@@ -1,1 +1,15 @@
+<<<<<<< HEAD
 node_modules
+=======
+
+node_modules/
+dist/
+.env
+*.db
+logs/
+uploads/
+.cache/
+coverage/
+.DS_Store
+.vscode/
+>>>>>>> 2315ac5caf027343377c666ab039ccd829c866f7

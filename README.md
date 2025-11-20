@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -96,3 +97,25 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+=======
+
+# Master Platform
+
+Complete multi-tenant SaaS platform.
+- Backend: NestJS 16 + MongoDB (TypeScript)
+- Frontend: React 19 + Vite 5 + TailwindCSS 4
+- Infrastructure: Docker, GitHub Actions CI/CD
+
+## Quick Start
+
+    cd backend
+    npm install
+    npm run start:dev
+
+    cd ../frontend
+    npm install
+    npm run dev
+
+Visit: http://localhost:3000
+API Docs: http://localhost:4000/api/docs
+>>>>>>> 2315ac5caf027343377c666ab039ccd829c866f7
