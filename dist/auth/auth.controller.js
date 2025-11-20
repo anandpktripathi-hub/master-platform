@@ -36,7 +36,7 @@ let AuthController = class AuthController {
         return this.authService.getUserById(req.user.userId);
     }
     async changePassword(req, changePasswordDto) {
-        return this.authService.changePassword(req.user.userId, changePasswordDto.currentPassword, changePasswordDto.newPassword);
+        return this.authService.changePassword(req.user.userId, changePasswordDto);
     }
     async requestPasswordReset(requestPasswordResetDto) {
         return this.authService.requestPasswordReset(requestPasswordResetDto.email);
@@ -61,17 +61,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('me'),
-    __param(0, (0, common_1.Request)()),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getProfile", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Patch)('change-password'),
-    __param(0, (0, common_1.Request)()),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, change_password_dto_1.ChangePasswordDto]),

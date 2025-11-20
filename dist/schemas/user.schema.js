@@ -16,47 +16,39 @@ var UserRole;
 (function (UserRole) {
     UserRole["SUPER_ADMIN"] = "super_admin";
     UserRole["TENANT_OWNER"] = "tenant_owner";
-    UserRole["TENANT_ADMIN"] = "tenant_admin";
-    UserRole["TENANT_USER"] = "tenant_user";
+    UserRole["ADMIN"] = "admin";
+    UserRole["MANAGER"] = "manager";
+    UserRole["USER"] = "user";
 })(UserRole || (exports.UserRole = UserRole = {}));
 var UserStatus;
 (function (UserStatus) {
     UserStatus["ACTIVE"] = "active";
     UserStatus["INACTIVE"] = "inactive";
     UserStatus["SUSPENDED"] = "suspended";
-    UserStatus["PENDING"] = "pending";
 })(UserStatus || (exports.UserStatus = UserStatus = {}));
 let User = class User {
     firstName;
     lastName;
     email;
     password;
+    tenant;
     role;
     status;
-    tenantId;
-    profileImage;
-    phoneNumber;
-    preferences;
-    lastLoginAt;
-    emailVerifiedAt;
-    emailVerificationToken;
-    passwordResetToken;
-    passwordResetExpires;
-    isTwoFactorEnabled;
-    twoFactorSecret;
-    permissions;
+    isActive;
+    resetPasswordToken;
+    resetPasswordExpires;
 };
 exports.User = User;
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, trim: true }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], User.prototype, "firstName", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, trim: true }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, unique: true, lowercase: true, trim: true }),
+    (0, mongoose_1.Prop)({ required: true, unique: true, lowercase: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
@@ -64,66 +56,31 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, enum: UserRole, default: UserRole.TENANT_USER }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Schema.Types.ObjectId, ref: 'Tenant', required: true }),
+    __metadata("design:type", mongoose_2.Schema.Types.ObjectId)
+], User.prototype, "tenant", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String, enum: UserRole, default: UserRole.USER }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, enum: UserStatus, default: UserStatus.PENDING }),
+    (0, mongoose_1.Prop)({ type: String, enum: UserStatus, default: UserStatus.ACTIVE }),
     __metadata("design:type", String)
 ], User.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Tenant', default: null }),
-    __metadata("design:type", mongoose_2.Types.ObjectId)
-], User.prototype, "tenantId", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", String)
-], User.prototype, "profileImage", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", String)
-], User.prototype, "phoneNumber", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: Object, default: {} }),
-    __metadata("design:type", Object)
-], User.prototype, "preferences", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", Date)
-], User.prototype, "lastLoginAt", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", Date)
-], User.prototype, "emailVerifiedAt", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", String)
-], User.prototype, "emailVerificationToken", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", String)
-], User.prototype, "passwordResetToken", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: null }),
-    __metadata("design:type", Date)
-], User.prototype, "passwordResetExpires", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: false }),
+    (0, mongoose_1.Prop)({ default: true }),
     __metadata("design:type", Boolean)
-], User.prototype, "isTwoFactorEnabled", void 0);
+], User.prototype, "isActive", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: null }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], User.prototype, "twoFactorSecret", void 0);
+], User.prototype, "resetPasswordToken", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [String], default: [] }),
-    __metadata("design:type", Array)
-], User.prototype, "permissions", void 0);
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Date)
+], User.prototype, "resetPasswordExpires", void 0);
 exports.User = User = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], User);
 exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
-exports.UserSchema.index({ email: 1 });
-exports.UserSchema.index({ tenantId: 1 });
-exports.UserSchema.index({ role: 1, status: 1 });
 //# sourceMappingURL=user.schema.js.map

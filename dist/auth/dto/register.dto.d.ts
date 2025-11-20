@@ -1,8 +1,7 @@
 export declare class RegisterDto {
-    firstName: string;
-    lastName: string;
     email: string;
     password: string;
-    companyName: string;
-    companySlug: string;
+    firstName: string;
+    lastName: string;
+    tenantName: string;
 }

@@ -1,31 +1,23 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, Matches } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsNotEmpty } from 'class-validator';
 
 export class RegisterDto {
-  @IsNotEmpty()
-  @IsString()
-  firstName: string;
-
-  @IsNotEmpty()
-  @IsString()
-  lastName: string;
-
-  @IsNotEmpty()
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
-  @IsNotEmpty()
   @IsString()
-  @MinLength(8, { message: 'Password must be at least 8 characters long' })
+  @MinLength(8)
   password: string;
 
-  @IsNotEmpty()
   @IsString()
-  companyName: string;
+  @IsNotEmpty()
+  firstName: string;
 
-  @IsNotEmpty()
   @IsString()
-  @Matches(/^[a-z0-9-]+$/, {
-    message: 'Company slug must contain only lowercase letters, numbers, and hyphens',
-  })
-  companySlug: string;
+  @IsNotEmpty()
+  lastName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  tenantName: string;
 }

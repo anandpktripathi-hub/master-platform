@@ -8,18 +8,19 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     register(registerDto: RegisterDto): Promise<{
-        message: string;
         user: any;
         tenant: any;
-        token: string;
+        accessToken: string;
     }>;
     login(loginDto: LoginDto): Promise<{
-        message: string;
         user: any;
         tenant: any;
-        token: string;
+        accessToken: string;
     }>;
-    getProfile(req: any): Promise<import("../schemas/user.schema").UserDocument>;
+    getProfile(req: any): Promise<{
+        user: any;
+        tenant: any;
+    }>;
     changePassword(req: any, changePasswordDto: ChangePasswordDto): Promise<{
         message: string;
     }>;

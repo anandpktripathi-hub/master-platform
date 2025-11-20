@@ -1,12 +1,14 @@
-import { Injectable, UnauthorizedException, ConflictException, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { User, UserDocument, UserRole, UserStatus } from '../schemas/user.schema';
 import { Tenant, TenantDocument, TenantStatus } from '../schemas/tenant.schema';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -17,70 +19,71 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { email, password, firstName, lastName, companyName, companySlug } = registerDto;
+    const { email, password, firstName, lastName, tenantName } = registerDto;
 
-    // Check if user exists
+    // Check if user already exists
     const existingUser = await this.userModel.findOne({ email });
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
     }
 
-    // Check if tenant slug exists
-    const existingTenant = await this.tenantModel.findOne({ slug: companySlug });
+    // Create tenant slug from tenant name
+    const slug = tenantName.toLowerCase().replace(/\s+/g, '-');
+
+    // Check if tenant slug already exists
+    const existingTenant = await this.tenantModel.findOne({ slug });
     if (existingTenant) {
-      throw new ConflictException('Company slug already taken');
+      throw new ConflictException('A tenant with this name already exists');
     }
+
+    // Create new tenant
+    const tenant = new this.tenantModel({
+      name: tenantName,
+      slug,
+      status: TenantStatus.TRIAL,
+      isActive: true,
+      subscriptionTier: 'trial',
+    });
+    await tenant.save();
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create tenant first
-    const tenant = await this.tenantModel.create({
-      slug: companySlug,
-      name: companyName,
-      email: email,
-      status: TenantStatus.TRIAL,
-      ownerId: null, // Will update after user creation
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
-    });
-
-    // Create user with tenant reference
-    const user = await this.userModel.create({
-      email,
-      password: hashedPassword,
+    // Create new user as tenant owner
+    const user = new this.userModel({
       firstName,
       lastName,
+      email,
+      password: hashedPassword,
+      tenant: tenant._id,
       role: UserRole.TENANT_OWNER,
       status: UserStatus.ACTIVE,
-      tenantId: tenant._id,
+      isActive: true,
     });
-
-    // Update tenant with owner ID
-    await this.tenantModel.findByIdAndUpdate(tenant._id, { ownerId: user._id });
+    await user.save();
 
     // Generate JWT token
-    const token = this.generateToken(user);
+    const payload = { 
+      sub: user._id, 
+      email: user.email, 
+      tenant: tenant._id,
+      role: user.role,
+    };
+    const accessToken = this.jwtService.sign(payload);
 
     return {
-      message: 'Registration successful',
       user: this.sanitizeUser(user),
       tenant: this.sanitizeTenant(tenant),
-      token,
+      accessToken,
     };
   }
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    // Find user with tenant info
-    const user = await this.userModel.findOne({ email }).populate('tenantId');
+    // Find user by email and populate tenant
+    const user = await this.userModel.findOne({ email }).populate('tenant');
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    // Check password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
@@ -89,58 +92,61 @@ export class AuthService {
       throw new UnauthorizedException('Account is not active');
     }
 
-    // Update last login
-    await this.userModel.findByIdAndUpdate(user._id, { lastLoginAt: new Date() });
+    // Verify password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
 
-    // Generate token
-    const token = this.generateToken(user);
+    // Generate JWT token
+    const payload = { 
+      sub: user._id, 
+      email: user.email, 
+      tenant: user.tenant,
+      role: user.role,
+    };
+    const accessToken = this.jwtService.sign(payload);
 
     return {
-      message: 'Login successful',
       user: this.sanitizeUser(user),
-      tenant: user.tenantId ? this.sanitizeTenant(user.tenantId as any) : null,
-      token,
+      tenant: user.tenant ? this.sanitizeTenant(user.tenant as any) : null,
+      accessToken,
     };
   }
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ email });
-    if (user && (await bcrypt.compare(password, user.password))) {
-      return user;
-    }
-    return null;
-  }
-
-  async getUserById(userId: string): Promise<UserDocument> {
-    const user = await this.userModel.findById(userId).populate('tenantId');
     if (!user) {
-      throw new NotFoundException('User not found');
+      return null;
     }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return null;
+    }
+
+    if (user.status !== UserStatus.ACTIVE) {
+      return null;
+    }
+
     return user;
   }
 
-  generateToken(user: UserDocument): string {
-    const payload = {
-      sub: user._id.toString(),
-      email: user.email,
-      role: user.role,
-      tenantId: user.tenantId?.toString(),
+  async getUserById(userId: string) {
+    const user = await this.userModel.findById(userId).populate('tenant');
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return {
+      user: this.sanitizeUser(user),
+      tenant: user.tenant ? this.sanitizeTenant(user.tenant as any) : null,
     };
-    return this.jwtService.sign(payload);
   }
 
-  private sanitizeUser(user: any) {
-    const { password, emailVerificationToken, passwordResetToken, twoFactorSecret, ...sanitized } = user.toObject();
-    return sanitized;
-  }
+  async changePassword(userId: string, changePasswordDto: ChangePasswordDto) {
+    const { currentPassword, newPassword } = changePasswordDto;
 
-  private sanitizeTenant(tenant: any) {
-    if (!tenant) return null;
-    const tenantObj = tenant.toObject ? tenant.toObject() : tenant;
-    return tenantObj;
-  }
-
-  async changePassword(userId: string, currentPassword: string, newPassword: string) {
     const user = await this.userModel.findById(userId);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -149,14 +155,13 @@ export class AuthService {
     // Verify current password
     const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Current password is incorrect');
+      throw new BadRequestException('Current password is incorrect');
     }
 
     // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update password
-    await this.userModel.findByIdAndUpdate(userId, { password: hashedPassword });
+    user.password = hashedPassword;
+    await user.save();
 
     return { message: 'Password changed successfully' };
   }
@@ -164,47 +169,69 @@ export class AuthService {
   async requestPasswordReset(email: string) {
     const user = await this.userModel.findOne({ email });
     if (!user) {
-      // Don't reveal if user exists
-      return { message: 'If email exists, password reset link has been sent' };
+      // Don't reveal if user exists or not for security
+      return { message: 'If a user with that email exists, a password reset link has been sent' };
     }
 
     // Generate reset token
-    const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    const resetExpires = new Date(Date.now() + 3600000); // 1 hour
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-    await this.userModel.findByIdAndUpdate(user._id, {
-      passwordResetToken: resetToken,
-      passwordResetExpires: resetExpires,
-    });
+    // Set token and expiry (1 hour from now)
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour
+    await user.save();
 
-    // TODO: Send email with reset link
-    // For now, return token (in production, send via email)
-    return {
-      message: 'Password reset token generated',
+    // TODO: Send email with reset link containing resetToken
+    // For now, just return the token (in production, send via email)
+    return { 
+      message: 'If a user with that email exists, a password reset link has been sent',
       resetToken, // Remove this in production
     };
   }
 
   async resetPassword(resetToken: string, newPassword: string) {
+    // Hash the provided token to compare with stored hash
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    // Find user with valid reset token
     const user = await this.userModel.findOne({
-      passwordResetToken: resetToken,
-      passwordResetExpires: { $gt: new Date() },
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: new Date() }, // Token not expired
     });
 
     if (!user) {
-      throw new UnauthorizedException('Invalid or expired reset token');
+      throw new BadRequestException('Invalid or expired reset token');
     }
 
     // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
 
-    // Update password and clear reset token
-    await this.userModel.findByIdAndUpdate(user._id, {
-      password: hashedPassword,
-      passwordResetToken: null,
-      passwordResetExpires: null,
-    });
+    return { message: 'Password has been reset successfully' };
+  }
 
-    return { message: 'Password reset successful' };
+  async getProfile(userId: string) {
+    const user = await this.userModel.findById(userId).populate('tenant');
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return {
+      user: this.sanitizeUser(user),
+      tenant: user.tenant ? this.sanitizeTenant(user.tenant as any) : null,
+    };
+  }
+
+  private sanitizeUser(user: any) {
+    const { password, resetPasswordToken, resetPasswordExpires, ...sanitized } = user.toObject();
+    return sanitized;
+  }
+
+  private sanitizeTenant(tenant: any) {
+    return tenant.toObject();
   }
 }

@@ -4,29 +4,28 @@ import { UserDocument } from '../schemas/user.schema';
 import { TenantDocument } from '../schemas/tenant.schema';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 export declare class AuthService {
     private userModel;
     private tenantModel;
     private jwtService;
     constructor(userModel: Model<UserDocument>, tenantModel: Model<TenantDocument>, jwtService: JwtService);
     register(registerDto: RegisterDto): Promise<{
-        message: string;
         user: any;
         tenant: any;
-        token: string;
+        accessToken: string;
     }>;
     login(loginDto: LoginDto): Promise<{
-        message: string;
         user: any;
         tenant: any;
-        token: string;
+        accessToken: string;
     }>;
     validateUser(email: string, password: string): Promise<any>;
-    getUserById(userId: string): Promise<UserDocument>;
-    generateToken(user: UserDocument): string;
-    private sanitizeUser;
-    private sanitizeTenant;
-    changePassword(userId: string, currentPassword: string, newPassword: string): Promise<{
+    getUserById(userId: string): Promise<{
+        user: any;
+        tenant: any;
+    }>;
+    changePassword(userId: string, changePasswordDto: ChangePasswordDto): Promise<{
         message: string;
     }>;
     requestPasswordReset(email: string): Promise<{
@@ -39,4 +38,10 @@ export declare class AuthService {
     resetPassword(resetToken: string, newPassword: string): Promise<{
         message: string;
     }>;
+    getProfile(userId: string): Promise<{
+        user: any;
+        tenant: any;
+    }>;
+    private sanitizeUser;
+    private sanitizeTenant;
 }
