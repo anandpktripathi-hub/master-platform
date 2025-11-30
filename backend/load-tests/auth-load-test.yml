@@ -1,0 +1,15 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+  defaults:
+    headers:
+      x-tenant-id: 'default'
+scenarios:
+  - flow:
+    - post:
+        url: '/auth/login'
+        json:
+          email: 'test@example.com'
+          password: 'password'
