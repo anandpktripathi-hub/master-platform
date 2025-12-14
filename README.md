@@ -1,47 +1,36 @@
-﻿# Master Platform - Multi-Tenant SaaS Backend
+﻿# Master Platform – Multi‑Tenant SaaS
 
-## Project Info
-- **Company:** Transformatrix Global
-- **Tech:** NestJS + MongoDB + TypeScript + JWT
-- **Status:** 25-30% Complete
+This repository contains a NestJS backend and a React/Vite frontend implementing a multi‑tenant SaaS platform.
 
-## What Works ✅
-- User Registration (creates user + tenant)
-- JWT Authentication
-- Password Hashing (bcrypt)
-- Multi-tenant Architecture
-- MongoDB Database
+## Quickstart
 
-## Tested Endpoints
-- POST /auth/register → 201 Created ✅
+### Backend
+1. Install dependencies
+	- `cd backend`
+	- `npm install`
+2. Configure environment
+	- Copy `.env.example` to `.env` and update values
+3. Run locally
+	- `npm run start:dev`
 
-## Pending Endpoints
-- POST /auth/login
-- GET /auth/me
-- PATCH /auth/change-password
-- Password reset endpoints
+### Frontend
+1. Install dependencies
+	- `cd frontend`
+	- `npm install`
+2. Run locally
+	- `npm run dev`
 
-## Database
-- **DB:** mongodb://localhost:27017/master-platform
-- **Collections:** users (1 doc), tenants (1 doc)
-- **Test User:** anandji@smetasc.com
-- **Test Tenant:** Smetasc Global
+## Documentation
 
-## Project Structure
+- Overview: see `docs/overview/PROJECT_CONTEXT.md`
+- API Reference: see `docs/API/API-DOCUMENTATION.md`
+- Billing: see `docs/billing/`
+- Themes: see `docs/themes/`
+- Testing: see `docs/testing/`
+- Deployment: see `docs/ops/DEPLOYMENT.md`
+- Detailed reports and audits: see `Report Docs/`
 
-src/
-├── auth/ # Auth module (100% complete)
-├── schemas/ # User + Tenant schemas
-└── app.module.ts # Main app config
+## Notes
 
-## Setup
-
-## Next Steps
-1. Test remaining auth endpoints
-2. Build Categories module
-3. Build Products module
-4. Build Orders module
-5. Build Frontend (React)
-
----
-**Last Updated:** 2024-11-20
+- Backend default port: 4000
+- Frontend default port: 5173 (Vite)

@@ -1,44 +1,26 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Settings from './pages/Settings';
+import { Outlet } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+import Navigation from "./components/Navigation";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, isLoading, logout } = useAuth();
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem('token');
+    logout();
   };
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-slate-950 text-white">
-        {isAuthenticated && <Navigation onLogout={handleLogout} />}
-        
-        <main className="min-h-screen">
-          <Routes>
-            {!isAuthenticated ? (
-              <>
-                <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                <Route path="*" element={<Navigate to="/login" replace />} />
-              </>
-            ) : (
-              <>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              </>
-            )}
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <div className="min-h-screen bg-slate-950 text-white">
+      {isAuthenticated && <Navigation onLogout={handleLogout} />}
+      <Outlet />
+    </div>
   );
 }

@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards } from '@nestjs/common';
+﻿import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Delete,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Dashboard } from '../../database/schemas/dashboard.schema';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -28,7 +37,11 @@ export class DashboardController {
 
   @Put(':id')
   @Roles('admin')
-  update(@Param('id') id: string, @Body() updateDashboardDto: Dashboard, @Tenant() tenantId: string) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDashboardDto: Dashboard,
+    @Tenant() tenantId: string,
+  ) {
     return this.dashboardService.update(id, updateDashboardDto, tenantId);
   }
 

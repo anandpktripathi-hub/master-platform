@@ -1,6 +1,7 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { INestApplication } from '@nestjs/common';
 
-export function setupSwagger(app) {
+export function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder()
     .setTitle('Smetasc SaaS Backend')
     .setDescription('API documentation for Smetasc SaaS Backend')
@@ -9,17 +10,3 @@ export function setupSwagger(app) {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

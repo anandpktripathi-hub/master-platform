@@ -1,26 +1,32 @@
-﻿import React, { useState } from 'react';
-import { authApi } from '../services/api';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-export default function Login({ onLogin }) {
-  const [email, setEmail] = useState('admin@example.com');
-  const [password, setPassword] = useState('password');
+interface LoginError {
+  message?: string;
+}
+
+export default function Login() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const [email, setEmail] = useState("admin@example.com");
+  const [password, setPassword] = useState("password");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError(null);
 
     try {
-      const response = await authApi.login(email, password);
-      localStorage.setItem('token', response.accessToken);
-      if (response.user) {
-        localStorage.setItem('user', JSON.stringify(response.user));
-      }
-      onLogin();
-    } catch (err) {
-      setError(err.message || 'Login failed. Please try again.');
+      await login({ email, password });
+      navigate("/app/dashboard");
+    } catch (err: unknown) {
+      const error = err as LoginError;
+      console.error("LOGIN ERROR", err);
+      setError(error.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -28,47 +34,24 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950">
-      <div className="max-w-md w-full bg-slate-900 p-8 rounded-lg border border-slate-800">
-        <h1 className="text-3xl font-bold mb-6 text-center text-teal-500">Smetasc SaaS</h1>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-teal-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-teal-500"
-              required
-            />
-          </div>
-
-          {error && <div className="bg-red-900 text-red-200 p-3 rounded text-sm">{error}</div>}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-teal-600 hover:bg-teal-700 disabled:bg-gray-600 text-white font-medium py-2 rounded transition"
-          >
-            {loading ? 'Loading...' : 'Login'}
-          </button>
-        </form>
-
-        <p className="text-gray-400 text-sm text-center mt-4">
-          Default: admin@example.com / password
-        </p>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Login"}
+        </button>
+        {error && <div>{error}</div>}
+      </form>
     </div>
   );
 }

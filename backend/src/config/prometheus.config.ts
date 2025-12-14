@@ -4,17 +4,3 @@ const register = new Registry();
 collectDefaultMetrics({ register });
 
 export { register };
-
-
-
-
-
-
-
-
-
-
-
-
-
-

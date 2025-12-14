@@ -9,17 +9,3 @@ export class HealthController {
     return { status: 'ok', info: {}, error: {}, details: {} };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

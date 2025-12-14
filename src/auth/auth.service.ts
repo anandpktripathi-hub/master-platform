@@ -52,7 +52,7 @@ export class AuthService {
       isActive: true,
     });
 
-    const payload = { sub: user._id, email: user.email, tenant: tenant._id, role: user.role };
+    const payload = { sub: user._id, email: user.email, tenantId: tenant._id, role: user.role };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
     await this.emailService.sendWelcomeEmail(user.email, firstName);
@@ -84,7 +84,7 @@ export class AuthService {
     user.lastLoginAt = new Date();
     await user.save();
 
-    const payload = { sub: user._id, email: user.email, tenant: (user.tenant as any)._id, role: user.role };
+    const payload = { sub: user._id, email: user.email, tenantId: (user.tenant as any)._id, role: user.role };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
     return {

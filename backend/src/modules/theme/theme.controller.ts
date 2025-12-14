@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards } from '@nestjs/common';
+﻿import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Delete,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { ThemeService } from './theme.service';
 import { Theme } from '../../database/schemas/theme.schema';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -28,7 +37,11 @@ export class ThemeController {
 
   @Put(':id')
   @Roles('admin')
-  update(@Param('id') id: string, @Body() updateThemeDto: Theme, @Tenant() tenantId: string) {
+  update(
+    @Param('id') id: string,
+    @Body() updateThemeDto: Theme,
+    @Tenant() tenantId: string,
+  ) {
     return this.themeService.update(id, updateThemeDto, tenantId);
   }
 
@@ -38,19 +51,3 @@ export class ThemeController {
     return this.themeService.remove(id);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

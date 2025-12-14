@@ -16,19 +16,3 @@ export class Dashboard {
 }
 
 export const DashboardSchema = SchemaFactory.createForClass(Dashboard);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

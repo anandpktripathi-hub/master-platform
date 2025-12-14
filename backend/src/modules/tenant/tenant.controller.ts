@@ -16,19 +16,3 @@ export class TenantController {
     return this.tenantService.create(createTenantDto);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

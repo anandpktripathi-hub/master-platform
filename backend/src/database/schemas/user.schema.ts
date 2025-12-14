@@ -1,6 +1,6 @@
-import { Types } from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+﻿import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
+import { RoleUnion, Role } from '../../modules/users/role.types';
 
 export type UserDocument = User & Document;
 
@@ -15,8 +15,25 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ enum: ['admin', 'owner', 'user'], default: 'user' })
-  role: string;
+  // Core RBAC roles:
+  // - platform_admin  -> Anand Ji (landlord, 100%)
+  // - tenant_admin    -> Sudama Ji / tenant owner (90%)
+  // - staff           -> staff/employee inside tenant (45%)
+  // - customer        -> end customer / portal user (8%)
+  @Prop({
+    enum: [
+      Role.USER,
+      Role.ADMIN,
+      Role.OWNER,
+      Role.PLATFORM_SUPER_ADMIN,
+      Role.PLATFORM_ADMIN_LEGACY,
+      Role.TENANT_ADMIN_LEGACY,
+      Role.STAFF_LEGACY,
+      Role.CUSTOMER_LEGACY,
+    ],
+    default: Role.USER,
+  })
+  role: RoleUnion;
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
   tenantId?: Types.ObjectId;
@@ -26,23 +43,41 @@ export class User {
 
   @Prop({ default: '' })
   company?: string;
+
+  // Personal Profile Fields (Step 1 of registration)
+  @Prop({ required: false })
+  firstName?: string;
+
+  @Prop({ required: false })
+  secondName?: string; // middle name
+
+  @Prop({ required: false })
+  lastName?: string;
+
+  @Prop({ required: false })
+  dateOfBirth?: Date;
+
+  @Prop({ required: false, unique: true, sparse: true })
+  username?: string; // unique username for login
+
+  @Prop({ required: false })
+  phone?: string;
+
+  @Prop({ required: false })
+  homeAddress?: string;
+
+  // Company-related user fields (Step 2 of registration)
+  @Prop({ required: false })
+  positionInCompany?: string;
+
+  @Prop({ required: false })
+  companyEmailForUser?: string; // work email
+
+  @Prop({ required: false })
+  companyPhoneForUser?: string; // work phone
+
+  @Prop({ required: false })
+  companyIdNumberForUser?: string; // employee ID
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

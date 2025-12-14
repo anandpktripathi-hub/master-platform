@@ -12,11 +12,12 @@ export class OrdersService {
     private emailService: EmailService,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto, userId: string) {
+  async create(createOrderDto: CreateOrderDto, userId: string, tenantId: string) {
     const orderNumber = `ORD-${Date.now()}`;
 
     const order = await this.orderModel.create({
       ...createOrderDto,
+      tenantId,
       orderNumber,
       customerId: userId,
       status: 'PENDING',
@@ -26,17 +27,17 @@ export class OrdersService {
     return order;
   }
 
-  async findAll(page: number = 1, limit: number = 10) {
+  async findAll(tenantId: string, page: number = 1, limit: number = 10) {
     const skip = (page - 1) * limit;
 
     const [orders, total] = await Promise.all([
       this.orderModel
-        .find()
+        .find({ tenantId })
         .populate('customerId')
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 }),
-      this.orderModel.countDocuments(),
+      this.orderModel.countDocuments({ tenantId }),
     ]);
 
     return {
@@ -50,23 +51,23 @@ export class OrdersService {
     };
   }
 
-  async findById(id: string) {
-    const order = await this.orderModel.findById(id).populate('customerId');
+  async findById(id: string, tenantId: string) {
+    const order = await this.orderModel.findOne({ _id: id, tenantId }).populate('customerId');
     if (!order) {
       throw new NotFoundException('Order not found');
     }
     return order;
   }
 
-  async findByCustomer(customerId: string) {
+  async findByCustomer(customerId: string, tenantId: string) {
     return this.orderModel
-      .find({ customerId })
+      .find({ customerId, tenantId })
       .populate('customerId')
       .sort({ createdAt: -1 });
   }
 
-  async updateStatus(id: string, updateOrderStatusDto: UpdateOrderStatusDto) {
-    const order = await this.orderModel.findById(id);
+  async updateStatus(id: string, updateOrderStatusDto: UpdateOrderStatusDto, tenantId: string) {
+    const order = await this.orderModel.findOne({ _id: id, tenantId });
     if (!order) {
       throw new NotFoundException('Order not found');
     }
@@ -92,8 +93,8 @@ export class OrdersService {
     return order;
   }
 
-  async cancel(id: string) {
-    const order = await this.orderModel.findById(id);
+  async cancel(id: string, tenantId: string) {
+    const order = await this.orderModel.findOne({ _id: id, tenantId });
     if (!order) {
       throw new NotFoundException('Order not found');
     }

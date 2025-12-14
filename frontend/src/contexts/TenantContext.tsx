@@ -1,13 +1,24 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const TenantContext = createContext<{
+interface Tenant {
+  domain: string;
+}
+
+interface TenantContextValue {
   tenantId: string;
   setTenantId: (id: string) => void;
   tenants: string[];
   loading: boolean;
   error: string | null;
-}>({
+}
+
+interface TenantProviderProps {
+  children: React.ReactNode;
+}
+
+export const TenantContext = createContext<TenantContextValue>({
   tenantId: '',
   setTenantId: () => {},
   tenants: [],
@@ -15,34 +26,44 @@ export const TenantContext = createContext<{
   error: null,
 });
 
-export const useTenantContext = () => useContext(TenantContext);
+function useTenantContextHook() {
+  return useContext(TenantContext);
+}
 
-export const TenantProvider = ({ children }) => {
-  const [tenantId, setTenantId] = useState('');
-  const [tenants, setTenants] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+export const useTenantContext = useTenantContextHook;
 
-  useEffect(() => {
+/* eslint-enable react-refresh/only-export-components */
+
+function TenantProviderComponent({ children }: TenantProviderProps) {
+  const [tenantId, setTenantId] = useState<string>('');
+  const [tenants, setTenants] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchTenants = React.useCallback(async () => {
     setLoading(true);
     setError(null);
-    axios.get('/tenants')
-      .then(res => {
-        setTenants(res.data.map(t => t.domain));
+    try {
+      const res = await axios.get<Tenant[]>('/tenants');
+      if (res.data) {
+        setTenants(res.data.map((t) => t.domain));
         // Load saved tenant from localStorage
         const savedTenantId = localStorage.getItem('tenantId');
-        const selectedTenant = res.data.find(t => t.domain === savedTenantId)?.domain || res.data[0]?.domain;
+        const selectedTenant = res.data.find((t) => t.domain === savedTenantId)?.domain || res.data[0]?.domain || '';
         setTenantId(selectedTenant);
-      })
-      .catch(err => {
-        setError('Failed to load tenants');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      }
+    } catch {
+      setError('Failed to load tenants');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const handleSetTenantId = (id) => {
+  useEffect(() => {
+    void fetchTenants();
+  }, [fetchTenants]);
+
+  const handleSetTenantId = (id: string) => {
     setTenantId(id);
     // Save tenant selection to localStorage
     localStorage.setItem('tenantId', id);
@@ -53,5 +74,7 @@ export const TenantProvider = ({ children }) => {
       {children}
     </TenantContext.Provider>
   );
-};
+}
+
+export const TenantProvider = TenantProviderComponent;
 

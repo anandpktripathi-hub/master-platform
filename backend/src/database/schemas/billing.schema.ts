@@ -22,19 +22,3 @@ export class Billing {
 }
 
 export const BillingSchema = SchemaFactory.createForClass(Billing);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

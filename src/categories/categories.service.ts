@@ -8,12 +8,12 @@ import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
 export class CategoriesService {
   constructor(@InjectModel('Category') private categoryModel: Model<Category>) {}
 
-  async create(createCategoryDto: CreateCategoryDto) {
+  async create(createCategoryDto: CreateCategoryDto, tenantId: string) {
     const { name, parentId } = createCategoryDto;
 
     const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
-    const existingCategory = await this.categoryModel.findOne({ slug });
+    const existingCategory = await this.categoryModel.findOne({ slug, tenantId });
     if (existingCategory) {
       throw new BadRequestException('Category with this name already exists');
     }
@@ -22,7 +22,7 @@ export class CategoriesService {
     let ancestors: Types.ObjectId[] = [];
 
     if (parentId) {
-      const parent = await this.categoryModel.findById(parentId);
+      const parent = await this.categoryModel.findOne({ _id: parentId, tenantId });
       if (!parent) {
         throw new NotFoundException('Parent category not found');
       }
@@ -32,6 +32,7 @@ export class CategoriesService {
 
     const category = await this.categoryModel.create({
       ...createCategoryDto,
+      tenantId,
       slug,
       level,
       ancestors,
@@ -40,28 +41,28 @@ export class CategoriesService {
     return category;
   }
 
-  async findAll() {
-    return this.categoryModel.find().populate('parentId').sort({ level: 1, name: 1 });
+  async findAll(tenantId: string) {
+    return this.categoryModel.find({ tenantId }).populate('parentId').sort({ level: 1, name: 1 });
   }
 
-  async findById(id: string) {
-    const category = await this.categoryModel.findById(id).populate('parentId');
+  async findById(id: string, tenantId: string) {
+    const category = await this.categoryModel.findOne({ _id: id, tenantId }).populate('parentId');
     if (!category) {
       throw new NotFoundException('Category not found');
     }
     return category;
   }
 
-  async findChildren(id: string) {
-    const category = await this.categoryModel.findById(id);
+  async findChildren(id: string, tenantId: string) {
+    const category = await this.categoryModel.findOne({ _id: id, tenantId });
     if (!category) {
       throw new NotFoundException('Category not found');
     }
-    return this.categoryModel.find({ parentId: id });
+    return this.categoryModel.find({ parentId: id, tenantId });
   }
 
-  async getCategoryTree() {
-    const categories = await this.categoryModel.find().sort({ level: 1, name: 1 });
+  async getCategoryTree(tenantId: string) {
+    const categories = await this.categoryModel.find({ tenantId }).sort({ level: 1, name: 1 });
     return this.buildTree(categories);
   }
 
@@ -85,8 +86,8 @@ export class CategoriesService {
     return tree;
   }
 
-  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    const category = await this.categoryModel.findById(id);
+  async update(id: string, updateCategoryDto: UpdateCategoryDto, tenantId: string) {
+    const category = await this.categoryModel.findOne({ _id: id, tenantId });
     if (!category) {
       throw new NotFoundException('Category not found');
     }
@@ -102,13 +103,13 @@ export class CategoriesService {
     return category;
   }
 
-  async remove(id: string) {
-    const category = await this.categoryModel.findById(id);
+  async remove(id: string, tenantId: string) {
+    const category = await this.categoryModel.findOne({ _id: id, tenantId });
     if (!category) {
       throw new NotFoundException('Category not found');
     }
 
-    const hasChildren = await this.categoryModel.findOne({ parentId: id });
+    const hasChildren = await this.categoryModel.findOne({ parentId: id, tenantId });
     if (hasChildren) {
       throw new BadRequestException('Cannot delete category with children. Delete children first.');
     }

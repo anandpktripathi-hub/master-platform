@@ -20,8 +20,14 @@ export class UserService {
     return createdUser.save();
   }
 
-  async update(id: string, updateUserDto: User, tenantId: string): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, { ...updateUserDto, tenantId }, { new: true }).exec();
+  async update(
+    id: string,
+    updateUserDto: User,
+    tenantId: string,
+  ): Promise<User> {
+    return this.userModel
+      .findByIdAndUpdate(id, { ...updateUserDto, tenantId }, { new: true })
+      .exec();
   }
 
   async remove(id: string) {

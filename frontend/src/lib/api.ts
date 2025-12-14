@@ -1,93 +1,35 @@
-﻿const API_BASE_URL = "http://localhost:4000/api/v1"
+import axios from "axios";
 
-async function request(path: string, options: RequestInit = {}) {
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    ...(options.headers || {}),
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/v1",
+  headers: { "Content-Type": "application/json" },
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  return config;
+});
 
-  let res: Response
-  try {
-    res = await fetch(`${API_BASE_URL}${path}`, {
-      ...options,
-      headers,
-    })
-  } catch (e: any) {
-    console.error("API FETCH ERROR", e)
-    throw new Error("Network error while calling backend")
-  }
-
-  const data = await res.json().catch(() => null)
-
-  if (!res.ok) {
-    const message =
-      (data && (data.message || data.error)) ||
-      `Request failed with status ${res.status}`
-    throw new Error(message)
-  }
-
-  return data
+export interface LoginPayload {
+  email: string;
+  password: string;
 }
 
 export const authApi = {
-  async login(email: string, password: string) {
-    return request("/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    })
+  login(data: LoginPayload) {
+    const { email, password } = data;
+    return api.post("/auth/login", { email, password });
   },
-  async register(payload: {
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-  }) {
-    return request("/auth/register", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    })
-  },
-}
+};
 
-export const usersApi = {
-  async list(page: number = 1, limit: number = 10) {
-    return request(`/users?page=${page}&limit=${limit}`)
-  },
-  async create(payload: {
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-    role?: string
-    isActive?: boolean
-  }) {
-    return request("/users", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    })
-  },
-  async bulkCreate(users: any[]) {
-    return request("/users/bulk", {
-      method: "POST",
-      body: JSON.stringify({ users }),
-    })
-  },
-  async update(id: string, payload: Partial<{
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-    role: string
-    isActive: boolean
-  }>) {
-    return request(`/users/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(payload),
-    })
-  },
-  async remove(id: string) {
-    return request(`/users/${id}`, {
-      method: "DELETE",
-    })
-  },
-}
+export const usersApi = api;
+export const productsApi = api;
+export const tenantsApi = api;
+export const themesApi = api;
+export const dashboardsApi = api;
+
+export default api;

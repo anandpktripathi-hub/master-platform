@@ -5,7 +5,9 @@ import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
 
 @Injectable()
 export class TenantService {
-  constructor(@InjectModel(Tenant.name) private tenantModel: Model<TenantDocument>) {}
+  constructor(
+    @InjectModel(Tenant.name) private tenantModel: Model<TenantDocument>,
+  ) {}
 
   async create(createTenantDto: Tenant): Promise<Tenant> {
     const createdTenant = new this.tenantModel(createTenantDto);
@@ -16,21 +18,3 @@ export class TenantService {
     return this.tenantModel.find().exec();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

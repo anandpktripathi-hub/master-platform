@@ -6,7 +6,9 @@ import { ThemeService } from './theme.service';
 import { RolesGuard } from '../../guards/roles.guard';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Theme.name, schema: ThemeSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: Theme.name, schema: ThemeSchema }]),
+  ],
   controllers: [ThemeController],
   providers: [ThemeService, RolesGuard],
   exports: [ThemeService], // Export ThemeService if other modules need it

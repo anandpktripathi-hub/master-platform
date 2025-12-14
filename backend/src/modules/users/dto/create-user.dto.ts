@@ -1,8 +1,9 @@
+import { RoleUnion } from '../role.types';
 export class CreateUserDto {
   name!: string;
   email!: string;
   password!: string;
-  role?: 'admin' | 'owner' | 'user';
+  role?: RoleUnion;
   isActive?: boolean;
   company?: string;
   tenantId?: string;
@@ -11,19 +12,3 @@ export class CreateUserDto {
 export class BulkCreateUserDto {
   users!: CreateUserDto[];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

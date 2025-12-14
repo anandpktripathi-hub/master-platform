@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards } from '@nestjs/common';
+﻿import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Delete,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { BillingService } from './billing.service';
 import { Billing } from '../../database/schemas/billing.schema';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -28,7 +37,11 @@ export class BillingController {
 
   @Put(':id')
   @Roles('admin')
-  update(@Param('id') id: string, @Body() updateBillingDto: Billing, @Tenant() tenantId: string) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBillingDto: Billing,
+    @Tenant() tenantId: string,
+  ) {
     return this.billingService.update(id, updateBillingDto, tenantId);
   }
 

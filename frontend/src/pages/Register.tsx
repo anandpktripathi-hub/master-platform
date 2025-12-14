@@ -1,6 +1,10 @@
-﻿import React, { useState } from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { authApi } from "../lib/api"
+
+interface RegisterError {
+  message?: string;
+}
 
 function Register() {
   const [firstName, setFirstName] = useState("")
@@ -36,9 +40,10 @@ function Register() {
       setTimeout(() => {
         navigate("/dashboard")
       }, 800)
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const error = err as RegisterError;
       console.error("REGISTER ERROR", err)
-      setError(err.message || "Registration failed. Please check your details.")
+      setError(error.message || "Registration failed. Please check your details.")
     } finally {
       setLoading(false)
     }
@@ -60,7 +65,7 @@ function Register() {
 
         {success && (
           <div className="mb-4 rounded-lg border border-emerald-500 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
-            Account created. Redirecting to dashboard…
+            Account created. Redirecting to dashboard�
           </div>
         )}
 
@@ -134,7 +139,7 @@ function Register() {
               id="password"
               type="password"
               className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="••••••••"
+              placeholder="��������"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required

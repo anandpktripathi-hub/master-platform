@@ -17,8 +17,8 @@ export class Product {
   @Prop({ type: Types.ObjectId, ref: 'Category' })
   category: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
-  tenant: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true, index: true })
+  tenantId: Types.ObjectId;
 
   @Prop({ default: true })
   isActive: boolean;

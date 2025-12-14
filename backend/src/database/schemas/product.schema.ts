@@ -1,40 +1,24 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document, Types } from 'mongoose'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
 
 export type ProductDocument = Product & Document;
 
 @Schema({ timestamps: true })
 export class Product {
   @Prop({ required: true })
-  name: string
+  name: string;
 
   @Prop()
-  description: string
+  description: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Category', required: false })
-  category: Types.ObjectId
+  category: Types.ObjectId;
 
   @Prop({ required: true, min: 0 })
-  price: number
+  price: number;
 
   @Prop({ default: true })
-  isActive: boolean
+  isActive: boolean;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const ProductSchema = SchemaFactory.createForClass(Product);

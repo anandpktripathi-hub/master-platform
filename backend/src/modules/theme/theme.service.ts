@@ -5,7 +5,9 @@ import { Theme, ThemeDocument } from '../../database/schemas/theme.schema';
 
 @Injectable()
 export class ThemeService {
-  constructor(@InjectModel(Theme.name) private themeModel: Model<ThemeDocument>) {}
+  constructor(
+    @InjectModel(Theme.name) private themeModel: Model<ThemeDocument>,
+  ) {}
 
   async findAll(tenantId: string): Promise<Theme[]> {
     return this.themeModel.find({ tenantId }).exec();
@@ -20,8 +22,14 @@ export class ThemeService {
     return createdTheme.save();
   }
 
-  async update(id: string, updateThemeDto: Theme, tenantId: string): Promise<Theme> {
-    return this.themeModel.findByIdAndUpdate(id, { ...updateThemeDto, tenantId }, { new: true }).exec();
+  async update(
+    id: string,
+    updateThemeDto: Theme,
+    tenantId: string,
+  ): Promise<Theme> {
+    return this.themeModel
+      .findByIdAndUpdate(id, { ...updateThemeDto, tenantId }, { new: true })
+      .exec();
   }
 
   async remove(id: string) {

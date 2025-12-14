@@ -31,23 +31,39 @@ export class Tenant {
 
   @Prop({ default: true })
   isActive?: boolean;
+
+  // Company Profile Fields (Step 2 of registration)
+  @Prop({ required: false })
+  companyDateOfBirth?: Date; // or establishedAt/incorporationDate
+
+  @Prop({ required: false })
+  companyEmail?: string;
+
+  @Prop({ required: false })
+  companyPhone?: string;
+
+  @Prop({ required: false })
+  companyAddress?: string;
+
+  // Compliance Fields (Step 3 of registration)
+  @Prop({ default: false })
+  acceptedTerms?: boolean;
+
+  @Prop({ default: false })
+  acceptedPrivacy?: boolean;
+
+  @Prop({ required: false })
+  acceptedTermsAt?: Date;
+
+  @Prop({ required: false })
+  acceptedPrivacyAt?: Date;
+
+  // Flags for tenant creation method
+  @Prop({ default: false })
+  createdByPlatformOwner?: boolean;
+
+  @Prop({ default: false })
+  skipPayment?: boolean;
 }
 
 export const TenantSchema = SchemaFactory.createForClass(Tenant);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

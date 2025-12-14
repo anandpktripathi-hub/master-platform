@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
 const navLinkClass =
@@ -39,7 +39,7 @@ function Sidebar() {
         ))}
       </nav>
       <div className="mt-8 border-t border-slate-800 pt-4 text-xs text-slate-500">
-        © {new Date().getFullYear()} SMETASC
+        � {new Date().getFullYear()} SMETASC
       </div>
     </aside>
   )

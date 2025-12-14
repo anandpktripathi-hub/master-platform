@@ -4,11 +4,11 @@ import { User, UserSchema } from '../../database/schemas/user.schema';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { RolesGuard } from '../../guards/roles.guard';
-import { Roles } from '../../decorators/roles.decorator';
-import { Tenant } from '../../decorators/tenant.decorator';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   controllers: [UserController],
   providers: [
     UserService,
@@ -17,5 +17,3 @@ import { Tenant } from '../../decorators/tenant.decorator';
   ],
 })
 export class UserModule {}
-
-

@@ -8,15 +8,15 @@ import { CreateProductDto, UpdateProductDto } from './product.dto';
 export class ProductsService {
   constructor(@InjectModel('Product') private productModel: Model<Product>) {}
 
-  async create(createProductDto: CreateProductDto) {
-    const product = await this.productModel.create(createProductDto);
+  async create(createProductDto: CreateProductDto, tenantId: string) {
+    const product = await this.productModel.create({ ...createProductDto, tenantId });
     return product;
   }
 
-  async findAll(page: number = 1, limit: number = 10, search?: string, categoryId?: string) {
+  async findAll(tenantId: string, page: number = 1, limit: number = 10, search?: string, categoryId?: string) {
     const skip = (page - 1) * limit;
     
-    const filter: any = {};
+    const filter: any = { tenantId };
     
     if (search) {
       filter.$or = [
@@ -51,17 +51,18 @@ export class ProductsService {
     };
   }
 
-  async findById(id: string) {
-    const product = await this.productModel.findById(id).populate('categoryId');
+  async findById(id: string, tenantId: string) {
+    const product = await this.productModel.findOne({ _id: id, tenantId }).populate('categoryId');
     if (!product) {
       throw new NotFoundException('Product not found');
     }
     return product;
   }
 
-  async search(query: string) {
+  async search(query: string, tenantId: string) {
     return this.productModel
       .find({
+        tenantId,
         $or: [
           { name: { $regex: query, $options: 'i' } },
           { description: { $regex: query, $options: 'i' } },
@@ -72,8 +73,8 @@ export class ProductsService {
       .limit(20);
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
-    const product = await this.productModel.findById(id);
+  async update(id: string, updateProductDto: UpdateProductDto, tenantId: string) {
+    const product = await this.productModel.findOne({ _id: id, tenantId });
     if (!product) {
       throw new NotFoundException('Product not found');
     }
@@ -84,8 +85,8 @@ export class ProductsService {
     return product;
   }
 
-  async remove(id: string) {
-    const product = await this.productModel.findById(id);
+  async remove(id: string, tenantId: string) {
+    const product = await this.productModel.findOne({ _id: id, tenantId });
     if (!product) {
       throw new NotFoundException('Product not found');
     }
@@ -94,8 +95,8 @@ export class ProductsService {
     return { message: 'Product deleted successfully' };
   }
 
-  async updateStock(id: string, quantity: number) {
-    const product = await this.productModel.findById(id);
+  async updateStock(id: string, quantity: number, tenantId: string) {
+    const product = await this.productModel.findOne({ _id: id, tenantId });
     if (!product) {
       throw new NotFoundException('Product not found');
     }
