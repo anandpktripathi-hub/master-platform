@@ -12,6 +12,8 @@ import CompanySettings from "./pages/CompanySettings";
 import AdminThemesPage from "./pages/admin/AdminThemesPage";
 import TenantThemeSelectorPage from "./pages/tenant/TenantThemeSelectorPage";
 import TenantThemeCustomizerPage from "./pages/tenant/TenantThemeCustomizerPage";
+import { ManageUsers } from "./pages/ManageUsers";
+import { ManageRoles } from "./pages/ManageRoles";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -25,6 +27,8 @@ export const router = createBrowserRouter([
     children: [
       { path: "dashboard", element: <ProtectedRoute><Dashboard /></ProtectedRoute> },
       { path: "users", element: <ProtectedRoute><Users /></ProtectedRoute> },
+      { path: "manage-users", element: <ProtectedRoute><ManageUsers /></ProtectedRoute> },
+      { path: "manage-roles", element: <ProtectedRoute><ManageRoles /></ProtectedRoute> },
       { path: "billing", element: <ProtectedRoute><BillingDashboard /></ProtectedRoute> },
       { path: "billing/invoices", element: <ProtectedRoute><Invoices /></ProtectedRoute> },
       { path: "profile", element: <ProtectedRoute><ProfileSettings /></ProtectedRoute> },

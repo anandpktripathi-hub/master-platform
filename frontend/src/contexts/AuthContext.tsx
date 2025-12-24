@@ -49,8 +49,8 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
       }
 
       try {
-        const res = await api.get("/users/me");
-        const rawUser = res.data;
+        // API now returns unwrapped response.data directly
+        const rawUser = await api.get("/users/me");
 
         const mappedUser: AuthUser = {
           id: rawUser._id ?? rawUser.id,
@@ -77,9 +77,10 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
 
   // Login: call /auth/login, save token, then /users/me
   const login = async (payload: LoginPayload) => {
+    // API now returns unwrapped response.data directly
     const response = await authApi.login(payload);
-    const accessToken: string = response.data.access_token;
-    const rawUser = response.data.user;
+    const accessToken: string = response.access_token;
+    const rawUser = response.user;
 
     if (!accessToken) {
       throw new Error("Invalid login response: missing token");
@@ -102,8 +103,8 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
     }
 
     // Fallback: fetch from /users/me if user not in login payload
-    const meRes = await api.get("/users/me");
-    const me = meRes.data;
+    // API now returns unwrapped response.data directly
+    const me = await api.get("/users/me");
     const mappedUser: AuthUser = {
       id: me._id ?? me.id,
       email: me.email,

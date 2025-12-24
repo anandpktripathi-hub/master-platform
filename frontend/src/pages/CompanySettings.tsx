@@ -42,8 +42,9 @@ export default function CompanySettings() {
     setLoading(true);
     setError(null);
     try {
+      // API now returns unwrapped response.data directly
       const response = await api.get('/tenant/profile');
-      setCompany(response.data);
+      setCompany(response);
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(

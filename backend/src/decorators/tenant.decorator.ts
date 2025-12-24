@@ -9,3 +9,6 @@ export const Tenant = createParamDecorator(
     return request.tenantId;
   },
 );
+
+// Alias for clarity
+export const CurrentTenant = Tenant;

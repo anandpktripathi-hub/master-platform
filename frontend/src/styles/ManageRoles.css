@@ -1,0 +1,243 @@
+/* ManageRoles.css */
+
+.manage-roles-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.manage-roles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.manage-roles-header h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.roles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.role-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.role-header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.role-item:hover .role-header {
+  background: #fafafa;
+}
+
+.role-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.role-info .description {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.role-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+  color: #666;
+}
+
+.btn-icon:hover {
+  color: #333;
+}
+
+.btn-icon.edit {
+  color: #2196f3;
+}
+
+.btn-icon.delete {
+  color: #f44336;
+}
+
+.role-permissions {
+  padding: 1.5rem;
+  background: #fafafa;
+}
+
+.role-permissions h4 {
+  margin: 0 0 1rem;
+  color: #333;
+}
+
+.permissions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.permission-chip {
+  display: inline-block;
+  background: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Modal Styles for Roles */
+.modal-large {
+  max-width: 900px;
+}
+
+.role-info-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.role-info-section .form-group:nth-child(n + 2) {
+  grid-column: 1 / -1;
+}
+
+.permissions-section {
+  margin-bottom: 2rem;
+}
+
+.permissions-section h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.permissions-matrix {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.permissions-matrix table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.permissions-matrix th {
+  background: #f5f5f5;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  font-size: 0.9rem;
+}
+
+.permissions-matrix td {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.permissions-matrix .module-name {
+  font-weight: 500;
+  color: #333;
+  min-width: 150px;
+}
+
+.permissions-matrix .checkbox-cell {
+  text-align: center;
+}
+
+.permissions-matrix input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #4caf50;
+}
+
+.permissions-matrix tbody tr:hover {
+  background: #fafafa;
+}
+
+/* General Modal Styles */
+.modal-loading {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .manage-users-container,
+  .manage-roles-container {
+    padding: 1rem;
+  }
+
+  .users-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-users-header,
+  .manage-roles-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .role-info-section {
+    grid-template-columns: 1fr;
+  }
+
+  .role-info-section .form-group:nth-child(n + 2) {
+    grid-column: 1;
+  }
+
+  .permissions-matrix {
+    font-size: 0.85rem;
+  }
+
+  .permissions-matrix th,
+  .permissions-matrix td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer button {
+    width: 100%;
+  }
+}

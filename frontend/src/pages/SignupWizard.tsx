@@ -109,6 +109,7 @@ export default function SignupWizard() {
     setLoading(true);
 
     try {
+      // API now returns unwrapped response.data directly
       const response = await api.post('/auth/tenant-register', {
         personal,
         company,
@@ -119,7 +120,7 @@ export default function SignupWizard() {
       });
 
       // Store the access token
-      const { accessToken } = response.data;
+      const { accessToken } = response;
       if (accessToken) {
         localStorage.setItem('token', accessToken);
       }

@@ -41,6 +41,7 @@ const Invoices: React.FC = () => {
         setLoading(true);
         setError(null);
 
+        // billingService returns unwrapped data now
         const response = await billingService.getInvoices(currentPage, ITEMS_PER_PAGE);
         setInvoices(response.data || []);
         setTotalPages(response.totalPages || 1);

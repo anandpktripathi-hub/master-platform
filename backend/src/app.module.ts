@@ -12,6 +12,7 @@ import { ThemesModule } from './modules/themes/themes.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { RbacModule } from './modules/rbac/rbac.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProfileModule } from './modules/profile/profile.module';
     AuthModule,
     DashboardModule,
     ProfileModule,
+    RbacModule,
   ],
 })
 export class AppModule implements NestModule {

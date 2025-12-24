@@ -44,6 +44,8 @@ function TenantProviderComponent({ children }: TenantProviderProps) {
     setLoading(true);
     setError(null);
     try {
+      // Note: TenantContext uses axios directly, not our api instance
+      // This still needs .data access since it doesn't use our interceptor
       const res = await axios.get<Tenant[]>('/tenants');
       if (res.data) {
         setTenants(res.data.map((t) => t.domain));

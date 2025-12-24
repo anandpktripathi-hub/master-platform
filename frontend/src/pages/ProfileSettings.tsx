@@ -42,8 +42,9 @@ export default function ProfileSettings() {
     setLoading(true);
     setError(null);
     try {
+      // API now returns unwrapped response.data directly
       const response = await api.get('/me/profile');
-      setProfile(response.data);
+      setProfile(response);
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(error.response?.data?.message || 'Failed to load profile');
