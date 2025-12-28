@@ -13,14 +13,14 @@ export interface TenantResolutionResult {
 
 /**
  * TenantResolverService
- * 
+ *
  * This service resolves which tenant a request belongs to based on the hostname.
- * 
+ *
  * Resolution Strategy:
  * 1. Check if hostname matches a custom domain (tenant.domain field)
  * 2. Check if hostname is a subdomain pattern: {slug}.{baseDomain}
  * 3. If neither, treat as landlord/platform domain
- * 
+ *
  * Examples:
  * - acme.myapp.com → Resolves to tenant with slug='acme'
  * - custom.com → Resolves to tenant with domain='custom.com'
@@ -35,21 +35,24 @@ export class TenantResolverService {
     @InjectModel(Tenant.name) private readonly tenantModel: Model<Tenant>,
   ) {
     // Load base domains from environment or use defaults
-    const baseDomainsEnv = process.env.BASE_DOMAINS || 'localhost:3000,localhost';
+    const baseDomainsEnv =
+      process.env.BASE_DOMAINS || 'localhost:3000,localhost';
     this.baseDomains = baseDomainsEnv.split(',').map((d) => d.trim());
-    
-    this.logger.log(`TenantResolver initialized with base domains: ${this.baseDomains.join(', ')}`);
+
+    this.logger.log(
+      `TenantResolver initialized with base domains: ${this.baseDomains.join(', ')}`,
+    );
   }
 
   /**
    * Resolve tenant from hostname
-   * 
+   *
    * @param hostname - The full hostname from the HTTP request (e.g., 'tenant1.myapp.com')
    * @returns TenantResolutionResult with tenant info or null if landlord domain
    */
   async resolveTenant(hostname: string): Promise<TenantResolutionResult> {
     const normalizedHostname = hostname.toLowerCase();
-    
+
     this.logger.debug(`Resolving tenant for hostname: ${normalizedHostname}`);
 
     // Step 1: Check if this is a landlord/platform domain
@@ -66,14 +69,16 @@ export class TenantResolverService {
 
     // Step 2: Try to resolve by custom domain (exact match)
     const tenantByDomain = await this.tenantModel
-      .findOne({ 
+      .findOne({
         domain: normalizedHostname,
         status: { $in: ['ACTIVE', 'TRIAL'] }, // Only active/trial tenants
       })
       .exec();
 
     if (tenantByDomain) {
-      this.logger.log(`Resolved tenant ${tenantByDomain.name} by custom domain: ${normalizedHostname}`);
+      this.logger.log(
+        `Resolved tenant ${tenantByDomain.name} by custom domain: ${normalizedHostname}`,
+      );
       return {
         tenant: tenantByDomain,
         tenantId: tenantByDomain._id.toString(),
@@ -87,14 +92,16 @@ export class TenantResolverService {
     const slug = this.extractSubdomainSlug(normalizedHostname);
     if (slug) {
       const tenantBySlug = await this.tenantModel
-        .findOne({ 
+        .findOne({
           slug,
           status: { $in: ['ACTIVE', 'TRIAL'] },
         })
         .exec();
 
       if (tenantBySlug) {
-        this.logger.log(`Resolved tenant ${tenantBySlug.name} by subdomain slug: ${slug}`);
+        this.logger.log(
+          `Resolved tenant ${tenantBySlug.name} by subdomain slug: ${slug}`,
+        );
         return {
           tenant: tenantBySlug,
           tenantId: tenantBySlug._id.toString(),
@@ -106,7 +113,9 @@ export class TenantResolverService {
     }
 
     // Step 4: No tenant found
-    this.logger.warn(`Could not resolve tenant for hostname: ${normalizedHostname}`);
+    this.logger.warn(
+      `Could not resolve tenant for hostname: ${normalizedHostname}`,
+    );
     return {
       tenant: null,
       tenantId: null,
@@ -140,7 +149,7 @@ export class TenantResolverService {
 
   /**
    * Extract subdomain slug from hostname
-   * 
+   *
    * Examples:
    * - 'tenant1.myapp.com' with base 'myapp.com' → 'tenant1'
    * - 'tenant1.localhost:3000' with base 'localhost:3000' → 'tenant1'
@@ -152,7 +161,7 @@ export class TenantResolverService {
       const pattern = `.${baseDomain}`;
       if (hostname.endsWith(pattern)) {
         const slug = hostname.substring(0, hostname.length - pattern.length);
-        
+
         // Validate slug (alphanumeric + hyphens, no dots)
         if (slug && /^[a-z0-9-]+$/.test(slug)) {
           return slug;

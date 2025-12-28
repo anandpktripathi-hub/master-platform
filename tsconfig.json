@@ -14,6 +14,11 @@
                             "sourceMap":  true,
                             "outDir":  "./dist",
                             "baseUrl":  "./",
+                            "paths": {
+                                "@schemas/*": [
+                                    "src/schemas/*"
+                                ]
+                            },
                             "incremental":  true,
                             "skipLibCheck":  true,
                             "strictNullChecks":  true,

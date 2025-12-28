@@ -3,15 +3,15 @@ import { Document, Types } from 'mongoose';
 
 /**
  * TenantTheme Schema
- * 
+ *
  * Represents a tenant's selected theme and their customizations.
  * Each tenant can:
  * 1. Select a base theme from the Theme catalog
  * 2. Customize specific colors/settings
  * 3. Save their customizations
- * 
+ *
  * Stored in the Master Database (tenant-specific configuration).
- * 
+ *
  * Example Flow:
  * 1. Tenant selects "Modern Light" theme
  * 2. Tenant customizes primaryColor from #1976d2 to #ff5722

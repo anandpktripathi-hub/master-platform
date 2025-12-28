@@ -1,7 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Permission, PermissionDocument, ModuleName } from '../../database/schemas/permission.schema';
+import {
+  Permission,
+  PermissionDocument,
+  ModuleName,
+} from '../../database/schemas/permission.schema';
 import { Role, RoleDocument } from '../../database/schemas/role.schema';
 import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
 
@@ -10,7 +14,8 @@ export class SeedService {
   private logger = new Logger(SeedService.name);
 
   constructor(
-    @InjectModel(Permission.name) private permissionModel: Model<PermissionDocument>,
+    @InjectModel(Permission.name)
+    private permissionModel: Model<PermissionDocument>,
     @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
     @InjectModel(Tenant.name) private tenantModel: Model<TenantDocument>,
   ) {}
@@ -78,25 +83,37 @@ export class SeedService {
     const allPermissions = await this.permissionModel.find().lean();
 
     // Helper to get permission IDs for specific modules/actions
-    const getPermissionIds = (modules: string[], actions: string[]): Types.ObjectId[] => {
+    const getPermissionIds = (
+      modules: string[],
+      actions: string[],
+    ): Types.ObjectId[] => {
       return allPermissions
         .filter((p) => modules.includes(p.module) && actions.includes(p.action))
-        .map((p) => new Types.ObjectId(p._id));
+        .map((p) => new Types.ObjectId(p._id as string));
     };
 
     const defaultRoles = [
       {
         name: 'Accountant',
-        description: 'Accountant role with account and invoice management permissions',
+        description:
+          'Accountant role with account and invoice management permissions',
         isSystem: true,
         permissionIds: getPermissionIds(
-          ['Account', 'Invoice', 'Expense', 'Constant tax', 'Constant unit', 'Constant category'],
+          [
+            'Account',
+            'Invoice',
+            'Expense',
+            'Constant tax',
+            'Constant unit',
+            'Constant category',
+          ],
           ['manage', 'create', 'edit', 'delete', 'show'],
         ),
       },
       {
         name: 'HR',
-        description: 'HR role with employee and department management permissions',
+        description:
+          'HR role with employee and department management permissions',
         isSystem: true,
         permissionIds: getPermissionIds(
           ['Employee', 'HRM', 'Department', 'Designation', 'Branch', 'User'],

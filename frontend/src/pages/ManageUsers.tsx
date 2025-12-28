@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import rbacApi, { UserTenant, Role } from '../services/rbacApi';
+import ErrorBoundary from '../components/ErrorBoundary';
+import rbacApi from '../services/rbacApi';
+import type { UserTenant } from '../services/rbacApi';
+import type { Role } from '../services/rbacApi';
 import '../styles/ManageUser.css';
 
 interface UserWithDetails extends UserTenant {
@@ -76,7 +79,8 @@ export const ManageUsers: React.FC = () => {
   if (loading) return <div className="loading">Loading users...</div>;
 
   return (
-    <div className="manage-users-container">
+    <ErrorBoundary>
+      <div className="manage-users-container">
       <div className="manage-users-header">
         <h1>Manage Users</h1>
         <button className="btn-primary" onClick={() => setShowCreateModal(true)}>
@@ -183,7 +187,8 @@ export const ManageUsers: React.FC = () => {
           Next →
         </button>
       </div>
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 };
 

@@ -1,10 +1,14 @@
-﻿import { Injectable, NestMiddleware, HttpException, HttpStatus } from '@nestjs/common';
+﻿import {
+  Injectable,
+  NestMiddleware,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { SubscriptionsService } from '../services/subscriptions.service';
 import { PlansService } from '../services/plans.service';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../../schemas/user.schema';
 
 /**
  * Middleware to enforce plan limits on tenant operations
@@ -38,14 +42,17 @@ export class PlanLimitsMiddleware implements NestMiddleware {
     }
 
     // Get tenant ID from request
-    const tenantId = (request as any).tenantId || (request.user as any)?.tenantId;
+    const tenantId =
+      (request as any).tenantId ||
+      ((request as any).user && (request as any).user.tenantId);
     if (!tenantId) {
       return next(); // No tenant context, allow through
     }
 
     try {
       // Get tenant's current subscription
-      const subscription = await this.subscriptionsService.findActiveByTenantId(tenantId);
+      const subscription =
+        await this.subscriptionsService.findActiveByTenantId(tenantId);
 
       if (!subscription) {
         // No active subscription, reject request
@@ -60,7 +67,9 @@ export class PlanLimitsMiddleware implements NestMiddleware {
       }
 
       // Get the plan details
-      const plan = await this.plansService.findById(subscription.planId.toString());
+      const plan = await this.plansService.findById(
+        subscription.planId.toString(),
+      );
 
       if (!plan) {
         // Plan not found (shouldn't happen), allow through
@@ -94,7 +103,12 @@ export class PlanLimitsMiddleware implements NestMiddleware {
    * Check if tenant has exceeded user limit
    */
   private async _checkUserLimit(tenantId: string, plan: any) {
-    if (!plan.userLimit || plan.userLimit === -1) {
+    if (
+      !('userLimit' in plan) ||
+      plan.userLimit === undefined ||
+      plan.userLimit === null ||
+      plan.userLimit === -1
+    ) {
       // No limit
       return;
     }
@@ -103,7 +117,7 @@ export class PlanLimitsMiddleware implements NestMiddleware {
       tenantId: new Types.ObjectId(tenantId),
     });
 
-    if (userCount >= plan.userLimit) {
+    if (userCount >= (plan.userLimit as number)) {
       throw new HttpException(
         {
           statusCode: HttpStatus.PAYMENT_REQUIRED,
@@ -121,7 +135,12 @@ export class PlanLimitsMiddleware implements NestMiddleware {
    * Check if tenant has exceeded product limit
    */
   private async _checkProductLimit(tenantId: string, plan: any) {
-    if (!plan.productsLimit || plan.productsLimit === -1) {
+    if (
+      !('productsLimit' in plan) ||
+      plan.productsLimit === undefined ||
+      plan.productsLimit === null ||
+      plan.productsLimit === -1
+    ) {
       // No limit
       return;
     }
@@ -130,7 +149,7 @@ export class PlanLimitsMiddleware implements NestMiddleware {
       tenantId: new Types.ObjectId(tenantId),
     });
 
-    if (productCount >= plan.productsLimit) {
+    if (productCount >= (plan.productsLimit as number)) {
       throw new HttpException(
         {
           statusCode: HttpStatus.PAYMENT_REQUIRED,
@@ -148,7 +167,12 @@ export class PlanLimitsMiddleware implements NestMiddleware {
    * Check if tenant has exceeded order limit
    */
   private async _checkOrderLimit(tenantId: string, plan: any) {
-    if (!plan.ordersLimit || plan.ordersLimit === -1) {
+    if (
+      !('ordersLimit' in plan) ||
+      plan.ordersLimit === undefined ||
+      plan.ordersLimit === null ||
+      plan.ordersLimit === -1
+    ) {
       // No limit
       return;
     }
@@ -157,7 +181,7 @@ export class PlanLimitsMiddleware implements NestMiddleware {
       tenantId: new Types.ObjectId(tenantId),
     });
 
-    if (orderCount >= plan.ordersLimit) {
+    if (orderCount >= (plan.ordersLimit as number)) {
       throw new HttpException(
         {
           statusCode: HttpStatus.PAYMENT_REQUIRED,
@@ -171,4 +195,3 @@ export class PlanLimitsMiddleware implements NestMiddleware {
     }
   }
 }
-

@@ -7,28 +7,28 @@ export type UserTenantDocument = UserTenant & Document;
 @Schema({ timestamps: true })
 export class UserTenant {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  userId: Types.ObjectId;
+  userId!: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
-  tenantId: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'Role', required: true })
-  roleId: Types.ObjectId;
+  roleId!: Types.ObjectId;
 
   // Allow/disallow login for this user in this tenant
   @Prop({ default: true })
-  isLoginEnabled?: boolean;
+  isLoginEnabled!: boolean;
 
   @Prop({ enum: ['active', 'inactive', 'suspended'], default: 'active' })
-  status?: string;
+  status!: string;
 
   // Track last login
   @Prop({ required: false })
-  lastLoginAt?: Date;
+  lastLoginAt!: Date;
 
   // For landlord platform employees
   @Prop({ default: false })
-  isPlatformUser?: boolean;
+  isPlatformUser!: boolean;
 }
 
 export const UserTenantSchema = SchemaFactory.createForClass(UserTenant);

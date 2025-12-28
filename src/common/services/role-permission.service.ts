@@ -21,17 +21,19 @@ export class RolePermissionService {
    * First checks runtime DB, then falls back to static map.
    */
   async getPermissionsForRole(role: Role | string): Promise<Permission[]> {
-    if (role === Role.PLATFORM_SUPER_ADMIN) {
+    if (String(role) === String(Role.PLATFORM_SUPER_ADMIN)) {
       return Object.values(Permission) as Permission[];
     }
 
     // Try to fetch from runtime DB
     try {
-      const runtimeRole = await this.runtimeRoleModel.findOne({ name: role, isActive: true }).exec();
+      const runtimeRole = await this.runtimeRoleModel
+        .findOne({ name: role, isActive: true })
+        .exec();
       if (runtimeRole) {
         return runtimeRole.permissions;
       }
-    } catch (e) {
+    } catch (error: unknown) {
       // Fall through to static map
     }
 
@@ -42,12 +44,18 @@ export class RolePermissionService {
   /**
    * Create or update a runtime role
    */
-  async upsertRole(name: string, permissions: Permission[], description?: string): Promise<RuntimeRole> {
-    return this.runtimeRoleModel.findOneAndUpdate(
-      { name },
-      { name, permissions, description, isActive: true },
-      { upsert: true, new: true },
-    ).exec();
+  async upsertRole(
+    name: string,
+    permissions: Permission[],
+    description?: string,
+  ): Promise<RuntimeRole> {
+    return this.runtimeRoleModel
+      .findOneAndUpdate(
+        { name },
+        { name, permissions, description, isActive: true },
+        { upsert: true, new: true },
+      )
+      .exec();
   }
 
   /**
@@ -67,7 +75,10 @@ export class RolePermissionService {
   /**
    * Check if a user with given role has a specific permission
    */
-  async hasPermission(role: Role | string, permission: Permission): Promise<boolean> {
+  async hasPermission(
+    role: Role | string,
+    permission: Permission,
+  ): Promise<boolean> {
     const permissions = await this.getPermissionsForRole(role);
     return permissions.includes(permission);
   }
@@ -75,7 +86,10 @@ export class RolePermissionService {
   /**
    * Check if a user with given role has any of the specified permissions
    */
-  async hasAnyPermission(role: Role | string, permissions: Permission[]): Promise<boolean> {
+  async hasAnyPermission(
+    role: Role | string,
+    permissions: Permission[],
+  ): Promise<boolean> {
     const userPermissions = await this.getPermissionsForRole(role);
     return permissions.some((p) => userPermissions.includes(p));
   }
@@ -84,7 +98,7 @@ export class RolePermissionService {
    * Check if a user with given role has all of the specified permissions
    */
   async hasAllPermissions(role: Role | string, permissions: Permission[]): Promise<boolean> {
-    const userPermissions = await this.getPermissionsForRole(role);
-    return permissions.every((p) => userPermissions.includes(p));
+    const rolePermissions = await this.getPermissionsForRole(role);
+    return permissions.every((p) => rolePermissions.includes(p));
   }
 }

@@ -10,7 +10,7 @@ export class TenantTheme {
     required: true,
     description: 'Reference to tenant',
   })
-  tenantId: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
@@ -18,7 +18,7 @@ export class TenantTheme {
     required: true,
     description: 'Reference to selected theme',
   })
-  themeId: Types.ObjectId;
+  themeId!: Types.ObjectId;
 
   @Prop({
     type: Map,
@@ -26,13 +26,13 @@ export class TenantTheme {
     default: {},
     description: 'Tenant-specific CSS variable overrides',
   })
-  customCssVariables: Record<string, string>;
+  customCssVariables!: Record<string, string>;
 
   @Prop({ type: Date, default: () => new Date() })
-  createdAt: Date;
+  createdAt!: Date;
 
   @Prop({ type: Date, default: () => new Date() })
-  updatedAt: Date;
+  updatedAt!: Date;
 }
 
 export const TenantThemeSchema = SchemaFactory.createForClass(TenantTheme);

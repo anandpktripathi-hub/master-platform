@@ -16,7 +16,7 @@ export class BillingService {
     return this.billingModel.find({ tenantId }).exec();
   }
 
-  async findOne(id: string): Promise<Billing> {
+  async findOne(id: string): Promise<Billing | null> {
     return this.billingModel.findById(id).exec();
   }
 
@@ -32,7 +32,7 @@ export class BillingService {
     id: string,
     updateBillingDto: Billing,
     tenantId: string,
-  ): Promise<Billing> {
+  ): Promise<Billing | null> {
     return this.billingModel
       .findByIdAndUpdate(id, { ...updateBillingDto, tenantId }, { new: true })
       .exec();

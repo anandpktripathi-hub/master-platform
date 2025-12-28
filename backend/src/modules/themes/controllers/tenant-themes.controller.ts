@@ -4,9 +4,10 @@ import {
   Get,
   Body,
   UseGuards,
-  HttpCode,
-  HttpStatus,
-  Request,
+  Req,
+  Param,
+  BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
@@ -17,32 +18,25 @@ import {
   CustomizeThemeDto,
   TenantThemeResponseDto,
   ThemeResponseDto,
+  CreateThemeDto,
+  UpdateThemeDto,
 } from '../dto/theme.dto';
 
 @Controller('tenant/theme')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('TENANT_OWNER', 'USER')
 export class TenantThemesController {
-  constructor(private readonly themesService: ThemesService) {}
-
-  /**
-   * Get all available themes for selection
-   * GET /tenant/theme/available
-   */
-  @Get('available')
-  async getAvailableThemes(): Promise<ThemeResponseDto[]> {
-    return this.themesService.getAllThemes(false); // Only active themes
-  }
+  constructor(private readonly tenantThemesService: ThemesService) {}
 
   /**
    * Get tenant's current theme with merged CSS variables
    * GET /tenant/theme
    */
   @Get()
-  async getTenantTheme(
-    @Request() req: { user: { tenantId: string } },
-  ): Promise<TenantThemeResponseDto> {
-    return this.themesService.getTenantTheme(req.user.tenantId);
+  async getTenantTheme(@Req() req: any) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+    return this.tenantThemesService.getTenantTheme(tenantId);
   }
 
   /**
@@ -50,13 +44,10 @@ export class TenantThemesController {
    * GET /tenant/theme/css
    */
   @Get('css')
-  async getThemeCss(
-    @Request() req: { user: { tenantId: string } },
-  ): Promise<{ css: string }> {
-    const css = await this.themesService.generateCssVariables(
-      req.user.tenantId,
-    );
-    return { css };
+  async getThemeCss(@Req() req: any) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+    return this.tenantThemesService.generateCssVariables(tenantId);
   }
 
   /**
@@ -64,10 +55,10 @@ export class TenantThemesController {
    * GET /tenant/theme/variables
    */
   @Get('variables')
-  async getThemeVariables(
-    @Request() req: { user: { tenantId: string } },
-  ): Promise<Record<string, string>> {
-    return this.themesService.getCssVariablesAsJson(req.user.tenantId);
+  async getThemeVariables(@Req() req: any) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+    return this.tenantThemesService.getCssVariablesAsJson(tenantId);
   }
 
   /**
@@ -75,13 +66,11 @@ export class TenantThemesController {
    * POST /tenant/theme/select
    */
   @Post('select')
-  @HttpCode(HttpStatus.OK)
-  async selectTheme(
-    @Request() req: { user: { tenantId: string } },
-    @Body() selectThemeDto: SelectThemeDto,
-  ): Promise<TenantThemeResponseDto> {
-    return this.themesService.selectThemeForTenant(
-      req.user.tenantId,
+  async selectTheme(@Req() req: any, @Body() selectThemeDto: SelectThemeDto) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+    return this.tenantThemesService.selectThemeForTenant(
+      tenantId,
       selectThemeDto,
     );
   }
@@ -91,13 +80,14 @@ export class TenantThemesController {
    * POST /tenant/theme/customize
    */
   @Post('customize')
-  @HttpCode(HttpStatus.OK)
   async customizeTheme(
-    @Request() req: { user: { tenantId: string } },
+    @Req() req: any,
     @Body() customizeThemeDto: CustomizeThemeDto,
-  ): Promise<TenantThemeResponseDto> {
-    return this.themesService.customizeThemeForTenant(
-      req.user.tenantId,
+  ) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+    return this.tenantThemesService.customizeThemeForTenant(
+      tenantId,
       customizeThemeDto,
     );
   }

@@ -1,4 +1,32 @@
-import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
+// Theme interface for safe property access
+interface ITheme {
+  _id: Types.ObjectId | string;
+  name: string;
+  description?: string;
+  slug: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  backgroundColor?: string;
+  surfaceColor?: string;
+  textPrimaryColor?: string;
+  textSecondaryColor?: string;
+  fontFamily?: string;
+  baseFontSize?: number;
+  baseSpacing?: number;
+  borderRadius?: number;
+  isActive?: boolean;
+  isDefault?: boolean;
+  previewImageUrl?: string;
+  metadata?: Record<string, any>;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  Logger,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Theme } from '../schemas/theme.schema';
@@ -18,7 +46,8 @@ export class ThemesService {
 
   constructor(
     @InjectModel(Theme.name) private readonly themeModel: Model<Theme>,
-    @InjectModel(TenantTheme.name) private readonly tenantThemeModel: Model<TenantTheme>,
+    @InjectModel(TenantTheme.name)
+    private readonly tenantThemeModel: Model<TenantTheme>,
   ) {}
 
   // ==================== ADMIN THEME MANAGEMENT ====================
@@ -28,14 +57,21 @@ export class ThemesService {
    */
   async createTheme(createThemeDto: CreateThemeDto): Promise<ThemeResponseDto> {
     // Check if slug already exists
-    const existing = await this.themeModel.findOne({ slug: createThemeDto.slug });
+    const existing = await this.themeModel.findOne({
+      slug: (createThemeDto as ITheme).slug,
+    });
     if (existing) {
-      throw new BadRequestException(`Theme with slug '${createThemeDto.slug}' already exists`);
+      throw new BadRequestException(
+        `Theme with slug '${createThemeDto.slug}' already exists`,
+      );
     }
 
     // If this is marked as default, unset all other defaults
     if (createThemeDto.isDefault) {
-      await this.themeModel.updateMany({ isDefault: true }, { isDefault: false });
+      await this.themeModel.updateMany(
+        { isDefault: true },
+        { isDefault: false },
+      );
     }
 
     const theme = await this.themeModel.create(createThemeDto);
@@ -66,7 +102,10 @@ export class ThemesService {
   /**
    * Update a theme (Platform Super Admin only)
    */
-  async updateTheme(id: string, updateThemeDto: UpdateThemeDto): Promise<ThemeResponseDto> {
+  async updateTheme(
+    id: string,
+    updateThemeDto: UpdateThemeDto,
+  ): Promise<ThemeResponseDto> {
     const theme = await this.themeModel.findById(id).exec();
     if (!theme) {
       throw new NotFoundException(`Theme with ID ${id} not found`);
@@ -74,7 +113,10 @@ export class ThemesService {
 
     // If this is being set as default, unset all other defaults
     if (updateThemeDto.isDefault) {
-      await this.themeModel.updateMany({ _id: { $ne: id }, isDefault: true }, { isDefault: false });
+      await this.themeModel.updateMany(
+        { _id: { $ne: id }, isDefault: true },
+        { isDefault: false },
+      );
     }
 
     Object.assign(theme, updateThemeDto);
@@ -94,7 +136,9 @@ export class ThemesService {
     }
 
     // Check if any tenants are using this theme
-    const tenantsUsingTheme = await this.tenantThemeModel.countDocuments({ baseThemeId: id });
+    const tenantsUsingTheme = await this.tenantThemeModel.countDocuments({
+      baseThemeId: id,
+    });
     if (tenantsUsingTheme > 0) {
       throw new BadRequestException(
         `Cannot delete theme '${theme.name}'. ${tenantsUsingTheme} tenant(s) are currently using it.`,
@@ -115,7 +159,10 @@ export class ThemesService {
     }
 
     // Unset all other defaults
-    await this.themeModel.updateMany({ _id: { $ne: id }, isDefault: true }, { isDefault: false });
+    await this.themeModel.updateMany(
+      { _id: { $ne: id }, isDefault: true },
+      { isDefault: false },
+    );
 
     theme.isDefault = true;
     theme.isActive = true; // Ensure default theme is active
@@ -131,7 +178,10 @@ export class ThemesService {
    * Get available themes for tenant selection (only active themes)
    */
   async getAvailableThemes(): Promise<ThemeResponseDto[]> {
-    const themes = await this.themeModel.find({ isActive: true }).sort({ isDefault: -1, name: 1 }).exec();
+    const themes = await this.themeModel
+      .find({ isActive: true })
+      .sort({ isDefault: -1, name: 1 })
+      .exec();
     return themes.map((theme) => this.mapThemeToResponse(theme));
   }
 
@@ -149,7 +199,7 @@ export class ThemesService {
       return this.getDefaultTheme();
     }
 
-    const baseTheme = tenantTheme.baseThemeId as any;
+    const baseTheme = await this.themeModel.findById(tenantTheme.baseThemeId);
     if (!baseTheme) {
       throw new NotFoundException('Base theme not found');
     }
@@ -161,12 +211,18 @@ export class ThemesService {
   /**
    * Select a theme for tenant (without customizations)
    */
-  async selectTheme(tenantId: string, selectThemeDto: SelectThemeDto, userId: string): Promise<TenantThemeResponseDto> {
+  async selectTheme(
+    tenantId: string,
+    selectThemeDto: SelectThemeDto,
+    userId: string,
+  ): Promise<TenantThemeResponseDto> {
     // Validate theme exists and is active
-    const theme = await this.themeModel.findOne({
-      _id: selectThemeDto.baseThemeId,
-      isActive: true,
-    }).exec();
+    const theme = (await this.themeModel
+      .findOne({
+        _id: selectThemeDto.baseThemeId,
+        isActive: true,
+      })
+      .exec()) as ITheme | null;
 
     if (!theme) {
       throw new NotFoundException('Theme not found or not available');
@@ -180,7 +236,7 @@ export class ThemesService {
       tenantTheme.baseThemeId = new Types.ObjectId(selectThemeDto.baseThemeId);
       tenantTheme.appliedAt = new Date();
       tenantTheme.lastModifiedBy = new Types.ObjectId(userId);
-      
+
       // Clear all customizations when selecting a new theme
       tenantTheme.customPrimaryColor = undefined;
       tenantTheme.customSecondaryColor = undefined;
@@ -224,7 +280,9 @@ export class ThemesService {
       .exec();
 
     if (!tenantTheme) {
-      throw new BadRequestException('Please select a base theme first before customizing');
+      throw new BadRequestException(
+        'Please select a base theme first before customizing',
+      );
     }
 
     // Apply customizations
@@ -233,16 +291,21 @@ export class ThemesService {
     tenantTheme.lastModifiedBy = new Types.ObjectId(userId);
     await tenantTheme.save();
 
-    const baseTheme = tenantTheme.baseThemeId as any;
+    const baseTheme = await this.themeModel.findById(tenantTheme.baseThemeId);
+    if (!baseTheme) {
+      throw new NotFoundException('Base theme not found');
+    }
     this.logger.log(`Tenant ${tenantId} customized theme: ${baseTheme.name}`);
-
     return this.mergeTenantTheme(baseTheme, tenantTheme);
   }
 
   /**
    * Reset tenant theme to base (remove customizations)
    */
-  async resetTheme(tenantId: string, userId: string): Promise<TenantThemeResponseDto> {
+  async resetTheme(
+    tenantId: string,
+    userId: string,
+  ): Promise<TenantThemeResponseDto> {
     const tenantTheme = await this.tenantThemeModel
       .findOne({ tenantId })
       .populate('baseThemeId')
@@ -269,9 +332,13 @@ export class ThemesService {
 
     await tenantTheme.save();
 
-    const baseTheme = tenantTheme.baseThemeId as any;
-    this.logger.log(`Tenant ${tenantId} reset theme to base: ${baseTheme.name}`);
-
+    const baseTheme = await this.themeModel.findById(tenantTheme.baseThemeId);
+    if (!baseTheme) {
+      throw new NotFoundException('Base theme not found');
+    }
+    this.logger.log(
+      `Tenant ${tenantId} reset theme to base: ${baseTheme.name}`,
+    );
     return this.mergeTenantTheme(baseTheme, tenantTheme);
   }
 
@@ -281,13 +348,17 @@ export class ThemesService {
    * Get the default theme for new tenants
    */
   private async getDefaultTheme(): Promise<TenantThemeResponseDto> {
-    const defaultTheme = await this.themeModel.findOne({ isDefault: true, isActive: true }).exec();
+    const defaultTheme = await this.themeModel
+      .findOne({ isDefault: true, isActive: true })
+      .exec();
 
     if (!defaultTheme) {
       // Fallback: get any active theme
       const anyTheme = await this.themeModel.findOne({ isActive: true }).exec();
       if (!anyTheme) {
-        throw new NotFoundException('No themes available. Please create at least one theme.');
+        throw new NotFoundException(
+          'No themes available. Please create at least one theme.',
+        );
       }
       return this.mapThemeToResponse(anyTheme) as TenantThemeResponseDto;
     }
@@ -298,20 +369,36 @@ export class ThemesService {
   /**
    * Merge base theme with tenant customizations
    */
-  private mergeTenantTheme(baseTheme: any, tenantTheme: TenantTheme): TenantThemeResponseDto {
+  private mergeTenantTheme(
+    baseTheme: any,
+    tenantTheme: TenantTheme,
+  ): TenantThemeResponseDto {
     const customizations: any = {};
 
-    if (tenantTheme.customPrimaryColor) customizations.customPrimaryColor = tenantTheme.customPrimaryColor;
-    if (tenantTheme.customSecondaryColor) customizations.customSecondaryColor = tenantTheme.customSecondaryColor;
-    if (tenantTheme.customBackgroundColor) customizations.customBackgroundColor = tenantTheme.customBackgroundColor;
-    if (tenantTheme.customSurfaceColor) customizations.customSurfaceColor = tenantTheme.customSurfaceColor;
-    if (tenantTheme.customTextPrimaryColor) customizations.customTextPrimaryColor = tenantTheme.customTextPrimaryColor;
-    if (tenantTheme.customTextSecondaryColor) customizations.customTextSecondaryColor = tenantTheme.customTextSecondaryColor;
-    if (tenantTheme.customFontFamily) customizations.customFontFamily = tenantTheme.customFontFamily;
-    if (tenantTheme.customBaseFontSize) customizations.customBaseFontSize = tenantTheme.customBaseFontSize;
-    if (tenantTheme.customBaseSpacing) customizations.customBaseSpacing = tenantTheme.customBaseSpacing;
-    if (tenantTheme.customBorderRadius) customizations.customBorderRadius = tenantTheme.customBorderRadius;
-    if (tenantTheme.customMetadata) customizations.customMetadata = tenantTheme.customMetadata;
+    if (tenantTheme.customPrimaryColor)
+      customizations.customPrimaryColor = tenantTheme.customPrimaryColor;
+    if (tenantTheme.customSecondaryColor)
+      customizations.customSecondaryColor = tenantTheme.customSecondaryColor;
+    if (tenantTheme.customBackgroundColor)
+      customizations.customBackgroundColor = tenantTheme.customBackgroundColor;
+    if (tenantTheme.customSurfaceColor)
+      customizations.customSurfaceColor = tenantTheme.customSurfaceColor;
+    if (tenantTheme.customTextPrimaryColor)
+      customizations.customTextPrimaryColor =
+        tenantTheme.customTextPrimaryColor;
+    if (tenantTheme.customTextSecondaryColor)
+      customizations.customTextSecondaryColor =
+        tenantTheme.customTextSecondaryColor;
+    if (tenantTheme.customFontFamily)
+      customizations.customFontFamily = tenantTheme.customFontFamily;
+    if (tenantTheme.customBaseFontSize)
+      customizations.customBaseFontSize = tenantTheme.customBaseFontSize;
+    if (tenantTheme.customBaseSpacing)
+      customizations.customBaseSpacing = tenantTheme.customBaseSpacing;
+    if (tenantTheme.customBorderRadius)
+      customizations.customBorderRadius = tenantTheme.customBorderRadius;
+    if (tenantTheme.customMetadata)
+      customizations.customMetadata = tenantTheme.customMetadata;
 
     return {
       id: baseTheme._id.toString(),
@@ -319,11 +406,15 @@ export class ThemesService {
       description: baseTheme.description,
       slug: baseTheme.slug,
       primaryColor: tenantTheme.customPrimaryColor || baseTheme.primaryColor,
-      secondaryColor: tenantTheme.customSecondaryColor || baseTheme.secondaryColor,
-      backgroundColor: tenantTheme.customBackgroundColor || baseTheme.backgroundColor,
+      secondaryColor:
+        tenantTheme.customSecondaryColor || baseTheme.secondaryColor,
+      backgroundColor:
+        tenantTheme.customBackgroundColor || baseTheme.backgroundColor,
       surfaceColor: tenantTheme.customSurfaceColor || baseTheme.surfaceColor,
-      textPrimaryColor: tenantTheme.customTextPrimaryColor || baseTheme.textPrimaryColor,
-      textSecondaryColor: tenantTheme.customTextSecondaryColor || baseTheme.textSecondaryColor,
+      textPrimaryColor:
+        tenantTheme.customTextPrimaryColor || baseTheme.textPrimaryColor,
+      textSecondaryColor:
+        tenantTheme.customTextSecondaryColor || baseTheme.textSecondaryColor,
       fontFamily: tenantTheme.customFontFamily || baseTheme.fontFamily,
       baseFontSize: tenantTheme.customBaseFontSize || baseTheme.baseFontSize,
       baseSpacing: tenantTheme.customBaseSpacing || baseTheme.baseSpacing,
@@ -335,7 +426,8 @@ export class ThemesService {
       createdAt: baseTheme.createdAt,
       updatedAt: baseTheme.updatedAt,
       baseThemeId: baseTheme._id.toString(),
-      customizations: Object.keys(customizations).length > 0 ? customizations : undefined,
+      customizations:
+        Object.keys(customizations).length > 0 ? customizations : undefined,
       appliedAt: tenantTheme.appliedAt,
     };
   }
@@ -344,27 +436,28 @@ export class ThemesService {
    * Map Theme document to response DTO
    */
   private mapThemeToResponse(theme: any): ThemeResponseDto {
+    const t: ITheme = theme as ITheme;
     return {
-      id: theme._id.toString(),
-      name: theme.name,
-      description: theme.description,
-      slug: theme.slug,
-      primaryColor: theme.primaryColor,
-      secondaryColor: theme.secondaryColor,
-      backgroundColor: theme.backgroundColor,
-      surfaceColor: theme.surfaceColor,
-      textPrimaryColor: theme.textPrimaryColor,
-      textSecondaryColor: theme.textSecondaryColor,
-      fontFamily: theme.fontFamily,
-      baseFontSize: theme.baseFontSize,
-      baseSpacing: theme.baseSpacing,
-      borderRadius: theme.borderRadius,
-      isActive: theme.isActive,
-      isDefault: theme.isDefault,
-      previewImageUrl: theme.previewImageUrl,
-      metadata: theme.metadata,
-      createdAt: theme.createdAt,
-      updatedAt: theme.updatedAt,
+      id: (t._id as any).toString() ?? '',
+      name: t.name ?? 'Unnamed',
+      description: t.description ?? '',
+      slug: t.slug ?? 'unnamed-slug',
+      primaryColor: t.primaryColor ?? '#000000',
+      secondaryColor: t.secondaryColor ?? '#ffffff',
+      backgroundColor: t.backgroundColor ?? '#f5f5f5',
+      surfaceColor: t.surfaceColor ?? '#ffffff',
+      textPrimaryColor: t.textPrimaryColor ?? '#000000',
+      textSecondaryColor: t.textSecondaryColor ?? '#666666',
+      fontFamily: t.fontFamily ?? 'sans-serif',
+      baseFontSize: t.baseFontSize ?? 14,
+      baseSpacing: t.baseSpacing ?? 8,
+      borderRadius: t.borderRadius ?? 4,
+      isActive: t.isActive ?? true,
+      isDefault: t.isDefault ?? false,
+      previewImageUrl: t.previewImageUrl,
+      metadata: t.metadata ?? {},
+      createdAt: t.createdAt ?? new Date(),
+      updatedAt: t.updatedAt ?? new Date(),
     };
   }
 }

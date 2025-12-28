@@ -1,4 +1,14 @@
-import { IsString, IsOptional, IsBoolean, IsNumber, IsObject, IsHexColor, MinLength, MaxLength, Min } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsNumber,
+  IsObject,
+  IsHexColor,
+  MinLength,
+  MaxLength,
+  Min,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 /**
@@ -11,7 +21,10 @@ export class CreateThemeDto {
   @MaxLength(50)
   name: string;
 
-  @ApiProperty({ example: 'A clean and modern light theme', description: 'Theme description' })
+  @ApiProperty({
+    example: 'A clean and modern light theme',
+    description: 'Theme description',
+  })
   @IsString()
   @MinLength(10)
   @MaxLength(200)
@@ -27,31 +40,49 @@ export class CreateThemeDto {
   @IsHexColor()
   primaryColor: string;
 
-  @ApiProperty({ example: '#dc004e', description: 'Secondary accent color (hex)' })
+  @ApiProperty({
+    example: '#dc004e',
+    description: 'Secondary accent color (hex)',
+  })
   @IsHexColor()
   secondaryColor: string;
 
-  @ApiPropertyOptional({ example: '#f5f5f5', description: 'Background color (hex)' })
+  @ApiPropertyOptional({
+    example: '#f5f5f5',
+    description: 'Background color (hex)',
+  })
   @IsOptional()
   @IsHexColor()
   backgroundColor?: string;
 
-  @ApiPropertyOptional({ example: '#ffffff', description: 'Surface/card color (hex)' })
+  @ApiPropertyOptional({
+    example: '#ffffff',
+    description: 'Surface/card color (hex)',
+  })
   @IsOptional()
   @IsHexColor()
   surfaceColor?: string;
 
-  @ApiPropertyOptional({ example: '#000000', description: 'Primary text color (hex)' })
+  @ApiPropertyOptional({
+    example: '#000000',
+    description: 'Primary text color (hex)',
+  })
   @IsOptional()
   @IsHexColor()
   textPrimaryColor?: string;
 
-  @ApiPropertyOptional({ example: '#666666', description: 'Secondary text color (hex)' })
+  @ApiPropertyOptional({
+    example: '#666666',
+    description: 'Secondary text color (hex)',
+  })
   @IsOptional()
   @IsHexColor()
   textSecondaryColor?: string;
 
-  @ApiPropertyOptional({ example: 'Roboto, sans-serif', description: 'Font family' })
+  @ApiPropertyOptional({
+    example: 'Roboto, sans-serif',
+    description: 'Font family',
+  })
   @IsOptional()
   @IsString()
   fontFamily?: string;
@@ -84,7 +115,10 @@ export class CreateThemeDto {
   @IsBoolean()
   isDefault?: boolean;
 
-  @ApiPropertyOptional({ example: 'https://example.com/preview.jpg', description: 'Preview image URL' })
+  @ApiPropertyOptional({
+    example: 'https://example.com/preview.jpg',
+    description: 'Preview image URL',
+  })
   @IsOptional()
   @IsString()
   previewImageUrl?: string;
@@ -191,7 +225,10 @@ export class UpdateThemeDto {
  * DTO for tenant selecting a theme
  */
 export class SelectThemeDto {
-  @ApiProperty({ example: '507f1f77bcf86cd799439011', description: 'Theme ID to select' })
+  @ApiProperty({
+    example: '507f1f77bcf86cd799439011',
+    description: 'Theme ID to select',
+  })
   @IsString()
   baseThemeId: string;
 }
@@ -200,12 +237,18 @@ export class SelectThemeDto {
  * DTO for tenant customizing their theme
  */
 export class CustomizeThemeDto {
-  @ApiPropertyOptional({ example: '#ff5722', description: 'Custom primary color' })
+  @ApiPropertyOptional({
+    example: '#ff5722',
+    description: 'Custom primary color',
+  })
   @IsOptional()
   @IsHexColor()
   customPrimaryColor?: string;
 
-  @ApiPropertyOptional({ example: '#00bcd4', description: 'Custom secondary color' })
+  @ApiPropertyOptional({
+    example: '#00bcd4',
+    description: 'Custom secondary color',
+  })
   @IsOptional()
   @IsHexColor()
   customSecondaryColor?: string;

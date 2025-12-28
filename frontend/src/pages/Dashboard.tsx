@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ErrorBoundary from '../components/ErrorBoundary';
 import {
   Box,
   Container,
@@ -71,7 +72,7 @@ export default function Dashboard() {
 
   const loadStats = async () => {
     console.group("🔄 Dashboard Stats Loading");
-    console.log("Starting to load dashboard stats...");
+      // Removed dev logging for production cleanliness
 
     // Use Promise.allSettled to load all stats in parallel
     // This ensures partial failures don't block successful responses
@@ -83,10 +84,7 @@ export default function Dashboard() {
         api.get("/team-members/stats/dashboard"),
       ]);
 
-    console.log("📦 Products stats response:", productsResult);
-    console.log("👥 Customers stats response:", customersResult);
-    console.log("🛒 Orders stats response:", ordersResult);
-    console.log("👔 Team members stats response:", teamResult);
+    // Removed dev logging for production cleanliness
 
     // Process products stats
     const newStats = { ...stats };
@@ -99,7 +97,11 @@ export default function Dashboard() {
         loading: false,
       };
     } else {
-      console.error("❌ Products stats failed:", productsResult.reason);
+      // Optionally log error in dev only
+      if (process.env.NODE_ENV !== 'production') {
+        // eslint-disable-next-line no-console
+        console.error("❌ Products stats failed:", productsResult.reason);
+      }
       newStats.products = {
         ...newStats.products,
         error: "Failed to load products stats",
@@ -116,7 +118,10 @@ export default function Dashboard() {
         loading: false,
       };
     } else {
-      console.error("❌ Customers stats failed:", customersResult.reason);
+      if (process.env.NODE_ENV !== 'production') {
+        // eslint-disable-next-line no-console
+        console.error("❌ Customers stats failed:", customersResult.reason);
+      }
       newStats.customers = {
         ...newStats.customers,
         error: "Failed to load customers stats",
@@ -133,7 +138,10 @@ export default function Dashboard() {
         loading: false,
       };
     } else {
-      console.error("❌ Orders stats failed:", ordersResult.reason);
+      if (process.env.NODE_ENV !== 'production') {
+        // eslint-disable-next-line no-console
+        console.error("❌ Orders stats failed:", ordersResult.reason);
+      }
       newStats.orders = {
         ...newStats.orders,
         error: "Failed to load orders stats",
@@ -150,7 +158,10 @@ export default function Dashboard() {
         loading: false,
       };
     } else {
-      console.error("❌ Team members stats failed:", teamResult.reason);
+      if (process.env.NODE_ENV !== 'production') {
+        // eslint-disable-next-line no-console
+        console.error("❌ Team members stats failed:", teamResult.reason);
+      }
       newStats.teamMembers = {
         ...newStats.teamMembers,
         error: "Failed to load team members stats",
@@ -171,12 +182,12 @@ export default function Dashboard() {
       setGlobalError("Failed to load all dashboard stats. Please try again.");
     }
 
-    console.log("✅ Dashboard stats loading completed");
-    console.groupEnd();
+    // Removed dev logging for production cleanliness
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <ErrorBoundary>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
           Dashboard
@@ -246,7 +257,8 @@ export default function Dashboard() {
           </Grid>
         ))}
       </Grid>
-    </Container>
+      </Container>
+    </ErrorBoundary>
   );
 }
 

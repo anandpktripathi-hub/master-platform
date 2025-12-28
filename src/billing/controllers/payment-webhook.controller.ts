@@ -1,10 +1,23 @@
-﻿import { Controller, Post, Body, Req, HttpCode, BadRequestException } from '@nestjs/common';
+﻿// Webhook interface for safe property access
+interface WebhookData {
+  type?: string;
+  data?: any;
+  event?: string;
+  payload?: any;
+  [key: string]: any;
+}
+import {
+  Controller,
+  Post,
+  Body,
+  Req,
+  HttpCode,
+  BadRequestException,
+} from '@nestjs/common';
 import type { RawBodyRequest } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { InvoicesService } from '../services/invoices.service';
 import { SubscriptionsService } from '../services/subscriptions.service';
-import { SubscriptionStatus } from '../schemas/subscription.schema';
-import { InvoiceStatus } from '../schemas/invoice.schema';
 import { Request } from 'express';
 
 @ApiTags('Payment Webhooks')
@@ -25,7 +38,7 @@ export class PaymentWebhookController {
   @ApiResponse({ status: 200, description: 'Webhook processed successfully' })
   async handleStripeWebhook(
     @Req() request: RawBodyRequest<Request>,
-    @Body() event: any,
+    @Body() event: WebhookData,
   ) {
     // In production, verify webhook signature:
     // const signature = request.headers['stripe-signature'];
@@ -37,18 +50,26 @@ export class PaymentWebhookController {
     // );
 
     try {
-      switch (event.type) {
+      switch (event?.type) {
         case 'payment_intent.succeeded':
-          return this._handleStripePaymentSucceeded(event.data.object);
+          return this._handleStripePaymentSucceeded(
+            (event.data?.object ?? {}) as { id?: string },
+          );
 
         case 'payment_intent.payment_failed':
-          return this._handleStripePaymentFailed(event.data.object);
+          return this._handleStripePaymentFailed(
+            (event.data?.object ?? {}) as { id?: string },
+          );
 
         case 'charge.refunded':
-          return this._handleStripeRefunded(event.data.object);
+          return this._handleStripeRefunded(
+            (event.data?.object ?? {}) as { id?: string },
+          );
 
         case 'customer.subscription.deleted':
-          return this._handleStripeSubscriptionCancelled(event.data.object);
+          return this._handleStripeSubscriptionCancelled(
+            (event.data?.object ?? {}) as { id?: string },
+          );
 
         default:
           console.log(`Unhandled Stripe event type: ${event.type}`);
@@ -68,7 +89,7 @@ export class PaymentWebhookController {
   @HttpCode(200)
   @ApiOperation({ summary: 'Handle Razorpay webhook events' })
   @ApiResponse({ status: 200, description: 'Webhook processed successfully' })
-  async handleRazorpayWebhook(@Body() event: any) {
+  async handleRazorpayWebhook(@Body() event: WebhookData) {
     // In production, verify webhook signature:
     // const crypto = require('crypto');
     // const shasum = crypto.createHmac('sha256', RAZORPAY_WEBHOOK_SECRET);
@@ -77,18 +98,26 @@ export class PaymentWebhookController {
     // if (signature !== headers['x-razorpay-signature']) throw new BadRequestException();
 
     try {
-      switch (event.event) {
+      switch (event?.event) {
         case 'payment.authorized':
-          return this._handleRazorpayPaymentAuthorized(event.payload.payment.entity);
+          return this._handleRazorpayPaymentAuthorized(
+            (event.payload?.payment?.entity ?? {}) as { id?: string },
+          );
 
         case 'payment.failed':
-          return this._handleRazorpayPaymentFailed(event.payload.payment.entity);
+          return this._handleRazorpayPaymentFailed(
+            (event.payload?.payment?.entity ?? {}) as { id?: string },
+          );
 
         case 'refund.created':
-          return this._handleRazorpayRefundCreated(event.payload.refund.entity);
+          return this._handleRazorpayRefundCreated(
+            (event.payload?.refund?.entity ?? {}) as { id?: string },
+          );
 
         case 'subscription.cancelled':
-          return this._handleRazorpaySubscriptionCancelled(event.payload.subscription.entity);
+          return this._handleRazorpaySubscriptionCancelled(
+            (event.payload?.subscription?.entity ?? {}) as { id?: string },
+          );
 
         default:
           console.log(`Unhandled Razorpay event: ${event.event}`);
@@ -103,115 +132,102 @@ export class PaymentWebhookController {
   /**
    * Handle Stripe payment succeeded
    */
-  private async _handleStripePaymentSucceeded(paymentIntent: any) {
-    console.log(`[Stripe] Payment succeeded: ${paymentIntent.id}`);
-
+  private _handleStripePaymentSucceeded(paymentIntent: { id?: string }) {
+    console.log(`[Stripe] Payment succeeded: ${(paymentIntent as any)?.id}`);
     // Find invoice by stripe payment intent ID and mark as paid
     // In production, query database for invoice with this stripePaymentIntentId
-    // await this.invoicesService.markAsPaid(invoiceId, paymentIntent.id, 'STRIPE');
-
+    // this.invoicesService.markAsPaid(invoiceId, paymentIntent.id, 'STRIPE');
     return { received: true };
   }
 
   /**
    * Handle Stripe payment failed
    */
-  private async _handleStripePaymentFailed(paymentIntent: any) {
-    console.log(`[Stripe] Payment failed: ${paymentIntent.id}`);
-
+  private _handleStripePaymentFailed(paymentIntent: { id?: string }) {
+    console.log(`[Stripe] Payment failed: ${(paymentIntent as any)?.id}`);
     // Find invoice and mark as failed, increment failed payment count
     // In production:
-    // await this.invoicesService.markAsFailed(invoiceId);
-    // const subscription = await this.subscriptionsService.findByPaymentIntentId(...);
+    // this.invoicesService.markAsFailed(invoiceId);
+    // const subscription = this.subscriptionsService.findByPaymentIntentId(...);
     // if (subscription.failedPaymentCount >= 3) {
-    //   await this.subscriptionsService.updateStatus(subscriptionId, SubscriptionStatus.PAST_DUE);
+    //   this.subscriptionsService.updateStatus(subscriptionId, SubscriptionStatus.PAST_DUE);
     // }
-
     return { received: true };
   }
 
   /**
    * Handle Stripe refund
    */
-  private async _handleStripeRefunded(charge: any) {
-    console.log(`[Stripe] Refund processed: ${charge.id}`);
-
+  private _handleStripeRefunded(charge: { id?: string }) {
+    console.log(`[Stripe] Refund processed: ${(charge as any)?.id}`);
     // Find invoice by stripe charge ID and update refund status
     // In production:
-    // const invoice = await this.invoicesService.findByStripeChargeId(charge.id);
-    // await this.invoicesService.refund(invoiceId, charge.amount_refunded);
-
+    // const invoice = this.invoicesService.findByStripeChargeId(charge.id);
+    // this.invoicesService.refund(invoiceId, charge.amount_refunded);
     return { received: true };
   }
 
   /**
    * Handle Stripe subscription cancelled
    */
-  private async _handleStripeSubscriptionCancelled(subscription: any) {
-    console.log(`[Stripe] Subscription cancelled: ${subscription.id}`);
-
+  private _handleStripeSubscriptionCancelled(subscription: { id?: string }) {
+    console.log(
+      `[Stripe] Subscription cancelled: ${(subscription as any)?.id}`,
+    );
     // Find and cancel subscription
     // In production:
-    // const dbSubscription = await this.subscriptionsService.findByStripeId(subscription.id);
-    // await this.subscriptionsService.updateStatus(dbSubscription._id, SubscriptionStatus.CANCELLED);
-
+    // const dbSubscription = this.subscriptionsService.findByStripeId(subscription.id);
+    // this.subscriptionsService.updateStatus(dbSubscription._id, SubscriptionStatus.CANCELLED);
     return { received: true };
   }
 
   /**
    * Handle Razorpay payment authorized
    */
-  private async _handleRazorpayPaymentAuthorized(payment: any) {
-    console.log(`[Razorpay] Payment authorized: ${payment.id}`);
-
+  private _handleRazorpayPaymentAuthorized(payment: { id?: string }) {
+    console.log(`[Razorpay] Payment authorized: ${(payment as any)?.id}`);
     // Find invoice by razorpay payment ID and mark as paid
     // In production:
-    // const invoice = await this.invoicesService.findByRazorpayPaymentId(payment.id);
-    // await this.invoicesService.markAsPaid(invoiceId, payment.id, 'RAZORPAY');
-
+    // const invoice = this.invoicesService.findByRazorpayPaymentId(payment.id);
+    // this.invoicesService.markAsPaid(invoiceId, payment.id, 'RAZORPAY');
     return { received: true };
   }
 
   /**
    * Handle Razorpay payment failed
    */
-  private async _handleRazorpayPaymentFailed(payment: any) {
-    console.log(`[Razorpay] Payment failed: ${payment.id}`);
-
+  private _handleRazorpayPaymentFailed(payment: { id?: string }) {
+    console.log(`[Razorpay] Payment failed: ${(payment as any)?.id}`);
     // Find invoice and mark as failed
     // In production:
-    // const invoice = await this.invoicesService.findByRazorpayPaymentId(payment.id);
-    // await this.invoicesService.markAsFailed(invoiceId);
-
+    // const invoice = this.invoicesService.findByRazorpayPaymentId(payment.id);
+    // this.invoicesService.markAsFailed(invoiceId);
     return { received: true };
   }
 
   /**
    * Handle Razorpay refund
    */
-  private async _handleRazorpayRefundCreated(refund: any) {
-    console.log(`[Razorpay] Refund created: ${refund.id}`);
-
+  private _handleRazorpayRefundCreated(refund: { id?: string }) {
+    console.log(`[Razorpay] Refund created: ${(refund as any)?.id}`);
     // Find invoice and update refund status
     // In production:
-    // const invoice = await this.invoicesService.findByRazorpayRefundId(refund.id);
-    // await this.invoicesService.refund(invoiceId, refund.amount);
-
+    // const invoice = this.invoicesService.findByRazorpayRefundId(refund.id);
+    // this.invoicesService.refund(invoiceId, refund.amount);
     return { received: true };
   }
 
   /**
    * Handle Razorpay subscription cancelled
    */
-  private async _handleRazorpaySubscriptionCancelled(subscription: any) {
-    console.log(`[Razorpay] Subscription cancelled: ${subscription.id}`);
-
+  private _handleRazorpaySubscriptionCancelled(subscription: { id?: string }) {
+    console.log(
+      `[Razorpay] Subscription cancelled: ${(subscription as any)?.id}`,
+    );
     // Find and cancel subscription
     // In production:
-    // const dbSubscription = await this.subscriptionsService.findByRazorpayId(subscription.id);
-    // await this.subscriptionsService.updateStatus(dbSubscription._id, SubscriptionStatus.CANCELLED);
-
+    // const dbSubscription = this.subscriptionsService.findByRazorpayId(subscription.id);
+    // this.subscriptionsService.updateStatus(dbSubscription._id, SubscriptionStatus.CANCELLED);
     return { received: true };
   }
 }
-

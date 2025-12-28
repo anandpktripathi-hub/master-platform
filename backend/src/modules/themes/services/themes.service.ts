@@ -210,6 +210,8 @@ export class ThemesService {
     }
 
     const savedTenantTheme = await tenantTheme.save();
+    if (!savedTenantTheme || !theme)
+      throw new NotFoundException('Theme not found');
     return this.mapTenantThemeToDto(savedTenantTheme, theme);
   }
 
@@ -236,6 +238,9 @@ export class ThemesService {
 
     // Fetch the associated theme
     const theme = await this.themeModel.findById(tenantTheme.themeId);
+    if (!theme) {
+      throw new NotFoundException('Associated theme not found');
+    }
 
     return this.mapTenantThemeToDto(savedTenantTheme, theme);
   }
@@ -296,8 +301,7 @@ export class ThemesService {
    * Helper: Map Theme document to DTO
    */
   private mapThemeToDto(theme: ThemeDocument): ThemeResponseDto {
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const themeIdStr = theme._id.toString();
+    const themeIdStr = (theme._id as any).toString();
     return {
       _id: themeIdStr,
       name: theme.name,
@@ -322,10 +326,7 @@ export class ThemesService {
       tenantTheme.customCssVariables || {},
     );
 
-    const tenantThemeIdStr = tenantTheme._id
-      ? // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        tenantTheme._id.toString()
-      : null;
+    const tenantThemeIdStr = tenantTheme._id?.toString() || '';
 
     const tenantIdStr = tenantTheme.tenantId.toString();
 

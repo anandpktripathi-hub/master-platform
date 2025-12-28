@@ -18,7 +18,7 @@ export class PersonalInfoDto {
   @IsString()
   @MinLength(2)
   @MaxLength(50)
-  firstName: string;
+  firstName!: string;
 
   @IsOptional()
   @IsString()
@@ -28,10 +28,10 @@ export class PersonalInfoDto {
   @IsString()
   @MinLength(2)
   @MaxLength(50)
-  lastName: string;
+  lastName!: string;
 
   @IsDateString()
-  dateOfBirth: string;
+  dateOfBirth!: string;
 
   @IsString()
   @MinLength(3)
@@ -40,20 +40,20 @@ export class PersonalInfoDto {
     message:
       'Username can only contain letters, numbers, hyphens, and underscores',
   })
-  username: string;
+  username!: string;
 
   @IsEmail()
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(10)
   @MaxLength(20)
-  phone: string;
+  phone!: string;
 
   @IsString()
   @MinLength(10)
   @MaxLength(200)
-  homeAddress: string;
+  homeAddress!: string;
 }
 
 /**
@@ -63,29 +63,29 @@ export class CompanyInfoDto {
   @IsString()
   @MinLength(2)
   @MaxLength(100)
-  companyName: string;
+  companyName!: string;
 
   @IsOptional()
   @IsDateString()
   companyDateOfBirth?: string;
 
   @IsEmail()
-  companyEmail: string;
+  companyEmail!: string;
 
   @IsString()
   @MinLength(10)
   @MaxLength(20)
-  companyPhone: string;
+  companyPhone!: string;
 
   @IsString()
   @MinLength(10)
   @MaxLength(200)
-  companyAddress: string;
+  companyAddress!: string;
 
   @IsString()
   @MinLength(2)
   @MaxLength(100)
-  positionInCompany: string;
+  positionInCompany!: string;
 
   @IsOptional()
   @IsEmail()
@@ -107,10 +107,10 @@ export class CompanyInfoDto {
  */
 export class ComplianceDto {
   @IsBoolean()
-  acceptedTerms: boolean;
+  acceptedTerms!: boolean;
 
   @IsBoolean()
-  acceptedPrivacy: boolean;
+  acceptedPrivacy!: boolean;
 }
 
 /**
@@ -119,20 +119,20 @@ export class ComplianceDto {
 export class TenantRegisterDto {
   @ValidateNested()
   @Type(() => PersonalInfoDto)
-  personal: PersonalInfoDto;
+  personal!: PersonalInfoDto;
 
   @ValidateNested()
   @Type(() => CompanyInfoDto)
-  company: CompanyInfoDto;
+  company!: CompanyInfoDto;
 
   @ValidateNested()
   @Type(() => ComplianceDto)
-  compliance: ComplianceDto;
+  compliance!: ComplianceDto;
 
   @IsString()
   @MinLength(6)
   @MaxLength(100)
-  password: string;
+  password!: string;
 
   @IsOptional()
   @IsString()
@@ -145,5 +145,5 @@ export class TenantRegisterDto {
     message:
       'Subdomain can only contain lowercase letters, numbers, and hyphens',
   })
-  subdomain: string;
+  subdomain!: string;
 }

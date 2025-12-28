@@ -1,7 +1,6 @@
 ﻿import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -90,7 +89,9 @@ export class AppModule implements NestModule {
     console.log('🔍 DATABASE_URL from env:', process.env.DATABASE_URL);
     if (!process.env.DATABASE_URL) {
       console.warn('⚠️ DATABASE_URL not found in environment variables!');
-      console.warn('⚠️ Using fallback: mongodb://localhost:27017/master-platform');
+      console.warn(
+        '⚠️ Using fallback: mongodb://localhost:27017/master-platform',
+      );
     }
   }
 }

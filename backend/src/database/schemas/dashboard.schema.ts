@@ -6,13 +6,13 @@ export type DashboardDocument = Dashboard & Document;
 @Schema()
 export class Dashboard {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: true })
-  widgets: Record<string, any>[];
+  widgets!: Record<string, any>[];
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
-  tenantId: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 }
 
 export const DashboardSchema = SchemaFactory.createForClass(Dashboard);

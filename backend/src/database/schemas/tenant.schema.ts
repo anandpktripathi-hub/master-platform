@@ -9,54 +9,54 @@ export type PlanKey = 'FREE' | 'PRO' | 'ENTERPRISE';
 @Schema({ timestamps: true })
 export class Tenant {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: false, unique: true, sparse: true })
-  domain?: string;
+  domain!: string;
 
   @Prop({ required: false, unique: true })
-  slug?: string;
+  slug!: string;
 
   @Prop({ required: false })
-  companyName?: string;
+  companyName!: string;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
-  createdByUserId?: Types.ObjectId;
+  createdByUserId!: Types.ObjectId;
 
   @Prop({ enum: ['FREE', 'PRO', 'ENTERPRISE'], default: 'FREE' })
-  planKey?: PlanKey;
+  planKey!: PlanKey;
 
   @Prop({ default: 'trialing' })
-  status?: string;
+  status!: string;
 
   @Prop({ default: true })
-  isActive?: boolean;
+  isActive!: boolean;
 
   // Company Profile Fields (Step 2 of registration)
   @Prop({ required: false })
-  companyDateOfBirth?: Date; // or establishedAt/incorporationDate
+  companyDateOfBirth!: Date; // or establishedAt/incorporationDate
 
   @Prop({ required: false })
-  companyEmail?: string;
+  companyEmail!: string;
 
   @Prop({ required: false })
-  companyPhone?: string;
+  companyPhone!: string;
 
   @Prop({ required: false })
-  companyAddress?: string;
+  companyAddress!: string;
 
   // Compliance Fields (Step 3 of registration)
   @Prop({ default: false })
-  acceptedTerms?: boolean;
+  acceptedTerms!: boolean;
 
   @Prop({ default: false })
-  acceptedPrivacy?: boolean;
+  acceptedPrivacy!: boolean;
 
   @Prop({ required: false })
-  acceptedTermsAt?: Date;
+  acceptedTermsAt!: Date;
 
   @Prop({ required: false })
-  acceptedPrivacyAt?: Date;
+  acceptedPrivacyAt!: Date;
 
   // Flags for tenant creation method
   @Prop({ default: false })

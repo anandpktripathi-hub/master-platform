@@ -19,7 +19,7 @@ import {
   CreateUserDto,
   UpdateUserDto,
   ResetPasswordDto,
-} from './dto/rbac.dto.ts';
+} from './dto/rbac.dto';
 import { CurrentTenant } from '../../decorators/tenant.decorator';
 
 @Controller('api/v1/rbac')
@@ -137,6 +137,10 @@ export class RbacController {
     @Param('userTenantId') userTenantId: string,
     @Body() body: { enable: boolean },
   ) {
-    return this.rbacService.toggleUserLogin(tenantId, userTenantId, body.enable);
+    return this.rbacService.toggleUserLogin(
+      tenantId,
+      userTenantId,
+      body.enable,
+    );
   }
 }

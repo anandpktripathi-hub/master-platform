@@ -1,0 +1,59 @@
+.admin-bg { background-color: var(--admin-bg, #0f172a); }
+.admin-text { color: var(--admin-text, #e2e8f0); }
+.admin-font { font-family: var(--admin-font-body, Inter, system-ui, sans-serif); }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.admin-text-muted { color: var(--admin-text-muted, #cbd5e1); }
+.spinner {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--admin-primary, #0ea5e9);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.admin-surface { background: var(--admin-surface, #111827); }
+.admin-border-bottom { border-bottom: 1px solid var(--admin-border, #1f2937); }
+.dismiss-btn { background: none; border: none; color: inherit; font-size: 1.5rem; cursor: pointer; }
+
+/* Refactored from inline styles in Navigation, AppLayout, Topbar, Sidebar */
+.nav-header {
+  background: var(--admin-nav-bg, #0b1224);
+  color: var(--admin-nav-text, #e2e8f0);
+  border-bottom: 1px solid var(--admin-border, #1f2937);
+}
+.nav-title {
+  color: var(--admin-color-main-2, #14b8a6);
+  font-family: var(--admin-font-heading, Inter, system-ui, sans-serif);
+}
+.sidebar-header {
+  color: var(--admin-color-main-2, #14b8a6);
+  font-family: var(--admin-font-heading, Inter, system-ui, sans-serif);
+}
+.topbar {
+  background: var(--admin-nav-bg, #0b1224);
+  color: var(--admin-nav-text, #e2e8f0);
+  border-bottom: 1px solid var(--admin-border, #1f2937);
+}
+.tenant-badge {
+  background: var(--admin-surface, #111827);
+  color: var(--admin-text-muted, #cbd5e1);
+  border: 1px solid var(--admin-border, #1f2937);
+}
+.topbar-btn {
+  background: var(--admin-surface, #111827);
+  color: var(--admin-text, #e2e8f0);
+  border: 1px solid var(--admin-border, #1f2937);
+}
+.topbar-avatar {
+  background: var(--admin-primary, #0ea5e9);
+  color: #0b1224;
+}
+.app-bg {
+  background: var(--admin-bg, #0f172a);
+  color: var(--admin-text, #e2e8f0);
+}
+.main-bg {
+  background: var(--admin-bg, #0f172a);
+}

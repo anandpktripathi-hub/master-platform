@@ -14,9 +14,9 @@ interface RequireRoleProps {
  * If user doesn't have required role, redirects to /not-authorized.
  */
 export function RequireRole({ roles, children, fallback }: RequireRoleProps) {
-  const { user, isAuthenticated, loading, hasRole } = useAuth();
+  const { user, isAuthenticated, isLoading, hasRole } = useAuth();
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 

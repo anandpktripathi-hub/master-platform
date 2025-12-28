@@ -27,7 +27,7 @@ export class ProductsService {
     return { data: products, total };
   }
 
-  async findOne(id: string): Promise<any> {
+  async findOne(id: string): Promise<ProductDocument> {
     const product = await this.productModel
       .findById(id)
       .populate('category')
@@ -36,6 +36,6 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException('Product not found');
     }
-    return product;
+    return product as unknown as ProductDocument;
   }
 }

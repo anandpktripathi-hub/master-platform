@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { Box, Card, CardContent, Typography, TextField, Button, Alert } from "@mui/material";
 
 interface LoginError {
   message?: string;
@@ -33,25 +34,44 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Login"}
-        </button>
-        {error && <div>{error}</div>}
-      </form>
-    </div>
+    <Box minHeight="100vh" display="flex" alignItems="center" justifyContent="center" bgcolor="#0a0a23">
+      <Card sx={{ minWidth: 350, p: 2, boxShadow: 6 }}>
+        <CardContent>
+          <Typography variant="h5" align="center" gutterBottom color="primary">Login</Typography>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <TextField
+              type="email"
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              autoFocus
+            />
+            <TextField
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              {loading ? "Loading..." : "Login"}
+            </Button>
+            {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+          </form>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

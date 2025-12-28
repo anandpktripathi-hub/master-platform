@@ -11,6 +11,7 @@ import { PlanKey } from '../../config/plans.config';
 import { ManualCreateTenantDto } from './dto/manual-create-tenant.dto';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
+import { objectIdToString } from '../../utils/objectIdToString';
 
 @Injectable()
 export class TenantsService {
@@ -150,10 +151,9 @@ export class TenantsService {
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const tenantIdStr = tenant._id.toString();
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const userIdStr = user._id.toString();
+    const tenantIdStr = objectIdToString(tenant._id);
+
+    const userIdStr = objectIdToString(user._id);
 
     return {
       success: true,

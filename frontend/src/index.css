@@ -1,3 +1,46 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	/* Core palette */
+	--admin-bg: #0f172a;
+	--admin-surface: #111827;
+	--admin-primary: #0ea5e9;
+	--admin-primary-hover: #0284c7;
+	--admin-text: #e2e8f0;
+	--admin-text-muted: #cbd5e1;
+	--admin-border: #1f2937;
+	--admin-sidebar-bg: #0b1224;
+	--admin-sidebar-active: #1f2937;
+	--admin-nav-bg: #0b1224;
+	--admin-nav-text: #e2e8f0;
+
+	/* Typography */
+	--admin-font-body: 'Inter', system-ui, -apple-system, sans-serif;
+	--admin-font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+	--admin-font-size: 16px;
+	--admin-line-height: 1.5;
+}
+
+[data-admin-theme='light'] {
+	--admin-bg: #f8fafc;
+	--admin-surface: #ffffff;
+	--admin-primary: #0f766e;
+	--admin-primary-hover: #115e59;
+	--admin-text: #0f172a;
+	--admin-text-muted: #475569;
+	--admin-border: #e2e8f0;
+	--admin-sidebar-bg: #ffffff;
+	--admin-sidebar-active: #e2e8f0;
+	--admin-nav-bg: #ffffff;
+	--admin-nav-text: #0f172a;
+}
+
+body {
+	font-family: var(--admin-font-body);
+	font-size: var(--admin-font-size);
+	line-height: var(--admin-line-height);
+	background: var(--admin-bg);
+	color: var(--admin-text);
+}

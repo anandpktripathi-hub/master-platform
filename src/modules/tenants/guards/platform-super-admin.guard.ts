@@ -4,9 +4,9 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 export class PlatformSuperAdminGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const req = context.switchToHttp().getRequest();
-    const user = req.user;
+    const user: { role?: string } = req.user;
     if (!user) return false;
     // Temporary simple check against role string
-    return user.role === 'PLATFORM_SUPER_ADMIN';
+    return user?.role === 'PLATFORM_SUPER_ADMIN';
   }
 }

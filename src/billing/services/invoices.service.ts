@@ -1,11 +1,21 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Invoice, InvoiceDocument, InvoiceStatus } from '../schemas/invoice.schema';
+import {
+  Invoice,
+  InvoiceDocument,
+  InvoiceStatus,
+} from '../schemas/invoice.schema';
 
 @Injectable()
 export class InvoicesService {
-  constructor(@InjectModel('Invoice') private invoiceModel: Model<InvoiceDocument>) {}
+  constructor(
+    @InjectModel('Invoice') private invoiceModel: Model<InvoiceDocument>,
+  ) {}
 
   async create(
     tenantId: string,
@@ -32,7 +42,11 @@ export class InvoicesService {
     return invoice.save();
   }
 
-  async findByTenantId(tenantId: string, limit = 50, page = 1): Promise<{ data: Invoice[]; total: number }> {
+  async findByTenantId(
+    tenantId: string,
+    limit = 50,
+    page = 1,
+  ): Promise<{ data: Invoice[]; total: number }> {
     const skip = (page - 1) * limit;
     const data = await this.invoiceModel
       .find({ tenantId: new Types.ObjectId(tenantId) })
@@ -61,7 +75,11 @@ export class InvoicesService {
     return invoice;
   }
 
-  async markAsPaid(invoiceId: string, transactionId?: string, paymentMethod?: string): Promise<Invoice> {
+  async markAsPaid(
+    invoiceId: string,
+    transactionId?: string,
+    paymentMethod?: string,
+  ): Promise<Invoice> {
     const invoice = await this.invoiceModel.findById(invoiceId);
 
     if (!invoice) {

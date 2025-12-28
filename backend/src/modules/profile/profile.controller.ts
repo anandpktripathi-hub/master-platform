@@ -1,4 +1,12 @@
-import { Controller, Get, Put, Body, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Put,
+  Body,
+  Req,
+  UseGuards,
+  BadRequestException,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { ProfileService } from './profile.service';
 import { UpdateProfileDto, UpdateTenantProfileDto } from './dto/profile.dto';
@@ -23,6 +31,7 @@ export class ProfileController {
   @Get('me/profile')
   async getMyProfile(@Req() req: AuthRequest) {
     const userId = req.user?.sub || req.user?._id;
+    if (!userId) throw new BadRequestException('User ID not found');
     return this.profileService.getUserProfile(userId);
   }
 
@@ -37,6 +46,7 @@ export class ProfileController {
     @Body() dto: UpdateProfileDto,
   ) {
     const userId = req.user?.sub || req.user?._id;
+    if (!userId) throw new BadRequestException('User ID not found');
     return this.profileService.updateUserProfile(userId, dto);
   }
 
@@ -48,6 +58,7 @@ export class ProfileController {
   @Get('tenant/profile')
   async getTenantProfile(@Req() req: AuthRequest) {
     const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID not found');
     return this.profileService.getTenantProfile(tenantId);
   }
 
@@ -62,6 +73,7 @@ export class ProfileController {
     @Body() dto: UpdateTenantProfileDto,
   ) {
     const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID not found');
     return this.profileService.updateTenantProfile(tenantId, dto);
   }
 }

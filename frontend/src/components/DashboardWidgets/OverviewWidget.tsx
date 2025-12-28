@@ -6,21 +6,9 @@ import React from "react";
  */
 const OverviewWidget: React.FC = () => {
   return (
-    <div
-      style={{
-        padding: "1rem",
-        borderRadius: 8,
-        border: "1px solid #374151",
-        background: "#020617",
-        color: "#e5e7eb",
-      }}
-    >
-      <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>
-        Dashboard Overview
-      </h2>
-      <p style={{ fontSize: 13, opacity: 0.8 }}>
-        This is a placeholder widget. Add real metrics here (tenants, users, revenue, etc.).
-      </p>
+    <div className="p-4 rounded-lg border border-[#374151] bg-[#020617] text-[#e5e7eb]">
+      <h2 className="text-base font-semibold mb-2">Dashboard Overview</h2>
+      <p className="text-sm opacity-80">This is a placeholder widget. Add real metrics here (tenants, users, revenue, etc.).</p>
     </div>
   );
 };

@@ -7,13 +7,13 @@ export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: true, unique: true })
-  email: string;
+  email!: string;
 
   @Prop({ required: true })
-  password: string;
+  password!: string;
 
   // Core RBAC roles:
   // - platform_admin  -> Anand Ji (landlord, 100%)
@@ -33,29 +33,29 @@ export class User {
     ],
     default: Role.USER,
   })
-  role: RoleUnion;
+  role!: RoleUnion;
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
-  tenantId?: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 
   @Prop({ default: true })
-  isActive?: boolean;
+  isActive!: boolean;
 
   @Prop({ default: '' })
-  company?: string;
+  company!: string;
 
   // Personal Profile Fields (Step 1 of registration)
   @Prop({ required: false })
-  firstName?: string;
+  firstName!: string;
 
   @Prop({ required: false })
-  secondName?: string; // middle name
+  secondName!: string; // middle name
 
   @Prop({ required: false })
-  lastName?: string;
+  lastName!: string;
 
   @Prop({ required: false })
-  dateOfBirth?: Date;
+  dateOfBirth!: Date;
 
   @Prop({ required: false, unique: true, sparse: true })
   username?: string; // unique username for login

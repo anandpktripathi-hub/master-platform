@@ -1,5 +1,20 @@
-import { Controller, Post, Get, Patch, Body, UseGuards, Request, Query, HttpCode } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Body,
+  UseGuards,
+  Request,
+  Query,
+  HttpCode,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { SubscriptionsService } from '../services/subscriptions.service';
 import { SubscribeDto } from '../dto/subscribe.dto';
 import { ChangePlanDto } from '../dto/change-plan.dto';
@@ -16,10 +31,16 @@ export class SubscriptionsController {
   @Post('subscribe')
   @HttpCode(201)
   @ApiOperation({ summary: 'Subscribe to a plan' })
-  @ApiResponse({ status: 201, description: 'Subscription created successfully' })
-  @ApiResponse({ status: 400, description: 'Bad request - tenant already has subscription' })
+  @ApiResponse({
+    status: 201,
+    description: 'Subscription created successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request - tenant already has subscription',
+  })
   async subscribe(@Body() subscribeDto: SubscribeDto, @Request() req: any) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.subscriptionsService.create(tenantId, subscribeDto);
   }
 
@@ -28,7 +49,7 @@ export class SubscriptionsController {
   @ApiResponse({ status: 200, description: 'Current subscription returned' })
   @ApiResponse({ status: 404, description: 'No subscription found' })
   async getCurrentSubscription(@Request() req: any) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.subscriptionsService.findByTenantId(tenantId);
   }
 
@@ -36,32 +57,35 @@ export class SubscriptionsController {
   @ApiOperation({ summary: 'Change subscription plan' })
   @ApiResponse({ status: 200, description: 'Plan changed successfully' })
   async changePlan(@Body() changePlanDto: ChangePlanDto, @Request() req: any) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.subscriptionsService.changePlan(tenantId, changePlanDto);
   }
 
   @Patch('upgrade')
   @ApiOperation({ summary: 'Upgrade to a better plan' })
   async upgrade(@Body() changePlanDto: ChangePlanDto, @Request() req: any) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.subscriptionsService.changePlan(tenantId, changePlanDto);
   }
 
   @Patch('downgrade')
   @ApiOperation({ summary: 'Downgrade to a lower plan' })
   async downgrade(@Body() changePlanDto: ChangePlanDto, @Request() req: any) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.subscriptionsService.changePlan(tenantId, changePlanDto);
   }
 
   @Patch('cancel')
   @ApiOperation({ summary: 'Cancel subscription' })
-  @ApiResponse({ status: 200, description: 'Subscription cancelled successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Subscription cancelled successfully',
+  })
   async cancelSubscription(
     @Query('atPeriodEnd') atPeriodEnd: boolean = false,
     @Request() req: any,
   ) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.subscriptionsService.cancelSubscription(tenantId, atPeriodEnd);
   }
 }

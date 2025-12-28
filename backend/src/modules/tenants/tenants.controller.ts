@@ -1,4 +1,6 @@
 ﻿import { Controller, Get, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
+import { objectIdToString } from '../../utils/objectIdToString';
 import { TenantsService } from './tenants.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -33,10 +35,9 @@ export class TenantsController {
   ) {
     let adminId = req.user?.sub;
     if (!adminId && req.user?._id && typeof req.user._id === 'object') {
-      // Extract string from ObjectId
-      const idObj = req.user._id as { toString(): string };
-      adminId = idObj.toString();
+      adminId = objectIdToString(req.user._id);
     }
+    if (!adminId) throw new BadRequestException('User ID is required');
     return this.tenantsService.manualCreateTenant(dto, adminId);
   }
 }

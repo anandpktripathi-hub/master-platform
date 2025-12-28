@@ -10,16 +10,21 @@
         "test": "jest",
         "lint": "eslint src --ext .ts,.tsx",
         "format": "prettier --write src",
-        "deploy": "vercel --prod"
+        "deploy": "vercel --prod",
+        "test:e2e": "playwright test",
+        "dev:mock": "vite --mode mock"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
+        "@hookform/resolvers": "^5.2.2",
         "@mui/icons-material": "^7.3.5",
         "@mui/material": "^7.3.5",
         "@mui/x-data-grid": "^8.22.0",
         "@sentry/react": "^10.27.0",
         "@sentry/tracing": "^7.120.4",
+        "@tanstack/react-query": "^5.90.12",
+        "@tanstack/react-query-devtools": "^5.91.1",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^16.3.0",
         "@typescript-eslint/eslint-plugin": "^8.48.0",
@@ -35,10 +40,13 @@
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "react-ga": "^3.3.1",
-        "react-router-dom": "^7.9.6"
+        "react-hook-form": "^7.69.0",
+        "react-router-dom": "^7.9.6",
+        "zod": "^4.2.1"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.1",
+        "@playwright/test": "^1.50.0",
         "@types/node": "^24.10.1",
         "@types/react": "^19.2.5",
         "@types/react-dom": "^19.2.3",

@@ -1,9 +1,15 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Tenant, TenantSchema } from '../../database/schemas/tenant.schema';
-import { Permission, PermissionSchema } from '../../database/schemas/permission.schema';
+import {
+  Permission,
+  PermissionSchema,
+} from '../../database/schemas/permission.schema';
 import { Role, RoleSchema } from '../../database/schemas/role.schema';
-import { UserTenant, UserTenantSchema } from '../../database/schemas/user-tenant.schema';
+import {
+  UserTenant,
+  UserTenantSchema,
+} from '../../database/schemas/user-tenant.schema';
 import { User, UserSchema } from '../../database/schemas/user.schema';
 import { RbacService } from './rbac.service';
 import { RbacController } from './rbac.controller';

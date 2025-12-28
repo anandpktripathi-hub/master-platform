@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import rbacApi, { Role, Permission } from '../services/rbacApi';
+import rbacApi from '../services/rbacApi';
+import type { Role } from '../services/rbacApi';
+import type { Permission } from '../services/rbacApi';
 import '../styles/ManageRoles.css';
 
 export const ManageRoles: React.FC = () => {
@@ -274,6 +276,8 @@ const CreateRoleModal: React.FC<CreateRoleModalProps> = ({ onClose, editingRole 
                                   type="checkbox"
                                   checked={selectedPermissions.has(perm._id)}
                                   onChange={() => togglePermission(perm._id)}
+                                  aria-label={`Toggle ${action} permission for ${module}`}
+                                  title={`Toggle ${action} permission for ${module}`}
                                 />
                               ) : null}
                             </td>

@@ -41,4 +41,3 @@ export class Tenant extends Document {
 }
 
 export const TenantSchema = SchemaFactory.createForClass(Tenant);
-

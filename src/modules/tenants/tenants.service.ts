@@ -1,8 +1,8 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Tenant } from './schemas/tenant.schema';
-import { User } from '../../schemas/user.schema';
+import { User } from '@schemas/user.schema';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 
@@ -14,13 +14,16 @@ export class TenantsService {
   ) {}
 
   async findAll(query: any) {
-    const page = Math.max(1, parseInt(query.page || '1', 10));
-    const limit = Math.min(100, parseInt(query.limit || '20', 10));
-    const search = query.search?.trim();
+    const page = Math.max(1, parseInt((query?.page || '1').toString(), 10));
+    const limit = Math.min(
+      100,
+      parseInt((query?.limit || '20').toString(), 10),
+    );
+    const search = query?.search?.trim();
 
     const match: any = {};
-    if (query.status) match.status = query.status;
-    if (query.plan) match.plan = query.plan;
+    if (query?.status) match.status = query.status;
+    if (query?.plan) match.plan = query.plan;
 
     const agg: any[] = [
       // Lookup owner user
@@ -42,7 +45,9 @@ export class TenantsService {
 
     if (search) {
       const regex = new RegExp(search, 'i');
-      and.push({ $or: [{ name: regex }, { domain: regex }, { 'owner.email': regex }] });
+      and.push({
+        $or: [{ name: regex }, { domain: regex }, { 'owner.email': regex }],
+      });
     }
 
     if (and.length) agg.push({ $match: { $and: and } });
@@ -62,14 +67,18 @@ export class TenantsService {
   }
 
   async findOne(id: string) {
-    if (!Types.ObjectId.isValid(id)) throw new NotFoundException('Tenant not found');
+    if (!Types.ObjectId.isValid(id))
+      throw new NotFoundException('Tenant not found');
     const found = await this.tenantModel.findById(id).exec();
     if (!found) throw new NotFoundException('Tenant not found');
     return found;
   }
 
   private makeSlug(name: string) {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
   }
 
   async create(dto: CreateTenantDto) {
@@ -84,7 +93,9 @@ export class TenantsService {
     const tenant = await tenantDoc.save();
 
     // Find or create owner user
-    let owner = await this.userModel.findOne({ email: dto.ownerEmail.toLowerCase() }).exec();
+    let owner = await this.userModel
+      .findOne({ email: dto.ownerEmail.toLowerCase() })
+      .exec();
     if (!owner) {
       const localPart = dto.ownerEmail.split('@')[0] || 'owner';
       owner = await this.userModel.create({

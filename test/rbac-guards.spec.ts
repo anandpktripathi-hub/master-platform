@@ -1,13 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ExecutionContext, INestApplication } from '@nestjs/common';
+import { ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { RolesGuard } from '../src/common/guards/roles.guard';
 import { PermissionsGuard } from '../src/common/guards/permissions.guard';
 import { TenantGuard } from '../src/common/guards/tenant.guard';
 import { Role } from '../src/common/enums/role.enum';
 import { Permission } from '../src/common/enums/permission.enum';
-import { ROLES_KEY } from '../src/common/decorators/roles.decorator';
-import { PERMISSIONS_KEY } from '../src/common/decorators/permissions.decorator';
 
 describe('RBAC Guards (Unit)', () => {
   describe('RolesGuard', () => {
@@ -162,7 +159,9 @@ describe('RBAC Guards (Unit)', () => {
     it('should allow PLATFORM_SUPER_ADMIN without tenantId', () => {
       const context = {
         switchToHttp: () => ({
-          getRequest: () => ({ user: { role: Role.PLATFORM_SUPER_ADMIN, tenantId: null } }),
+          getRequest: () => ({
+            user: { role: Role.PLATFORM_SUPER_ADMIN, tenantId: null },
+          }),
         }),
       } as unknown as ExecutionContext;
 
@@ -179,7 +178,7 @@ describe('RBAC Guards (Unit)', () => {
 
       const result = guard.canActivate(context);
       expect(result).toBe(true);
-      expect((req as any).tenantId).toBe('tenant-123');
+      expect((req as { tenantId?: string }).tenantId).toBe('tenant-123');
     });
 
     it('should reject if user is missing', () => {
@@ -195,7 +194,9 @@ describe('RBAC Guards (Unit)', () => {
     it('should reject if user lacks tenantId and is not super admin', () => {
       const context = {
         switchToHttp: () => ({
-          getRequest: () => ({ user: { role: Role.TENANT_OWNER, tenantId: null } }),
+          getRequest: () => ({
+            user: { role: Role.TENANT_OWNER, tenantId: null },
+          }),
         }),
       } as unknown as ExecutionContext;
 

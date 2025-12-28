@@ -2,21 +2,21 @@ import { Injectable, Scope } from '@nestjs/common';
 
 /**
  * TenantContextService
- * 
+ *
  * A request-scoped service that holds the current tenant's context.
  * This allows any service to access the current tenantId through dependency injection
  * without needing to pass it through multiple layers.
- * 
+ *
  * Usage in a service:
  * ```typescript
  * constructor(private readonly tenantContext: TenantContextService) {}
- * 
+ *
  * async someMethod() {
  *   const tenantId = this.tenantContext.getTenantId();
  *   // Use tenantId in your queries
  * }
  * ```
- * 
+ *
  * The service is REQUEST-scoped, meaning a new instance is created for each HTTP request.
  * This ensures tenant isolation even in concurrent requests.
  */
@@ -41,7 +41,9 @@ export class TenantContextService {
    */
   getTenantId(): string {
     if (!this.tenantId) {
-      throw new Error('Tenant context not available. Make sure the request is authenticated.');
+      throw new Error(
+        'Tenant context not available. Make sure the request is authenticated.',
+      );
     }
     return this.tenantId;
   }

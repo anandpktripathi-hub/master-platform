@@ -7,7 +7,7 @@ import { getConnectionToken } from '@nestjs/mongoose';
 
 /**
  * E2E Tests for Multi-Tenant Data Isolation
- * 
+ *
  * These tests verify that:
  * 1. Tenants can only access their own data
  * 2. Cross-tenant data leakage is prevented
@@ -17,18 +17,14 @@ import { getConnectionToken } from '@nestjs/mongoose';
 describe('Multi-Tenant Data Isolation (E2E)', () => {
   let app: INestApplication;
   let connection: Connection;
-  
+
   // Test data
-  let tenant1: any;
-  let tenant2: any;
-  let tenant1User: any;
-  let tenant2User: any;
-  let superAdmin: any;
+  let tenant1: Record<string, any>;
+  let tenant2: Record<string, any>;
   let tenant1Token: string;
   let tenant2Token: string;
-  let superAdminToken: string;
-  let tenant1Product: any;
-  let tenant2Product: any;
+  let tenant1Product: Record<string, any>;
+  let tenant2Product: Record<string, any>;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -36,12 +32,14 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }));
-    
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+
     await app.init();
 
     connection = app.get(getConnectionToken());
@@ -67,7 +65,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           ownerPassword: 'Password123!',
         });
 
-      tenant1 = response.body;
+      tenant1 = response.body as Record<string, any>;
       expect(response.status).toBe(201);
     });
 
@@ -82,7 +80,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           ownerPassword: 'Password123!',
         });
 
-      tenant2 = response.body;
+      tenant2 = response.body as Record<string, any>;
       expect(response.status).toBe(201);
     });
 
@@ -94,8 +92,9 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           password: 'Password123!',
         });
 
-      tenant1Token = response.body.access_token;
-      tenant1User = response.body.user;
+      const loginData: { access_token: string; user: Record<string, any> } =
+        response.body;
+      tenant1Token = loginData.access_token;
       expect(response.status).toBe(200);
       expect(tenant1Token).toBeDefined();
     });
@@ -108,8 +107,9 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           password: 'Password123!',
         });
 
-      tenant2Token = response.body.access_token;
-      tenant2User = response.body.user;
+      const loginData2: { access_token: string; user: Record<string, any> } =
+        response.body;
+      tenant2Token = loginData2.access_token;
       expect(response.status).toBe(200);
       expect(tenant2Token).toBeDefined();
     });
@@ -127,7 +127,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           sku: 'T1-PROD-001',
         });
 
-      tenant1Product = response.body;
+      tenant1Product = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(tenant1Product.tenantId).toBe(tenant1._id);
     });
@@ -143,7 +143,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           sku: 'T2-PROD-001',
         });
 
-      tenant2Product = response.body;
+      tenant2Product = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(tenant2Product.tenantId).toBe(tenant2._id);
     });
@@ -155,14 +155,16 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.body)).toBe(true);
-      
+
       // Should only contain tenant 1 products
-      response.body.forEach((product: any) => {
+      (response.body as Array<Record<string, any>>).forEach((product) => {
         expect(product.tenantId).toBe(tenant1._id);
       });
-      
+
       // Should NOT contain tenant 2 products
-      const hasTenant2Product = response.body.some((p: any) => p._id === tenant2Product._id);
+      const hasTenant2Product = (
+        response.body as Array<Record<string, any>>
+      ).some((p) => p._id === tenant2Product._id);
       expect(hasTenant2Product).toBe(false);
     });
 
@@ -173,14 +175,16 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.body)).toBe(true);
-      
+
       // Should only contain tenant 2 products
-      response.body.forEach((product: any) => {
+      (response.body as Array<Record<string, any>>).forEach((product) => {
         expect(product.tenantId).toBe(tenant2._id);
       });
-      
+
       // Should NOT contain tenant 1 products
-      const hasTenant1Product = response.body.some((p: any) => p._id === tenant1Product._id);
+      const hasTenant1Product = (
+        response.body as Array<Record<string, any>>
+      ).some((p) => p._id === tenant1Product._id);
       expect(hasTenant1Product).toBe(false);
     });
 
@@ -241,7 +245,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           description: 'Category for tenant 1',
         });
 
-      tenant1Category = response.body;
+      tenant1Category = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(tenant1Category.tenantId).toBe(tenant1._id);
     });
@@ -255,7 +259,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           description: 'Category for tenant 2',
         });
 
-      tenant2Category = response.body;
+      tenant2Category = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(tenant2Category.tenantId).toBe(tenant2._id);
     });
@@ -266,8 +270,8 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
         .set('Authorization', `Bearer ${tenant1Token}`);
 
       expect(response.status).toBe(200);
-      
-      response.body.forEach((category: any) => {
+
+      (response.body as Array<Record<string, any>>).forEach((category) => {
         expect(category.tenantId).toBe(tenant1._id);
       });
     });
@@ -278,8 +282,8 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
         .set('Authorization', `Bearer ${tenant2Token}`);
 
       expect(response.status).toBe(200);
-      
-      response.body.forEach((category: any) => {
+
+      (response.body as Array<Record<string, any>>).forEach((category) => {
         expect(category.tenantId).toBe(tenant2._id);
       });
     });
@@ -307,7 +311,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           customerEmail: 'customer1@test.com',
         });
 
-      tenant1Order = response.body;
+      tenant1Order = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(tenant1Order.tenantId).toBe(tenant1._id);
     });
@@ -322,7 +326,7 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
           customerEmail: 'customer2@test.com',
         });
 
-      tenant2Order = response.body;
+      tenant2Order = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(tenant2Order.tenantId).toBe(tenant2._id);
     });
@@ -333,8 +337,8 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
         .set('Authorization', `Bearer ${tenant1Token}`);
 
       expect(response.status).toBe(200);
-      
-      response.body.forEach((order: any) => {
+
+      (response.body as Array<Record<string, any>>).forEach((order) => {
         expect(order.tenantId).toBe(tenant1._id);
       });
     });
@@ -356,9 +360,9 @@ describe('Multi-Tenant Data Isolation (E2E)', () => {
         .set('Authorization', `Bearer ${tenant1Token}`);
 
       expect(response.status).toBe(200);
-      
+
       // All products should belong to tenant1
-      response.body.forEach((product: any) => {
+      (response.body as Array<Record<string, any>>).forEach((product) => {
         expect(product.tenantId).toBe(tenant1._id);
       });
     });

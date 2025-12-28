@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ErrorBoundary from '../components/ErrorBoundary';
 import {
   Box,
   Button,
@@ -77,7 +78,8 @@ export default function ProfileSettings() {
   }
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <ErrorBoundary>
+      <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom>
           Personal Profile Settings
@@ -217,6 +219,7 @@ export default function ProfileSettings() {
           </Button>
         </Box>
       </Paper>
-    </Container>
+      </Container>
+    </ErrorBoundary>
   );
 }

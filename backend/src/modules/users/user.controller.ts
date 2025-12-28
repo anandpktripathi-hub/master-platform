@@ -8,6 +8,7 @@
   Param,
   UseGuards,
   Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../../database/schemas/user.schema';
@@ -43,7 +44,7 @@ export class UserController {
   getMe(@Req() req: { user?: { userId?: string } }) {
     const userId = req.user?.userId;
     if (!userId) {
-      throw new Error('User ID not found');
+      throw new BadRequestException('User ID not found');
     }
     return this.userService.findMe(userId);
   }

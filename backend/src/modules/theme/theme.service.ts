@@ -13,7 +13,7 @@ export class ThemeService {
     return this.themeModel.find({ tenantId }).exec();
   }
 
-  async findOne(id: string): Promise<Theme> {
+  async findOne(id: string): Promise<Theme | null> {
     return this.themeModel.findById(id).exec();
   }
 
@@ -26,13 +26,13 @@ export class ThemeService {
     id: string,
     updateThemeDto: Theme,
     tenantId: string,
-  ): Promise<Theme> {
+  ): Promise<Theme | null> {
     return this.themeModel
       .findByIdAndUpdate(id, { ...updateThemeDto, tenantId }, { new: true })
       .exec();
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<Theme | null> {
     return this.themeModel.findByIdAndDelete(id).exec();
   }
 }

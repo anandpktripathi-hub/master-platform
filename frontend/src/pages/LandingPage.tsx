@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import ErrorBoundary from '../components/ErrorBoundary';
 import {
   Button,
   Container,
@@ -14,7 +15,8 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <ErrorBoundary>
+      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       {/* Hero Section */}
       <Box
         sx={{
@@ -72,7 +74,7 @@ export default function LandingPage() {
           Why Choose Us?
         </Typography>
         <Grid container spacing={4} sx={{ mt: 4 }}>
-          <Grid item xs={12} md={4}>
+          <Grid>
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h5" gutterBottom>
@@ -84,7 +86,7 @@ export default function LandingPage() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid>
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h5" gutterBottom>
@@ -96,7 +98,7 @@ export default function LandingPage() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid>
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h5" gutterBottom>
@@ -130,6 +132,7 @@ export default function LandingPage() {
           </Button>
         </Container>
       </Box>
-    </Box>
+      </Box>
+    </ErrorBoundary>
   );
 }

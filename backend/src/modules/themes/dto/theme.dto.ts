@@ -9,11 +9,11 @@ import {
 export class CreateThemeDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @IsString()
   @IsNotEmpty()
-  key: string;
+  key!: string;
 
   @IsString()
   @IsOptional()
@@ -21,7 +21,7 @@ export class CreateThemeDto {
 
   @IsObject()
   @IsNotEmpty()
-  cssVariables: Record<string, string>;
+  cssVariables!: Record<string, string>;
 
   @IsEnum(['ACTIVE', 'INACTIVE'])
   @IsOptional()
@@ -53,33 +53,33 @@ export class UpdateThemeDto {
 export class SelectThemeDto {
   @IsString()
   @IsNotEmpty()
-  themeId: string;
+  themeId!: string;
 }
 
 export class CustomizeThemeDto {
   @IsObject()
   @IsNotEmpty()
-  customCssVariables: Record<string, string>;
+  customCssVariables!: Record<string, string>;
 }
 
 export class ThemeResponseDto {
-  _id: string;
-  name: string;
-  key: string;
+  _id!: string;
+  name!: string;
+  key!: string;
   previewImage?: string;
-  cssVariables: Record<string, string>;
-  status: 'ACTIVE' | 'INACTIVE';
-  createdAt: Date;
-  updatedAt: Date;
+  cssVariables!: Record<string, string>;
+  status!: 'ACTIVE' | 'INACTIVE';
+  createdAt!: Date;
+  updatedAt!: Date;
 }
 
 export class TenantThemeResponseDto {
-  _id: string;
-  tenantId: string;
-  themeId: string;
+  _id!: string;
+  tenantId!: string;
+  themeId!: string;
   theme?: ThemeResponseDto; // Populated theme object
-  customCssVariables: Record<string, string>;
-  mergedCssVariables: Record<string, string>; // System defaults + tenant overrides
-  createdAt: Date;
-  updatedAt: Date;
+  customCssVariables!: Record<string, string>;
+  mergedCssVariables!: Record<string, string>; // System defaults + tenant overrides
+  createdAt!: Date;
+  updatedAt!: Date;
 }

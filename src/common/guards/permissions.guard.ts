@@ -11,25 +11,28 @@ export class PermissionsGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredPermissions = this.reflector.getAllAndOverride<Permission[]>(PERMISSIONS_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-    const anyPermissions = this.reflector.getAllAndOverride<Permission[]>(ANY_PERMISSIONS_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const requiredPermissions = this.reflector.getAllAndOverride<Permission[]>(
+      PERMISSIONS_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+    const anyPermissions = this.reflector.getAllAndOverride<Permission[]>(
+      ANY_PERMISSIONS_KEY,
+      [context.getHandler(), context.getClass()],
+    );
 
     // If neither @Permissions nor @AnyPermissions specified, allow
-    if ((!requiredPermissions || requiredPermissions.length === 0) &&
-        (!anyPermissions || anyPermissions.length === 0)) {
+    if (
+      (!requiredPermissions || requiredPermissions.length === 0) &&
+      (!anyPermissions || anyPermissions.length === 0)
+    ) {
       return true;
     }
 
-    const { user } = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest();
+    const user: { role?: Role } = request.user;
     if (!user) return false;
 
-    const userRole: Role = user.role as Role;
+    const userRole: Role = user?.role as Role;
 
     // Super admin shortcut
     if (userRole === Role.PLATFORM_SUPER_ADMIN) return true;

@@ -1,11 +1,16 @@
-﻿import { Injectable, UnauthorizedException, BadRequestException, NotFoundException } from '@nestjs/common';
+﻿import {
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { User } from '../schemas/user.schema';
-import { Tenant } from '../schemas/tenant.schema';
+import { User } from '@schemas/user.schema';
+import { Tenant } from '@schemas/tenant.schema';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
@@ -25,13 +30,18 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     const { email, password, firstName, lastName, tenantName } = registerDto;
 
-    const existingUser = await this.userModel.findOne({ email: email.toLowerCase() });
+    const existingUser = await this.userModel.findOne({
+      email: email.toLowerCase(),
+    });
     if (existingUser) {
       throw new BadRequestException('User with this email already exists');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const slug = tenantName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    const slug = tenantName
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '');
 
     const tenant = await this.tenantModel.create({
       name: tenantName,
@@ -52,7 +62,12 @@ export class AuthService {
       isActive: true,
     });
 
-    const payload = { sub: user._id, email: user.email, tenantId: tenant._id, role: user.role };
+    const payload = {
+      sub: user._id,
+      email: user.email,
+      tenantId: tenant._id,
+      role: user.role,
+    };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
     await this.emailService.sendWelcomeEmail(user.email, firstName);
@@ -65,15 +80,17 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto) {
-    const { email, password } = loginDto;
+    const email: string = loginDto.email;
+    const password: string = loginDto.password;
 
-    const user = await this.userModel.findOne({ email: email.toLowerCase() }).populate('tenant');
+    const user = await this.userModel
+      .findOne({ email: email.toLowerCase() })
+      .populate('tenant');
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+    if (!(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
@@ -84,8 +101,15 @@ export class AuthService {
     user.lastLoginAt = new Date();
     await user.save();
 
-    const payload = { sub: user._id, email: user.email, tenantId: (user.tenant as any)._id, role: user.role };
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+    const accessToken = this.jwtService.sign(
+      {
+        sub: user._id,
+        email: user.email,
+        tenantId: (user.tenant as any)?._id as string,
+        role: user.role,
+      },
+      { expiresIn: '7d' },
+    );
 
     return {
       user: this.sanitizeUser(user),
@@ -113,7 +137,10 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
 
-    const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    const isCurrentPasswordValid = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
     if (!isCurrentPasswordValid) {
       throw new BadRequestException('Current password is incorrect');
     }
@@ -121,7 +148,10 @@ export class AuthService {
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 
-    await this.emailService.sendPasswordChangedEmail(user.email, user.firstName);
+    await this.emailService.sendPasswordChangedEmail(
+      user.email,
+      user.firstName,
+    );
 
     return { message: 'Password changed successfully' };
   }
@@ -135,13 +165,20 @@ export class AuthService {
     }
 
     const resetToken = crypto.randomBytes(32).toString('hex');
-    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
 
     user.resetPasswordToken = hashedToken;
     user.resetPasswordExpires = new Date(Date.now() + 3600000);
     await user.save();
 
-    await this.emailService.sendPasswordResetEmail(user.email, user.firstName, resetToken);
+    await this.emailService.sendPasswordResetEmail(
+      user.email,
+      user.firstName,
+      resetToken,
+    );
 
     return { message: 'If email exists, reset link has been sent' };
   }
@@ -165,13 +202,25 @@ export class AuthService {
     user.resetPasswordExpires = null;
     await user.save();
 
-    await this.emailService.sendPasswordResetConfirmationEmail(user.email, user.firstName);
+    await this.emailService.sendPasswordResetConfirmationEmail(
+      user.email,
+      user.firstName,
+    );
 
     return { message: 'Password reset successful' };
   }
 
   private sanitizeUser(user: any) {
-    const { password, resetPasswordToken, resetPasswordExpires, ...sanitized } = user.toObject();
+    // Type the result of toObject and remove unused destructuring
+    const sanitized = (user.toObject ? user.toObject() : user) as Omit<
+      User,
+      'password' | 'resetPasswordToken' | 'resetPasswordExpires'
+    > &
+      Record<string, any>;
+    // Remove sensitive fields if present
+    delete sanitized.password;
+    delete sanitized.resetPasswordToken;
+    delete sanitized.resetPasswordExpires;
     return sanitized;
   }
 }

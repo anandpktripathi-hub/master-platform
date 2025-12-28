@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -13,36 +13,43 @@ export class DashboardService {
     private dashboardModel: Model<DashboardDocument>,
   ) {}
 
-  async findAll(tenantId: string): Promise<Dashboard[]> {
-    return this.dashboardModel.find({ tenantId }).exec();
-  }
-
-  async findOne(id: string): Promise<Dashboard> {
-    return this.dashboardModel.findById(id).exec();
-  }
-
-  async create(
-    createDashboardDto: Dashboard,
-    tenantId: string,
-  ): Promise<Dashboard> {
-    const createdDashboard = new this.dashboardModel({
+  async create(createDashboardDto: any, tenantId: string): Promise<Dashboard> {
+    const dashboard = new this.dashboardModel({
       ...createDashboardDto,
-      tenantId,
+      tenant: tenantId,
     });
-    return createdDashboard.save();
+    return dashboard.save();
+  }
+
+  async findAll(tenantId: string): Promise<Dashboard[]> {
+    return this.dashboardModel.find({ tenant: tenantId }).exec();
+  }
+
+  async findOne(id: string, tenantId: string): Promise<Dashboard> {
+    const dashboard = await this.dashboardModel
+      .findOne({ _id: id, tenant: tenantId })
+      .exec();
+    if (!dashboard) throw new NotFoundException('Dashboard not found');
+    return dashboard;
   }
 
   async update(
     id: string,
-    updateDashboardDto: Dashboard,
+    updateDashboardDto: any,
     tenantId: string,
   ): Promise<Dashboard> {
-    return this.dashboardModel
-      .findByIdAndUpdate(id, { ...updateDashboardDto, tenantId }, { new: true })
+    const updated = await this.dashboardModel
+      .findByIdAndUpdate(
+        id,
+        { ...updateDashboardDto, tenant: tenantId },
+        { new: true },
+      )
       .exec();
+    if (!updated) throw new NotFoundException('Dashboard not found');
+    return updated;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<any> {
     return this.dashboardModel.findByIdAndDelete(id).exec();
   }
 }

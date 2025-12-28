@@ -1,12 +1,14 @@
 ﻿/* eslint-disable react-refresh/only-export-components */
-import React, {
+import {
   createContext,
   useContext,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
+import type { ReactNode } from 'react';
 import api, { authApi } from "../lib/api";
+
+export type UserRole = 'PLATFORM_SUPERADMIN' | 'TENANT_ADMIN' | 'TENANT_STAFF' | 'CUSTOMER';
 
 export interface LoginPayload {
   email: string;
@@ -17,7 +19,8 @@ export interface AuthUser {
   id: string;
   name?: string;
   email: string;
-  role?: string;
+  role: UserRole;
+  tenantId?: string;
   company?: string;
 }
 
@@ -25,8 +28,15 @@ interface AuthContextValue {
   user: AuthUser | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  roles: UserRole[];
+  tenantId: string | null;
+  hasRole: (allowedRoles: UserRole[]) => boolean;
+  isPlatformAdmin: boolean;
+  isTenantAdmin: boolean;
   login: (payload: LoginPayload) => Promise<void>;
   logout: () => void;
+  hasAllPermissions?: (permissions: string[]) => boolean;
+  hasAnyPermission?: (permissions: string[]) => boolean;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -39,7 +49,6 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // On app load, if token exists, fetch /users/me to restore current user
   useEffect(() => {
     const initialize = async () => {
       const token = localStorage.getItem("token");
@@ -49,9 +58,8 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
       }
 
       try {
-        // API now returns unwrapped response.data directly
-        const rawUser = await api.get("/users/me");
-
+        const userResp = await api.get("/users/me");
+        const rawUser = userResp as any;
         const mappedUser: AuthUser = {
           id: rawUser._id ?? rawUser.id,
           email: rawUser.email,
@@ -60,6 +68,7 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
             `${rawUser.firstName ?? ""} ${rawUser.lastName ?? ""}`.trim(),
           role: rawUser.role,
           company: rawUser.company,
+          tenantId: rawUser.tenantId,
         };
 
         setUser(mappedUser);
@@ -75,12 +84,10 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
     void initialize();
   }, []);
 
-  // Login: call /auth/login, save token, then /users/me
   const login = async (payload: LoginPayload) => {
-    // API now returns unwrapped response.data directly
     const response = await authApi.login(payload);
-    const accessToken: string = response.access_token;
-    const rawUser = response.user;
+    const accessToken: string = (response as any).access_token;
+    const rawUser = (response as any).user;
 
     if (!accessToken) {
       throw new Error("Invalid login response: missing token");
@@ -97,14 +104,14 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
           `${rawUser.firstName ?? ""} ${rawUser.lastName ?? ""}`.trim(),
         role: rawUser.role,
         company: rawUser.company,
+        tenantId: rawUser.tenantId,
       };
       setUser(mappedUser);
       return;
     }
 
-    // Fallback: fetch from /users/me if user not in login payload
-    // API now returns unwrapped response.data directly
-    const me = await api.get("/users/me");
+    const meResp = await api.get("/users/me");
+    const me = meResp as any;
     const mappedUser: AuthUser = {
       id: me._id ?? me.id,
       email: me.email,
@@ -112,6 +119,7 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
         me.name ?? `${me.firstName ?? ""} ${me.lastName ?? ""}`.trim(),
       role: me.role,
       company: me.company,
+      tenantId: me.tenantId,
     };
     setUser(mappedUser);
   };
@@ -121,12 +129,27 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
     setUser(null);
   };
 
+  const hasRole = (allowedRoles: UserRole[]): boolean => {
+    if (!user || !user.role) return false;
+    return allowedRoles.includes(user.role);
+  };
+
+  const isPlatformAdmin = user?.role === 'PLATFORM_SUPERADMIN';
+  const isTenantAdmin = user?.role === 'TENANT_ADMIN' || user?.role === 'PLATFORM_SUPERADMIN';
+
   const value: AuthContextValue = {
     user,
     isAuthenticated: !!user,
     isLoading,
+    roles: user?.role ? [user.role] : [],
+    tenantId: user?.tenantId || null,
+    hasRole,
+    isPlatformAdmin,
+    isTenantAdmin,
     login,
     logout,
+    hasAllPermissions: () => false,
+    hasAnyPermission: () => false,
   };
 
   return (
@@ -139,13 +162,12 @@ export const AuthProvider = AuthProviderComponent;
 function useAuthHook(): AuthContextValue {
   const ctx = useContext(AuthContext);
   if (!ctx) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('Auth context unavailable. Please wrap your app in AuthProvider.');
   }
   return ctx;
 }
 
 export const useAuth = useAuthHook;
+export const useAuthContext = useAuthHook;
 
 /* eslint-enable react-refresh/only-export-components */
-
-

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Stack } from '@mui/material';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -22,16 +22,23 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <Typography variant="h5" color="error">
-            Something went wrong.
-          </Typography>
-          <Typography variant="body1">
-            {this.state.error?.toString()}
-          </Typography>
-          <Button variant="contained" color="primary" onClick={this.handleReset}>
-            Try Again
-          </Button>
+        <div className="p-5 text-center">
+          <Stack spacing={1.5} alignItems="center">
+            <Typography variant="h5" color="error">
+              Something went wrong.
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              {this.state.error?.toString()}
+            </Typography>
+            <Stack direction="row" spacing={1}>
+              <Button variant="outlined" onClick={() => window.location.reload()}>
+                Reload
+              </Button>
+              <Button variant="contained" color="primary" onClick={this.handleReset}>
+                Try Again
+              </Button>
+            </Stack>
+          </Stack>
         </div>
       );
     }

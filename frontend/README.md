@@ -1,73 +1,36 @@
-# React + TypeScript + Vite
+# Frontend (Vite + React + TS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This app is wired to the backend APIs for domains, custom domains, packages, coupons, audit logs, and multi-tenancy. React Query, React Hook Form, and Zod are preinstalled.
 
-Currently, two official plugins are available:
+## Configure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Create `.env.local` with:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+VITE_API_BASE_URL=http://localhost:4000/api/v1
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Tokens are read from `localStorage` key `token`; tenant context can be passed via `localStorage` key `tenantId` or `x-tenant-id` header per request.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `npm run dev` – start Vite dev server
+- `npm run build` – production build
+- `npm run preview` – preview production build
+- `npm run lint` – ESLint
+- `npm run test` – unit tests (Jest)
+- `npm run test:e2e` – Playwright e2e scaffold
+- `npm run dev:mock` – run dev server in mock mode (uses Vite mock env)
+
+## E2E (Playwright)
+
+- Config: `playwright.config.ts`
+- Tests: `tests/e2e/*.spec.ts` (scaffolds for domains, custom domains, packages/coupons)
+- Set `E2E_BASE_URL` if not using default `http://localhost:5173`.
+
+## Integration Notes
+
+- API client: `src/api/client.ts` auto-attaches JWT and optional `x-tenant-id`; handles 401/403 centrally.
+- React Query provider and notistack toasts: `src/providers/QueryProvider.tsx`.
+- Auth context: `src/contexts/AuthContext.tsx` with `RequireAuth`/`RequireRole` guards.
+- Shared UI states: `src/components/common` (loading/error/empty/confirm dialog/status chip).

@@ -1,4 +1,10 @@
-﻿import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+﻿import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Catch()
@@ -20,7 +26,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         message = (exceptionResponse as any).message || message;
         errors = (exceptionResponse as any).errors || null;
       } else {
-        message = exceptionResponse as string;
+        message = exceptionResponse;
       }
     } else if (exception instanceof Error) {
       message = exception.message;
@@ -28,8 +34,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
     console.error('Exception caught:', {
       timestamp: new Date().toISOString(),
-      path: request.url,
-      method: request.method,
+      path: (request as any).url,
+      method: (request as any).method,
       status,
       message,
       stack: exception instanceof Error ? exception.stack : undefined,

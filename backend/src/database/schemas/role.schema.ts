@@ -6,25 +6,25 @@ export type RoleDocument = Role & Document;
 @Schema({ timestamps: true })
 export class Role {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: false })
-  description?: string;
+  description!: string;
 
   // Tenant ID - if null, this is a platform-level role
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
-  tenantId?: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 
   // Whether this is a default/system role that cannot be deleted
   @Prop({ default: false })
-  isSystem?: boolean;
+  isSystem!: boolean;
 
   // Array of permission IDs assigned to this role
   @Prop({ type: [Types.ObjectId], ref: 'Permission', default: [] })
-  permissions: Types.ObjectId[];
+  permissions!: Types.ObjectId[];
 
   @Prop({ default: true })
-  isActive?: boolean;
+  isActive!: boolean;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(Role);

@@ -9,15 +9,23 @@ export class ProductsService {
   constructor(@InjectModel('Product') private productModel: Model<Product>) {}
 
   async create(createProductDto: CreateProductDto, tenantId: string) {
-    const product = await this.productModel.create({ ...createProductDto, tenantId });
+    const product = await this.productModel.create({
+      ...createProductDto,
+      tenantId,
+    });
     return product;
   }
 
-  async findAll(tenantId: string, page: number = 1, limit: number = 10, search?: string, categoryId?: string) {
+  async findAll(
+    tenantId: string,
+    page: number = 1,
+    limit: number = 10,
+    search?: string,
+    categoryId?: string,
+  ) {
     const skip = (page - 1) * limit;
-    
-    const filter: any = { tenantId };
-    
+    const filter: Record<string, any> = { tenantId };
+
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: 'i' } },
@@ -25,7 +33,7 @@ export class ProductsService {
         { sku: { $regex: search, $options: 'i' } },
       ];
     }
-    
+
     if (categoryId) {
       filter.categoryId = categoryId;
     }
@@ -52,7 +60,9 @@ export class ProductsService {
   }
 
   async findById(id: string, tenantId: string) {
-    const product = await this.productModel.findOne({ _id: id, tenantId }).populate('categoryId');
+    const product = await this.productModel
+      .findOne({ _id: id, tenantId })
+      .populate('categoryId');
     if (!product) {
       throw new NotFoundException('Product not found');
     }
@@ -73,7 +83,11 @@ export class ProductsService {
       .limit(20);
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto, tenantId: string) {
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+    tenantId: string,
+  ) {
     const product = await this.productModel.findOne({ _id: id, tenantId });
     if (!product) {
       throw new NotFoundException('Product not found');

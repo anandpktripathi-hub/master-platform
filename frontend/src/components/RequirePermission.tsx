@@ -22,10 +22,9 @@ export function RequirePermission({
   children,
   fallback,
 }: RequirePermissionProps) {
-  const { isAuthenticated, loading } = useAuth();
-  const auth = useAuth();
+  const { isAuthenticated, isLoading, hasAllPermissions, hasAnyPermission } = useAuth();
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -33,10 +32,11 @@ export function RequirePermission({
     return <Navigate to="/login" replace />;
   }
 
+  const normalized = Array.isArray(permissions) ? permissions : [permissions];
   const hasPerms =
     mode === 'all'
-      ? auth.hasAllPermissions(Array.isArray(permissions) ? permissions : [permissions])
-      : auth.hasAnyPermission(Array.isArray(permissions) ? permissions : [permissions]);
+      ? hasAllPermissions?.(normalized)
+      : hasAnyPermission?.(normalized);
 
   if (!hasPerms) {
     if (fallback) return <>{fallback}</>;

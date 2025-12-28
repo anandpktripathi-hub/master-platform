@@ -1,10 +1,21 @@
-import { Injectable, BadRequestException, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { Permission, PermissionDocument } from '../../database/schemas/permission.schema';
+import {
+  Permission,
+  PermissionDocument,
+} from '../../database/schemas/permission.schema';
 import { Role, RoleDocument } from '../../database/schemas/role.schema';
-import { UserTenant, UserTenantDocument } from '../../database/schemas/user-tenant.schema';
+import {
+  UserTenant,
+  UserTenantDocument,
+} from '../../database/schemas/user-tenant.schema';
 import { User, UserDocument } from '../../database/schemas/user.schema';
 import {
   CreatePermissionDto,
@@ -16,14 +27,16 @@ import {
   RoleDto,
   PermissionDto,
   UserTenantDto,
-} from './dto/rbac.dto.ts';
+} from './dto/rbac.dto';
 
 @Injectable()
 export class RbacService {
   constructor(
-    @InjectModel(Permission.name) private permissionModel: Model<PermissionDocument>,
+    @InjectModel(Permission.name)
+    private permissionModel: Model<PermissionDocument>,
     @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
-    @InjectModel(UserTenant.name) private userTenantModel: Model<UserTenantDocument>,
+    @InjectModel(UserTenant.name)
+    private userTenantModel: Model<UserTenantDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
@@ -35,7 +48,10 @@ export class RbacService {
   }
 
   async getPermissionsByModule(module: string): Promise<PermissionDto[]> {
-    const permissions = await this.permissionModel.find({ module }).lean().exec();
+    const permissions = await this.permissionModel
+      .find({ module })
+      .lean()
+      .exec();
     return permissions.map((p) => this.mapPermissionToDto(p));
   }
 
@@ -61,7 +77,9 @@ export class RbacService {
       tenantId: new Types.ObjectId(tenantId),
     });
     if (existing) {
-      throw new BadRequestException(`Role "${dto.name}" already exists in this tenant`);
+      throw new BadRequestException(
+        `Role "${dto.name}" already exists in this tenant`,
+      );
     }
 
     // Validate permissions exist
@@ -85,7 +103,11 @@ export class RbacService {
     return this.mapRoleToDto(role);
   }
 
-  async updateRole(tenantId: string, roleId: string, dto: UpdateRoleDto): Promise<RoleDto> {
+  async updateRole(
+    tenantId: string,
+    roleId: string,
+    dto: UpdateRoleDto,
+  ): Promise<RoleDto> {
     const role = await this.roleModel.findOne({
       _id: new Types.ObjectId(roleId),
       tenantId: new Types.ObjectId(tenantId),
@@ -105,7 +127,9 @@ export class RbacService {
         tenantId: new Types.ObjectId(tenantId),
       });
       if (existing) {
-        throw new BadRequestException(`Role "${dto.name}" already exists in this tenant`);
+        throw new BadRequestException(
+          `Role "${dto.name}" already exists in this tenant`,
+        );
       }
       role.name = dto.name;
     }
@@ -115,7 +139,9 @@ export class RbacService {
     }
 
     if (dto.permissionIds) {
-      const permissionIds = dto.permissionIds.map((id) => new Types.ObjectId(id));
+      const permissionIds = dto.permissionIds.map(
+        (id) => new Types.ObjectId(id),
+      );
       const permissions = await this.permissionModel
         .find({ _id: { $in: permissionIds } })
         .lean()
@@ -136,7 +162,7 @@ export class RbacService {
       .populate('permissions')
       .lean()
       .exec();
-    return Promise.all(roles.map((r) => this.mapRoleToDto(r)));
+    return roles.map((r) => this.mapRoleToDto(r));
   }
 
   async getRoleById(tenantId: string, roleId: string): Promise<RoleDto> {
@@ -173,7 +199,9 @@ export class RbacService {
       tenantId: new Types.ObjectId(tenantId),
     });
     if (usersWithRole > 0) {
-      throw new BadRequestException('Cannot delete role that has users assigned');
+      throw new BadRequestException(
+        'Cannot delete role that has users assigned',
+      );
     }
 
     await this.roleModel.deleteOne({ _id: new Types.ObjectId(roleId) });
@@ -181,7 +209,10 @@ export class RbacService {
 
   // ============= USER TENANT OPERATIONS =============
 
-  async createTenantUser(tenantId: string, dto: CreateUserDto): Promise<UserTenantDto> {
+  async createTenantUser(
+    tenantId: string,
+    dto: CreateUserDto,
+  ): Promise<UserTenantDto> {
     // Validate role exists in tenant
     const role = await this.roleModel.findOne({
       _id: new Types.ObjectId(dto.roleId),
@@ -224,7 +255,11 @@ export class RbacService {
     return this.mapUserTenantToDto(userTenant);
   }
 
-  async getTenantUsers(tenantId: string, page = 1, limit = 10): Promise<{
+  async getTenantUsers(
+    tenantId: string,
+    page = 1,
+    limit = 10,
+  ): Promise<{
     data: (UserTenantDto & { user: any; role: any })[];
     total: number;
   }> {
@@ -282,7 +317,10 @@ export class RbacService {
 
     // Update user profile if needed
     if (dto.name) {
-      await this.userModel.updateOne({ _id: userTenant.userId }, { name: dto.name });
+      await this.userModel.updateOne(
+        { _id: userTenant.userId },
+        { name: dto.name },
+      );
     }
 
     if (dto.dateOfBirth) {
@@ -296,7 +334,10 @@ export class RbacService {
     return this.mapUserTenantToDto(userTenant);
   }
 
-  async deleteTenantUser(tenantId: string, userTenantId: string): Promise<void> {
+  async deleteTenantUser(
+    tenantId: string,
+    userTenantId: string,
+  ): Promise<void> {
     const userTenant = await this.userTenantModel.findOne({
       _id: new Types.ObjectId(userTenantId),
       tenantId: new Types.ObjectId(tenantId),
@@ -305,10 +346,16 @@ export class RbacService {
       throw new NotFoundException('User not found in this tenant');
     }
 
-    await this.userTenantModel.deleteOne({ _id: new Types.ObjectId(userTenantId) });
+    await this.userTenantModel.deleteOne({
+      _id: new Types.ObjectId(userTenantId),
+    });
   }
 
-  async resetUserPassword(tenantId: string, userTenantId: string, dto: ResetPasswordDto): Promise<void> {
+  async resetUserPassword(
+    tenantId: string,
+    userTenantId: string,
+    dto: ResetPasswordDto,
+  ): Promise<void> {
     const userTenant = await this.userTenantModel.findOne({
       _id: new Types.ObjectId(userTenantId),
       tenantId: new Types.ObjectId(tenantId),
@@ -318,10 +365,17 @@ export class RbacService {
     }
 
     const hashedPassword = await bcrypt.hash(dto.newPassword, 10);
-    await this.userModel.updateOne({ _id: userTenant.userId }, { password: hashedPassword });
+    await this.userModel.updateOne(
+      { _id: userTenant.userId },
+      { password: hashedPassword },
+    );
   }
 
-  async toggleUserLogin(tenantId: string, userTenantId: string, enable: boolean): Promise<UserTenantDto> {
+  async toggleUserLogin(
+    tenantId: string,
+    userTenantId: string,
+    enable: boolean,
+  ): Promise<UserTenantDto> {
     const userTenant = await this.userTenantModel.findOne({
       _id: new Types.ObjectId(userTenantId),
       tenantId: new Types.ObjectId(tenantId),
@@ -337,18 +391,20 @@ export class RbacService {
 
   // ============= HELPER METHODS =============
 
-  private mapPermissionToDto(permission: any): PermissionDto {
+  private mapPermissionToDto(permission: Permission): PermissionDto {
     return {
-      _id: String(permission._id),
+      _id: String((permission as any)._id || ''),
       action: permission.action,
       module: permission.module,
       description: permission.description,
     };
   }
 
-  private async mapRoleToDto(role: any): Promise<RoleDto> {
+  private mapRoleToDto(role: any): RoleDto {
     const permissions = Array.isArray(role.permissions)
-      ? role.permissions.map((p: any) => this.mapPermissionToDto(p))
+      ? role.permissions.map((p: any) =>
+          this.mapPermissionToDto(p as Permission),
+        )
       : [];
 
     return {
@@ -359,8 +415,8 @@ export class RbacService {
       isSystem: role.isSystem,
       permissions,
       isActive: role.isActive,
-      createdAt: role.createdAt,
-      updatedAt: role.updatedAt,
+      createdAt: role.createdAt ? new Date(role.createdAt) : new Date(),
+      updatedAt: role.updatedAt ? new Date(role.updatedAt) : new Date(),
     };
   }
 
@@ -372,9 +428,15 @@ export class RbacService {
       roleId: String(userTenant.roleId),
       isLoginEnabled: userTenant.isLoginEnabled,
       status: userTenant.status,
-      lastLoginAt: userTenant.lastLoginAt,
-      createdAt: userTenant.createdAt,
-      updatedAt: userTenant.updatedAt,
+      lastLoginAt: userTenant.lastLoginAt
+        ? new Date(userTenant.lastLoginAt)
+        : undefined,
+      createdAt: userTenant.createdAt
+        ? new Date(userTenant.createdAt)
+        : new Date(),
+      updatedAt: userTenant.updatedAt
+        ? new Date(userTenant.updatedAt)
+        : new Date(),
     };
   }
 }

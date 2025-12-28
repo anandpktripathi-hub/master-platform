@@ -7,7 +7,7 @@ import { getConnectionToken } from '@nestjs/mongoose';
 
 /**
  * E2E Tests for Theme Module with Tenant Isolation
- * 
+ *
  * These tests verify that:
  * 1. Super admin can create/manage global themes
  * 2. Tenants can select and customize themes
@@ -17,16 +17,13 @@ import { getConnectionToken } from '@nestjs/mongoose';
 describe('Theme Module Multi-Tenant (E2E)', () => {
   let app: INestApplication;
   let connection: Connection;
-  
+
   let superAdminToken: string;
   let tenant1Token: string;
   let tenant2Token: string;
-  let tenant1Id: string;
-  let tenant2Id: string;
-  
-  let modernLightTheme: any;
-  let darkProfessionalTheme: any;
-  let vibrantTheme: any;
+  let modernLightTheme: Record<string, any>;
+  let darkProfessionalTheme: Record<string, any>;
+  let vibrantTheme: Record<string, any>;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -34,12 +31,14 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }));
-    
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+
     await app.init();
 
     connection = app.get(getConnectionToken());
@@ -64,7 +63,6 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           ownerPassword: 'Password123!',
         });
 
-      tenant1Id = response.body._id;
       expect(response.status).toBe(201);
     });
 
@@ -79,7 +77,6 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           ownerPassword: 'Password123!',
         });
 
-      tenant2Id = response.body._id;
       expect(response.status).toBe(201);
     });
 
@@ -91,7 +88,7 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           password: 'Password123!',
         });
 
-      tenant1Token = response.body.access_token;
+      tenant1Token = (response.body as { access_token: string }).access_token;
       expect(response.status).toBe(200);
     });
 
@@ -103,7 +100,7 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           password: 'Password123!',
         });
 
-      tenant2Token = response.body.access_token;
+      tenant2Token = (response.body as { access_token: string }).access_token;
       expect(response.status).toBe(200);
     });
 
@@ -116,7 +113,8 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           password: 'SuperAdmin123!',
         });
 
-      superAdminToken = response.body.access_token;
+      superAdminToken = (response.body as { access_token: string })
+        .access_token;
       expect(response.status).toBe(200);
     });
   });
@@ -142,7 +140,7 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           isActive: true,
         });
 
-      modernLightTheme = response.body;
+      modernLightTheme = response.body as Record<string, any>;
       expect(response.status).toBe(201);
       expect(modernLightTheme.name).toBe('Modern Light');
       expect(modernLightTheme.slug).toBe('modern-light');
@@ -168,7 +166,7 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           isActive: true,
         });
 
-      darkProfessionalTheme = response.body;
+      darkProfessionalTheme = response.body as Record<string, any>;
       expect(response.status).toBe(201);
     });
 
@@ -192,7 +190,7 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           isActive: true,
         });
 
-      vibrantTheme = response.body;
+      vibrantTheme = response.body as Record<string, any>;
       expect(response.status).toBe(201);
     });
 
@@ -237,9 +235,9 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
       expect(response.status).toBe(200);
       expect(Array.isArray(response.body)).toBe(true);
       expect(response.body.length).toBeGreaterThanOrEqual(3);
-      
+
       // All themes should be active
-      response.body.forEach((theme: any) => {
+      (response.body as Array<Record<string, any>>).forEach((theme) => {
         expect(theme.isActive).toBe(true);
       });
     });
@@ -250,8 +248,9 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         .set('Authorization', `Bearer ${tenant1Token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Modern Light');
-      expect(response.body.customizations).toBeDefined();
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.name).toBe('Modern Light');
+      expect(themeData.customizations).toBeDefined();
     });
 
     it('tenant 1 should select Dark Professional theme', async () => {
@@ -263,8 +262,9 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Dark Professional');
-      expect(response.body.baseThemeId).toBe(darkProfessionalTheme._id);
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.name).toBe('Dark Professional');
+      expect(themeData.baseThemeId).toBe(darkProfessionalTheme._id);
     });
 
     it('tenant 2 should select Vibrant theme', async () => {
@@ -276,7 +276,8 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Vibrant');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.name).toBe('Vibrant');
     });
 
     it('tenant 1 current theme should be Dark Professional', async () => {
@@ -285,7 +286,8 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         .set('Authorization', `Bearer ${tenant1Token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Dark Professional');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.name).toBe('Dark Professional');
     });
 
     it('tenant 2 current theme should be Vibrant', async () => {
@@ -294,7 +296,8 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         .set('Authorization', `Bearer ${tenant2Token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Vibrant');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.name).toBe('Vibrant');
     });
   });
 
@@ -309,8 +312,9 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body.customizations.primaryColor).toBe('#ff0000');
-      expect(response.body.customizations.secondaryColor).toBe('#00ff00');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.customizations.primaryColor).toBe('#ff0000');
+      expect(themeData.customizations.secondaryColor).toBe('#00ff00');
     });
 
     it('tenant 2 should customize their theme typography', async () => {
@@ -323,8 +327,11 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
         });
 
       expect(response.status).toBe(200);
-      expect(response.body.customizations.fontFamily).toBe('Comic Sans MS, cursive');
-      expect(response.body.customizations.baseFontSize).toBe(18);
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.customizations.fontFamily).toBe(
+        'Comic Sans MS, cursive',
+      );
+      expect(themeData.customizations.baseFontSize).toBe(18);
     });
 
     it('tenant 1 customizations should NOT affect tenant 2', async () => {
@@ -334,8 +341,11 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
 
       expect(response.status).toBe(200);
       // Should NOT have tenant 1 customizations
-      expect(response.body.customizations.primaryColor).not.toBe('#ff0000');
-      expect(response.body.customizations.fontFamily).toBe('Comic Sans MS, cursive');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.customizations.primaryColor).not.toBe('#ff0000');
+      expect(themeData.customizations.fontFamily).toBe(
+        'Comic Sans MS, cursive',
+      );
     });
 
     it('tenant 2 customizations should NOT affect tenant 1', async () => {
@@ -345,8 +355,11 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
 
       expect(response.status).toBe(200);
       // Should NOT have tenant 2 customizations
-      expect(response.body.customizations.fontFamily).not.toBe('Comic Sans MS, cursive');
-      expect(response.body.customizations.primaryColor).toBe('#ff0000');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.customizations.fontFamily).not.toBe(
+        'Comic Sans MS, cursive',
+      );
+      expect(themeData.customizations.primaryColor).toBe('#ff0000');
     });
 
     it('tenant 1 should reset their theme customizations', async () => {
@@ -356,7 +369,8 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
 
       expect(response.status).toBe(200);
       // Customizations should be empty or base values
-      expect(Object.keys(response.body.customizations).length).toBe(0);
+      const themeData = response.body as Record<string, any>;
+      expect(Object.keys(themeData.customizations).length).toBe(0);
     });
 
     it('tenant 1 reset should NOT affect tenant 2 customizations', async () => {
@@ -366,7 +380,10 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
 
       expect(response.status).toBe(200);
       // Tenant 2 should still have their customizations
-      expect(response.body.customizations.fontFamily).toBe('Comic Sans MS, cursive');
+      const themeData = response.body as Record<string, any>;
+      expect(themeData.customizations.fontFamily).toBe(
+        'Comic Sans MS, cursive',
+      );
     });
   });
 
@@ -403,7 +420,7 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
           isActive: false,
         });
 
-      const inactiveTheme = createResponse.body;
+      const inactiveTheme = createResponse.body as Record<string, any>;
 
       // Try to select it as tenant
       const selectResponse = await request(app.getHttpServer())
@@ -435,7 +452,8 @@ describe('Theme Module Multi-Tenant (E2E)', () => {
 
       expect(response.status).toBe(200);
       // Customizations should be cleared
-      expect(Object.keys(response.body.customizations).length).toBe(0);
+      const themeData = response.body as Record<string, any>;
+      expect(Object.keys(themeData.customizations).length).toBe(0);
     });
   });
 });

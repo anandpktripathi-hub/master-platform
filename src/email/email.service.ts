@@ -22,20 +22,29 @@ export class EmailService {
 
   private async sendEmail(to: string, subject: string, html: string) {
     try {
-      await this.transporter.sendMail({
-        from: process.env.SMTP_FROM || 'noreply@transformatrix.com',
-        to,
-        subject,
-        html,
-      });
-      console.log(`Email sent to ${to}: ${subject}`);
+      const mailer = this.transporter;
+      if (mailer && typeof mailer.sendMail === 'function') {
+        await mailer.sendMail({
+          from: process.env.SMTP_FROM || 'noreply@transformatrix.com',
+          to,
+          subject,
+          html,
+        });
+        console.log(`Email sent to ${to}: ${subject}`);
+      } else {
+        console.error('Mailer is not properly configured.');
+      }
     } catch (error) {
       console.error(`Failed to send email to ${to}:`, error);
     }
   }
 
   private compileTemplate(templateName: string, context: any): string {
-    const templatePath = path.join(__dirname, 'templates', `${templateName}.hbs`);
+    const templatePath = path.join(
+      __dirname,
+      'templates',
+      `${templateName}.hbs`,
+    );
     const templateSource = fs.readFileSync(templatePath, 'utf8');
     const template = handlebars.compile(templateSource);
     return template(context);
@@ -51,14 +60,23 @@ export class EmailService {
     await this.sendEmail(email, 'Password Changed Successfully', html);
   }
 
-  async sendPasswordResetEmail(email: string, firstName: string, resetToken: string) {
+  async sendPasswordResetEmail(
+    email: string,
+    firstName: string,
+    resetToken: string,
+  ) {
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    const html = this.compileTemplate('password-reset', { firstName, resetUrl });
+    const html = this.compileTemplate('password-reset', {
+      firstName,
+      resetUrl,
+    });
     await this.sendEmail(email, 'Password Reset Request', html);
   }
 
   async sendPasswordResetConfirmationEmail(email: string, firstName: string) {
-    const html = this.compileTemplate('password-reset-confirmation', { firstName });
+    const html = this.compileTemplate('password-reset-confirmation', {
+      firstName,
+    });
     await this.sendEmail(email, 'Password Reset Successful', html);
   }
 }

@@ -1,12 +1,20 @@
-import { IsString, IsOptional, IsBoolean, IsArray, IsMongoId, IsEnum, IsDateString } from 'class-validator';
-import { PermissionAction, ModuleName } from '../../database/schemas/permission.schema';
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsArray,
+  IsMongoId,
+  IsEnum,
+  IsDateString,
+} from 'class-validator';
+import { PermissionAction, ModuleName } from '@schemas/permission.schema';
 
 export class CreatePermissionDto {
   @IsEnum(['manage', 'create', 'edit', 'delete', 'show'])
-  action: PermissionAction;
+  action!: PermissionAction;
 
   @IsString()
-  module: ModuleName;
+  module!: ModuleName;
 
   @IsOptional()
   @IsString()
@@ -14,15 +22,15 @@ export class CreatePermissionDto {
 }
 
 export class PermissionDto {
-  _id: string;
-  action: PermissionAction;
-  module: ModuleName;
+  _id!: string;
+  action!: PermissionAction;
+  module!: ModuleName;
   description?: string;
 }
 
 export class CreateRoleDto {
   @IsString()
-  name: string;
+  name!: string;
 
   @IsOptional()
   @IsString()
@@ -30,7 +38,7 @@ export class CreateRoleDto {
 
   @IsArray()
   @IsMongoId({ each: true })
-  permissionIds: string[];
+  permissionIds!: string[];
 }
 
 export class UpdateRoleDto {
@@ -49,32 +57,32 @@ export class UpdateRoleDto {
 }
 
 export class RoleDto {
-  _id: string;
-  name: string;
+  _id!: string;
+  name!: string;
   description?: string;
   tenantId?: string;
   isSystem?: boolean;
-  permissions: PermissionDto[];
+  permissions!: PermissionDto[];
   isActive?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt!: Date;
+  updatedAt!: Date;
 }
 
 export class CreateUserDto {
   @IsString()
-  name: string;
+  name!: string;
 
   @IsString()
-  email: string;
+  email!: string;
 
   @IsString()
-  password: string;
+  password!: string;
 
   @IsMongoId()
-  tenantId: string;
+  tenantId!: string;
 
   @IsMongoId()
-  roleId: string;
+  roleId!: string;
 
   @IsOptional()
   @IsBoolean()
@@ -104,18 +112,18 @@ export class UpdateUserDto {
 }
 
 export class UserTenantDto {
-  _id: string;
-  userId: string;
-  tenantId: string;
-  roleId: string;
-  isLoginEnabled: boolean;
-  status: string;
+  _id!: string;
+  userId!: string;
+  tenantId!: string;
+  roleId!: string;
+  isLoginEnabled!: boolean;
+  status!: string;
   lastLoginAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt!: Date;
+  updatedAt!: Date;
 }
 
 export class ResetPasswordDto {
   @IsString()
-  newPassword: string;
+  newPassword!: string;
 }

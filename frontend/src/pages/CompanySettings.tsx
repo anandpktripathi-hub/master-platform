@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  TextField,
-  Typography,
-  Alert,
-  Divider,
-  Chip,
-} from '@mui/material';
-import { Grid } from '@mui/material';
+import ErrorBoundary from '../components/ErrorBoundary';
+import { Box, Button, Container, Paper, TextField, Typography, Alert, Divider, Chip, Grid } from '@mui/material';
 import { Save as SaveIcon, CheckCircle } from '@mui/icons-material';
 import api from '../lib/api';
 
@@ -82,7 +72,8 @@ export default function CompanySettings() {
   }
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <ErrorBoundary>
+      <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom>
           Company Settings
@@ -220,6 +211,7 @@ export default function CompanySettings() {
           </Button>
         </Box>
       </Paper>
-    </Container>
+      </Container>
+    </ErrorBoundary>
   );
 }

@@ -18,11 +18,12 @@ describe('TenantGuard', () => {
   });
 
   describe('canActivate', () => {
-    const createMockContext = (user: any): ExecutionContext => ({
-      switchToHttp: () => ({
-        getRequest: () => ({ user }),
-      }),
-    } as any);
+    const createMockContext = (user: Record<string, any>): ExecutionContext =>
+      ({
+        switchToHttp: () => ({
+          getRequest: () => ({ user }),
+        }),
+      }) as unknown as ExecutionContext;
 
     it('should allow PLATFORM_SUPER_ADMIN without tenantId', () => {
       const context = createMockContext({
@@ -82,7 +83,9 @@ describe('TenantGuard', () => {
       const context = createMockContext(null);
 
       expect(() => guard.canActivate(context)).toThrow(ForbiddenException);
-      expect(() => guard.canActivate(context)).toThrow('Authentication required');
+      expect(() => guard.canActivate(context)).toThrow(
+        'Authentication required',
+      );
     });
 
     it('should reject TENANT_OWNER without tenantId', () => {
@@ -93,7 +96,9 @@ describe('TenantGuard', () => {
       });
 
       expect(() => guard.canActivate(context)).toThrow(ForbiddenException);
-      expect(() => guard.canActivate(context)).toThrow('Tenant context is required');
+      expect(() => guard.canActivate(context)).toThrow(
+        'Tenant context is required',
+      );
     });
 
     it('should reject TENANT_ADMIN without tenantId', () => {
@@ -117,7 +122,10 @@ describe('TenantGuard', () => {
     });
 
     it('should attach tenantId to request', () => {
-      const mockRequest = {
+      const mockRequest: {
+        user: { userId: string; tenantId: string; role: string };
+        tenantId?: string;
+      } = {
         user: {
           userId: 'user-123',
           tenantId: 'tenant-1',
@@ -133,7 +141,7 @@ describe('TenantGuard', () => {
 
       guard.canActivate(context);
 
-      expect((mockRequest as any)['tenantId']).toBe('tenant-1');
+      expect(mockRequest.tenantId).toBe('tenant-1');
     });
   });
 });

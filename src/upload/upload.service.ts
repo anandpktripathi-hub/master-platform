@@ -14,12 +14,16 @@ export class UploadService {
       secretAccessKey: this.configService.get<string>('AWS_SECRET_ACCESS_KEY'),
       region: this.configService.get<string>('AWS_REGION'),
     });
-    this.bucketName = this.configService.get<string>('AWS_S3_BUCKET_NAME') || 'default-bucket';
+    this.bucketName =
+      this.configService.get<string>('AWS_S3_BUCKET_NAME') || 'default-bucket';
   }
 
-  async uploadFile(file: Express.Multer.File, folder: string = 'uploads'): Promise<string> {
+  async uploadFile(
+    file: Express.Multer.File,
+    folder: string = 'uploads',
+  ): Promise<string> {
     const key = `${folder}/${uuidv4()}-${file.originalname}`;
-    
+
     const params: AWS.S3.PutObjectRequest = {
       Bucket: this.bucketName,
       Key: key,
@@ -34,7 +38,7 @@ export class UploadService {
 
   async deleteFile(fileUrl: string): Promise<void> {
     const key = fileUrl.split('.com/')[1];
-    
+
     const params: AWS.S3.DeleteObjectRequest = {
       Bucket: this.bucketName,
       Key: key,

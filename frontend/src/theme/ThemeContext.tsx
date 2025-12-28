@@ -157,7 +157,17 @@ export const ThemeProvider = ThemeProviderComponent;
 function useThemeContextHook(): ThemeContextValue {
   const ctx = useContext(ThemeContext);
   if (!ctx) {
-    throw new Error("useThemeContext must be used within ThemeProvider");
+    // Instead of throwing, return a fallback context with error state
+    return {
+      themes: [],
+      currentTheme: null,
+      variables: null,
+      loading: false,
+      error: 'Theme context unavailable. Please reload or contact support.',
+      refresh: async () => {},
+      selectTheme: async () => {},
+      updateCustomVariables: async () => {},
+    };
   }
   return ctx;
 }

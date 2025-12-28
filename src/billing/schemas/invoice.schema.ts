@@ -83,4 +83,3 @@ InvoiceSchema.index({ invoiceNumber: 1 }, { unique: true });
 InvoiceSchema.index({ status: 1 });
 InvoiceSchema.index({ paidOn: 1 });
 InvoiceSchema.index({ tenantId: 1, status: 1 }); // Composite index
-

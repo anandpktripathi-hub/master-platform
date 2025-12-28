@@ -11,7 +11,7 @@ export class UserService {
     return this.userModel.find({ tenantId }).exec();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<User | null> {
     return this.userModel.findById(id).exec();
   }
 
@@ -24,13 +24,13 @@ export class UserService {
     id: string,
     updateUserDto: User,
     tenantId: string,
-  ): Promise<User> {
+  ): Promise<User | null> {
     return this.userModel
       .findByIdAndUpdate(id, { ...updateUserDto, tenantId }, { new: true })
       .exec();
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<User | null> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
 }

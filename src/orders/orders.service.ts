@@ -1,4 +1,8 @@
-﻿import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+﻿import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order, OrderStatus } from './order.schema';
@@ -12,7 +16,11 @@ export class OrdersService {
     private emailService: EmailService,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto, userId: string, tenantId: string) {
+  async create(
+    createOrderDto: CreateOrderDto,
+    userId: string,
+    tenantId: string,
+  ) {
     const orderNumber = `ORD-${Date.now()}`;
 
     const order = await this.orderModel.create({
@@ -52,7 +60,9 @@ export class OrdersService {
   }
 
   async findById(id: string, tenantId: string) {
-    const order = await this.orderModel.findOne({ _id: id, tenantId }).populate('customerId');
+    const order = await this.orderModel
+      .findOne({ _id: id, tenantId })
+      .populate('customerId');
     if (!order) {
       throw new NotFoundException('Order not found');
     }
@@ -66,7 +76,11 @@ export class OrdersService {
       .sort({ createdAt: -1 });
   }
 
-  async updateStatus(id: string, updateOrderStatusDto: UpdateOrderStatusDto, tenantId: string) {
+  async updateStatus(
+    id: string,
+    updateOrderStatusDto: UpdateOrderStatusDto,
+    tenantId: string,
+  ) {
     const order = await this.orderModel.findOne({ _id: id, tenantId });
     if (!order) {
       throw new NotFoundException('Order not found');
@@ -100,7 +114,9 @@ export class OrdersService {
     }
 
     if (['DELIVERED', 'CANCELLED'].includes(order.status)) {
-      throw new BadRequestException(`Cannot cancel order with status ${order.status}`);
+      throw new BadRequestException(
+        `Cannot cancel order with status ${order.status}`,
+      );
     }
 
     order.status = 'CANCELLED';

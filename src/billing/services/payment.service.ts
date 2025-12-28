@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 export interface PaymentIntent {
@@ -33,20 +37,21 @@ export class PaymentService {
   private razorpayKeySecret: string;
 
   constructor(private configService: ConfigService) {
-    this.stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY') || '';
-    this.razorpayKeyId = this.configService.get<string>('RAZORPAY_KEY_ID') || '';
-    this.razorpayKeySecret = this.configService.get<string>('RAZORPAY_KEY_SECRET') || '';
+    this.stripeSecretKey = configService.get<string>('STRIPE_SECRET_KEY') || '';
+    this.razorpayKeyId = configService.get<string>('RAZORPAY_KEY_ID') || '';
+    this.razorpayKeySecret =
+      configService.get<string>('RAZORPAY_KEY_SECRET') || '';
   }
 
   /**
    * Create a payment intent for Stripe
    * In production, use the actual Stripe library: import Stripe from 'stripe';
    */
-  async createStripePaymentIntent(
+  createStripePaymentIntent(
     amount: number,
     currency: string = 'inr',
-    description?: string,
-  ): Promise<PaymentIntent> {
+    // removed unused variable
+  ): PaymentIntent {
     if (!this.stripeSecretKey) {
       throw new BadRequestException('Stripe is not configured');
     }
@@ -65,8 +70,9 @@ export class PaymentService {
         provider: 'stripe',
         clientSecret: `${this._generateRandomId()}_secret_${this._generateRandomId()}`,
       };
-    } catch (error: any) {
-      throw new InternalServerErrorException(`Stripe error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(`Stripe error: ${message}`);
     }
   }
 
@@ -74,11 +80,7 @@ export class PaymentService {
    * Create a payment order for Razorpay
    * In production, use the actual Razorpay library
    */
-  async createRazorpayOrder(
-    amount: number,
-    currency: string = 'INR',
-    description?: string,
-  ): Promise<PaymentIntent> {
+  createRazorpayOrder(amount: number, currency: string = 'INR'): PaymentIntent {
     if (!this.razorpayKeyId || !this.razorpayKeySecret) {
       throw new BadRequestException('Razorpay is not configured');
     }
@@ -101,15 +103,16 @@ export class PaymentService {
         provider: 'razorpay',
         paymentUrl: `https://checkout.razorpay.com/?key=${this.razorpayKeyId}&order_id=order_${this._generateRandomId()}`,
       };
-    } catch (error: any) {
-      throw new InternalServerErrorException(`Razorpay error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(`Razorpay error: ${message}`);
     }
   }
 
   /**
    * Confirm Stripe payment
    */
-  async confirmStripePayment(paymentIntentId: string): Promise<PaymentConfirmation> {
+  confirmStripePayment(paymentIntentId: string): PaymentConfirmation {
     if (!this.stripeSecretKey) {
       throw new BadRequestException('Stripe is not configured');
     }
@@ -127,15 +130,19 @@ export class PaymentService {
         amount: 0, // Would be fetched from Stripe in production
         currency: 'inr',
       };
-    } catch (error: any) {
-      throw new InternalServerErrorException(`Stripe error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(`Stripe error: ${message}`);
     }
   }
 
   /**
    * Confirm Razorpay payment
    */
-  async confirmRazorpayPayment(paymentId: string, orderId: string): Promise<PaymentConfirmation> {
+  confirmRazorpayPayment(
+    paymentId: string,
+    _orderId: string,
+  ): PaymentConfirmation {
     if (!this.razorpayKeyId || !this.razorpayKeySecret) {
       throw new BadRequestException('Razorpay is not configured');
     }
@@ -156,15 +163,16 @@ export class PaymentService {
         amount: 0, // Would be fetched from Razorpay in production
         currency: 'INR',
       };
-    } catch (error: any) {
-      throw new InternalServerErrorException(`Razorpay error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(`Razorpay error: ${message}`);
     }
   }
 
   /**
    * Refund a Stripe payment
    */
-  async refundStripePayment(paymentIntentId: string, amount?: number): Promise<RefundResult> {
+  refundStripePayment(paymentIntentId: string, amount?: number): RefundResult {
     if (!this.stripeSecretKey) {
       throw new BadRequestException('Stripe is not configured');
     }
@@ -184,15 +192,16 @@ export class PaymentService {
         provider: 'stripe',
         amount: amount || 0,
       };
-    } catch (error: any) {
-      throw new InternalServerErrorException(`Stripe refund error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(`Stripe refund error: ${message}`);
     }
   }
 
   /**
    * Refund a Razorpay payment
    */
-  async refundRazorpayPayment(paymentId: string, amount?: number): Promise<RefundResult> {
+  refundRazorpayPayment(paymentId: string, amount?: number): RefundResult {
     if (!this.razorpayKeyId || !this.razorpayKeySecret) {
       throw new BadRequestException('Razorpay is not configured');
     }
@@ -215,8 +224,11 @@ export class PaymentService {
         provider: 'razorpay',
         amount: amount || 0,
       };
-    } catch (error: any) {
-      throw new InternalServerErrorException(`Razorpay refund error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new InternalServerErrorException(
+        `Razorpay refund error: ${message}`,
+      );
     }
   }
 

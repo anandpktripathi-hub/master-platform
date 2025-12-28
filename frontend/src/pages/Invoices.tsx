@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ErrorBoundary from '../components/ErrorBoundary';
 import {
   Container,
   Box,
@@ -94,7 +95,8 @@ const Invoices: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <ErrorBoundary>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
@@ -281,7 +283,8 @@ const Invoices: React.FC = () => {
           )}
         </DialogActions>
       </Dialog>
-    </Container>
+      </Container>
+    </ErrorBoundary>
   );
 };
 

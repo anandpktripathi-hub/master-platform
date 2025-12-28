@@ -21,7 +21,7 @@ export interface UserFormProps {
  */
 const UserForm: React.FC<UserFormProps> = ({ mode = "create" }) => {
   return (
-    <div style={{ padding: "1rem", border: "1px dashed #555", borderRadius: 8 }}>
+    <div className="p-4 border border-dashed border-[var(--admin-border,#555)] rounded-lg">
       <p>UserForm placeholder ({mode} mode).</p>
       <p>TODO: Implement full user form UI.</p>
     </div>

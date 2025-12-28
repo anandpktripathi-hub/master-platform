@@ -4,10 +4,10 @@ import { TenantResolverService } from '../services/tenant-resolver.service';
 
 /**
  * DomainTenantMiddleware
- * 
+ *
  * This middleware resolves the tenant from the request hostname (domain/subdomain).
  * It runs BEFORE authentication and attaches tenant information to the request.
- * 
+ *
  * Execution Flow:
  * 1. Extract hostname from request (req.hostname or req.headers.host)
  * 2. Use TenantResolverService to resolve tenant from hostname
@@ -17,10 +17,10 @@ import { TenantResolverService } from '../services/tenant-resolver.service';
  *    - req.resolvedTenantSlug (tenant slug)
  *    - req.isLandlordDomain (boolean flag)
  * 4. Continue to next middleware
- * 
+ *
  * This middleware does NOT enforce authentication or authorization.
  * It only makes tenant context available based on the domain.
- * 
+ *
  * Use Cases:
  * - Public pages that need to show tenant-specific branding before login
  * - Login pages that need to know which tenant the user is logging into
@@ -47,7 +47,7 @@ export class DomainTenantMiddleware implements NestMiddleware {
       // Extract hostname from request
       // req.hostname removes the port, req.headers.host includes the port
       const hostname = req.headers.host || req.hostname || 'localhost';
-      
+
       this.logger.debug(`Processing request for hostname: ${hostname}`);
 
       // Resolve tenant from hostname
@@ -73,7 +73,10 @@ export class DomainTenantMiddleware implements NestMiddleware {
 
       next();
     } catch (error) {
-      this.logger.error(`Error in DomainTenantMiddleware: ${error.message}`, error.stack);
+      this.logger.error(
+        `Error in DomainTenantMiddleware: ${(error as Error).message}`,
+        (error as Error).stack,
+      );
       // Don't block the request, just continue without tenant resolution
       next();
     }

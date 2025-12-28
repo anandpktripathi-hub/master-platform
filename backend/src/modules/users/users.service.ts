@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcryptjs';
+import { objectIdToString } from '../../utils/objectIdToString';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -38,7 +39,7 @@ export class UsersService {
 
     return {
       ...(lean as Omit<User, 'password'>),
-      _id: String(doc._id),
+      _id: objectIdToString(doc._id),
     } as SafeUser;
   }
 
@@ -85,7 +86,7 @@ export class UsersService {
     ]);
     const safe = (users as (User & { _id: unknown })[]).map((u) => ({
       ...u,
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+
       _id: String(u._id),
     })) as SafeUser[];
     return { data: safe, total };

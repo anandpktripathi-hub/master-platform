@@ -1,5 +1,20 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, UseGuards, HttpCode } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+  HttpCode,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { PlansService } from '../services/plans.service';
 import { CreatePlanDto } from '../dto/create-plan.dto';
 import { UpdatePlanDto } from '../dto/update-plan.dto';
@@ -43,7 +58,10 @@ export class PlansController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update plan (Super Admin only)' })
   @ApiResponse({ status: 200, description: 'Plan updated successfully' })
-  async updatePlan(@Param('id') id: string, @Body() updatePlanDto: UpdatePlanDto) {
+  async updatePlan(
+    @Param('id') id: string,
+    @Body() updatePlanDto: UpdatePlanDto,
+  ) {
     return this.plansService.update(id, updatePlanDto);
   }
 

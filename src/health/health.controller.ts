@@ -11,8 +11,9 @@ export class HealthController {
   @Get()
   @ApiOperation({ summary: 'Health check' })
   @ApiResponse({ status: 200, description: 'Service is healthy' })
-  async check() {
-    const dbStatus = this.connection.readyState === 1 ? 'connected' : 'disconnected';
+  check() {
+    const dbStatus =
+      String(this.connection.readyState) === '1' ? 'connected' : 'disconnected';
 
     return {
       status: 'ok',

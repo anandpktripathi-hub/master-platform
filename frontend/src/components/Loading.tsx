@@ -2,9 +2,9 @@ import React from 'react';
 import { CircularProgress, Typography } from '@mui/material';
 
 const Loading = () => (
-  <div style={{ textAlign: 'center', padding: '20px' }}>
+  <div className="text-center p-5">
     <CircularProgress />
-    <Typography variant="body1" style={{ marginTop: '10px' }}>
+    <Typography variant="body1" className="mt-2">
       Loading...
     </Typography>
   </div>

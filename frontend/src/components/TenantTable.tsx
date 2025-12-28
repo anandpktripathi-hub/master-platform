@@ -18,7 +18,7 @@ export interface TenantTableProps {
  */
 const TenantTable: React.FC<TenantTableProps> = ({ tenants = [] }) => {
   return (
-    <div style={{ padding: "1rem", border: "1px dashed #555", borderRadius: 8 }}>
+    <div style={{ padding: "1rem", border: "1px dashed var(--admin-border, #555)", borderRadius: 8 }}>
       <p>TenantTable placeholder. Total tenants: {tenants.length}</p>
       <ul>
         {tenants.map((t, idx) => (

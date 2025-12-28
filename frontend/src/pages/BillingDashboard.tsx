@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -19,12 +20,12 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
+  ListItemText
 } from '@mui/material';
 import {
   Info as InfoIcon,
   Edit as EditIcon,
-  CreditCard as CreditCardIcon,
+  CreditCard as CreditCardIcon
 } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 import type { Subscription, Plan } from '../types/billing.types';
@@ -185,33 +186,30 @@ const BillingDashboard: React.FC = () => {
     }
   };
 
+  let content;
   if (loading) {
-    return (
+    content = (
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box>
       </Container>
     );
-  }
-
-  if (error || !subscription) {
-    return (
+  } else if (error || !subscription) {
+    content = (
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Alert severity="error">{error || 'No active subscription found'}</Alert>
       </Container>
     );
-  }
-
-  const currentPlan = getCurrentPlan();
-  const usageMetrics = getUsageMetrics();
-  const daysRemaining =
-    subscription.status === 'TRIAL'
-      ? calculateDaysRemaining(subscription.trialEndsAt || '')
-      : calculateDaysRemaining(subscription.renewsAt || '');
-
-  return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+  } else {
+    const currentPlan = getCurrentPlan();
+    const usageMetrics = getUsageMetrics();
+    const daysRemaining =
+      subscription.status === 'TRIAL'
+        ? calculateDaysRemaining(subscription.trialEndsAt || '')
+        : calculateDaysRemaining(subscription.renewsAt || '');
+    content = (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header */}
       <Box sx={{ mb: 6 }}>
         <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
@@ -420,7 +418,9 @@ const BillingDashboard: React.FC = () => {
         </DialogActions>
       </Dialog>
     </Container>
-  );
+      );
+    }
+    return <ErrorBoundary>{content}</ErrorBoundary>;
 };
 
 export default BillingDashboard;

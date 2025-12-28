@@ -21,15 +21,15 @@ import {
 export class ManualCreateTenantDto {
   @ValidateNested()
   @Type(() => PersonalInfoDto)
-  personal: PersonalInfoDto;
+  personal!: PersonalInfoDto;
 
   @ValidateNested()
   @Type(() => CompanyInfoDto)
-  company: CompanyInfoDto;
+  company!: CompanyInfoDto;
 
   @ValidateNested()
   @Type(() => ComplianceDto)
-  compliance: ComplianceDto;
+  compliance!: ComplianceDto;
 
   @IsOptional()
   @IsString()
@@ -48,7 +48,7 @@ export class ManualCreateTenantDto {
     message:
       'Subdomain can only contain lowercase letters, numbers, and hyphens',
   })
-  subdomain: string;
+  subdomain!: string; // Optional: if not provided, generates temp password or sends invite
 
   @IsOptional()
   @IsBoolean()

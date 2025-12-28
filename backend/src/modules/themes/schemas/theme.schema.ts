@@ -6,13 +6,13 @@ export type ThemeDocument = Theme & Document;
 @Schema({ timestamps: true })
 export class Theme {
   @Prop({ required: true, unique: true, trim: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
-  key: string;
+  key!: string;
 
   @Prop({ type: String, default: null })
-  previewImage?: string;
+  previewImage!: string;
 
   @Prop({
     type: Map,
@@ -21,20 +21,20 @@ export class Theme {
     description:
       'Default CSS variables for theme (e.g., color-primary, border-radius)',
   })
-  cssVariables: Record<string, string>;
+  cssVariables!: Record<string, string>;
 
   @Prop({
     type: String,
     enum: ['ACTIVE', 'INACTIVE'],
     default: 'ACTIVE',
   })
-  status: 'ACTIVE' | 'INACTIVE';
+  status!: 'ACTIVE' | 'INACTIVE';
 
   @Prop({ type: Date, default: () => new Date() })
-  createdAt: Date;
+  createdAt!: Date;
 
   @Prop({ type: Date, default: () => new Date() })
-  updatedAt: Date;
+  updatedAt!: Date;
 }
 
 export const ThemeSchema = SchemaFactory.createForClass(Theme);

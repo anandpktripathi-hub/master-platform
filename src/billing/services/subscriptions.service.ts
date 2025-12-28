@@ -1,7 +1,16 @@
-﻿import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+﻿import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Subscription, SubscriptionDocument, SubscriptionStatus, BillingPeriod } from '../schemas/subscription.schema';
+import {
+  Subscription,
+  SubscriptionDocument,
+  SubscriptionStatus,
+  BillingPeriod,
+} from '../schemas/subscription.schema';
 import { SubscribeDto } from '../dto/subscribe.dto';
 import { ChangePlanDto } from '../dto/change-plan.dto';
 import { PlansService } from './plans.service';
@@ -9,11 +18,15 @@ import { PlansService } from './plans.service';
 @Injectable()
 export class SubscriptionsService {
   constructor(
-    @InjectModel('Subscription') private subscriptionModel: Model<SubscriptionDocument>,
+    @InjectModel('Subscription')
+    private subscriptionModel: Model<SubscriptionDocument>,
     private plansService: PlansService,
   ) {}
 
-  async create(tenantId: string, subscribeDto: SubscribeDto): Promise<Subscription> {
+  async create(
+    tenantId: string,
+    subscribeDto: SubscribeDto,
+  ): Promise<Subscription> {
     // Check if tenant already has an active subscription
     const existingSubscription = await this.subscriptionModel.findOne({
       tenantId: new Types.ObjectId(tenantId),
@@ -21,7 +34,9 @@ export class SubscriptionsService {
     });
 
     if (existingSubscription) {
-      throw new BadRequestException('Tenant already has an active subscription');
+      throw new BadRequestException(
+        'Tenant already has an active subscription',
+      );
     }
 
     // Get plan details
@@ -56,7 +71,7 @@ export class SubscriptionsService {
       paymentMethod: subscribeDto.paymentMethodId ? 'STRIPE' : 'MANUAL',
     });
 
-    return (subscription as any).save();
+    return (await (subscription as any).save()) as Subscription;
   }
 
   async findByTenantId(tenantId: string): Promise<Subscription> {
@@ -65,7 +80,9 @@ export class SubscriptionsService {
       .populate('planId');
 
     if (!subscription) {
-      throw new NotFoundException(`No subscription found for tenant "${tenantId}"`);
+      throw new NotFoundException(
+        `No subscription found for tenant "${tenantId}"`,
+      );
     }
 
     return subscription;
@@ -78,7 +95,10 @@ export class SubscriptionsService {
     });
   }
 
-  async changePlan(tenantId: string, changePlanDto: ChangePlanDto): Promise<Subscription> {
+  async changePlan(
+    tenantId: string,
+    changePlanDto: ChangePlanDto,
+  ): Promise<Subscription> {
     const subscription = await this.findByTenantId(tenantId);
 
     if (!subscription) {
@@ -86,11 +106,13 @@ export class SubscriptionsService {
     }
 
     if (subscription.status === SubscriptionStatus.CANCELLED) {
-      throw new BadRequestException('Cannot change plan for a cancelled subscription');
+      throw new BadRequestException(
+        'Cannot change plan for a cancelled subscription',
+      );
     }
 
     // Get new plan
-    const newPlan = await this.plansService.findById(changePlanDto.newPlanId);
+    await this.plansService.findById(changePlanDto.newPlanId);
 
     // Update subscription
     subscription.planId = new Types.ObjectId(changePlanDto.newPlanId);
@@ -100,13 +122,19 @@ export class SubscriptionsService {
     if (subscription.status === SubscriptionStatus.TRIAL) {
       subscription.renewAt = this.addDays(new Date(), 14); // Reset trial
     } else {
-      subscription.renewAt = this.addMonths(new Date(), changePlanDto.billingPeriod === BillingPeriod.YEARLY ? 12 : 1);
+      subscription.renewAt = this.addMonths(
+        new Date(),
+        changePlanDto.billingPeriod === BillingPeriod.YEARLY ? 12 : 1,
+      );
     }
 
-    return (subscription as any).save();
+    return (await (subscription as any).save()) as Subscription;
   }
 
-  async cancelSubscription(tenantId: string, cancelAtPeriodEnd = false): Promise<Subscription> {
+  async cancelSubscription(
+    tenantId: string,
+    cancelAtPeriodEnd = false,
+  ): Promise<Subscription> {
     const subscription = await this.findByTenantId(tenantId);
 
     if (!subscription) {
@@ -120,10 +148,13 @@ export class SubscriptionsService {
       subscription.cancelledAt = new Date();
     }
 
-    return (subscription as any).save();
+    return (await (subscription as any).save()) as Subscription;
   }
 
-  async updateStatus(tenantId: string, status: SubscriptionStatus): Promise<Subscription> {
+  async updateStatus(
+    tenantId: string,
+    status: SubscriptionStatus,
+  ): Promise<Subscription> {
     const subscription = await this.findByTenantId(tenantId);
 
     if (!subscription) {
@@ -131,7 +162,7 @@ export class SubscriptionsService {
     }
 
     subscription.status = status;
-    return (subscription as any).save();
+    return (await (subscription as any).save()) as Subscription;
   }
 
   async renewSubscription(subscriptionId: string): Promise<Subscription> {
@@ -156,7 +187,7 @@ export class SubscriptionsService {
       subscription.failedPaymentCount = 0;
     }
 
-    return (subscription as any).save();
+    return (await (subscription as any).save()) as Subscription;
   }
 
   // Helper methods
@@ -172,4 +203,3 @@ export class SubscriptionsService {
     return result;
   }
 }
-

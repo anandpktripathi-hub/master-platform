@@ -6,16 +6,16 @@ export type ThemeDocument = Theme & Document;
 @Schema()
 export class Theme {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ type: Object, required: true })
-  colors: Record<string, string>;
+  colors!: Record<string, string>;
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
-  tenantId: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 
   @Prop({ default: true })
-  isActive: boolean;
+  isActive!: boolean;
 }
 
 export const ThemeSchema = SchemaFactory.createForClass(Theme);

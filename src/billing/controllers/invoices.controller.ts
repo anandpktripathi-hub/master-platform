@@ -1,5 +1,17 @@
-import { Controller, Get, Param, UseGuards, Request, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Param,
+  UseGuards,
+  Request,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { InvoicesService } from '../services/invoices.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { TenantGuard } from '../../common/guards/tenant.guard';
@@ -19,7 +31,7 @@ export class InvoicesController {
     @Query('limit') limit: number = 50,
     @Request() req: any,
   ) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.invoicesService.findByTenantId(tenantId, limit, page);
   }
 
@@ -28,7 +40,7 @@ export class InvoicesController {
   @ApiResponse({ status: 200, description: 'Invoice details returned' })
   @ApiResponse({ status: 404, description: 'Invoice not found' })
   async getInvoice(@Param('invoiceId') invoiceId: string, @Request() req: any) {
-    const tenantId = req.tenantId;
+    const tenantId = req.user?.tenantId;
     return this.invoicesService.findById(invoiceId, tenantId);
   }
 }

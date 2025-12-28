@@ -7,6 +7,8 @@
   Delete,
   Param,
   UseGuards,
+  Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Dashboard } from '../../database/schemas/dashboard.schema';
@@ -25,8 +27,10 @@ export class DashboardController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dashboardService.findOne(id);
+  findOne(@Param('id') id: string, @Req() req: any) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+    return this.dashboardService.findOne(id, tenantId);
   }
 
   @Post()

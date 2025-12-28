@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
+import { objectIdToString } from '../../utils/objectIdToString';
 import { User, UserDocument } from '../../database/schemas/user.schema';
 import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
 import { TenantRegisterDto } from './dto/tenant-register.dto';
@@ -36,7 +37,9 @@ export class AuthService {
     }
 
     const userObj = user.toObject() as UserDocument & { password?: string };
-    delete userObj.password;
+    if (userObj && Object.prototype.hasOwnProperty.call(userObj, 'password')) {
+      delete (userObj as { password?: string }).password;
+    }
     return userObj;
   }
 
@@ -51,8 +54,7 @@ export class AuthService {
   }) {
     let subject: string | null = user.id ?? user.userId ?? null;
     if (!subject && user._id && typeof user._id === 'object') {
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      subject = String(user._id);
+      subject = objectIdToString(user._id);
     }
     const payload = {
       sub: subject,
@@ -154,19 +156,19 @@ export class AuthService {
     });
 
     // 5. Update tenant with owner user reference
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const tenantIdUpdate = tenant._id.toString();
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const userIdUpdate = user._id.toString();
+
+    const tenantIdUpdate = objectIdToString(tenant._id);
+
+    const userIdUpdate = objectIdToString(user._id);
     await this.tenantModel.findByIdAndUpdate(tenantIdUpdate, {
       createdByUserId: userIdUpdate,
     });
 
     // 6. Generate JWT for immediate login
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const userId = user._id.toString();
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    const tenantIdStr = tenant._id.toString();
+
+    const userId = objectIdToString(user._id);
+
+    const tenantIdStr = objectIdToString(tenant._id);
     const payload = {
       sub: userId,
       email: user.email,

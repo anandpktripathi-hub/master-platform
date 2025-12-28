@@ -1,4 +1,11 @@
-import { IsString, IsNumber, IsArray, IsBoolean, IsOptional, Min, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsArray,
+  IsBoolean,
+  IsOptional,
+  Min,
+} from 'class-validator';
 
 export class CreatePlanDto {
   @IsString()

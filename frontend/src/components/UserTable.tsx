@@ -21,7 +21,7 @@ export interface UserTableProps {
  */
 const UserTable: React.FC<UserTableProps> = ({ users = [] }) => {
   return (
-    <div style={{ padding: "1rem", border: "1px dashed #555", borderRadius: 8 }}>
+    <div className="p-4 border border-dashed border-[var(--admin-border,#555)] rounded-lg">
       <p>UserTable placeholder. Total users: {users.length}</p>
       <ul>
         {users.map((u, idx) => (

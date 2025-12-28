@@ -6,12 +6,12 @@ export type PermissionDocument = Permission & Document;
 export type PermissionAction = 'manage' | 'create' | 'edit' | 'delete' | 'show';
 
 // Module names that match the screenshots
-export type ModuleName = 
-  | 'User' 
-  | 'Role' 
-  | 'Client' 
-  | 'Product & service' 
-  | 'Constant unit' 
+export type ModuleName =
+  | 'User'
+  | 'Role'
+  | 'Client'
+  | 'Product & service'
+  | 'Constant unit'
   | 'Constant tax'
   | 'Constant category'
   | 'Account'
@@ -28,14 +28,17 @@ export type ModuleName =
 
 @Schema({ timestamps: true })
 export class Permission {
-  @Prop({ required: true, enum: ['manage', 'create', 'edit', 'delete', 'show'] })
-  action: PermissionAction;
+  @Prop({
+    required: true,
+    enum: ['manage', 'create', 'edit', 'delete', 'show'],
+  })
+  action!: PermissionAction;
 
   @Prop({ required: true })
-  module: ModuleName;
+  module!: ModuleName;
 
   @Prop({ required: false })
-  description?: string;
+  description!: string;
 }
 
 export const PermissionSchema = SchemaFactory.createForClass(Permission);

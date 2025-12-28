@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { Plan, PlanSchema } from './schemas/plan.schema';
-import { Subscription, SubscriptionSchema } from './schemas/subscription.schema';
+import {
+  Subscription,
+  SubscriptionSchema,
+} from './schemas/subscription.schema';
 import { Invoice, InvoiceSchema } from './schemas/invoice.schema';
 import { PlansService } from './services/plans.service';
 import { SubscriptionsService } from './services/subscriptions.service';
@@ -22,8 +25,23 @@ import { PaymentWebhookController } from './controllers/payment-webhook.controll
       { name: Invoice.name, schema: InvoiceSchema },
     ]),
   ],
-  providers: [PlansService, SubscriptionsService, InvoicesService, PaymentService],
-  controllers: [PlansController, SubscriptionsController, InvoicesController, PaymentWebhookController],
-  exports: [PlansService, SubscriptionsService, InvoicesService, PaymentService],
+  providers: [
+    PlansService,
+    SubscriptionsService,
+    InvoicesService,
+    PaymentService,
+  ],
+  controllers: [
+    PlansController,
+    SubscriptionsController,
+    InvoicesController,
+    PaymentWebhookController,
+  ],
+  exports: [
+    PlansService,
+    SubscriptionsService,
+    InvoicesService,
+    PaymentService,
+  ],
 })
 export class BillingModule {}

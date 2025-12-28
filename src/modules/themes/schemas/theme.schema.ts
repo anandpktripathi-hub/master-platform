@@ -3,11 +3,11 @@ import { Document } from 'mongoose';
 
 /**
  * Theme Schema
- * 
+ *
  * Represents a global theme template that can be used by any tenant.
  * Created and managed by PLATFORM_SUPER_ADMIN only.
  * Stored in the Master Database.
- * 
+ *
  * Examples:
  * - "Modern Light" - Clean, minimal light theme
  * - "Dark Professional" - Professional dark theme

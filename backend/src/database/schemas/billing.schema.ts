@@ -6,19 +6,19 @@ export type BillingDocument = Billing & Document;
 @Schema()
 export class Billing {
   @Prop({ required: true })
-  amount: number;
+  amount!: number;
 
   @Prop({ required: true })
-  currency: string;
+  currency!: string;
 
   @Prop({ required: true })
-  status: string;
+  status!: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
-  tenantId: Types.ObjectId;
+  tenantId!: Types.ObjectId;
 
   @Prop({ default: Date.now })
-  createdAt: Date;
+  createdAt!: Date;
 }
 
 export const BillingSchema = SchemaFactory.createForClass(Billing);

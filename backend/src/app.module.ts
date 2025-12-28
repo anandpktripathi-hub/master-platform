@@ -13,12 +13,17 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { RbacModule } from './modules/rbac/rbac.module';
+import { DomainsModule } from './modules/domains/domains.module';
+import { CustomDomainsModule } from './modules/custom-domains/custom-domains.module';
+import { PackagesModule } from './modules/packages/packages.module';
+import { CouponsModule } from './modules/coupons/coupons.module';
+import { SettingsModule } from './modules/settings/settings.module';
 
 @Module({
   imports: [
     HealthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.DATABASE_URI),
+    MongooseModule.forRoot(process.env.DATABASE_URI!),
     UsersModule,
     TenantsModule,
     ProductsModule,
@@ -27,6 +32,11 @@ import { RbacModule } from './modules/rbac/rbac.module';
     DashboardModule,
     ProfileModule,
     RbacModule,
+    DomainsModule,
+    CustomDomainsModule,
+    PackagesModule,
+    CouponsModule,
+    SettingsModule,
   ],
 })
 export class AppModule implements NestModule {

@@ -11,18 +11,21 @@ export class PaymentsController {
   @Post('create-payment-intent')
   @ApiOperation({ summary: 'Create Stripe payment intent' })
   @ApiResponse({ status: 201, description: 'Payment intent created' })
-  async createPaymentIntent(@Body() body: { amount: number; currency?: string }) {
-    return this.paymentsService.createPaymentIntent(body.amount, body.currency || 'usd');
+  async createPaymentIntent(
+    @Body() body: { amount: number; currency?: string },
+  ) {
+    return this.paymentsService.createPaymentIntent(
+      body.amount,
+      body.currency || 'usd',
+    );
   }
 
   @Post('create-checkout-session')
   @ApiOperation({ summary: 'Create Stripe checkout session' })
   @ApiResponse({ status: 201, description: 'Checkout session created' })
-  async createCheckoutSession(@Body() body: { 
-    items: any[]; 
-    successUrl: string; 
-    cancelUrl: string;
-  }) {
+  async createCheckoutSession(
+    @Body() body: { items: any[]; successUrl: string; cancelUrl: string },
+  ) {
     const session = await this.paymentsService.createCheckoutSession(
       body.items,
       body.successUrl,
@@ -38,10 +41,13 @@ export class PaymentsController {
     @Headers('stripe-signature') signature: string,
     @Req() request: Request,
   ) {
-    const rawBody = (request as any).rawBody || request.body;
+    const rawBody: any = (request as any).rawBody || request.body;
     try {
-      const event = await this.paymentsService.verifyWebhookSignature(rawBody, signature);
-      
+      const event = await this.paymentsService.verifyWebhookSignature(
+        rawBody,
+        signature,
+      );
+
       // Handle different event types
       switch (event.type) {
         case 'payment_intent.succeeded':
@@ -56,7 +62,7 @@ export class PaymentsController {
 
       return { received: true };
     } catch (err) {
-      return { error: err.message };
+      return { error: (err as Error).message };
     }
   }
 }
