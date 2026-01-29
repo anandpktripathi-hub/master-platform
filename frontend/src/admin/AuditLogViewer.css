@@ -1,0 +1,19 @@
+.audit-log-filter-input {
+  margin-bottom: 10px;
+  padding: 4px 8px;
+  width: 300px;
+}
+
+.audit-log-download-btn {
+  margin-left: 8px;
+  margin-bottom: 10px;
+}
+
+.audit-log-table-container {
+  overflow-x: auto;
+}
+
+.audit-log-details-pre {
+  max-width: 300px;
+  white-space: pre-wrap;
+}

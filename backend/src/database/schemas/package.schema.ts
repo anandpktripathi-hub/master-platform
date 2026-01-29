@@ -11,6 +11,11 @@ export interface FeatureSet {
   advancedAnalytics: boolean;
   customTheme: boolean;
   api: boolean;
+  hotelBooking: boolean;
+  courseManagement: boolean;
+  blogEnabled: boolean;
+  ecommerceEnabled: boolean;
+  bookingEnabled: boolean;
   [key: string]: boolean; // Allow dynamic features
 }
 
@@ -27,7 +32,7 @@ export interface PackageLimits {
 
 @Schema({ timestamps: true })
 export class Package {
-  @Prop({ required: true, unique: true, index: true })
+  @Prop({ required: true })
   name!: string; // e.g., "Basic", "Standard", "Premium"
 
   @Prop({ required: false })
@@ -50,6 +55,9 @@ export class Package {
 
   @Prop({ type: Object, required: true })
   limits!: PackageLimits;
+
+  @Prop({ required: false, type: Number })
+  expiryWarningDays?: number; // Optional per-plan subscription expiry warning window
 
   @Prop({ required: false })
   order!: number; // Display order in UI (lower = first)

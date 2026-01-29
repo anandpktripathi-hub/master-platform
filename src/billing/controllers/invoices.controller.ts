@@ -5,6 +5,7 @@ import {
   UseGuards,
   Request,
   Query,
+  Res,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -15,13 +16,18 @@ import {
 import { InvoicesService } from '../services/invoices.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { TenantGuard } from '../../common/guards/tenant.guard';
+import { InvoicePdfService } from '../services/invoice-pdf.service';
+import type { Response } from 'express';
 
 @ApiTags('Invoices')
 @Controller('invoices')
 @UseGuards(JwtAuthGuard, TenantGuard)
 @ApiBearerAuth()
 export class InvoicesController {
-  constructor(private invoicesService: InvoicesService) {}
+  constructor(
+    private invoicesService: InvoicesService,
+    private invoicePdfService: InvoicePdfService,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'Get invoices for current tenant' })
@@ -42,5 +48,27 @@ export class InvoicesController {
   async getInvoice(@Param('invoiceId') invoiceId: string, @Request() req: any) {
     const tenantId = req.user?.tenantId;
     return this.invoicesService.findById(invoiceId, tenantId);
+  }
+
+  @Get(':invoiceId/pdf')
+  @ApiOperation({ summary: 'Download invoice as branded PDF (current tenant)' })
+  @ApiResponse({ status: 200, description: 'PDF stream returned' })
+  async downloadInvoicePdf(
+    @Param('invoiceId') invoiceId: string,
+    @Request() req: any,
+    @Res() res: Response,
+  ) {
+    const tenantId = req.user?.tenantId;
+    const invoice = await this.invoicesService.findById(invoiceId, tenantId);
+    const pdfBuffer = await this.invoicePdfService.generate(invoice as any);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="${(invoice as any).invoiceNumber || 'invoice'}.pdf"`,
+    );
+    res.setHeader('Content-Length', pdfBuffer.length.toString());
+
+    res.end(pdfBuffer);
   }
 }

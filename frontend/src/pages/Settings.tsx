@@ -25,6 +25,7 @@ const emptyApplication: ApplicationSettingsDto = {
   appTimezone: 'UTC',
   isLiveServer: false,
   appDebug: false,
+  subscriptionExpiryWarningDays: 3,
 };
 
 const emptySystem: SystemSettingsDto = {
@@ -221,6 +222,16 @@ export default function Settings() {
               label="Debug Mode"
               checked={application.appDebug}
               onChange={(v) => setApplication({ ...application, appDebug: v })}
+            />
+            <TextField
+              label="Subscription expiry warning days"
+              value={String(application.subscriptionExpiryWarningDays ?? 3)}
+              onChange={(v) =>
+                setApplication({
+                  ...application,
+                  subscriptionExpiryWarningDays: Number(v) || 0,
+                })
+              }
             />
           </FormGrid>
         </SettingsCard>

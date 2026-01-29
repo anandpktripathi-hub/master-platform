@@ -32,17 +32,22 @@ api.interceptors.response.use(
         window.location.href = "/login";
         return Promise.reject(new Error("Session expired. Please login again."));
       }
-      
-      // 403 Forbidden: show permission denied (no redirect, let caller handle)
+
+      // 403 Forbidden: preserve backend message so we can surface
+      // quota/payment/subscription issues instead of a generic error.
       if (error.response.status === 403) {
-        return Promise.reject(new Error("Permission denied"));
+        const backendMessage =
+          (error.response.data && (error.response.data.message || error.response.data.error)) ||
+          undefined;
+        const message = backendMessage || "Permission denied";
+        return Promise.reject(new Error(message));
       }
 
       // For other errors (including 5xx), pass through without global alert
       // Let individual components handle their errors
       return Promise.reject(error);
     }
-    
+
     // Network error or no response
     return Promise.reject(error);
   }

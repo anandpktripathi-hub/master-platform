@@ -33,7 +33,8 @@ export class SubscriptionsController {
   @ApiOperation({ summary: 'Subscribe to a plan' })
   @ApiResponse({
     status: 201,
-    description: 'Subscription created successfully',
+    description:
+      'Subscription created successfully. For paid plans, invoice and payment intent/order details are returned.',
   })
   @ApiResponse({
     status: 400,

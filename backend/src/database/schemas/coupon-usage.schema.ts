@@ -5,10 +5,10 @@ export type CouponUsageDocument = CouponUsage & Document;
 
 @Schema({ timestamps: true })
 export class CouponUsage {
-  @Prop({ type: Types.ObjectId, ref: 'Coupon', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Coupon', required: true })
   couponId!: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
   tenantId!: Types.ObjectId;
 
   @Prop({ required: true })

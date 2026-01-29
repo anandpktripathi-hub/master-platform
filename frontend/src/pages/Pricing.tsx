@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -20,10 +20,12 @@ import type { Plan, BillingPeriod } from '../types/billing.types';
 import { PricingCard } from '../components/billing/PricingCard';
 import { PlanComparisonTable } from '../components/billing/PlanComparisonTable';
 import billingService from '../services/billingService';
+import { subscribeToPlan, type PaymentProvider } from '../api/subscriptions';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const location = useLocation();
 
   const [plans, setPlans] = useState<Plan[]>([]);
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('MONTHLY');
@@ -32,6 +34,8 @@ const Pricing: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [paymentProvider, setPaymentProvider] = useState<PaymentProvider>('RAZORPAY');
+  const [prefilledFromQuery, setPrefilledFromQuery] = useState(false);
 
   // Fetch plans on component mount
   useEffect(() => {
@@ -54,6 +58,29 @@ const Pricing: React.FC = () => {
     fetchPlans();
   }, [enqueueSnackbar]);
 
+  // If opened with planId/billingPeriod in the query string (e.g. from Billing Dashboard retry),
+  // pre-select that plan and open the confirmation dialog.
+  useEffect(() => {
+    if (prefilledFromQuery || plans.length === 0) return;
+
+    const params = new URLSearchParams(location.search);
+    const planId = params.get('planId');
+    const period = params.get('billingPeriod') as BillingPeriod | null;
+
+    if (!planId) return;
+
+    const plan = plans.find((p) => p._id === planId);
+    if (!plan) return;
+
+    if (period === 'MONTHLY' || period === 'YEARLY') {
+      setBillingPeriod(period);
+    }
+
+    setSelectedPlan(plan);
+    setShowConfirmDialog(true);
+    setPrefilledFromQuery(true);
+  }, [plans, location.search, prefilledFromQuery]);
+
   const handleSubscribe = (plan: Plan) => {
     // Check if user is authenticated
     const token = localStorage.getItem('authToken');
@@ -72,22 +99,66 @@ const Pricing: React.FC = () => {
 
     try {
       setIsSubscribing(true);
-      await billingService.subscribe({
+      // Use new subscriptions API which returns subscription + invoice + paymentIntent
+      const result = await subscribeToPlan({
         planId: selectedPlan._id!,
         billingPeriod,
+        provider: paymentProvider,
       });
 
-      enqueueSnackbar(`Successfully subscribed to ${selectedPlan.name} plan!`, {
-        variant: 'success',
-      });
+      if (!result.requiresPayment || !result.paymentIntent) {
+        enqueueSnackbar(`Successfully subscribed to ${selectedPlan.name} plan!`, {
+          variant: 'success',
+        });
 
-      setShowConfirmDialog(false);
-      setSelectedPlan(null);
+        setShowConfirmDialog(false);
+        setSelectedPlan(null);
 
-      // Redirect to billing dashboard
-      setTimeout(() => {
-        navigate('/app/billing');
-      }, 1500);
+        setTimeout(() => {
+          navigate('/app/billing');
+        }, 1500);
+        return;
+      }
+
+      const pi = result.paymentIntent;
+
+      if (pi.provider === 'razorpay' && pi.paymentUrl) {
+        enqueueSnackbar('Redirecting to secure Razorpay checkout...', {
+          variant: 'info',
+        });
+        window.location.href = pi.paymentUrl;
+        return;
+      }
+      if (pi.provider === 'paypal' && pi.paymentUrl) {
+        enqueueSnackbar('Redirecting to secure PayPal checkout...', {
+          variant: 'info',
+        });
+        window.location.href = pi.paymentUrl;
+        return;
+      }
+
+      if (pi.provider === 'stripe' && pi.clientSecret) {
+        enqueueSnackbar('Redirecting to secure in-app Stripe checkout...', {
+          variant: 'info',
+        });
+        setShowConfirmDialog(false);
+        setSelectedPlan(null);
+        navigate('/app/billing/checkout/stripe', {
+          state: {
+            clientSecret: pi.clientSecret,
+            amount: pi.amount,
+            currency: pi.currency,
+            planName: selectedPlan?.name,
+          },
+        });
+        return;
+      }
+
+      // Fallback: subscription created but no actionable payment info
+      enqueueSnackbar(
+        `Subscription created for ${selectedPlan.name}, but no payment URL was returned. Please contact support.`,
+        { variant: 'warning' },
+      );
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Subscription failed';
       enqueueSnackbar(errorMessage, { variant: 'error' });
@@ -203,6 +274,24 @@ const Pricing: React.FC = () => {
             <Typography variant="body2" color="textSecondary" sx={{ mt: 3 }}>
               {selectedPlan?.description || 'You will be able to manage your subscription from the billing dashboard.'}
             </Typography>
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+                Payment Method
+              </Typography>
+              <ToggleButtonGroup
+                value={paymentProvider}
+                exclusive
+                onChange={(_, newValue: PaymentProvider | null) => {
+                  if (newValue) setPaymentProvider(newValue);
+                }}
+                aria-label="payment provider"
+                size="small"
+              >
+                <ToggleButton value="RAZORPAY">Razorpay</ToggleButton>
+                <ToggleButton value="STRIPE">Stripe (Card)</ToggleButton>
+                <ToggleButton value="PAYPAL">PayPal</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions>

@@ -11,6 +11,16 @@ type SafeUser = Omit<User, 'password'> & { _id: string };
 
 @Injectable()
 export class UsersService {
+  async countAll(): Promise<number> {
+    return this.userModel.countDocuments();
+  }
+
+  async countByRole(role: string): Promise<number> {
+    return this.userModel.countDocuments({ role });
+  }
+    async deleteByEmail(email: string): Promise<void> {
+      await this.userModel.deleteOne({ email }).exec();
+    }
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<SafeUser> {
@@ -103,7 +113,7 @@ export class UsersService {
     }
     const safe = {
       ...user,
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+
       _id: String(user._id),
     } as SafeUser;
     return safe;
@@ -122,7 +132,7 @@ export class UsersService {
     }
     const safe = {
       ...user,
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+
       _id: String(user._id),
     } as SafeUser;
     return safe;

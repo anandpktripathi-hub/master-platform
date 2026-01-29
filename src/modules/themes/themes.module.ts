@@ -1,4 +1,5 @@
 ﻿import { Module } from '@nestjs/common';
+import { DatabaseModule } from '../../database/database.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Theme, ThemeSchema } from './schemas/theme.schema';
 import { TenantTheme, TenantThemeSchema } from './schemas/tenant-theme.schema';
@@ -12,6 +13,7 @@ import { TenantThemesController } from './controllers/tenant-themes.controller';
       { name: Theme.name, schema: ThemeSchema },
       { name: TenantTheme.name, schema: TenantThemeSchema },
     ]),
+    DatabaseModule,
   ],
   controllers: [AdminThemesController, TenantThemesController],
   providers: [ThemesService],

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import rbacApi from '../services/rbacApi';
 import type { Role } from '../services/rbacApi';
 import type { Permission } from '../services/rbacApi';
+import HierarchyApi, { HierarchyNode } from '../modules/hierarchy/HierarchyApi';
+import { RoleHierarchyApi } from '../modules/hierarchy/RoleHierarchyApi';
 import '../styles/ManageRoles.css';
 
 export const ManageRoles: React.FC = () => {
@@ -136,10 +138,22 @@ const CreateRoleModal: React.FC<CreateRoleModalProps> = ({ onClose, editingRole 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [hierarchyNodes, setHierarchyNodes] = useState<HierarchyNode[]>([]);
+  const [selectedHierarchy, setSelectedHierarchy] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchPermissions();
+    fetchHierarchy();
   }, []);
+
+  const fetchHierarchy = async () => {
+    try {
+      const nodes = await HierarchyApi.getTree('feature');
+      setHierarchyNodes(nodes);
+    } catch {
+      // ignore for now
+    }
+  };
 
   const fetchPermissions = async () => {
     try {
@@ -200,6 +214,8 @@ const CreateRoleModal: React.FC<CreateRoleModalProps> = ({ onClose, editingRole 
           permissionIds,
         });
       }
+      // Save hierarchy assignment
+      await RoleHierarchyApi.assignNodes(name, Array.from(selectedHierarchy));
       onClose();
     } catch (err: any) {
       setError(err.message || 'Failed to save role');
@@ -288,6 +304,24 @@ const CreateRoleModal: React.FC<CreateRoleModalProps> = ({ onClose, editingRole 
                   })}
                 </tbody>
               </table>
+            </div>
+            <h3>Assign Features/Options from Hierarchy</h3>
+            <div className="hierarchy-list">
+              {hierarchyNodes.map((node) => (
+                <label key={node._id} style={{ display: 'block', margin: '4px 0' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedHierarchy.has(node._id!)}
+                    onChange={() => {
+                      const newSet = new Set(selectedHierarchy);
+                      if (newSet.has(node._id!)) newSet.delete(node._id!);
+                      else newSet.add(node._id!);
+                      setSelectedHierarchy(newSet);
+                    }}
+                  />
+                  {node.name} <span style={{ fontStyle: 'italic', color: '#888' }}>({node.type})</span>
+                </label>
+              ))}
             </div>
           </div>
 

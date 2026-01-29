@@ -1,0 +1,18 @@
+<p>Hi {{recipientName}},</p>
+
+<p>A new invoice has been issued for your account on <strong>{{appName}}</strong>.</p>
+
+<p>
+  <strong>Invoice:</strong> {{invoiceNumber}}<br />
+  <strong>Amount:</strong> {{invoiceCurrency}} {{invoiceAmount}}<br />
+  {{#if dueDate}}
+    <strong>Due date:</strong> {{dueDate}}<br />
+  {{/if}}
+  <strong>Status:</strong> {{invoiceStatus}}
+</p>
+
+<p>You can view this invoice and your full billing history here:</p>
+<p><a href="{{invoiceUrl}}">Open Billing &amp; Invoices</a></p>
+
+<p>Best regards,<br />
+The {{appName}} Team</p>

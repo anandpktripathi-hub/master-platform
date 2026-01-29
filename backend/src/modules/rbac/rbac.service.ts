@@ -397,7 +397,30 @@ export class RbacService {
       action: permission.action,
       module: permission.module,
       description: permission.description,
+      fields: (permission as any).fields || undefined,
     };
+  }
+
+  /**
+   * Check if a user/role has permission for a specific action/module/field
+   * @param permissions Array of PermissionDto
+   * @param module Module name
+   * @param action Action name
+   * @param field Optional field name (for field-level check)
+   */
+  public static hasPermissionForField(
+    permissions: { module: string; action: string; fields?: string[] }[],
+    module: string,
+    action: string,
+    field?: string
+  ): boolean {
+    const perm = permissions.find(
+      (p) => p.module === module && p.action === action
+    );
+    if (!perm) return false;
+    if (!field) return true;
+    if (!perm.fields || perm.fields.length === 0) return false;
+    return perm.fields.includes(field);
   }
 
   private mapRoleToDto(role: any): RoleDto {

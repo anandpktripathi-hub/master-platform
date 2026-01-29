@@ -11,7 +11,7 @@ import {
 } from '../../database/schemas/audit-log.schema';
 import { CouponController } from './coupons.controller';
 import { CouponService } from './services/coupon.service';
-import { AuditLogService } from '@services/audit-log.service';
+import { AuditLogService } from '../../services/audit-log.service';
 import { RoleGuard } from '../../guards/role.guard';
 
 @Module({

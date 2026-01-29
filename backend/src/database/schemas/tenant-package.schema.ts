@@ -23,12 +23,10 @@ export class TenantPackage {
     type: Types.ObjectId,
     ref: 'Tenant',
     required: true,
-    unique: true,
-    index: true,
   })
   tenantId!: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Package', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Package', required: true })
   packageId!: Types.ObjectId;
 
   @Prop({
@@ -61,6 +59,10 @@ export class TenantPackage {
   @Prop({ required: false })
   notes!: string;
 
+    // Track whether a subscription expiry warning email has been sent
+    @Prop({ default: false })
+    expiryWarningSent!: boolean;
+
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -70,3 +72,4 @@ export const TenantPackageSchema = SchemaFactory.createForClass(TenantPackage);
 TenantPackageSchema.index({ tenantId: 1 }, { unique: true });
 TenantPackageSchema.index({ packageId: 1, status: 1 });
 TenantPackageSchema.index({ expiresAt: 1, status: 1 });
+TenantPackageSchema.index({ expiresAt: 1, expiryWarningSent: 1 });

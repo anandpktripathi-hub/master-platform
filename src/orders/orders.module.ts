@@ -1,4 +1,5 @@
 ﻿import { Module } from '@nestjs/common';
+import { DatabaseModule } from '../database/database.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
@@ -9,6 +10,7 @@ import { EmailModule } from '../email/email.module';
   imports: [
     MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),
     EmailModule,
+    DatabaseModule,
   ],
   controllers: [OrdersController],
   providers: [OrdersService],

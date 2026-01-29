@@ -97,7 +97,10 @@ export class RolePermissionService {
   /**
    * Check if a user with given role has all of the specified permissions
    */
-  async hasAllPermissions(role: Role | string, permissions: Permission[]): Promise<boolean> {
+  async hasAllPermissions(
+    role: Role | string,
+    permissions: Permission[],
+  ): Promise<boolean> {
     const rolePermissions = await this.getPermissionsForRole(role);
     return permissions.every((p) => rolePermissions.includes(p));
   }

@@ -19,6 +19,7 @@ import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { DomainService } from './services/domain.service';
+import { DomainResellerService } from './services/domain-reseller.service';
 import {
   CreateDomainDto,
   UpdateDomainDto,
@@ -26,10 +27,13 @@ import {
 } from './dto/domain.dto';
 
 @Controller('domains')
-export class DomainController {
-  private readonly logger = new Logger(DomainController.name);
+export class DomainsController {
+  private readonly logger = new Logger(DomainsController.name);
 
-  constructor(private domainService: DomainService) {}
+  constructor(
+    private readonly domainService: DomainService,
+    private readonly domainResellerService: DomainResellerService,
+  ) {}
 
   /**
    * TENANT ENDPOINTS
@@ -156,7 +160,20 @@ export class DomainController {
     }
 
     const available = await this.domainService.checkAvailability(type, value);
-    return { available, value, type };
+
+    // For full custom domains (with a dot), also query the reseller stub
+    let reseller: any = null;
+    if (value.includes('.')) {
+      try {
+        reseller = await this.domainResellerService.search(value);
+      } catch (err) {
+        this.logger.warn(
+          `Reseller search failed for ${value}: ${(err as Error).message}`,
+        );
+      }
+    }
+
+    return { available, reseller, value, type };
   }
 
   /**

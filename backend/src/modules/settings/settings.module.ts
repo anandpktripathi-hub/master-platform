@@ -12,6 +12,6 @@ import { Setting, SettingSchema } from './schemas/setting.schema';
   ],
   controllers: [SettingsController],
   providers: [SettingsService, EmailService, RoleGuard],
-  exports: [SettingsService],
+  exports: [SettingsService, EmailService],
 })
 export class SettingsModule {}

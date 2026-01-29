@@ -8,10 +8,12 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, FilterQuery } from 'mongoose';
 import { objectIdToString } from '../../../utils/objectIdToString';
-import { Domain } from '@schemas/domain.schema';
-import { TenantPackage } from '@schemas/tenant-package.schema';
-import { Package } from '@schemas/package.schema';
-import { AuditLogService } from '@services/audit-log.service';
+import { Domain } from '../../../database/schemas/domain.schema';
+import { TenantPackage } from '../../../database/schemas/tenant-package.schema';
+import { Package } from '../../../database/schemas/package.schema';
+import { AuditLogService } from '../../../services/audit-log.service';
+import { DomainResellerService } from './domain-reseller.service';
+import { DnsRecord } from './domain-reseller.provider';
 import {
   CreateDomainDto,
   UpdateDomainDto,
@@ -40,6 +42,7 @@ export class DomainService {
     private tenantPackageModel: Model<TenantPackage>,
     @InjectModel(Package.name) private packageModel: Model<Package>,
     private auditLogService: AuditLogService,
+    private readonly domainResellerService: DomainResellerService,
   ) {}
 
   /**
@@ -135,6 +138,8 @@ export class DomainService {
 
     const before = domain.toObject() as unknown as Record<string, unknown>;
 
+    const wasActive = domain.status === 'active';
+
     // Update fields
     if (updateDto.status) {
       domain.status = updateDto.status;
@@ -149,6 +154,51 @@ export class DomainService {
     }
 
     const saved = await domain.save();
+
+    // If a subdomain transitions to active, automatically provision DNS and record status
+    if (
+      domain.type === 'subdomain' &&
+      !wasActive &&
+      saved.status === 'active'
+    ) {
+      const hostname = `${saved.value}.${PLATFORM_DOMAIN}`;
+      const serverIp = process.env.SERVER_IP;
+      const providerId = process.env.DOMAIN_RESELLER_PROVIDER === 'cloudflare'
+        ? 'cloudflare'
+        : 'stub';
+
+      if (serverIp) {
+        const records: DnsRecord[] = [
+          {
+            type: 'A',
+            name: hostname,
+            value: serverIp,
+            ttl: 3600,
+          },
+        ];
+        try {
+          await this.domainResellerService.ensureDns(hostname, records);
+          saved.dnsProvider = providerId;
+          saved.dnsSyncedAt = new Date();
+          saved.dnsLastError = undefined;
+          await saved.save();
+        } catch (err) {
+          const message = (err as Error).message;
+          this.logger.warn(
+            `Failed to auto-provision DNS for subdomain ${hostname}: ${message}`,
+          );
+          saved.dnsProvider = providerId;
+          saved.dnsLastError = message;
+          await saved.save();
+        }
+      } else {
+        const msg = `SERVER_IP env var not set; skipping DNS provisioning for subdomain ${hostname}.`;
+        this.logger.warn(msg);
+        saved.dnsProvider = providerId;
+        saved.dnsLastError = msg;
+        await saved.save();
+      }
+    }
 
     // Audit log
     await this.auditLogService.log({
@@ -476,6 +526,9 @@ export class DomainService {
       updatedBy: domainObj.updatedBy,
       createdAt: domainObj.createdAt,
       updatedAt: domainObj.updatedAt,
+      dnsProvider: domainObj.dnsProvider,
+      dnsSyncedAt: domainObj.dnsSyncedAt,
+      dnsLastError: domainObj.dnsLastError,
     };
   }
 }

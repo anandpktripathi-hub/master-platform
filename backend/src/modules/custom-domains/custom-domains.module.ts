@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   CustomDomain,
@@ -14,9 +14,13 @@ import {
   AuditLogSchema,
 } from '../../database/schemas/audit-log.schema';
 import { CustomDomainController } from './custom-domains.controller';
+import { TenantDomainsController } from './tenant-domains.controller';
 import { CustomDomainService } from './services/custom-domain.service';
-import { AuditLogService } from '@services/audit-log.service';
+import { AuditLogService } from '../../services/audit-log.service';
 import { RoleGuard } from '../../guards/role.guard';
+import { CustomDomainSslScheduler } from './custom-domain-ssl.scheduler';
+import { BillingModule } from '../billing/billing.module';
+import { TenantsModule } from '../tenants/tenants.module';
 
 @Module({
   imports: [
@@ -26,9 +30,16 @@ import { RoleGuard } from '../../guards/role.guard';
       { name: Package.name, schema: PackageSchema },
       { name: AuditLog.name, schema: AuditLogSchema },
     ]),
+    forwardRef(() => BillingModule),
+    forwardRef(() => TenantsModule),
   ],
-  controllers: [CustomDomainController],
-  providers: [CustomDomainService, AuditLogService, RoleGuard],
+  controllers: [CustomDomainController, TenantDomainsController],
+  providers: [
+    CustomDomainService,
+    AuditLogService,
+    RoleGuard,
+    CustomDomainSslScheduler,
+  ],
   exports: [CustomDomainService, MongooseModule],
 })
 export class CustomDomainsModule {}

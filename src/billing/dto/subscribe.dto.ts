@@ -10,5 +10,10 @@ export class SubscribeDto {
 
   @IsOptional()
   @IsString()
-  paymentMethodId?: string; // Stripe payment method ID or Razorpay method
+  paymentMethodId?: string; // Stripe payment method ID or Razorpay/PayPal reference
+
+  // Preferred payment provider for checkout. Defaults to 'STRIPE' if omitted.
+  @IsOptional()
+  @IsString()
+  provider?: 'STRIPE' | 'RAZORPAY' | 'PAYPAL' | 'MANUAL';
 }

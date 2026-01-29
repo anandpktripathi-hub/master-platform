@@ -1,0 +1,152 @@
+.feature-manager-filter-input {
+  margin-bottom: 10px;
+  padding: 4px 8px;
+  width: 300px;
+}
+
+.permissions-matrix {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+.permissions-matrix table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 600px;
+}
+.permissions-matrix th, .permissions-matrix td {
+  border: 1px solid #bbb;
+  padding: 6px 10px;
+  text-align: center;
+}
+.permissions-matrix th {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+.permissions-matrix tr:nth-child(even) {
+  background: #f4f7fa;
+}
+.assignment-form {
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.5rem;
+  background: #f4f7fa;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  max-width: 400px;
+}
+.assignment-form input {
+  margin-right: 0.5rem;
+  padding: 0.3rem 0.5rem;
+}
+.assignment-form button {
+  margin-right: 0.5rem;
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid #1976d2;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+}
+.assignment-form button:hover {
+  background: #1565c0;
+}
+.assignment-chip {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 12px;
+  padding: 2px 10px;
+  margin: 2px 4px 2px 0;
+  font-size: 0.95em;
+}
+.assignment-chip button {
+  background: transparent;
+  color: #d32f2f;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 4px;
+}
+.edit-btn {
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid #ffa000;
+  background: #ffa000;
+  color: #fff;
+  cursor: pointer;
+}
+.edit-btn:hover {
+  background: #ff8f00;
+}
+.delete-btn {
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid #d32f2f;
+  background: #d32f2f;
+  color: #fff;
+  cursor: pointer;
+}
+.delete-btn:hover {
+  background: #b71c1c;
+}
+.feature-manager-container {
+  padding: 1.5rem;
+}
+
+.toggle-btn {
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.toggle-btn:hover {
+  background: #e0e0e0;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.add-btn {
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid #1976d2;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+}
+.add-btn:hover {
+  background: #1565c0;
+}
+
+.feature-form {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 400px;
+}
+.feature-form input,
+.feature-form select,
+.feature-form textarea {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+}
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}

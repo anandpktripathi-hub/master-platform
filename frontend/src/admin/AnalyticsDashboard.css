@@ -1,0 +1,9 @@
+.analytics-export-btn {
+  margin-bottom: 16px;
+}
+
+.analytics-charts-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}

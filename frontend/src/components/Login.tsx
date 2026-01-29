@@ -4,12 +4,16 @@ import { Button, TextField, CircularProgress, Typography } from '@mui/material';
 
 const Login = () => {
   const { login, loading, error } = useAuthContext();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [tenantId, setTenantId] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(email, password);
+    setErrorMsg('');
+    const payload = tenantId.trim() ? { email, password, tenantId } : { email, password };
+    login(payload).catch(err => {
+      setErrorMsg(err.message || 'Login failed');
+    });
   };
 
   return (
@@ -29,10 +33,18 @@ const Login = () => {
         margin="normal"
         fullWidth
       />
+      <TextField
+        label="Tenant ID"
+        value={tenantId}
+        onChange={(e) => setTenantId(e.target.value)}
+        margin="normal"
+        fullWidth
+        required
+      />
       <Button type="submit" variant="contained" color="primary" disabled={loading}>
         {loading ? <CircularProgress size={20} /> : 'Login'}
       </Button>
-      {error && <Typography color="error">{error}</Typography>}
+      {(error || errorMsg) && <Typography color="error">{errorMsg || error}</Typography>}
     </form>
   );
 };

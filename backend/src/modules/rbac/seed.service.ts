@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Connection, Model, Types } from 'mongoose';
 import {
   Permission,
   PermissionDocument,
@@ -19,6 +19,53 @@ export class SeedService {
     @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
     @InjectModel(Tenant.name) private tenantModel: Model<TenantDocument>,
   ) {}
+
+  private async waitForConnection(): Promise<void> {
+    // Use the underlying Mongoose connection from the injected model
+    const connection: Connection | undefined = this.permissionModel
+      ? (this.permissionModel.db as Connection | undefined)
+      : undefined;
+
+    if (!connection) {
+      this.logger.warn(
+        'No Mongoose connection available for RBAC seeding; skipping wait.',
+      );
+      return;
+    }
+
+    // 1 = connected, 2 = connecting; 0/3 = disconnected/disconnecting
+    if (connection.readyState === 1) {
+      return;
+    }
+
+    this.logger.log(
+      `Waiting for MongoDB connection before RBAC seeding (state: ${connection.readyState})...`,
+    );
+
+    await new Promise<void>((resolve) => {
+      const timeout = setTimeout(() => {
+        this.logger.error(
+          'Timed out waiting for MongoDB connection; RBAC seeding will be skipped for now.',
+        );
+        resolve();
+      }, 10000);
+
+      connection.once('connected', () => {
+        clearTimeout(timeout);
+        this.logger.log('MongoDB connection is ready for RBAC seeding.');
+        resolve();
+      });
+
+      connection.once('error', (err) => {
+        clearTimeout(timeout);
+        this.logger.error(
+          'Error while waiting for MongoDB connection; RBAC seeding will be skipped for now.',
+          err as Error,
+        );
+        resolve();
+      });
+    });
+  }
 
   async seedPermissions(): Promise<void> {
     const existingCount = await this.permissionModel.countDocuments();
@@ -89,7 +136,7 @@ export class SeedService {
     ): Types.ObjectId[] => {
       return allPermissions
         .filter((p) => modules.includes(p.module) && actions.includes(p.action))
-        .map((p) => new Types.ObjectId(p._id as string));
+        .map((p) => new Types.ObjectId(p._id as any));
     };
 
     const defaultRoles = [
@@ -147,6 +194,16 @@ export class SeedService {
           ['manage', 'create', 'edit', 'delete', 'show'],
         ),
       },
+      {
+        name: 'Tenant Admin',
+        description:
+          'Tenant administrator role with full access to all ERP modules (accounts, invoices, expenses, POS, HRM, projects, etc.)',
+        isSystem: true,
+        // Full access: attach all permissions that exist
+        permissionIds: allPermissions.map(
+          (p) => new Types.ObjectId(p._id as any),
+        ),
+      },
     ];
 
     const rolesToInsert = defaultRoles.map((role) => ({
@@ -161,8 +218,16 @@ export class SeedService {
 
   async seed(): Promise<void> {
     this.logger.log('Starting seed...');
-    await this.seedPermissions();
-    await this.seedDefaultRoles();
-    this.logger.log('Seed completed successfully');
+    try {
+      await this.waitForConnection();
+      await this.seedPermissions();
+      await this.seedDefaultRoles();
+      this.logger.log('Seed completed successfully');
+    } catch (error) {
+      // If MongoDB is not yet fully connected or any other error occurs,
+      // log it but do not rethrow. This prevents unhandled rejections
+      // from crashing the entire application during startup.
+      this.logger.error('RBAC seed failed, continuing without seeded data', error as Error);
+    }
   }
 }

@@ -4,18 +4,21 @@ const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const billingService = {
   async getPlans() {
-    return axios.get(API_BASE + "/billing/plans");
+    const response = await axios.get(API_BASE + "/billing/plans");
+    return response.data;
   },
 
-  async subscribe(planId) {
-    return axios.post(API_BASE + "/billing/subscribe", { planId });
+  async subscribe(payload: any) {
+    const response = await axios.post(API_BASE + "/billing/subscribe", payload);
+    return response.data;
   },
 
   async getInvoices() {
-    return axios.get(API_BASE + "/billing/invoices");
+    const response = await axios.get(API_BASE + "/billing/invoices");
+    return response.data;
   },
 
-  async downloadInvoice(invoiceId) {
+  async downloadInvoice(invoiceId: string) {
     return axios.get(API_BASE + "/billing/invoices/" + invoiceId + "/pdf", {
       responseType: "blob",
     });

@@ -24,5 +24,9 @@ export function entriesToApplicationDto(
     appTimezone: (raw.appTimezone as string) || '',
     isLiveServer: Boolean(raw.isLiveServer),
     appDebug: Boolean(raw.appDebug),
+    subscriptionExpiryWarningDays: (() => {
+      const num = Number(raw.subscriptionExpiryWarningDays);
+      return !Number.isNaN(num) && num > 0 ? num : 3;
+    })(),
   };
 }

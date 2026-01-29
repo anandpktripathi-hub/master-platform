@@ -33,7 +33,13 @@ export class RbacModule implements OnModuleInit {
   constructor(private seedService: SeedService) {}
 
   async onModuleInit() {
-    // Seed default permissions and roles when module initializes
-    await this.seedService.seed();
+    // Seed default permissions and roles when module initializes.
+    // If seeding fails (e.g. transient DB connectivity), log but do not crash the app.
+    try {
+      await this.seedService.seed();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('[RbacModule] RBAC seeding failed, continuing without seeded roles/permissions:', error);
+    }
   }
 }

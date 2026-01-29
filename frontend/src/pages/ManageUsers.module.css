@@ -1,0 +1,47 @@
+.select {
+  min-height: 36px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.select-multiline {
+  min-height: 60px;
+}
+.hierarchy-list {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 8px;
+}
+.hierarchy-label {
+  display: block;
+  margin: 4px 0;
+}
+.hierarchy-type {
+  font-style: italic;
+  color: #888;
+}
+
+.assigned-features-list {
+  margin: 4px 0 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.assigned-feature-item {
+  font-size: 0.95em;
+  color: #555;
+  background: #f6f6f6;
+  border-radius: 4px;
+  padding: 2px 8px;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.assigned-feature-item:focus {
+  box-shadow: 0 0 0 2px #1976d2;
+  background: #e3f2fd;
+}
+}

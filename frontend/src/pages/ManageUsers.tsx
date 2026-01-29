@@ -4,6 +4,7 @@ import rbacApi from '../services/rbacApi';
 import type { UserTenant } from '../services/rbacApi';
 import type { Role } from '../services/rbacApi';
 import '../styles/ManageUser.css';
+import { usePackageUsage } from '../hooks/usePackages';
 
 interface UserWithDetails extends UserTenant {
   user?: any;
@@ -19,6 +20,10 @@ export const ManageUsers: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingUser, setEditingUser] = useState<UserWithDetails | null>(null);
   const [actionMenuOpenFor, setActionMenuOpenFor] = useState<string | null>(null);
+  // Store hierarchy assignments for each user
+  const [userHierarchyMap, setUserHierarchyMap] = useState<Record<string, any[]>>({});
+
+  const { data: packageUsage, isLoading: usageLoading } = usePackageUsage();
 
   useEffect(() => {
     fetchUsers();
@@ -28,8 +33,20 @@ export const ManageUsers: React.FC = () => {
     try {
       setLoading(true);
       const response = await rbacApi.getUsers(page, 10);
-      setUsers(response.data || []);
+      const userList = response.data || [];
+      setUsers(userList);
       setTotal(response.total || 0);
+      // Fetch hierarchy assignments for all users
+      const hierarchyMap: Record<string, any[]> = {};
+      await Promise.all(userList.map(async (user: any) => {
+        try {
+          const result = await UserHierarchyApi.getNodes(user._id);
+          hierarchyMap[user._id] = result?.hierarchyNodes || [];
+        } catch {
+          hierarchyMap[user._id] = [];
+        }
+      }));
+      setUserHierarchyMap(hierarchyMap);
     } catch (err: any) {
       setError(err.message || 'Failed to load users');
     } finally {
@@ -76,6 +93,10 @@ export const ManageUsers: React.FC = () => {
     setActionMenuOpenFor(null);
   };
 
+  const teamMembersUsed = packageUsage?.usage?.teamMembers ?? users.length;
+  const maxTeamMembers = packageUsage?.limits?.maxTeamMembers;
+  const atTeamLimit = typeof maxTeamMembers === 'number' && maxTeamMembers >= 0 && teamMembersUsed >= maxTeamMembers;
+
   if (loading) return <div className="loading">Loading users...</div>;
 
   return (
@@ -83,10 +104,31 @@ export const ManageUsers: React.FC = () => {
       <div className="manage-users-container">
       <div className="manage-users-header">
         <h1>Manage Users</h1>
-        <button className="btn-primary" onClick={() => setShowCreateModal(true)}>
+        {typeof maxTeamMembers === 'number' && maxTeamMembers > 0 && (
+          <span className="quota-info">
+            Team members: {teamMembersUsed} / {maxTeamMembers}
+          </span>
+        )}
+        <button
+          className="btn-primary"
+          disabled={usageLoading || atTeamLimit}
+          onClick={() => {
+            if (atTeamLimit) {
+              window.location.href = '/app/packages';
+              return;
+            }
+            setShowCreateModal(true);
+          }}
+        >
           + Add User
         </button>
       </div>
+
+      {atTeamLimit && (
+        <div className="info-message warning-message">
+          You have reached the team member limit for your current plan. Upgrade your subscription on the Packages page to invite more users.
+        </div>
+      )}
 
       {error && <div className="error-message">{error}</div>}
 
@@ -154,6 +196,19 @@ export const ManageUsers: React.FC = () => {
                   {user.isLoginEnabled ? 'Login Enabled' : 'Login Disabled'}
                 </span>
               </div>
+              {/* Display assigned hierarchy nodes */}
+              {userHierarchyMap[user._id] && userHierarchyMap[user._id].length > 0 && (
+                <div className="user-hierarchy-nodes">
+                    <span className="label">Assigned Features/Options:</span>
+                    <ul className="assigned-features-list">
+                      {userHierarchyMap[user._id].map((node: any) => (
+                        <li key={node._id || node} className="assigned-feature-item" tabIndex={0} aria-label={`Feature: ${node.name || node}, Type: ${node.type || ''}`}>
+                          {node.name || node} <span className="hierarchy-type">({node.type || ''})</span>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -164,7 +219,7 @@ export const ManageUsers: React.FC = () => {
           onClose={() => {
             setShowCreateModal(false);
             setEditingUser(null);
-            fetchUsers();
+            fetchUsers(); // will refresh hierarchy assignments too
           }}
           editingUser={editingUser}
         />
@@ -207,9 +262,21 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hierarchyNodes, setHierarchyNodes] = useState<any[]>([]);
+  const [selectedHierarchy, setSelectedHierarchy] = useState<Set<string>>(new Set());
+  const [paymentGateway, setPaymentGateway] = useState(editingUser?.user?.paymentGateway || 'stripe');
+  const [isPublic, setIsPublic] = useState(editingUser?.user?.isPublic ?? false);
+  const [languages, setLanguages] = useState<string[]>(editingUser?.user?.languages || []);
+  const availableGateways = ['stripe', 'paypal', 'razorpay'];
+  const availableLanguages = ['English', 'Spanish', 'French', 'German', 'Chinese', 'Hindi', 'Unlimited...'];
 
   useEffect(() => {
     fetchRoles();
+    fetchHierarchy();
+    // If editing, fetch assigned nodes
+    if (editingUser) {
+      fetchAssignedHierarchy(editingUser._id);
+    }
   }, []);
 
   const fetchRoles = async () => {
@@ -221,6 +288,36 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
     }
   };
 
+  const fetchHierarchy = async () => {
+    try {
+      // Fetch only features/options
+      const nodes = await HierarchyApi.getTree('feature');
+      setHierarchyNodes(nodes);
+    } catch (err: any) {
+      setHierarchyNodes([]);
+    }
+  };
+
+  const fetchAssignedHierarchy = async (userId: string) => {
+    try {
+      const result = await UserHierarchyApi.getNodes(userId);
+      if (result && result.hierarchyNodes) {
+        setSelectedHierarchy(new Set(result.hierarchyNodes.map((n: any) => n._id || n)));
+      }
+    } catch {
+      setSelectedHierarchy(new Set());
+    }
+  };
+
+  const handleHierarchyToggle = (nodeId: string) => {
+    setSelectedHierarchy(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(nodeId)) newSet.delete(nodeId);
+      else newSet.add(nodeId);
+      return newSet;
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -229,14 +326,22 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
       setError('Please fill in all required fields');
       return;
     }
-
     if (!editingUser && !password) {
       setError('Password is required for new users');
+      return;
+    }
+    if (!paymentGateway) {
+      setError('Please select a payment gateway');
+      return;
+    }
+    if (languages.length === 0) {
+      setError('Please select at least one language');
       return;
     }
 
     try {
       setLoading(true);
+      let userId = editingUser?._id;
       if (editingUser) {
         await rbacApi.updateUser(editingUser._id, {
           name,
@@ -245,7 +350,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
           dateOfBirth,
         });
       } else {
-        await rbacApi.createUser({
+        const created = await rbacApi.createUser({
           name,
           email,
           password,
@@ -253,6 +358,11 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
           isLoginEnabled,
           dateOfBirth,
         });
+        userId = created._id;
+      }
+      // Assign hierarchy nodes
+      if (userId) {
+        await UserHierarchyApi.assignNodes(userId, Array.from(selectedHierarchy));
       }
       onClose();
     } catch (err: any) {
@@ -318,6 +428,8 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
               id="role"
               value={roleId}
               onChange={(e) => setRoleId(e.target.value)}
+              title="Select user role"
+              className="select"
             >
               <option value="">Select a role</option>
               {roles.map((role) => (
@@ -326,6 +438,48 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
                 </option>
               ))}
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="gateway">Payment Gateway *</label>
+            <select
+              id="gateway"
+              value={paymentGateway}
+              onChange={(e) => setPaymentGateway(e.target.value)}
+              title="Select payment gateway"
+              className="select"
+            >
+              <option value="">Select gateway</option>
+              {availableGateways.map((gw) => (
+                <option key={gw} value={gw}>{gw.charAt(0).toUpperCase() + gw.slice(1)}</option>
+              ))}
+            </select>
+            <span className="hint">Choose how the user will pay for their subscription.</span>
+          </div>
+          <div className="form-group checkbox">
+            <label>
+              <input
+                type="checkbox"
+                checked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+              />
+              Publicly Visible
+            </label>
+            <span className="hint">If enabled, user profile will be visible to others.</span>
+          </div>
+          <div className="form-group">
+            <label>Languages *</label>
+            <select
+              multiple
+              value={languages}
+              onChange={(e) => setLanguages(Array.from(e.target.selectedOptions, opt => opt.value))}
+              title="Select languages"
+              className="select select-multiline"
+            >
+              {availableLanguages.map((lang) => (
+                <option key={lang} value={lang}>{lang}</option>
+              ))}
+            </select>
+            <span className="hint">Select one or more languages. Choose 'Unlimited...' for unlimited support.</span>
           </div>
 
           <div className="form-group">
@@ -347,6 +501,22 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onClose, editingUser 
               />
               Login is Enabled
             </label>
+          </div>
+
+          <div className="form-group">
+            <label>Assign Features/Options</label>
+            <div className="hierarchy-list">
+              {hierarchyNodes.map((node) => (
+                <label key={node._id} className="hierarchy-label">
+                  <input
+                    type="checkbox"
+                    checked={selectedHierarchy.has(node._id)}
+                    onChange={() => handleHierarchyToggle(node._id)}
+                  />
+                  {node.name} <span className="hierarchy-type">({node.type})</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           <div className="modal-footer">

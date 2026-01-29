@@ -7,7 +7,11 @@ import {
   IsEnum,
   IsDateString,
 } from 'class-validator';
-import { PermissionAction, ModuleName } from '@schemas/permission.schema';
+import {
+  PermissionAction,
+  ModuleName,
+} from '../../../database/schemas/permission.schema';
+
 
 export class CreatePermissionDto {
   @IsEnum(['manage', 'create', 'edit', 'delete', 'show'])
@@ -19,13 +23,23 @@ export class CreatePermissionDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  /**
+   * Optional: List of allowed fields for this permission (for per-field access control)
+   */
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  fields?: string[];
 }
+
 
 export class PermissionDto {
   _id!: string;
   action!: PermissionAction;
   module!: ModuleName;
   description?: string;
+  fields?: string[];
 }
 
 export class CreateRoleDto {

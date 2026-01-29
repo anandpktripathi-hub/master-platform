@@ -71,11 +71,22 @@ export class CouponService {
     packageId?: string,
   ): Promise<any> {
     // Implement coupon validation logic
-    const coupon = await this.couponModel
-      .findOne({ code, status: 'active' })
-      .exec();
-    if (!coupon) throw new NotFoundException('Coupon not found or inactive');
-    // Add more validation as needed
+    const coupon = await this.couponModel.findOne({ code }).exec();
+    if (!coupon) throw new NotFoundException('Coupon not found');
+    // Check expiry
+    const now = new Date();
+    if (coupon.validTo && now > coupon.validTo) {
+      // Mark as expired if not already
+      if (coupon.status !== 'expired') {
+        coupon.status = 'expired';
+        await coupon.save();
+      }
+      return { valid: false, reason: 'Coupon expired', coupon };
+    }
+    if (coupon.status !== 'active') {
+      return { valid: false, reason: 'Coupon not active', coupon };
+    }
+    // TODO: Check usage limits, applicable packages, allowed tenants, etc.
     return { valid: true, coupon };
   }
 

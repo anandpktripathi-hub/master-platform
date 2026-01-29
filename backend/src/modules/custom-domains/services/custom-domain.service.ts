@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, FilterQuery } from 'mongoose';
-import { CustomDomain } from '@schemas/custom-domain.schema';
-import { TenantPackage } from '@schemas/tenant-package.schema';
-import { Package } from '@schemas/package.schema';
-import { AuditLogService } from '@services/audit-log.service';
+import { CustomDomain } from '../../../database/schemas/custom-domain.schema';
+import { TenantPackage } from '../../../database/schemas/tenant-package.schema';
+import { Package } from '../../../database/schemas/package.schema';
+import { AuditLogService } from '../../../services/audit-log.service';
 import {
   CreateCustomDomainDto,
   UpdateCustomDomainDto,
@@ -25,6 +25,25 @@ const dnsCname = promisify(dns.resolveCname);
 
 const PLATFORM_DOMAIN = process.env.PLATFORM_DOMAIN || 'localhost';
 const DNS_TARGET = process.env.DNS_TARGET || `edge.${PLATFORM_DOMAIN}`; // CNAME target
+
+interface TenantDomainSslExpiringItem {
+  domain: string;
+  expiresAt: Date;
+  daysRemaining: number;
+}
+
+interface TenantDomainHealthSummary {
+  total: number;
+  byStatus: Record<string, number>;
+  ssl: {
+    issued: number;
+    pending: number;
+    expired: number;
+    expiringSoon: number;
+    expiringList: TenantDomainSslExpiringItem[];
+  };
+  primary: string | null;
+}
 
 @Injectable()
 export class CustomDomainService {
@@ -219,8 +238,34 @@ export class CustomDomainService {
   }
 
   /**
-   * Issue SSL certificate for a verified domain (via ACME/LetsEncrypt)
-   * Note: This is a stub for now; integrate with actual ACME provider
+   * Issue SSL certificate for a verified domain (via ACME/LetsEncrypt).
+   *
+   * In a production environment, this method should be extended to call an
+   * external ACME client (e.g., certbot, acme.sh, or an ACME library such
+   * as node-acme-client) that handles HTTP-01 or DNS-01 challenge flows and
+   * stores the resulting certificate in /etc/letsencrypt/live/<domain>/ or
+   * a custom certificate directory.
+   *
+   * For now, this method marks the domain as 'ssl_pending' and logs that
+   * an external issuance process should be triggered. After that process
+   * completes (e.g., via a webhook or scheduled job that re-checks certs),
+   * the SslAutomationService can resync statuses to update the database to
+   * 'ssl_issued' when the actual certificate files exist.
+   *
+   * Integration Steps:
+   *  1. When this method is called, spawn or enqueue a job to run:
+   *       certbot certonly --webroot -w /var/www/certbot \
+   *         -d <customDomain.domain> --non-interactive --agree-tos \
+   *         -m admin@yourdomain.com
+   *
+   *  2. Poll or listen for certbot completion, then mark sslStatus='issued'.
+   *
+   *  3. Or, use a library like `node-acme-client` to request certs in-process,
+   *     storing them in a known location, then update this record accordingly.
+   *
+   * The current implementation logs the issuance request and populates expiry
+   * metadata for demo/dashboard purposes; replace the TODO block below with
+   * real ACME calls when deploying to production.
    */
   async issueSslCertificate(
     domainId: string,
@@ -243,8 +288,6 @@ export class CustomDomainService {
       );
     }
 
-    // TODO: Integrate with LetsEncrypt/ACME API
-    // For now, simulate issuing
     const before = customDomain.toObject() as unknown as Record<
       string,
       unknown
@@ -253,6 +296,13 @@ export class CustomDomainService {
     customDomain.status = 'ssl_pending';
     customDomain.sslProvider = provider;
     customDomain.sslStatus = 'pending';
+
+    // Set initial issue/expiry timestamps for dashboard display.
+    // In production, update these fields after the actual ACME cert is generated.
+    const issuedAt = new Date();
+    const ninetyDaysMs = 90 * 24 * 60 * 60 * 1000;
+    customDomain.sslIssuedAt = issuedAt;
+    customDomain.sslExpiresAt = new Date(issuedAt.getTime() + ninetyDaysMs);
 
     const saved = await customDomain.save();
 
@@ -268,7 +318,17 @@ export class CustomDomainService {
       status: 'pending',
     });
 
-    this.logger.log(`SSL issuance initiated for ${customDomain.domain}`);
+    this.logger.log(
+      `SSL issuance initiated for ${customDomain.domain}. ` +
+      `In production, trigger external ACME client (certbot/acme.sh) or use node-acme-client library. ` +
+      `After cert issuance, mark sslStatus='issued' via SslAutomationService.resyncStatuses().`
+    );
+
+    // TODO (Production): Spawn or enqueue a job here to call certbot or node-acme-client.
+    // Example (pseudo):
+    //   await this.acmeService.requestCertificate(customDomain.domain);
+    //   Then, poll or listen for completion and update customDomain.sslStatus = 'issued'.
+
     return saved;
   }
 
@@ -676,5 +736,81 @@ export class CustomDomainService {
         ],
       };
     }
+  }
+
+  /**
+   * Get domain & SSL health summary for tenant dashboard "My Domains / My URLs / SSL Health" view.
+   * Returns aggregate counts by status, SSL expiry warnings, and per-domain readiness breakdown.
+   */
+  async getTenantDomainHealthSummary(
+    tenantId: string,
+  ): Promise<TenantDomainHealthSummary> {
+    const tenantObjectId = new Types.ObjectId(tenantId);
+
+    const domains = await this.customDomainModel
+      .find({ tenantId: tenantObjectId })
+      .lean();
+
+    const now = new Date();
+    const warningWindowMs = 14 * 24 * 60 * 60 * 1000; // 14 days
+
+    const summary: TenantDomainHealthSummary = {
+      total: domains.length,
+      byStatus: {} as Record<string, number>,
+      ssl: {
+        issued: 0,
+        pending: 0,
+        expired: 0,
+        expiringSoon: 0,
+        expiringList: [] as Array<{ domain: string; expiresAt: Date; daysRemaining: number }>,
+      },
+      primary: domains.find((d) => d.isPrimary)?.domain || null,
+    };
+
+    for (const d of domains) {
+      const status = d.status || 'unknown';
+      summary.byStatus[status] = (summary.byStatus[status] || 0) + 1;
+
+      if (d.sslStatus === 'issued') {
+        summary.ssl.issued += 1;
+
+        if (d.sslExpiresAt) {
+          const expiresAt = new Date(d.sslExpiresAt);
+          const msRemaining = expiresAt.getTime() - now.getTime();
+
+          if (msRemaining <= 0) {
+            summary.ssl.expired += 1;
+          } else if (msRemaining <= warningWindowMs) {
+            const daysRemaining = Math.max(1, Math.round(msRemaining / (1000 * 60 * 60 * 24)));
+            summary.ssl.expiringSoon += 1;
+            summary.ssl.expiringList.push({
+              domain: d.domain,
+              expiresAt,
+              daysRemaining,
+            });
+          }
+        }
+      } else if (d.sslStatus === 'pending') {
+        summary.ssl.pending += 1;
+      } else if (d.sslStatus === 'expired') {
+        summary.ssl.expired += 1;
+      }
+    }
+
+    return summary;
+  }
+
+  /**
+   * List all custom domains for a tenant with formatted response.
+   */
+  async listForTenant(
+    tenantId: string,
+  ): Promise<Array<Record<string, unknown>>> {
+    const domains = await this.customDomainModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .sort('-createdAt')
+      .exec();
+
+    return domains.map((d) => this.formatCustomDomainResponse(d));
   }
 }

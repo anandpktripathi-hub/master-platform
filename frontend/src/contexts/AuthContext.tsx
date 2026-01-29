@@ -86,14 +86,14 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
 
   const login = async (payload: LoginPayload) => {
     const response = await authApi.login(payload);
-    const accessToken: string = (response as any).access_token;
+    const token: string = (response as any).token;
     const rawUser = (response as any).user;
 
-    if (!accessToken) {
+    if (!token) {
       throw new Error("Invalid login response: missing token");
     }
 
-    localStorage.setItem("token", accessToken);
+    localStorage.setItem("token", token);
 
     if (rawUser) {
       const mappedUser: AuthUser = {
@@ -129,9 +129,16 @@ function AuthProviderComponent({ children }: AuthProviderProps) {
     setUser(null);
   };
 
+  const normalizeRole = (role: string) => {
+    if (role === 'PLATFORM_SUPERADMIN' || role === 'PLATFORM_SUPER_ADMIN') return 'PLATFORM_SUPERADMIN';
+    return role;
+  };
+
   const hasRole = (allowedRoles: UserRole[]): boolean => {
     if (!user || !user.role) return false;
-    return allowedRoles.includes(user.role);
+    const normalizedUserRole = normalizeRole(user.role);
+    const normalizedAllowedRoles = allowedRoles.map(normalizeRole);
+    return normalizedAllowedRoles.includes(normalizedUserRole);
   };
 
   const isPlatformAdmin = user?.role === 'PLATFORM_SUPERADMIN';

@@ -1,0 +1,13 @@
+server {
+    listen 443 ssl;
+    server_name __DOMAIN__;
+
+    ssl_certificate /etc/nginx/certs/__DOMAIN__.crt;
+    ssl_certificate_key /etc/nginx/certs/__DOMAIN__.key;
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Tenant-Id __TENANT_ID__;
+        proxy_pass http://backend:3000;
+    }
+}

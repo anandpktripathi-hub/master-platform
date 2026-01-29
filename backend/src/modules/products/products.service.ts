@@ -12,6 +12,14 @@ export class ProductsService {
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
   ) {}
 
+  async countAll(): Promise<number> {
+    return this.productModel.countDocuments();
+  }
+
+  async countActive(): Promise<number> {
+    return this.productModel.countDocuments({ isActive: true });
+  }
+
   async findAll(page = 1, limit = 10): Promise<{ data: any[]; total: number }> {
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([

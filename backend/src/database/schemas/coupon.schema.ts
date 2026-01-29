@@ -5,7 +5,7 @@ export type CouponDocument = Coupon & Document;
 
 @Schema({ timestamps: true })
 export class Coupon {
-  @Prop({ required: true, unique: true, uppercase: true, index: true })
+  @Prop({ required: true, uppercase: true })
   code!: string;
 
   @Prop({ required: false })

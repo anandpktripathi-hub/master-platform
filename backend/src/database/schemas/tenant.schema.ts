@@ -45,6 +45,10 @@ export class Tenant {
   @Prop({ required: false })
   companyAddress!: string;
 
+  // Affiliate / referral tracking
+  @Prop({ required: false })
+  referralCode?: string;
+
   // Compliance Fields (Step 3 of registration)
   @Prop({ default: false })
   acceptedTerms!: boolean;
@@ -58,12 +62,98 @@ export class Tenant {
   @Prop({ required: false })
   acceptedPrivacyAt!: Date;
 
+  // Custom domains and quota fields
+  @Prop({ type: [String], default: [] })
+  customDomains!: string[];
+
+  @Prop({ default: 10000 })
+  maxApiCallsPerDay!: number;
+
+  @Prop({ default: 0 })
+  usedApiCallsToday!: number;
+
+  @Prop({ default: 1024 })
+  maxStorageMb!: number;
+
+  @Prop({ default: 0 })
+  usedStorageMb!: number;
+
   // Flags for tenant creation method
   @Prop({ default: false })
   createdByPlatformOwner?: boolean;
 
   @Prop({ default: false })
   skipPayment?: boolean;
+
+  // Public business profile fields
+  @Prop({ required: false })
+  publicName?: string;
+
+  @Prop({ required: false })
+  tagline?: string;
+
+  @Prop({ required: false })
+  shortDescription?: string;
+
+  @Prop({ required: false })
+  fullDescription?: string;
+
+  @Prop({ required: false })
+  logoUrl?: string;
+
+  @Prop({ required: false })
+  coverImageUrl?: string;
+
+  @Prop({ type: [String], default: [] })
+  categories?: string[];
+
+  @Prop({ type: [String], default: [] })
+  tags?: string[];
+
+  @Prop({ required: false })
+  websiteUrl?: string;
+
+  @Prop({ required: false })
+  contactEmailPublic?: string;
+
+  @Prop({ required: false })
+  contactPhonePublic?: string;
+
+  @Prop({ default: false })
+  isListedInDirectory!: boolean;
+
+  @Prop({
+    type: String,
+    enum: ['PUBLIC', 'PRIVATE'],
+    default: 'PRIVATE',
+  })
+  directoryVisibility!: 'PUBLIC' | 'PRIVATE';
+
+  @Prop({ required: false })
+  city?: string;
+
+  @Prop({ required: false })
+  country?: string;
+
+  @Prop({ required: false })
+  latitude?: number;
+
+  @Prop({ required: false })
+  longitude?: number;
+
+  @Prop({
+    type: String,
+    enum: ['LOW', 'MEDIUM', 'HIGH'],
+    required: false,
+  })
+  priceTier?: 'LOW' | 'MEDIUM' | 'HIGH';
+
+  @Prop({ type: Number, default: 0 })
+  avgRating?: number;
+
+  @Prop({ type: Number, default: 0 })
+  reviewCount?: number;
 }
 
 export const TenantSchema = SchemaFactory.createForClass(Tenant);
+// Add any compound/unique indexes here if needed

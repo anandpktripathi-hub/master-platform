@@ -1,0 +1,51 @@
+.adminThemesRoot {
+  min-height: 100vh;
+  background: #020617;
+  color: #e5e7eb;
+  padding: 2rem;
+}
+.adminThemesTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.adminThemesDesc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+.themeLivePreview {
+  margin-top: 2rem;
+}
+.themeLivePreviewHeader {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.themeLivePreviewFlex {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+.themeLivePreviewInput {
+  margin-left: 0.5rem;
+}
+.themeLivePreviewButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+.themeLivePreviewArea {
+  border-radius: 1rem;
+  min-height: 200px;
+  margin-top: 1rem;
+  transition: all 0.2s;
+  padding: 2rem;
+}
+.themeLivePreviewAreaHeader {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.themeLivePreviewFontSample {
+  font-family: inherit;
+}

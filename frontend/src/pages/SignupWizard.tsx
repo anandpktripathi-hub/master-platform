@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -14,10 +14,21 @@ import {
   FormControlLabel,
   Alert,
 } from '@mui/material';
-import { Grid } from '@mui/material';
+import { Grid, Card, CardContent, Chip, CircularProgress } from '@mui/material';
 import api from '../lib/api';
 
-const steps = ['Personal Info', 'Company Info', 'Compliance', 'Review'];
+const steps = ['Personal Info', 'Company Info', 'Compliance', 'Plan & Pricing', 'Review'];
+
+interface PackageSummary {
+  _id: string;
+  name: string;
+  description?: string;
+  price: number;
+  billingCycle: string;
+  trialDays?: number;
+  featureSet?: Record<string, boolean>;
+  limits?: Record<string, number>;
+}
 
 interface PersonalInfo {
   firstName: string;
@@ -52,6 +63,11 @@ export default function SignupWizard() {
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const [plans, setPlans] = useState<PackageSummary[]>([]);
+  const [plansLoading, setPlansLoading] = useState(false);
+  const [plansError, setPlansError] = useState<string | null>(null);
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
   const [personal, setPersonal] = useState<PersonalInfo>({
     firstName: '',
@@ -84,8 +100,67 @@ export default function SignupWizard() {
   const [subdomain, setSubdomain] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+
+  const PLAN_STEP_INDEX = 3;
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      setPlansLoading(true);
+      setPlansError(null);
+      try {
+        const res = await api.get('/packages?limit=20');
+        const data = Array.isArray(res?.data) ? res.data : res?.data ?? [];
+        setPlans(data);
+
+        const freePlan = data.find((pkg: PackageSummary) => pkg.name?.toUpperCase() === 'FREE');
+        if (freePlan) {
+          setSelectedPlanId(freePlan.name);
+        }
+      } catch (err: unknown) {
+        const error = err as { response?: { data?: { message?: string } }; message?: string };
+        const msg =
+          error.response?.data?.message ||
+          error.message ||
+          'Failed to load plans. You can continue with the default Free plan.';
+        setPlansError(msg);
+      } finally {
+        setPlansLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
+  useEffect(() => {
+    const refParam = searchParams.get('ref');
+    if (refParam) {
+      setReferralCode(refParam);
+      try {
+        localStorage.setItem('referralCode', refParam);
+      } catch {
+        // Ignore storage errors (e.g., disabled cookies)
+      }
+    } else {
+      try {
+        const stored = localStorage.getItem('referralCode');
+        if (stored) {
+          setReferralCode(stored);
+        }
+      } catch {
+        // Ignore storage errors
+      }
+    }
+  }, [searchParams]);
 
   const handleNext = () => {
+    setError(null);
+
+    if (activeStep === PLAN_STEP_INDEX && !selectedPlanId) {
+      setError('Please select a plan to continue');
+      return;
+    }
+
     setActiveStep((prev) => prev + 1);
   };
 
@@ -116,7 +191,8 @@ export default function SignupWizard() {
         compliance,
         subdomain,
         password,
-        planId: 'FREE',
+        planId: selectedPlanId || 'FREE',
+        referralCode: referralCode || undefined,
       });
 
       // Store the access token
@@ -126,7 +202,7 @@ export default function SignupWizard() {
       }
 
       alert('Registration successful! Redirecting to dashboard...');
-      navigate('/app/dashboard');
+      navigate('/app/onboarding');
     } catch (err: unknown) {
       const error = err as {
         response?: { data?: { message?: string } };
@@ -353,6 +429,86 @@ export default function SignupWizard() {
         return (
           <Box>
             <Typography variant="h6" gutterBottom>
+              Choose Your Plan
+            </Typography>
+            {plansLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Grid container spacing={2} sx={{ mt: 1 }}>
+                {plans.map((plan) => (
+                  <Grid item xs={12} sm={6} key={plan._id}>
+                    <Card
+                      sx={{
+                        border: selectedPlanId === plan.name ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setSelectedPlanId(plan.name)}
+                    >
+                      <CardContent>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                          <Typography variant="h6">{plan.name}</Typography>
+                          {plan.trialDays && plan.trialDays > 0 && (
+                            <Chip size="small" color="primary" label={`${plan.trialDays}-day trial`} />
+                          )}
+                        </Box>
+                        <Typography variant="h5" sx={{ mb: 1 }}>
+                          ${plan.price}
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ ml: 0.5 }}
+                          >
+                            / {plan.billingCycle}
+                          </Typography>
+                        </Typography>
+                        {plan.description && (
+                          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                            {plan.description}
+                          </Typography>
+                        )}
+                        {plan.featureSet && (
+                          <Box sx={{ mt: 1 }}>
+                            {Object.entries(plan.featureSet)
+                              .filter(([, enabled]) => enabled)
+                              .slice(0, 4)
+                              .map(([featureKey]) => (
+                                <Chip
+                                  key={featureKey}
+                                  label={featureKey}
+                                  size="small"
+                                  sx={{ mr: 0.5, mb: 0.5 }}
+                                />
+                              ))}
+                          </Box>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+                {plans.length === 0 && !plansLoading && (
+                  <Grid item xs={12}>
+                    <Alert severity="info">
+                      No plans are configured yet. You will be registered on the default Free plan.
+                    </Alert>
+                  </Grid>
+                )}
+                {plansError && (
+                  <Grid item xs={12}>
+                    <Alert severity="warning">{plansError}</Alert>
+                  </Grid>
+                )}
+              </Grid>
+            )}
+          </Box>
+        );
+
+      case 4:
+        return (
+          <Box>
+            <Typography variant="h6" gutterBottom>
               Review & Complete Registration
             </Typography>
             <Grid container spacing={2} sx={{ mt: 1 }}>
@@ -397,6 +553,9 @@ export default function SignupWizard() {
               </Typography>
               <Typography variant="subtitle2">
                 <strong>Compliance:</strong> {compliance.acceptedTerms && compliance.acceptedPrivacy ? '✅ Accepted' : '❌ Not Accepted'}
+              </Typography>
+              <Typography variant="subtitle2" gutterBottom>
+                <strong>Plan:</strong> {selectedPlanId || 'FREE'}
               </Typography>
             </Box>
           </Box>

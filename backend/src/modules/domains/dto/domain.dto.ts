@@ -68,4 +68,7 @@ export class DomainResponseDto {
   updatedBy?: string;
   createdAt!: Date;
   updatedAt!: Date;
+  dnsProvider?: string;
+  dnsSyncedAt?: Date;
+  dnsLastError?: string;
 }

@@ -71,6 +71,12 @@ export class Invoice {
   @Prop({ required: false })
   notes?: string;
 
+  @Prop({ type: Types.ObjectId, ref: 'Affiliate', required: false })
+  affiliateId?: Types.ObjectId;
+
+  @Prop({ required: false })
+  referralCode?: string;
+
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -83,3 +89,4 @@ InvoiceSchema.index({ invoiceNumber: 1 }, { unique: true });
 InvoiceSchema.index({ status: 1 });
 InvoiceSchema.index({ paidOn: 1 });
 InvoiceSchema.index({ tenantId: 1, status: 1 }); // Composite index
+InvoiceSchema.index({ affiliateId: 1 });

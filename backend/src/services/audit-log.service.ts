@@ -67,24 +67,125 @@ export class AuditLogService {
    */
   async getTenantLogs(
     tenantId: string,
-    options: { limit?: number; skip?: number; sortBy?: string } = {},
+    options: {
+      limit?: number;
+      skip?: number;
+      sortBy?: string;
+      action?: string;
+      actionPrefix?: string;
+      resourceType?: string;
+      resourceId?: string;
+      status?: 'success' | 'failure' | 'pending';
+      startDate?: Date;
+      endDate?: Date;
+    } = {},
   ): Promise<{ data: AuditLog[]; total: number }> {
     const limit = options.limit || 50;
     const skip = options.skip || 0;
     const sortBy = options.sortBy || '-createdAt';
 
+    const filter: FilterQuery<AuditLog> = { tenantId };
+
+    if (options.action) {
+      filter.action = options.action;
+    } else if (options.actionPrefix) {
+      filter.action = { $regex: `^${options.actionPrefix}` } as any;
+    }
+
+    if (options.resourceType) {
+      filter.resourceType = options.resourceType;
+    }
+
+    if (options.resourceId) {
+      filter.resourceId = options.resourceId;
+    }
+
+    if (options.status) {
+      filter.status = options.status;
+    }
+
+    if (options.startDate || options.endDate) {
+      filter.createdAt = {} as any;
+
+      if (options.startDate) {
+        (filter.createdAt as any).$gte = options.startDate;
+      }
+
+      if (options.endDate) {
+        (filter.createdAt as any).$lte = options.endDate;
+      }
+    }
+
     const [data, total] = await Promise.all([
       this.auditLogModel
-        .find({ tenantId })
+        .find(filter)
         .limit(limit)
         .skip(skip)
         .sort(sortBy)
         .populate('actorId', 'email name')
         .exec(),
-      this.auditLogModel.countDocuments({ tenantId }),
+      this.auditLogModel.countDocuments(filter),
     ]);
 
     return { data, total };
+  }
+
+  /**
+   * Get all audit logs for a tenant matching the given filters, for exports.
+   * This does not apply pagination; callers should use cautiously.
+   */
+  async getTenantLogsForExport(
+    tenantId: string,
+    options: {
+      sortBy?: string;
+      action?: string;
+      actionPrefix?: string;
+      resourceType?: string;
+      resourceId?: string;
+      status?: 'success' | 'failure' | 'pending';
+      startDate?: Date;
+      endDate?: Date;
+    } = {},
+  ): Promise<AuditLog[]> {
+    const sortBy = options.sortBy || '-createdAt';
+
+    const filter: FilterQuery<AuditLog> = { tenantId };
+
+    if (options.action) {
+      filter.action = options.action;
+    } else if (options.actionPrefix) {
+      filter.action = { $regex: `^${options.actionPrefix}` } as any;
+    }
+
+    if (options.resourceType) {
+      filter.resourceType = options.resourceType;
+    }
+
+    if (options.resourceId) {
+      filter.resourceId = options.resourceId;
+    }
+
+    if (options.status) {
+      filter.status = options.status;
+    }
+
+    if (options.startDate || options.endDate) {
+      filter.createdAt = {} as any;
+
+      if (options.startDate) {
+        (filter.createdAt as any).$gte = options.startDate;
+      }
+
+      if (options.endDate) {
+        (filter.createdAt as any).$lte = options.endDate;
+      }
+    }
+
+    return this.auditLogModel
+      .find(filter)
+      .sort(sortBy)
+      .populate('actorId', 'email name')
+      .exec();
   }
 
   /**

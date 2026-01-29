@@ -6,11 +6,10 @@ interface TenantUser {
 }
 import {
   Injectable,
-  CanActivate,
   ExecutionContext,
-  ForbiddenException,
-  Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
+import { TenantDatabaseService } from '../../tenants/database/database.service';
 
 /**
  * TenantGuard
@@ -33,45 +32,20 @@ import {
  * ```
  */
 @Injectable()
-export class TenantGuard implements CanActivate {
-  private readonly logger = new Logger(TenantGuard.name);
+export class TenantGuard {
+  constructor(private tenantDbService: TenantDatabaseService) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    const user: TenantUser = req.user;
-
-    // User must be authenticated
-    if (!user) {
-      this.logger.warn(
-        'TenantGuard: No user found on request. Ensure JwtAuthGuard runs before TenantGuard.',
-      );
-      throw new ForbiddenException('Authentication required');
+    // Extract tenantId from header or subdomain
+    const tenantId = req.headers['x-tenant-id'] || req.subdomain;
+    if (!tenantId) {
+      throw new UnauthorizedException('Tenant ID required');
     }
-
-    // PLATFORM_SUPER_ADMIN bypasses tenant isolation
-    if (user.role === 'PLATFORM_SUPER_ADMIN') {
-      this.logger.debug(
-        `TenantGuard: PLATFORM_SUPER_ADMIN ${user.email} bypassing tenant check`,
-      );
-      return true;
-    }
-
-    // All other users MUST have a tenantId
-    if (!user.tenantId) {
-      this.logger.error(
-        `TenantGuard: User ${user.email || user.userId} has no tenantId in JWT token`,
-      );
-      throw new ForbiddenException(
-        'Tenant context is required. Invalid JWT token.',
-      );
-    }
-
-    // Attach tenantId to request for downstream use (redundant with middleware, but safe)
-    req.tenantId = user.tenantId;
-
-    this.logger.debug(
-      `TenantGuard: Validated tenant ${user.tenantId} for user ${user.email || user.userId}`,
-    );
+    // Set tenant DB connection for this request
+    req.tenantDbConnection =
+      await this.tenantDbService.getTenantConnection(tenantId);
+    req.tenantId = tenantId;
     return true;
   }
 }

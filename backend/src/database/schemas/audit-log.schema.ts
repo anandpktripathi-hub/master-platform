@@ -8,13 +8,13 @@ export class AuditLog {
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   actorId!: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
   tenantId!: Types.ObjectId;
 
-  @Prop({ required: true, index: true })
+  @Prop({ required: true })
   action!: string;
 
-  @Prop({ required: true, index: true })
+  @Prop({ required: true })
   resourceType!: string;
 
   @Prop({ type: Types.ObjectId, required: false })

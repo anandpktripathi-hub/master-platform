@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Domain, DomainSchema } from '../../database/schemas/domain.schema';
+import { DomainResellerOrder, DomainResellerOrderSchema } from '../../database/schemas/domain-reseller-order.schema';
 import {
   TenantPackage,
   TenantPackageSchema,
@@ -10,9 +11,16 @@ import {
   AuditLog,
   AuditLogSchema,
 } from '../../database/schemas/audit-log.schema';
-import { DomainController } from './domains.controller';
+import { DomainsController } from './domains.controller';
 import { DomainService } from './services/domain.service';
-import { AuditLogService } from '@services/audit-log.service';
+import { DomainResellerService } from './services/domain-reseller.service';
+import {
+  StubDomainResellerProvider,
+  CloudflareDomainResellerProvider,
+  DOMAIN_RESELLER_PROVIDER_TOKEN,
+  DomainResellerProvider,
+} from './services/domain-reseller.provider';
+import { AuditLogService } from '../../services/audit-log.service';
 import { RoleGuard } from '../../guards/role.guard';
 
 @Module({
@@ -22,10 +30,32 @@ import { RoleGuard } from '../../guards/role.guard';
       { name: TenantPackage.name, schema: TenantPackageSchema },
       { name: Package.name, schema: PackageSchema },
       { name: AuditLog.name, schema: AuditLogSchema },
+      { name: DomainResellerOrder.name, schema: DomainResellerOrderSchema },
     ]),
   ],
-  controllers: [DomainController],
-  providers: [DomainService, AuditLogService, RoleGuard],
-  exports: [DomainService, MongooseModule],
+  controllers: [DomainsController],
+  providers: [
+    DomainService,
+    AuditLogService,
+    RoleGuard,
+    StubDomainResellerProvider,
+    CloudflareDomainResellerProvider,
+    {
+      provide: DOMAIN_RESELLER_PROVIDER_TOKEN,
+      useFactory: (
+        stub: StubDomainResellerProvider,
+        cloudflare: CloudflareDomainResellerProvider,
+      ): DomainResellerProvider => {
+        const provider = process.env.DOMAIN_RESELLER_PROVIDER;
+        if (provider === 'cloudflare') {
+          return cloudflare;
+        }
+        return stub;
+      },
+      inject: [StubDomainResellerProvider, CloudflareDomainResellerProvider],
+    },
+    DomainResellerService,
+  ],
+  exports: [DomainService, DomainResellerService, MongooseModule],
 })
 export class DomainsModule {}

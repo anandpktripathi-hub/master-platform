@@ -15,6 +15,12 @@ export class User {
   @Prop({ required: true })
   password!: string;
 
+  @Prop({ default: false })
+  emailVerified!: boolean;
+
+  @Prop({ required: false })
+  previewTemplate?: string;
+
   // Core RBAC roles:
   // - platform_admin  -> Anand Ji (landlord, 100%)
   // - tenant_admin    -> Sudama Ji / tenant owner (90%)
@@ -78,6 +84,11 @@ export class User {
 
   @Prop({ required: false })
   companyIdNumberForUser?: string; // employee ID
+
+  @Prop({ type: Object, required: false })
+  oauth?: Record<string, any>;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+// Compound unique index for email+tenantId
+UserSchema.index({ email: 1, tenantId: 1 }, { unique: true });

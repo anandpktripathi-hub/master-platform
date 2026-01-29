@@ -1,4 +1,4 @@
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
 export class ApplicationSettingsDto {
   @IsString()
@@ -12,6 +12,9 @@ export class ApplicationSettingsDto {
 
   @IsBoolean()
   appDebug!: boolean;
+
+  @IsNumber()
+  subscriptionExpiryWarningDays!: number;
 }
 
 export class UpdateApplicationSettingsDto extends ApplicationSettingsDto {}

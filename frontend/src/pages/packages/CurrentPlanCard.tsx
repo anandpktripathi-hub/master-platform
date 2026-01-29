@@ -51,6 +51,19 @@ export default function CurrentPlanCard() {
   const isExpired = status === 'expired';
   const pkg = packageDef;
 
+  const utilization = usage.utilization || {};
+  const nearLimitEntries = Object.entries(utilization).filter(([, value]) =>
+    typeof value === 'number' && value >= 80 && value < 100
+  );
+
+  const formatLimitKey = (key: string) => {
+    let formatted = key.replace(/^max/, '');
+    formatted = formatted.replace(/([A-Z])/g, ' $1').trim();
+    return formatted || key;
+  };
+
+  const nearLimitLabels = nearLimitEntries.map(([key]) => formatLimitKey(key));
+
   const getStatusColor = () => {
     switch (status) {
       case 'active':
@@ -129,14 +142,15 @@ export default function CurrentPlanCard() {
         {/* Trial Info */}
         {isTrialActive && (tenantPackage.trialEndsAt || usage.trialEndsAt) && (
           <Alert severity="info" sx={{ mb: 2 }}>
-            Trial ends on {new Date((tenantPackage.trialEndsAt || usage.trialEndsAt) as string).toLocaleDateString()}
+            Your free trial ends on{' '}
+            {new Date((tenantPackage.trialEndsAt || usage.trialEndsAt) as string).toLocaleDateString()}.
           </Alert>
         )}
 
         {/* Expired Warning */}
         {isExpired && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            Your plan has expired. Please upgrade to continue using premium features.
+            Your plan has expired. Choose a new plan to restore access and avoid interruptions.
           </Alert>
         )}
 
@@ -148,7 +162,7 @@ export default function CurrentPlanCard() {
             ${pkg.price?.toFixed(2) ?? '0.00'}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            per {pkg.billingCycle}
+            billed {pkg.billingCycle}
           </Typography>
         </Box>
 
@@ -158,6 +172,12 @@ export default function CurrentPlanCard() {
         <Typography variant="h6" gutterBottom>
           Usage
         </Typography>
+        {nearLimitLabels.length > 0 && (
+          <Alert severity="warning" variant="outlined" sx={{ mb: 2 }}>
+            You are close to the limits for {nearLimitLabels.join(', ')} on this plan. Upgrade now to avoid hitting
+            hard limits or service interruptions.
+          </Alert>
+        )}
         {Object.entries(usage.limits || {}).map(([key, limit]) => {
           const current = usage.usage?.[key] || tenantPackage.usageCounters?.[key] || 0;
           const formattedKey = key
@@ -175,13 +195,31 @@ export default function CurrentPlanCard() {
         </Typography>
         <Grid container spacing={1}>
           {Object.entries(pkg.featureSet).map(([key, enabled]) => {
-            const formattedKey = key
+            // Map advanced features to user-friendly labels and tooltips
+            const featureLabels: Record<string, { label: string; tooltip?: string }> = {
+              hotelBooking: { label: 'Hotel Booking', tooltip: 'Enable hotel booking system' },
+              courseManagement: { label: 'Course Management', tooltip: 'Enable course management system' },
+              blogEnabled: { label: 'Blog', tooltip: 'Enable blog features' },
+              ecommerceEnabled: { label: 'E-Commerce', tooltip: 'Enable e-commerce features' },
+              bookingEnabled: { label: 'General Booking', tooltip: 'Enable booking logic' },
+            };
+            let formattedKey = key
               .replace(/^allow/, '')
               .replace(/([A-Z])/g, ' $1')
               .trim();
+            if (featureLabels[key]) {
+              formattedKey = featureLabels[key].label;
+            }
             return (
               <Grid item xs={12} key={key}>
-                {renderFeature(formattedKey, enabled as boolean)}
+                {/* Optionally add tooltip for advanced features */}
+                {featureLabels[key]?.tooltip ? (
+                  <Box title={featureLabels[key].tooltip}>
+                    {renderFeature(formattedKey, enabled as boolean)}
+                  </Box>
+                ) : (
+                  renderFeature(formattedKey, enabled as boolean)
+                )}
               </Grid>
             );
           })}
@@ -195,9 +233,9 @@ export default function CurrentPlanCard() {
             variant="contained"
             startIcon={<UpgradeIcon />}
             fullWidth
-            onClick={() => navigate('/packages')}
+            onClick={() => navigate('/app/packages')}
           >
-            Upgrade Plan
+            Manage Plan
           </Button>
         </Stack>
       </CardContent>

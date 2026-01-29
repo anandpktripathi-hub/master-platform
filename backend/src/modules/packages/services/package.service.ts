@@ -7,10 +7,22 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, FilterQuery } from 'mongoose';
-import { Package, FeatureSet, PackageLimits } from '@schemas/package.schema';
-import { TenantPackage, UsageCounters } from '@schemas/tenant-package.schema';
-import { Tenant } from '@schemas/tenant.schema';
-import { AuditLogService } from '@services/audit-log.service';
+import {
+  Package,
+  FeatureSet,
+  PackageLimits,
+} from '../../../database/schemas/package.schema';
+import {
+  TenantPackage,
+  UsageCounters,
+} from '../../../database/schemas/tenant-package.schema';
+import { Tenant } from '../../../database/schemas/tenant.schema';
+import { AuditLogService } from '../../../services/audit-log.service';
+import { Optional } from '@nestjs/common';
+import type { BillingNotificationService } from '../../billing/billing-notification.service';
+import type { TenantsService } from '../../tenants/tenants.service';
+// import { PaymentGatewayService } from '../../payments/services/payment-gateway.service';
+// import { PaymentLogService } from '../../payments/services/payment-log.service';
 
 export class CreatePackageDto {
   name!: string;
@@ -21,6 +33,7 @@ export class CreatePackageDto {
   featureSet!: FeatureSet;
   limits!: PackageLimits;
   order?: number;
+  expiryWarningDays?: number;
 }
 
 export class UpdatePackageDto {
@@ -33,6 +46,7 @@ export class UpdatePackageDto {
   featureSet?: Partial<FeatureSet>;
   limits?: Partial<PackageLimits>;
   order?: number;
+   expiryWarningDays?: number;
 }
 
 export class AssignPackageDto {
@@ -52,6 +66,13 @@ export class PackageService {
     private tenantPackageModel: Model<TenantPackage>,
     @InjectModel(Tenant.name) private tenantModel: Model<Tenant>,
     private auditLogService: AuditLogService,
+    // Payment services removed to break circular dependency
+
+  // Setter injection for payment services
+
+  // Example usage: pass payment services as parameters where needed
+  // update methods like below:
+  // async someMethod(..., paymentGatewayService: PaymentGatewayService, paymentLogService: PaymentLogService) { ... }
   ) {}
 
   /**
@@ -84,6 +105,11 @@ export class PackageService {
       featureSet: createDto.featureSet,
       limits: createDto.limits,
       order: createDto.order || 999,
+      expiryWarningDays:
+        typeof createDto.expiryWarningDays === 'number' &&
+        createDto.expiryWarningDays > 0
+          ? createDto.expiryWarningDays
+          : undefined,
       createdBy: userId ? new Types.ObjectId(userId) : undefined,
     });
 
@@ -139,6 +165,13 @@ export class PackageService {
     if (updateDto.trialDays !== undefined) pkg.trialDays = updateDto.trialDays;
     if (updateDto.isActive !== undefined) pkg.isActive = updateDto.isActive;
     if (updateDto.order !== undefined) pkg.order = updateDto.order;
+    if (updateDto.expiryWarningDays !== undefined) {
+      pkg.expiryWarningDays =
+        typeof updateDto.expiryWarningDays === 'number' &&
+        updateDto.expiryWarningDays > 0
+          ? updateDto.expiryWarningDays
+          : undefined;
+    }
 
     if (updateDto.featureSet) {
       this.validateFeatureSet(updateDto.featureSet as FeatureSet);
@@ -268,7 +301,14 @@ export class PackageService {
   async assignPackageToTenant(
     tenantId: string,
     packageId: string,
-    options: { startTrial?: boolean; userId?: string } = {},
+    options: {
+      startTrial?: boolean;
+      userId?: string;
+      paymentToken?: string;
+      gatewayName?: string;
+    } = {},
+    paymentGatewayService?: import('../../payments/services/payment-gateway.service').PaymentGatewayService,
+    paymentLogService?: import('../../payments/services/payment-log.service').PaymentLogService,
   ): Promise<TenantPackage> {
     // Validate tenant exists
     const tenant = await this.tenantModel.findById(tenantId);
@@ -286,15 +326,72 @@ export class PackageService {
       throw new BadRequestException('Package is not active');
     }
 
+    // Integrate payment gateway (simulate payment for website creation/assignment)
+    // Only charge if not trial
+    if (!options.startTrial) {
+      if (!paymentGatewayService || !paymentLogService) {
+        throw new BadRequestException('Payment services are required for payment processing');
+      }
+
+      const paymentResult = await paymentGatewayService.processPayment({
+        amount: pkg.price,
+        currency: 'USD',
+        description: `Assign package ${pkg.name} to tenant ${tenantId}`,
+        sourceToken: options.paymentToken || 'test_token',
+        tenantId,
+        packageId,
+        gatewayName: options.gatewayName,
+        module: 'packages',
+      });
+
+      // Structured logging and explicit tracking for payment result
+      if (!paymentResult.success) {
+        this.logger.error('Payment failed when assigning package', {
+          tenantId,
+          packageId,
+          eventType: 'payment_failure',
+          error: paymentResult.error,
+        });
+
+        await paymentLogService.record({
+          transactionId: paymentResult.transactionId || 'unknown',
+          tenantId,
+          packageId,
+          amount: pkg.price,
+          currency: 'USD',
+          status: 'failed',
+          gatewayName: options.gatewayName || 'stripe',
+          error: paymentResult.error,
+          createdAt: new Date(),
+        });
+
+        throw new BadRequestException('Payment failed: ' + paymentResult.error);
+      }
+
+      await paymentLogService.record({
+        transactionId: paymentResult.transactionId || 'unknown',
+        tenantId,
+        packageId,
+        amount: pkg.price,
+        currency: 'USD',
+        status: 'success',
+        gatewayName: options.gatewayName || 'stripe',
+        createdAt: new Date(),
+      });
+    }
+
     // Check if tenant already has a package
     const existing = await this.tenantPackageModel.findOne({
       tenantId: new Types.ObjectId(tenantId),
     });
 
     if (existing) {
-      throw new ConflictException(
-        'Tenant already has an active package assignment',
-      );
+      // If expired, allow re-assignment; otherwise block
+      if (existing.status !== 'expired') {
+        throw new ConflictException(
+          'Tenant already has an active package assignment',
+        );
+      }
     }
 
     // Calculate dates
@@ -392,21 +489,255 @@ export class PackageService {
     if (!tenantPackage) {
       return false;
     }
-
     if (tenantPackage.status !== 'trial') {
       return false;
     }
-
     if (tenantPackage.trialEndsAt && new Date() > tenantPackage.trialEndsAt) {
-      // Trial expired, update status
+      // Trial expired, update status and set expiry
       await this.tenantPackageModel.updateOne(
         { _id: tenantPackage.id },
-        { status: 'expired' },
+        { status: 'expired', expiresAt: new Date() },
       );
       return false;
     }
-
     return true;
+
+  }
+
+  /**
+   * Scheduled expiry check for tenant packages (to be called by cron or admin)
+   */
+  async expireTenantPackages(): Promise<number> {
+    const now = new Date();
+    const expired = await this.tenantPackageModel.updateMany(
+      {
+        expiresAt: { $lte: now },
+        status: { $nin: ['expired'] },
+      },
+      { $set: { status: 'expired' } },
+    );
+    return expired.modifiedCount || 0;
+  }
+
+  /**
+   * Expire tenant packages that have passed their expiry date and
+   * send termination notifications, also marking the underlying
+   * Tenant records as inactive/expired. Designed for use by a
+   * scheduled job or an admin endpoint.
+   */
+  async expireTenantPackagesWithNotifications(
+    billingNotifications: BillingNotificationService,
+    tenantsService: TenantsService,
+  ): Promise<number> {
+    const now = new Date();
+
+    const candidates = await this.tenantPackageModel
+      .find({
+        expiresAt: { $lte: now },
+        status: { $nin: ['expired'] },
+      })
+      .populate('packageId')
+      .exec();
+
+    let processed = 0;
+
+    for (const tenantPackage of candidates as any[]) {
+      const tenantIdValue =
+        tenantPackage.tenantId && tenantPackage.tenantId.toString
+          ? tenantPackage.tenantId.toString()
+          : undefined;
+
+      if (!tenantIdValue) continue;
+
+      const email = await tenantsService.getTenantBillingEmail(tenantIdValue);
+      const pkg = tenantPackage.packageId as any as Package;
+
+      if (email) {
+        await billingNotifications
+          .sendSubscriptionTerminatedEmail({
+            to: email,
+            tenantId: tenantIdValue,
+            packageName: (pkg && pkg.name) || 'Current package',
+            expiredAt: tenantPackage.expiresAt || now,
+          })
+          .catch(() => undefined);
+      }
+
+      tenantPackage.status = 'expired';
+      await tenantPackage.save();
+
+      await this.tenantModel
+        .updateOne(
+          { _id: new Types.ObjectId(tenantIdValue) },
+          { $set: { status: 'expired', isActive: false } },
+        )
+        .exec();
+
+      processed += 1;
+    }
+
+    return processed;
+  }
+
+  /**
+   * Compute the maximum subscription expiry warning window across all active packages,
+   * based on the optional per-plan expiryWarningDays field. Falls back to the provided
+   * global default when no overrides are configured.
+   */
+  async getMaxExpiryWarningWindow(globalDefaultDays: number): Promise<number> {
+    const doc = await this.packageModel
+      .find({ isActive: true, expiryWarningDays: { $gt: 0 } })
+      .sort({ expiryWarningDays: -1 })
+      .limit(1)
+      .lean()
+      .exec();
+
+    const maxOverride =
+      doc && doc.length > 0 && typeof doc[0].expiryWarningDays === 'number'
+        ? (doc[0].expiryWarningDays as number)
+        : 0;
+
+    if (maxOverride > globalDefaultDays) {
+      return maxOverride;
+    }
+    return globalDefaultDays;
+  }
+
+  /**
+   * Return per-plan summary including expiry settings and tenant counts.
+   */
+  async getPlanSummary(): Promise<
+    Array<{
+      package: Package;
+      activeTenantCount: number;
+      totalTenantCount: number;
+    }>
+  > {
+    const [packages, stats] = await Promise.all([
+      this.packageModel.find({}).sort('order').lean().exec(),
+      this.tenantPackageModel
+        .aggregate([
+          {
+            $group: {
+              _id: '$packageId',
+              totalTenantCount: { $sum: 1 },
+              activeTenantCount: {
+                $sum: {
+                  $cond: [
+                    { $in: ['$status', ['trial', 'active']] },
+                    1,
+                    0,
+                  ],
+                },
+              },
+            },
+          },
+        ])
+        .exec(),
+    ]);
+
+    const statsByPackageId = new Map<string, { activeTenantCount: number; totalTenantCount: number }>();
+    for (const row of stats as any[]) {
+      const id = row._id ? String(row._id) : '';
+      statsByPackageId.set(id, {
+        activeTenantCount: row.activeTenantCount || 0,
+        totalTenantCount: row.totalTenantCount || 0,
+      });
+    }
+
+    return packages.map((pkg) => {
+      const key = (pkg as any)._id ? String((pkg as any)._id) : '';
+      const s = statsByPackageId.get(key) || {
+        activeTenantCount: 0,
+        totalTenantCount: 0,
+      };
+      return {
+        package: pkg as any as Package,
+        activeTenantCount: s.activeTenantCount,
+        totalTenantCount: s.totalTenantCount,
+      };
+    });
+  }
+
+  /**
+   * Scan for tenant packages that are about to expire soon and
+   * trigger subscription expiry warning emails via BillingNotificationService.
+   *
+   * This method is designed to be called by a scheduled job or
+   * an admin-triggered endpoint. It only sends a single warning
+   * per subscription window by toggling the expiryWarningSent flag.
+   */
+  async sendSubscriptionExpiryWarnings(
+    globalDaysBeforeExpiry: number,
+    windowDays: number,
+    billingNotifications: BillingNotificationService,
+    tenantsService: TenantsService,
+  ): Promise<number> {
+    const now = new Date();
+    const cutoff = new Date(now.getTime() + windowDays * 24 * 60 * 60 * 1000);
+
+    const candidates = await this.tenantPackageModel
+      .find({
+        expiresAt: { $gte: now, $lte: cutoff },
+        status: { $in: ['trial', 'active'] },
+        expiryWarningSent: { $ne: true },
+      })
+      .populate('packageId')
+      .exec();
+
+    let processed = 0;
+
+    for (const tenantPackage of candidates as any[]) {
+      if (!tenantPackage.expiresAt) continue;
+
+      const tenantIdValue =
+        (tenantPackage.tenantId && tenantPackage.tenantId.toString
+          ? tenantPackage.tenantId.toString()
+          : undefined) as string | undefined;
+      if (!tenantIdValue) continue;
+
+      const email = await tenantsService.getTenantBillingEmail(tenantIdValue);
+      if (!email) continue;
+
+      const pkg = tenantPackage.packageId as any as Package;
+
+      const effectiveDaysBeforeExpiry = (() => {
+        const override = (pkg as any).expiryWarningDays as number | undefined;
+        if (typeof override === 'number' && override > 0) {
+          return override;
+        }
+        return globalDaysBeforeExpiry;
+      })();
+
+      const effectiveCutoff = new Date(
+        now.getTime() + effectiveDaysBeforeExpiry * 24 * 60 * 60 * 1000,
+      );
+
+      if (tenantPackage.expiresAt > effectiveCutoff) {
+        continue;
+      }
+      const msRemaining = tenantPackage.expiresAt.getTime() - now.getTime();
+      const daysRemaining = Math.max(
+        1,
+        Math.ceil(msRemaining / (24 * 60 * 60 * 1000)),
+      );
+
+      await billingNotifications
+        .sendSubscriptionExpiringSoonEmail({
+          to: email,
+          tenantId: tenantIdValue,
+          packageName: (pkg && pkg.name) || 'Current package',
+          expiresAt: tenantPackage.expiresAt,
+          daysRemaining,
+        })
+        .catch(() => undefined);
+
+      tenantPackage.expiryWarningSent = true;
+      await tenantPackage.save();
+      processed += 1;
+    }
+
+    return processed;
   }
 
   /**

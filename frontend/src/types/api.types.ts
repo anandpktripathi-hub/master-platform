@@ -72,6 +72,9 @@ export interface Domain {
   updatedBy?: string;
   createdAt: string;
   updatedAt: string;
+  dnsProvider?: string;
+  dnsSyncedAt?: string;
+  dnsLastError?: string;
 }
 
 export interface CreateDomainDto {
@@ -200,6 +203,7 @@ export interface Package {
   limits: PackageLimits;
   isActive: boolean;
   order: number;
+   expiryWarningDays?: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -214,6 +218,7 @@ export interface CreatePackageDto {
   limits: PackageLimits;
   isActive?: boolean;
   order?: number;
+  expiryWarningDays?: number;
 }
 
 export interface UpdatePackageDto {
@@ -226,6 +231,13 @@ export interface UpdatePackageDto {
   limits?: PackageLimits;
   isActive?: boolean;
   order?: number;
+  expiryWarningDays?: number;
+}
+
+export interface PackagePlanSummary {
+  package: Package;
+  activeTenantCount: number;
+  totalTenantCount: number;
 }
 
 export type TenantPackageStatus = 'trial' | 'active' | 'expired' | 'suspended';
@@ -260,6 +272,10 @@ export interface TenantPackage {
 export interface AssignPackageDto {
   tenantId: string;
   startTrial?: boolean;
+  /** Optional gateway for this assignment, e.g. "stripe" or "paypal" */
+  gatewayName?: string;
+  /** Optional opaque payment token (card token, PayPal order id, etc.) */
+  paymentToken?: string;
 }
 
 export interface PackageUsage {

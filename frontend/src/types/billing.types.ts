@@ -40,7 +40,7 @@ export interface Subscription {
   failedPaymentCount: number;
   stripeSubscriptionId?: string;
   razorpaySubscriptionId?: string;
-  paymentMethod?: 'STRIPE' | 'RAZORPAY' | 'MANUAL';
+  paymentMethod?: 'STRIPE' | 'RAZORPAY' | 'PAYPAL' | 'MANUAL';
   createdAt: string;
   updatedAt: string;
 }
@@ -57,7 +57,7 @@ export interface Invoice {
   paidOn?: string;
   dueDate: string;
   status: InvoiceStatus;
-  paymentMethod?: 'STRIPE' | 'RAZORPAY' | 'MANUAL';
+  paymentMethod?: 'STRIPE' | 'RAZORPAY' | 'PAYPAL' | 'MANUAL';
   transactionId?: string;
   stripeInvoiceId?: string;
   razorpayPaymentId?: string;
@@ -65,6 +65,8 @@ export interface Invoice {
   refundedAmount: number;
   refundedOn?: string;
   notes?: string;
+  affiliateId?: string;
+  referralCode?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -129,4 +131,18 @@ export interface PlanUsage {
     limit: number;
     percentage: number;
   };
+}
+
+export interface OfflinePaymentRequest {
+  _id: string;
+  tenantId: string;
+  userId: string;
+  amount: number;
+  currency: string;
+  method: string;
+  description?: string;
+  proofUrl?: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+  updatedAt: string;
 }

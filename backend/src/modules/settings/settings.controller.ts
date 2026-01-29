@@ -41,6 +41,38 @@ import {
   UpdateEmailSettingsDto,
 } from './dto/email-settings.dto';
 import {
+  PaymentSettingsDto,
+  UpdatePaymentSettingsDto,
+} from './dto/payment-settings.dto';
+import {
+  IntegrationSettingsDto,
+  UpdateIntegrationSettingsDto,
+} from './dto/integration-settings.dto';
+import {
+  TrackerSettingsDto,
+  UpdateTrackerSettingsDto,
+} from './dto/tracker-settings.dto';
+import {
+  NotificationSettingsDto,
+  UpdateNotificationSettingsDto,
+} from './dto/notification-settings.dto';
+import {
+  ZoomSettingsDto,
+  UpdateZoomSettingsDto,
+} from './dto/zoom-settings.dto';
+import {
+  CalendarSettingsDto,
+  UpdateCalendarSettingsDto,
+} from './dto/calendar-settings.dto';
+import {
+  WebhookSettingsDto,
+  UpdateWebhookSettingsDto,
+} from './dto/webhook-settings.dto';
+import {
+  IpRestrictionSettingsDto,
+  UpdateIpRestrictionSettingsDto,
+} from './dto/ip-restriction-settings.dto';
+import {
   ReferralSettingsDto,
   UpdateReferralSettingsDto,
 } from './dto/referral-settings.dto';
@@ -118,6 +150,38 @@ import {
   entriesToReportsDto,
   reportsDtoToEntries,
 } from './mappers/reports-settings-mappers';
+import {
+  entriesToPaymentDto,
+  paymentDtoToEntries,
+} from './mappers/payment-settings-mappers';
+import {
+  entriesToIntegrationDto,
+  integrationDtoToEntries,
+} from './mappers/integration-settings-mappers';
+import {
+  entriesToTrackerDto,
+  trackerDtoToEntries,
+} from './mappers/tracker-settings-mappers';
+import {
+  entriesToNotificationDto,
+  notificationDtoToEntries,
+} from './mappers/notification-settings-mappers';
+import {
+  entriesToZoomDto,
+  zoomDtoToEntries,
+} from './mappers/zoom-settings-mappers';
+import {
+  calendarDtoToEntries,
+  entriesToCalendarDto,
+} from './mappers/calendar-settings-mappers';
+import {
+  entriesToWebhookDto,
+  webhookDtoToEntries,
+} from './mappers/webhook-settings-mappers';
+import {
+  entriesToIpRestrictionDto,
+  ipRestrictionDtoToEntries,
+} from './mappers/ip-restriction-settings-mappers';
 
 @Controller()
 export class SettingsController {
@@ -436,5 +500,173 @@ export class SettingsController {
     const entries = reportsDtoToEntries(dto);
     const res = await this.settingsService.upsertGroup('reports', entries);
     return entriesToReportsDto(res.items);
+  }
+
+  // Public (read-only) Reports settings for authenticated tenants
+  @UseGuards(JwtAuthGuard)
+  @Get('settings/reports')
+  async getReportsPublic(): Promise<ReportsSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('reports');
+    return entriesToReportsDto(res.items);
+  }
+
+  // Payment Settings
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/payment/typed')
+  async getPayment(): Promise<PaymentSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('payment');
+    return entriesToPaymentDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/payment/typed')
+  async updatePayment(
+    @Body() dto: UpdatePaymentSettingsDto,
+  ): Promise<PaymentSettingsDto> {
+    const entries = paymentDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('payment', entries);
+    return entriesToPaymentDto(res.items);
+  }
+
+  // Integration Settings (Slack, Telegram, Twilio)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/integrations/typed')
+  async getIntegrations(): Promise<IntegrationSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('integrations');
+    return entriesToIntegrationDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/integrations/typed')
+  async updateIntegrations(
+    @Body() dto: UpdateIntegrationSettingsDto,
+  ): Promise<IntegrationSettingsDto> {
+    const entries = integrationDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('integrations', entries);
+    return entriesToIntegrationDto(res.items);
+  }
+
+  // Time Tracker Settings
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/tracker/typed')
+  async getTracker(): Promise<TrackerSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('tracker');
+    return entriesToTrackerDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/tracker/typed')
+  async updateTracker(
+    @Body() dto: UpdateTrackerSettingsDto,
+  ): Promise<TrackerSettingsDto> {
+    const entries = trackerDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('tracker', entries);
+    return entriesToTrackerDto(res.items);
+  }
+
+  // Notification Settings
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/notifications/typed')
+  async getNotifications(): Promise<NotificationSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('notifications');
+    return entriesToNotificationDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/notifications/typed')
+  async updateNotifications(
+    @Body() dto: UpdateNotificationSettingsDto,
+  ): Promise<NotificationSettingsDto> {
+    const entries = notificationDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('notifications', entries);
+    return entriesToNotificationDto(res.items);
+  }
+
+  // Zoom Settings
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/zoom/typed')
+  async getZoom(): Promise<ZoomSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('zoom');
+    return entriesToZoomDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/zoom/typed')
+  async updateZoom(
+    @Body() dto: UpdateZoomSettingsDto,
+  ): Promise<ZoomSettingsDto> {
+    const entries = zoomDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('zoom', entries);
+    return entriesToZoomDto(res.items);
+  }
+
+  // Calendar Settings (Google Calendar)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/calendar/typed')
+  async getCalendar(): Promise<CalendarSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('calendar');
+    return entriesToCalendarDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/calendar/typed')
+  async updateCalendar(
+    @Body() dto: UpdateCalendarSettingsDto,
+  ): Promise<CalendarSettingsDto> {
+    const entries = calendarDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('calendar', entries);
+    return entriesToCalendarDto(res.items);
+  }
+
+  // Webhook Settings
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/webhooks/typed')
+  async getWebhooks(): Promise<WebhookSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('webhooks');
+    return entriesToWebhookDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/webhooks/typed')
+  async updateWebhooks(
+    @Body() dto: UpdateWebhookSettingsDto,
+  ): Promise<WebhookSettingsDto> {
+    const entries = webhookDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('webhooks', entries);
+    return entriesToWebhookDto(res.items);
+  }
+
+  // IP Restriction Settings
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Get('admin/settings/ip-restriction/typed')
+  async getIpRestriction(): Promise<IpRestrictionSettingsDto> {
+    const res = await this.settingsService.getGroupAdmin('ip-restriction');
+    return entriesToIpRestrictionDto(res.items);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN')
+  @Put('admin/settings/ip-restriction/typed')
+  async updateIpRestriction(
+    @Body() dto: UpdateIpRestrictionSettingsDto,
+  ): Promise<IpRestrictionSettingsDto> {
+    const entries = ipRestrictionDtoToEntries(dto);
+    const res = await this.settingsService.upsertGroup('ip-restriction', entries);
+    return entriesToIpRestrictionDto(res.items);
   }
 }

@@ -2,25 +2,113 @@ import {
   Injectable,
   ConflictException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
 import { User, UserDocument } from '../../database/schemas/user.schema';
+import {
+  BusinessReview,
+  BusinessReviewDocument,
+} from '../../database/schemas/business-review.schema';
 import { PlanKey } from '../../config/plans.config';
 import { ManualCreateTenantDto } from './dto/manual-create-tenant.dto';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { objectIdToString } from '../../utils/objectIdToString';
+import { Role } from '../users/role.types';
 
 @Injectable()
 export class TenantsService {
+  private readonly logger = new Logger(TenantsService.name);
+
   constructor(
     @InjectModel(Tenant.name)
     private readonly tenantModel: Model<TenantDocument>,
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
+    @InjectModel(BusinessReview.name)
+    private readonly reviewModel: Model<BusinessReviewDocument>,
   ) {}
+
+  /**
+   * Resolve a reasonable billing/contact email address for a tenant.
+   *
+   * Priority:
+   * 1. Tenant.companyEmail
+   * 2. Tenant.contactEmailPublic
+   * 3. Created-by user email
+   * 4. First active OWNER/ADMIN/TENANT_ADMIN_LEGACY user for the tenant
+   * 5. Any active user for the tenant
+   */
+  async getTenantBillingEmail(tenantId: string): Promise<string | null> {
+    if (!tenantId) {
+      return null;
+    }
+
+    try {
+      const tenantObjectId = new Types.ObjectId(tenantId);
+      const tenant = await this.tenantModel.findById(tenantObjectId).lean();
+
+      if (!tenant) {
+        return null;
+      }
+
+      if (tenant.companyEmail) {
+        return String(tenant.companyEmail).trim();
+      }
+
+      if (tenant.contactEmailPublic) {
+        return String(tenant.contactEmailPublic).trim();
+      }
+
+      if (tenant.createdByUserId) {
+        const creator = await this.userModel
+          .findById(tenant.createdByUserId)
+          .lean();
+        if (creator?.email) {
+          return String(creator.email).trim();
+        }
+      }
+
+      const adminRoles = [
+        Role.OWNER,
+        Role.ADMIN,
+        Role.TENANT_ADMIN_LEGACY,
+      ];
+
+      const adminUser = await this.userModel
+        .findOne({
+          tenantId: tenantObjectId,
+          role: { $in: adminRoles },
+          isActive: true,
+        })
+        .sort({ createdAt: 1 })
+        .lean();
+
+      if (adminUser?.email) {
+        return String(adminUser.email).trim();
+      }
+
+      const anyUser = await this.userModel
+        .findOne({ tenantId: tenantObjectId, isActive: true })
+        .sort({ createdAt: 1 })
+        .lean();
+
+      if (anyUser?.email) {
+        return String(anyUser.email).trim();
+      }
+
+      return null;
+    } catch (error) {
+      this.logger.error(
+        `Failed to resolve tenant billing email for tenantId=${tenantId}`,
+        error as any,
+      );
+      return null;
+    }
+  }
 
   async createTenant(
     name: string,
@@ -42,6 +130,126 @@ export class TenantsService {
 
   async getCurrentTenant(tenantId: string) {
     return this.tenantModel.findById(tenantId).lean();
+  }
+
+  async updateTenantPublicProfile(
+    tenantId: string,
+    payload: Partial<TenantDocument>,
+  ) {
+    const updated = await this.tenantModel
+      .findByIdAndUpdate(tenantId, payload, { new: true })
+      .lean();
+    if (!updated) {
+      throw new BadRequestException('Tenant not found');
+    }
+    return updated;
+  }
+
+  async getPublicBusinessBySlug(slug: string) {
+    const tenant = await this.tenantModel
+      .findOne({
+        slug,
+        isActive: true,
+        isListedInDirectory: true,
+        directoryVisibility: 'PUBLIC',
+      })
+      .lean();
+    if (!tenant) {
+      throw new BadRequestException('Business not found');
+    }
+    return tenant;
+  }
+
+  async listPublicBusinesses(filter: {
+    q?: string;
+    category?: string;
+    city?: string;
+    country?: string;
+    tag?: string;
+    priceTier?: 'LOW' | 'MEDIUM' | 'HIGH';
+    minRating?: number;
+  }) {
+    const query: Record<string, unknown> = {
+      isActive: true,
+      isListedInDirectory: true,
+      directoryVisibility: 'PUBLIC',
+    };
+
+    if (filter.category) {
+      query.categories = filter.category;
+    }
+    if (filter.city) {
+      query.city = filter.city;
+    }
+    if (filter.country) {
+      query.country = filter.country;
+    }
+    if (filter.tag) {
+      query.tags = filter.tag;
+    }
+    if (filter.priceTier) {
+      query.priceTier = filter.priceTier;
+    }
+    if (filter.minRating !== undefined) {
+      query.avgRating = { $gte: filter.minRating };
+    }
+    if (filter.q) {
+      query.$or = [
+        { name: new RegExp(filter.q, 'i') },
+        { publicName: new RegExp(filter.q, 'i') },
+        { shortDescription: new RegExp(filter.q, 'i') },
+        { tags: new RegExp(filter.q, 'i') },
+      ];
+    }
+
+    return this.tenantModel
+      .find(query)
+      .select(
+        'name publicName slug tagline shortDescription logoUrl city country categories tags planKey isActive priceTier avgRating reviewCount',
+      )
+      .lean();
+  }
+
+  async listBusinessReviews(tenantId: Types.ObjectId) {
+    return this.reviewModel
+      .find({ tenantId, status: 'PUBLISHED' })
+      .sort({ createdAt: -1 })
+      .lean();
+  }
+
+  async addBusinessReview(
+    tenantId: Types.ObjectId,
+    userId: Types.ObjectId,
+    rating: number,
+    comment?: string,
+  ) {
+    await this.reviewModel.create({
+      tenantId,
+      userId,
+      rating,
+      comment,
+      status: 'PUBLISHED',
+    });
+
+    const agg = await this.reviewModel
+      .aggregate([
+        { $match: { tenantId, status: 'PUBLISHED' } },
+        {
+          $group: {
+            _id: '$tenantId',
+            avgRating: { $avg: '$rating' },
+            reviewCount: { $sum: 1 },
+          },
+        },
+      ])
+      .exec();
+
+    const { avgRating = 0, reviewCount = 0 } = agg[0] || {};
+
+    await this.tenantModel.updateOne(
+      { _id: tenantId },
+      { $set: { avgRating, reviewCount } },
+    );
   }
 
   /**

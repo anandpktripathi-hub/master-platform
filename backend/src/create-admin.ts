@@ -14,8 +14,8 @@ async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
   const usersService = app.get(UsersService);
 
-  const email = 'admin@example.com';
-  const password = 'password';
+  const email = 'anand@gmail.com';
+  const password = '123456';
 
   const hash = await bcrypt.hash(password, 10);
 
@@ -23,11 +23,13 @@ async function bootstrap() {
     const createDto: CreateAdminDto = {
       email,
       password: hash,
-      name: 'Admin',
+      name: 'Platform Admin',
       role: Role.PLATFORM_SUPER_ADMIN,
     };
+    // Delete any existing user with this email first
+    await usersService.deleteByEmail(email);
     const user = await usersService.create(createDto);
-    console.log('Created admin user:', String(user.email));
+    console.log('Created platform admin user:', String(user.email));
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Unknown error';
     console.error('Error creating admin user:', message);

@@ -2,7 +2,7 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { ProductsModule } from './products/products.module';
+// ...existing code...
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
@@ -15,6 +15,7 @@ import { ThemesModule } from './modules/themes/themes.module';
 import { RolesGuard } from './common/guards/roles.guard';
 import { PermissionsGuard } from './common/guards/permissions.guard';
 import { TenantGuard } from './common/guards/tenant.guard';
+import { TenantDatabaseService } from './tenants/database/database.service';
 import { TenantMiddleware } from './common/middleware/tenant.middleware';
 import { TenantContextMiddleware } from './common/middleware/tenant-context.middleware';
 import { DomainTenantMiddleware } from './common/middleware/domain-tenant.middleware';
@@ -22,6 +23,7 @@ import { TenantContextService } from './common/services/tenant-context.service';
 import { TenantResolverService } from './common/services/tenant-resolver.service';
 import { TenantTestController } from './common/controllers/tenant-test.controller';
 import { DomainTestController } from './common/controllers/domain-test.controller';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -38,7 +40,7 @@ import { DomainTestController } from './common/controllers/domain-test.controlle
       },
     ),
     AuthModule,
-    ProductsModule,
+    // ...existing code...
     CategoriesModule,
     OrdersModule,
     PaymentsModule,
@@ -48,6 +50,7 @@ import { DomainTestController } from './common/controllers/domain-test.controlle
     BillingModule,
     ThemesModule,
     HealthModule,
+    DatabaseModule,
   ],
   controllers: [
     TenantTestController, // Test controller for verifying tenant middleware
@@ -56,7 +59,7 @@ import { DomainTestController } from './common/controllers/domain-test.controlle
   providers: [
     RolesGuard,
     PermissionsGuard,
-    TenantGuard,
+    TenantDatabaseService,
     TenantContextService, // REQUEST-scoped service for tenant context
     TenantResolverService, // Service for resolving tenant from domain
     // Optional: Uncomment to enable global RBAC enforcement on all routes
@@ -74,6 +77,7 @@ import { DomainTestController } from './common/controllers/domain-test.controlle
     //   useClass: TenantGuard,
     // },
   ],
+  exports: [TenantDatabaseService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

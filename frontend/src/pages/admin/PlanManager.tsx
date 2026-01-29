@@ -35,6 +35,8 @@ import {
 import { useSnackbar } from 'notistack';
 import type { Plan } from '../types/billing.types';
 import billingService from '../../services/billingService';
+import { useAdminSettings } from '../../contexts/AdminSettingsContext';
+import { formatCurrencyWithSettings } from '../../utils/formatting';
 
 interface PlanFormData {
   name: string;
@@ -68,6 +70,8 @@ const initialFormData: PlanFormData = {
 
 const PlanManager: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
+
+  const { currency } = useAdminSettings();
 
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
@@ -204,7 +208,7 @@ const PlanManager: React.FC = () => {
   };
 
   const formatCurrency = (amountInCents: number) => {
-    return `₹${(amountInCents / 100).toFixed(2)}`;
+    return formatCurrencyWithSettings(amountInCents, null, currency);
   };
 
   if (loading) {

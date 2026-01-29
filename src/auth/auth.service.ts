@@ -80,6 +80,7 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto) {
+    console.log('auth service login called', loginDto);
     const email: string = loginDto.email;
     const password: string = loginDto.password;
 

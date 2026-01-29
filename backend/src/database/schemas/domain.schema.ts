@@ -5,13 +5,13 @@ export type DomainDocument = Domain & Document;
 
 @Schema({ timestamps: true })
 export class Domain {
-  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
   tenantId!: Types.ObjectId;
 
   @Prop({ enum: ['path', 'subdomain'], required: true })
   type!: 'path' | 'subdomain';
 
-  @Prop({ required: true, lowercase: true, trim: true, index: true })
+  @Prop({ required: true, lowercase: true, trim: true })
   value!: string; // slug for path or subdomain
 
   @Prop({
@@ -20,7 +20,7 @@ export class Domain {
   })
   status!: string;
 
-  @Prop({ default: false, index: true })
+  @Prop({ default: false })
   isPrimary!: boolean;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
@@ -28,6 +28,16 @@ export class Domain {
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   updatedBy!: Types.ObjectId;
+
+  // DNS provisioning metadata (for subdomains/custom domains)
+  @Prop({ required: false })
+  dnsProvider?: string; // e.g. 'stub', 'cloudflare'
+
+  @Prop({ required: false })
+  dnsSyncedAt?: Date;
+
+  @Prop({ required: false })
+  dnsLastError?: string;
 
   createdAt?: Date;
   updatedAt?: Date;

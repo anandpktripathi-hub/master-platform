@@ -138,6 +138,10 @@ export class TenantRegisterDto {
   @IsString()
   planId?: string; // Optional plan selection (defaults to FREE)
 
+  @IsOptional()
+  @IsString()
+  referralCode?: string; // Optional affiliate/referral code from signup URL
+
   @IsString()
   @MinLength(3)
   @MaxLength(50)

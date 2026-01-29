@@ -1,0 +1,17 @@
+<p>Hi {{recipientName}},</p>
+
+<p>We attempted to charge an invoice on <strong>{{appName}}</strong>, but the payment failed.</p>
+
+<p>
+  <strong>Invoice:</strong> {{invoiceNumber}}<br />
+  <strong>Amount:</strong> {{invoiceCurrency}} {{invoiceAmount}}<br />
+  <strong>Status:</strong> {{invoiceStatus}}
+</p>
+
+<p>Please update your payment method or retry the payment from your billing page:</p>
+<p><a href="{{invoiceUrl}}">Open Billing &amp; Invoices</a></p>
+
+<p>If you believe this is an error, please contact support.</p>
+
+<p>Best regards,<br />
+The {{appName}} Team</p>

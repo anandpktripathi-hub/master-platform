@@ -33,7 +33,7 @@ export default function LandingPage() {
           <Typography variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
             Multi-Tenant SaaS Platform for Your Business
           </Typography>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
               variant="contained"
               size="large"
@@ -63,6 +63,20 @@ export default function LandingPage() {
               }}
             >
               Log In
+            </Button>
+            <Button
+              variant="text"
+              size="large"
+              onClick={() => navigate('/directory')}
+              sx={{
+                color: 'white',
+                textDecoration: 'underline',
+                '&:hover': { bgcolor: 'rgba(255,255,255,0.08)' },
+                px: 4,
+                py: 1.5,
+              }}
+            >
+              Browse Business Directory
             </Button>
           </Box>
         </Container>

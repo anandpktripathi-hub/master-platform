@@ -56,16 +56,28 @@ export default function TenantsPage() {
     { open: false, message: '', severity: 'success' }
   );
 
-interface ApiError {
-  message?: string;
-}
+  interface ApiError {
+    message?: string;
+  }
 
   const fetchData = React.useCallback(async () => {
     setLoading(true);
     try {
-      const res = await tenantsApi.adminList({ page, limit, search: search || undefined, status: statusFilter, plan: planFilter });
-      setTenants(res.data || []);
-      setTotal(res.total || 0);
+      const res = await tenantsApi.get('/admin/tenants', {
+        params: {
+          page,
+          limit,
+          search: search || undefined,
+          status: statusFilter,
+          plan: planFilter,
+        },
+      });
+
+      const data = (res as any)?.data ?? [];
+      const total = (res as any)?.total ?? 0;
+
+      setTenants(data);
+      setTotal(total);
     } catch (err: unknown) {
       const error = err as ApiError;
       setSnackbar({ open: true, message: error.message || 'Failed to fetch tenants', severity: 'error' });
@@ -78,7 +90,7 @@ interface ApiError {
 
   const handleCreate = async () => {
     try {
-      await tenantsApi.adminCreate(newPayload);
+      await tenantsApi.post('/admin/tenants', newPayload);
       setOpenNew(false);
       setSnackbar({ open: true, message: 'Tenant created', severity: 'success' });
       fetchData();
@@ -104,7 +116,10 @@ interface ApiError {
       maxStorageMB: editing.maxStorageMB,
     };
     try {
-      await tenantsApi.adminUpdate(editing._id, payload);
+      if (!editing._id) {
+        throw new Error('Missing tenant id');
+      }
+      await tenantsApi.patch(`/admin/tenants/${editing._id}`, payload);
       setEditOpen(false);
       setSnackbar({ open: true, message: 'Tenant updated', severity: 'success' });
       fetchData();
@@ -157,22 +172,47 @@ interface ApiError {
                 <TableCell>User Count</TableCell>
                 <TableCell>Created At</TableCell>
                 <TableCell>Last Login</TableCell>
+                <TableCell>Brand</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {tenants.map((t) => (
-                <TableRow key={t._id} hover>
+                <TableRow key={t._id || t.id} hover>
                   <TableCell>
                     <Typography fontWeight={600}>{t.name}</Typography>
                     <Typography variant="caption" color="textSecondary">{t.slug}</Typography>
                   </TableCell>
                   <TableCell>{t.domain || '-'}</TableCell>
-                  <TableCell><Chip label={t.plan} size="small" color="info" /></TableCell>
-                  <TableCell><Chip label={t.status} size="small" color={STATUS_COLORS[t.status]} /></TableCell>
-                  <TableCell>{t.userCount}</TableCell>
-                  <TableCell>{new Date(t.createdAt).toLocaleString()}</TableCell>
+                  <TableCell>
+                    <Chip label={t.plan || '-'} size="small" color="info" />
+                  </TableCell>
+                  <TableCell>
+                    {t.status ? (
+                      <Chip
+                        label={t.status}
+                        size="small"
+                        color={STATUS_COLORS[t.status]}
+                      />
+                    ) : (
+                      '-'
+                    )}
+                  </TableCell>
+                  <TableCell>{t.userCount ?? '-'}</TableCell>
+                  <TableCell>{t.createdAt ? new Date(t.createdAt).toLocaleString() : '-'}</TableCell>
                   <TableCell>{t.lastLoginAt ? new Date(t.lastLoginAt).toLocaleString() : '-'}</TableCell>
+                  <TableCell>
+                    {t.slug ? (
+                      <Button
+                        size="small"
+                        onClick={() => window.open(`/b/${t.slug}`, '_blank', 'noopener')}
+                      >
+                        View Brand
+                      </Button>
+                    ) : (
+                      '-'
+                    )}
+                  </TableCell>
                   <TableCell>
                     {hasPermission(PERMISSIONS.MANAGE_TENANTS) && (
                       <Button size="small" startIcon={<EditIcon />} onClick={() => openEdit(t)}>

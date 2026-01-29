@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { Box, Card, CardContent, Typography, TextField, Button, Alert } from "@mui/material";
+import { Box, Card, CardContent, Typography, TextField, Button, Alert, Link } from "@mui/material";
 
 interface LoginError {
   message?: string;
@@ -24,10 +24,20 @@ export default function Login() {
     try {
       await login({ email, password });
       navigate("/app/dashboard");
-    } catch (err: unknown) {
-      const error = err as LoginError;
+    } catch (err: any) {
+      // Try to extract backend error details
+      let backendMsg = err?.response?.data?.details || err?.response?.data?.message || err?.message;
+      if (backendMsg) backendMsg = backendMsg.toLowerCase();
+      if (backendMsg?.includes("user not found")) {
+        setError("User can't be found. Please check your email.");
+      } else if (backendMsg?.includes("incorrect password")) {
+        setError("Wrong password. Please try again.");
+      } else if (backendMsg?.includes("tenant not found")) {
+        setError("Tenant not found. Please contact support or check your account type.");
+      } else {
+        setError(err.message || "Login failed. Please try again.");
+      }
       console.error("LOGIN ERROR", err);
-      setError(error.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -58,6 +68,13 @@ export default function Login() {
               fullWidth
               margin="normal"
             />
+            
+            <Box display="flex" justifyContent="flex-end">
+              <Link component={RouterLink} to="/forgot-password" variant="body2">
+                Forgot password?
+              </Link>
+            </Box>
+
             <Button
               type="submit"
               variant="contained"
@@ -69,6 +86,15 @@ export default function Login() {
               {loading ? "Loading..." : "Login"}
             </Button>
             {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+            
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Typography variant="body2">
+                Don't have an account?{' '}
+                <Link component={RouterLink} to="/register">
+                  Sign up
+                </Link>
+              </Typography>
+            </Box>
           </form>
         </CardContent>
       </Card>

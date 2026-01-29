@@ -13,6 +13,7 @@ import { Billing } from '../../database/schemas/billing.schema';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { Tenant } from '../../decorators/tenant.decorator';
+import { RateLimitGuard } from '../../common/guards/rate-limit.guard';
 
 @Controller('billings')
 @UseGuards(RolesGuard)
@@ -31,12 +32,14 @@ export class BillingController {
 
   @Post()
   @Roles('admin')
+  @UseGuards(RateLimitGuard, RolesGuard)
   create(@Body() createBillingDto: Billing, @Tenant() tenantId: string) {
     return this.billingService.create(createBillingDto, tenantId);
   }
 
   @Put(':id')
   @Roles('admin')
+  @UseGuards(RateLimitGuard, RolesGuard)
   update(
     @Param('id') id: string,
     @Body() updateBillingDto: Billing,

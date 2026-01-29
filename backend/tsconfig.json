@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "types": ["jest", "node"],
+    "typeRoots": [
+      "../../node_modules/@types",
+      "./node_modules/@types"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
@@ -23,6 +28,9 @@
       ],
       "@dto/*": [
         "modules/*/dto"
+      ],
+      "@common-schemas/*": [
+        "../../src/common/schemas/*"
       ]
     },
     "incremental": true,
@@ -33,5 +41,7 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*", "../../src/common/schemas/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

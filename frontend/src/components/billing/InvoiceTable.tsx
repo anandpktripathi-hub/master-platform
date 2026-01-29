@@ -15,6 +15,8 @@ import {
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { Invoice } from '../../types/billing.types';
+import { useAdminSettings } from '../../contexts/AdminSettingsContext';
+import { formatDateWithSystemSettings, formatCurrencyWithSettings } from '../../utils/formatting';
 
 interface InvoiceTableProps {
   invoices: Invoice[];
@@ -44,16 +46,14 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
   onView,
   isLoading = false,
 }) => {
+  const { system, currency } = useAdminSettings();
+
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    return formatDateWithSystemSettings(dateString, system);
   };
 
-  const formatCurrency = (amountInCents: number) => {
-    return `₹${(amountInCents / 100).toFixed(2)}`;
+  const formatCurrency = (amountInCents: number, invoiceCurrency?: string | null) => {
+    return formatCurrencyWithSettings(amountInCents, invoiceCurrency || null, currency);
   };
 
   return (
@@ -92,7 +92,7 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
                 <TableCell>{formatDate(invoice.createdAt)}</TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: 600 }}>
-                  {formatCurrency(invoice.totalAmount)}
+                  {formatCurrency(invoice.totalAmount, invoice.currency)}
                 </TableCell>
 
                 <TableCell align="center">

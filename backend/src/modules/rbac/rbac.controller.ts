@@ -27,6 +27,27 @@ import { CurrentTenant } from '../../decorators/tenant.decorator';
 export class RbacController {
   constructor(private rbacService: RbacService) {}
 
+  /**
+   * Check if a role has permission for a specific field/action/module
+   * POST /api/v1/rbac/check-field-permission
+   * Body: { roleId, module, action, field }
+   * Returns: { allowed: boolean }
+   */
+  @Post('check-field-permission')
+  async checkFieldPermission(
+    @Body() body: { roleId: string; module: string; action: string; field?: string },
+    @CurrentTenant() tenantId: string,
+  ) {
+    const role = await this.rbacService.getRoleById(tenantId, body.roleId);
+    const allowed = RbacService.hasPermissionForField(
+      role.permissions,
+      body.module,
+      body.action,
+      body.field,
+    );
+    return { allowed };
+  }
+
   // ============= PERMISSION ENDPOINTS =============
 
   @Get('permissions')

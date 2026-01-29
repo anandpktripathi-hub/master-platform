@@ -1,4 +1,5 @@
-﻿import {
+﻿console.log('TEST LOG: file loaded (src/auth/auth.controller.ts)');
+import {
   Controller,
   Post,
   Get,
@@ -39,6 +40,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Login successful' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() loginDto: LoginDto) {
+    console.log('LOGIN CONTROLLER HIT (src/auth/auth.controller.ts)', loginDto);
     return this.authService.login(loginDto);
   }
 

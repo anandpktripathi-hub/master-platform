@@ -26,6 +26,7 @@ export type ModuleName =
   | 'Employee'
   | 'POS';
 
+
 @Schema({ timestamps: true })
 export class Permission {
   @Prop({
@@ -39,6 +40,12 @@ export class Permission {
 
   @Prop({ required: false })
   description!: string;
+
+  /**
+   * Optional: List of allowed fields for this permission (for per-field access control)
+   */
+  @Prop({ type: [String], required: false, default: undefined })
+  fields?: string[];
 }
 
 export const PermissionSchema = SchemaFactory.createForClass(Permission);

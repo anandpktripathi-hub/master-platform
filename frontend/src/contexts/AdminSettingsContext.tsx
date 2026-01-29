@@ -2,7 +2,15 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import {
   settingsApi,
 } from '../lib/api';
-import type { BasicSettingsDto, BrandingSettingsDto, UiColorsLightSettingsDto, UiTogglesSettingsDto, UiTypographySettingsDto } from '../lib/api';
+import type {
+  BasicSettingsDto,
+  BrandingSettingsDto,
+  UiColorsLightSettingsDto,
+  UiTogglesSettingsDto,
+  UiTypographySettingsDto,
+  SystemSettingsDto,
+  CurrencySettingsDto,
+} from '../lib/api';
 
 type AdminSettingsContextValue = {
   basic: BasicSettingsDto | null;
@@ -10,6 +18,8 @@ type AdminSettingsContextValue = {
   uiToggles: UiTogglesSettingsDto | null;
   uiColorsLight: UiColorsLightSettingsDto | null;
   uiTypography: UiTypographySettingsDto | null;
+  system: SystemSettingsDto | null;
+  currency: CurrencySettingsDto | null;
   loading: boolean;
   error: string | null;
   dismissError: () => void;
@@ -23,6 +33,8 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
   const [uiToggles, setUiToggles] = useState<UiTogglesSettingsDto | null>(null);
   const [uiColorsLight, setUiColorsLight] = useState<UiColorsLightSettingsDto | null>(null);
   const [uiTypography, setUiTypography] = useState<UiTypographySettingsDto | null>(null);
+    const [system, setSystem] = useState<SystemSettingsDto | null>(null);
+    const [currency, setCurrency] = useState<CurrencySettingsDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,20 +49,31 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
           if (mounted) setLoading(false);
           return;
         }
-        const [basicRes, brandingRes, uiToggleRes, uiColorLightRes, uiTypographyRes] =
-          await Promise.all([
-            settingsApi.getBasicSettings(),
-            settingsApi.getBrandingSettings(),
-            settingsApi.getUiTogglesSettings(),
-            settingsApi.getUiColorsLightSettings(),
-            settingsApi.getUiTypographySettings(),
-          ]);
+        const [
+          basicRes,
+          brandingRes,
+          uiToggleRes,
+          uiColorLightRes,
+          uiTypographyRes,
+          systemRes,
+          currencyRes,
+        ] = await Promise.all([
+          settingsApi.getBasicSettings(),
+          settingsApi.getBrandingSettings(),
+          settingsApi.getUiTogglesSettings(),
+          settingsApi.getUiColorsLightSettings(),
+          settingsApi.getUiTypographySettings(),
+          settingsApi.getSystemSettings(),
+          settingsApi.getCurrencySettings(),
+        ]);
         if (!mounted) return;
         setBasic(basicRes);
         setBranding(brandingRes);
         setUiToggles(uiToggleRes);
         setUiColorsLight(uiColorLightRes);
         setUiTypography(uiTypographyRes);
+        setSystem(systemRes);
+        setCurrency(currencyRes);
       } catch (err: any) {
         if (!mounted) return;
         setError(err?.message || 'Failed to load admin settings');
@@ -79,10 +102,12 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
     uiToggles,
     uiColorsLight,
     uiTypography,
+    system,
+    currency,
     loading,
     error,
     dismissError,
-  }), [basic, branding, uiToggles, uiColorsLight, uiTypography, loading, error]);
+  }), [basic, branding, uiToggles, uiColorsLight, uiTypography, system, currency, loading, error]);
 
   return <AdminSettingsContext.Provider value={value}>{children}</AdminSettingsContext.Provider>;
 }
@@ -90,14 +115,19 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
 export function useAdminSettings() {
   const ctx = useContext(AdminSettingsContext);
   if (!ctx) {
-    // Instead of throwing, return a fallback context with error state
+    // Fallback context when provider is unavailable
     return {
-      branding: null,
       basic: null,
+      branding: null,
+      uiToggles: null,
+      uiColorsLight: null,
+      uiTypography: null,
+      system: null,
+      currency: null,
       loading: false,
       error: 'Admin settings context unavailable. Please reload or contact support.',
-      refresh: async () => {},
-    };
+      dismissError: () => {},
+    } as AdminSettingsContextValue;
   }
   return ctx;
 }

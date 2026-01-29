@@ -14,6 +14,14 @@ services:
       - smetasc-network
     restart: unless-stopped
 
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - smetasc-network
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend

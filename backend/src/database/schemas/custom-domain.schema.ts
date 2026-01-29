@@ -5,15 +5,13 @@ export type CustomDomainDocument = CustomDomain & Document;
 
 @Schema({ timestamps: true })
 export class CustomDomain {
-  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
   tenantId!: Types.ObjectId;
 
   @Prop({
     required: true,
-    unique: true,
     lowercase: true,
     trim: true,
-    index: true,
   })
   domain!: string;
 
@@ -60,7 +58,7 @@ export class CustomDomain {
   @Prop({ required: false })
   lastRenewalAttemptAt!: Date;
 
-  @Prop({ default: false, index: true })
+  @Prop({ default: false })
   isPrimary!: boolean;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })

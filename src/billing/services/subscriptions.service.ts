@@ -14,6 +14,9 @@ import {
 import { SubscribeDto } from '../dto/subscribe.dto';
 import { ChangePlanDto } from '../dto/change-plan.dto';
 import { PlansService } from './plans.service';
+import { InvoicesService } from './invoices.service';
+import { PaymentService, PaymentIntent } from './payment.service';
+import { BillingReferralMetadataService } from './billing-referral-metadata.service';
 
 @Injectable()
 export class SubscriptionsService {
@@ -21,12 +24,20 @@ export class SubscriptionsService {
     @InjectModel('Subscription')
     private subscriptionModel: Model<SubscriptionDocument>,
     private plansService: PlansService,
+    private invoicesService: InvoicesService,
+    private paymentService: PaymentService,
+    private billingReferralMetadataService: BillingReferralMetadataService,
   ) {}
 
   async create(
     tenantId: string,
     subscribeDto: SubscribeDto,
-  ): Promise<Subscription> {
+  ): Promise<{
+    subscription: Subscription;
+    invoice?: any;
+    paymentIntent?: PaymentIntent | null;
+    requiresPayment: boolean;
+  }> {
     // Check if tenant already has an active subscription
     const existingSubscription = await this.subscriptionModel.findOne({
       tenantId: new Types.ObjectId(tenantId),
@@ -71,7 +82,80 @@ export class SubscriptionsService {
       paymentMethod: subscribeDto.paymentMethodId ? 'STRIPE' : 'MANUAL',
     });
 
-    return (await (subscription as any).save()) as Subscription;
+    // For free plans, no invoice or payment is needed
+    if (isFree) {
+      const saved = (await (subscription as any).save()) as Subscription;
+      return {
+        subscription: saved,
+        requiresPayment: false,
+        invoice: undefined,
+        paymentIntent: null,
+      };
+    }
+
+    // Paid plans: create invoice and payment intent / order
+    const savedSubscription = (await (subscription as any).save()) as Subscription;
+
+    const amountCents =
+      subscribeDto.billingPeriod === BillingPeriod.YEARLY
+        ? plan.priceYearly
+        : plan.priceMonthly;
+
+    const invoice = await this.invoicesService.create(
+      tenantId,
+      (savedSubscription as any)._id.toString(),
+      subscribeDto.planId,
+      amountCents,
+      `Subscription to ${plan.name} (${subscribeDto.billingPeriod})`,
+    );
+
+    const metadata =
+      await this.billingReferralMetadataService.buildMetadataForTenantPayment({
+        tenantId,
+        invoiceId: (invoice as any)._id.toString(),
+        subscriptionId: (savedSubscription as any)._id.toString(),
+        extra: {
+          planId: subscribeDto.planId,
+          planName: plan.name,
+        },
+      });
+
+    const provider = subscribeDto.provider || 'STRIPE';
+    let paymentIntent: PaymentIntent | null = null;
+
+    if (provider === 'STRIPE') {
+      paymentIntent = this.paymentService.createStripePaymentIntent(
+        amountCents,
+        'usd',
+        metadata,
+      );
+      (savedSubscription as any).paymentMethod = 'STRIPE';
+    } else if (provider === 'RAZORPAY') {
+      paymentIntent = this.paymentService.createRazorpayOrder(
+        amountCents,
+        'USD',
+        metadata,
+      );
+      (savedSubscription as any).paymentMethod = 'RAZORPAY';
+    } else if (provider === 'PAYPAL') {
+      paymentIntent = await this.paymentService.createPaypalOrder(
+        amountCents,
+        'USD',
+        metadata,
+      );
+      (savedSubscription as any).paymentMethod = 'PAYPAL';
+    } else {
+      (savedSubscription as any).paymentMethod = 'MANUAL';
+    }
+
+    await (savedSubscription as any).save();
+
+    return {
+      subscription: savedSubscription,
+      invoice,
+      paymentIntent,
+      requiresPayment: !!paymentIntent,
+    };
   }
 
   async findByTenantId(tenantId: string): Promise<Subscription> {

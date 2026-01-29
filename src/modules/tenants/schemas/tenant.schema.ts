@@ -38,6 +38,10 @@ export class Tenant extends Document {
 
   @Prop({ required: false })
   notes?: string;
+
+  // Affiliate / referral tracking: code used during signup
+  @Prop({ required: false })
+  referralCode?: string;
 }
 
 export const TenantSchema = SchemaFactory.createForClass(Tenant);

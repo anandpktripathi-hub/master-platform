@@ -16,6 +16,8 @@ import { Save, Refresh } from '@mui/icons-material';
 import type { CustomizeThemeDto, TenantThemeResponse } from '../../services/themeApi';
 import { getCurrentTheme, customizeTheme, resetTheme } from '../../services/themeApi';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useCanUseFeature } from '../../hooks/usePackages';
+import { useNavigate } from 'react-router-dom';
 
 interface ThemeError {
   response?: { data?: { message?: string } };
@@ -30,6 +32,8 @@ export default function TenantThemeCustomizerPage() {
   const [success, setSuccess] = useState<string | null>(null);
 
   const [customizations, setCustomizations] = useState<CustomizeThemeDto>({});
+  const { data: customThemeFeature, isLoading: featureLoading } = useCanUseFeature('customTheme');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCurrentTheme();
@@ -110,10 +114,24 @@ export default function TenantThemeCustomizerPage() {
     }
   };
 
-  if (loading) {
+  if (featureLoading || loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
         <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (customThemeFeature && !customThemeFeature.canUse) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Alert severity="info" sx={{ mb: 2 }}>
+          Custom themes are not included in your current plan. Upgrade your subscription to unlock theme
+          customization.
+        </Alert>
+        <Button variant="contained" onClick={() => navigate('/app/packages')}>
+          View plans & upgrade
+        </Button>
       </Box>
     );
   }

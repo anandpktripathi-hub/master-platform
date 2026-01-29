@@ -9,6 +9,7 @@ import type {
   TenantPackage,
   AssignPackageDto,
   PackageUsage,
+  PackagePlanSummary,
 } from '../types/api.types';
 
 /**
@@ -99,6 +100,19 @@ export function useAdminPackagesList(): UseQueryResult<Package[], Error> {
       const data = await api.get('/packages/admin/all');
       if (Array.isArray(data)) return data as Package[];
       return (data as any)?.data ?? [];
+    },
+  });
+}
+
+/**
+ * Fetch per-plan summary (admin) (GET /packages/admin/plan-summary)
+ */
+export function usePackagePlanSummary(): UseQueryResult<PackagePlanSummary[], Error> {
+  return useQuery({
+    queryKey: [...packageKeys.all, 'plan-summary'],
+    queryFn: async () => {
+      const data = await api.get('/packages/admin/plan-summary');
+      return (data || []) as PackagePlanSummary[];
     },
   });
 }
@@ -219,17 +233,34 @@ export function useAssignPackageToTenant(): UseMutationResult<
 export function useAssignPackageToSelf(): UseMutationResult<
   TenantPackage,
   Error,
-  { packageId: string; tenantId: string; startTrial?: boolean }
+  { packageId: string; tenantId: string; startTrial?: boolean; gatewayName?: string; paymentToken?: string }
 > {
   const queryClient = useQueryClient();
   const { showSuccessToast, showErrorToast } = useApiErrorToast();
 
   return useMutation({
-    mutationFn: async ({ packageId, tenantId, startTrial }: { packageId: string; tenantId: string; startTrial?: boolean }) => {
+    mutationFn: async ({
+      packageId,
+      tenantId,
+      startTrial,
+      gatewayName,
+      paymentToken,
+    }: {
+      packageId: string;
+      tenantId: string;
+      startTrial?: boolean;
+      gatewayName?: string;
+      paymentToken?: string;
+    }) => {
       if (!tenantId) {
         throw new Error('Missing tenant context for upgrade');
       }
-      const data = await api.post(`/packages/${packageId}/assign`, { tenantId, startTrial });
+      const data = await api.post(`/packages/${packageId}/assign`, {
+        tenantId,
+        startTrial,
+        gatewayName,
+        paymentToken,
+      });
       return data as TenantPackage;
     },
     onSuccess: () => {

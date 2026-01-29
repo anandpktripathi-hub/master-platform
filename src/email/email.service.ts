@@ -39,6 +39,16 @@ export class EmailService {
     }
   }
 
+  async sendCustomTemplateEmail(
+    to: string,
+    subject: string,
+    templateName: string,
+    context: any,
+  ) {
+    const html = this.compileTemplate(templateName, context);
+    await this.sendEmail(to, subject, html);
+  }
+
   private compileTemplate(templateName: string, context: any): string {
     const templatePath = path.join(
       __dirname,

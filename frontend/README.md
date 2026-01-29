@@ -1,36 +1,32 @@
-# Frontend (Vite + React + TS)
+# Frontend (React/Vite) – Master Platform
 
-This app is wired to the backend APIs for domains, custom domains, packages, coupons, audit logs, and multi-tenancy. React Query, React Hook Form, and Zod are preinstalled.
+This frontend is a modern, multi-tenant SaaS UI built with React, Vite, and Tailwind CSS.
 
-## Configure
+## Structure
+- `src/` – Main app code (pages, components, hooks, utils)
+- `public/` – Static assets
+- `tests/` – Frontend tests
 
-Create `.env.local` with:
+## Key Features
+- Tenant-aware routing (subdomain, custom domain)
+- Theming and branding per tenant
+- Auth flows (JWT, OAuth)
+- RBAC-aware UI
+- Billing, CMS, and integrations
 
-```
-VITE_API_BASE_URL=http://localhost:4000/api/v1
-```
+## Common Scripts
+- `npm run dev` – Start in development mode (default port: 5173)
+- `npm run build` – Build for production
+- `npm run test` – Run tests
 
-Tokens are read from `localStorage` key `token`; tenant context can be passed via `localStorage` key `tenantId` or `x-tenant-id` header per request.
+## Environment
+- Copy `.env.example` to `.env` and update values
 
-## Scripts
+## Extending
+- Add new pages/components in `src/`
+- Use hooks and context for state management
+- See `../docs/themes/` for theming guidelines
 
-- `npm run dev` – start Vite dev server
-- `npm run build` – production build
-- `npm run preview` – preview production build
-- `npm run lint` – ESLint
-- `npm run test` – unit tests (Jest)
-- `npm run test:e2e` – Playwright e2e scaffold
-- `npm run dev:mock` – run dev server in mock mode (uses Vite mock env)
-
-## E2E (Playwright)
-
-- Config: `playwright.config.ts`
-- Tests: `tests/e2e/*.spec.ts` (scaffolds for domains, custom domains, packages/coupons)
-- Set `E2E_BASE_URL` if not using default `http://localhost:5173`.
-
-## Integration Notes
-
-- API client: `src/api/client.ts` auto-attaches JWT and optional `x-tenant-id`; handles 401/403 centrally.
-- React Query provider and notistack toasts: `src/providers/QueryProvider.tsx`.
-- Auth context: `src/contexts/AuthContext.tsx` with `RequireAuth`/`RequireRole` guards.
-- Shared UI states: `src/components/common` (loading/error/empty/confirm dialog/status chip).
+## More
+- For architecture, see `../docs/overview/PROJECT_CONTEXT.md`
+- For deployment, see `../docs/ops/DEPLOYMENT.md`

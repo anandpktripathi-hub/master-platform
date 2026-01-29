@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { useSearchParams } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -19,12 +20,17 @@ import {
 import { useSnackbar } from 'notistack';
 import type { Invoice } from '../types/billing.types';
 import { InvoiceTable } from '../components/billing/InvoiceTable';
-import billingService from '../services/billingService';
+import { getInvoices as fetchInvoicesApi, getInvoiceById, downloadInvoicePdf } from '../api/invoices';
+import { useAdminSettings } from '../contexts/AdminSettingsContext';
+import { formatDateWithSystemSettings, formatCurrencyWithSettings } from '../utils/formatting';
 
 const ITEMS_PER_PAGE = 10;
 
 const Invoices: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const { system, currency } = useAdminSettings();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,9 +49,9 @@ const Invoices: React.FC = () => {
         setError(null);
 
         // billingService returns unwrapped data now
-        const response = await billingService.getInvoices(currentPage, ITEMS_PER_PAGE);
+        const response = await fetchInvoicesApi(currentPage, ITEMS_PER_PAGE);
         setInvoices(response.data || []);
-        setTotalPages(response.totalPages || 1);
+        setTotalPages(response.pages || 1);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load invoices';
         setError(errorMessage);
@@ -58,9 +64,26 @@ const Invoices: React.FC = () => {
     fetchInvoices();
   }, [currentPage, enqueueSnackbar]);
 
+  // Auto-open invoice details when navigated with ?invoiceId=...
+  useEffect(() => {
+    const invoiceId = searchParams.get('invoiceId');
+    if (!invoiceId || loading || invoices.length === 0) return;
+
+    const invoice = invoices.find((inv) => inv._id === invoiceId);
+    if (!invoice) return;
+
+    setSelectedInvoice(invoice);
+    setDetailsDialogOpen(true);
+
+    // Clear the query parameter so dialog doesn't reopen on future visits
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete('invoiceId');
+    setSearchParams(nextParams, { replace: true });
+  }, [searchParams, invoices, loading, setSearchParams]);
+
   const handleViewInvoice = async (invoiceId: string) => {
     try {
-      const invoice = await billingService.getInvoiceById(invoiceId);
+      const invoice = await getInvoiceById(invoiceId);
       setSelectedInvoice(invoice);
       setDetailsDialogOpen(true);
     } catch (err) {
@@ -72,7 +95,7 @@ const Invoices: React.FC = () => {
   const handleDownloadInvoice = async (invoiceId: string) => {
     try {
       setDownloading(invoiceId);
-      await billingService.downloadInvoicePDF(invoiceId);
+      await downloadInvoicePdf(invoiceId);
       enqueueSnackbar('Invoice downloaded successfully', { variant: 'success' });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to download invoice';
@@ -83,15 +106,11 @@ const Invoices: React.FC = () => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    return formatDateWithSystemSettings(dateString, system);
   };
 
-  const formatCurrency = (amountInCents: number) => {
-    return `₹${(amountInCents / 100).toFixed(2)}`;
+  const formatCurrency = (amountInCents: number, invoiceCurrency?: string | null) => {
+    return formatCurrencyWithSettings(amountInCents, invoiceCurrency || null, currency);
   };
 
   return (
@@ -191,7 +210,7 @@ const Invoices: React.FC = () => {
                     Total Amount
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '1.1rem' }}>
-                    {formatCurrency(selectedInvoice.totalAmount)}
+                    {formatCurrency(selectedInvoice.totalAmount, selectedInvoice.currency)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -220,7 +239,7 @@ const Invoices: React.FC = () => {
                         </Typography>
                       </Box>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                        {formatCurrency(item.amount)}
+                        {formatCurrency(item.amount, selectedInvoice.currency)}
                       </Typography>
                     </Box>
                   ))}

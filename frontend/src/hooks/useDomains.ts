@@ -158,8 +158,12 @@ export function useAdminDomainsList(): UseQueryResult<Domain[], Error> {
   return useQuery({
     queryKey: [...domainKeys.all, 'admin'],
     queryFn: async () => {
-      const data = await api.get('/domains');
-      return data as Domain[];
+      const response = await api.get('/domains');
+      // Backend returns a paginated envelope { data, total, limit, skip }
+      if (Array.isArray(response)) {
+        return response as Domain[];
+      }
+      return (response as any)?.data ?? [];
     },
   });
 }

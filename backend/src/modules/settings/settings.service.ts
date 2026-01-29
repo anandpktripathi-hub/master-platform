@@ -3,6 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { Setting, SettingDocument } from './schemas/setting.schema';
 import { SettingEntryDto } from './dto/upsert-settings.dto';
+import { IntegrationSettingsDto } from './dto/integration-settings.dto';
+import { WebhookSettingsDto } from './dto/webhook-settings.dto';
+import { entriesToIntegrationDto } from './mappers/integration-settings-mappers';
+import { entriesToWebhookDto } from './mappers/webhook-settings-mappers';
 
 interface SettingsGroupResult {
   items: Record<string, any>;
@@ -80,5 +84,24 @@ export class SettingsService {
     }
 
     return this.getGroupAdmin(group, entries[0]?.locale, entries[0]?.tenantId);
+  }
+
+  /**
+   * Convenience helper for reading global integration settings used by
+   * Slack/Telegram/Twilio integration services. Currently these settings
+   * are global, so the tenantId parameter is ignored.
+   */
+  async getIntegrationSettings(_tenantId?: string): Promise<IntegrationSettingsDto> {
+    const res = await this.getGroupAdmin('integrations');
+    return entriesToIntegrationDto(res.items);
+  }
+
+  /**
+   * Convenience helper for reading webhook configuration used by the
+   * WebhookDispatcherService. Currently these settings are global.
+   */
+  async getWebhookSettings(_tenantId?: string): Promise<WebhookSettingsDto> {
+    const res = await this.getGroupAdmin('webhooks');
+    return entriesToWebhookDto(res.items);
   }
 }
