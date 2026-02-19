@@ -19,7 +19,12 @@ export class Goal {
   @Prop({ type: Date })
   dueDate?: Date;
 
-  @Prop({ required: true, enum: ['active', 'achieved', 'cancelled'], default: 'active' })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['active', 'achieved', 'cancelled'],
+    default: 'active',
+  })
   status!: GoalStatus;
 
   @Prop()

@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../../../database/schemas/user.schema';
@@ -21,7 +26,11 @@ export class AuthService {
   /**
    * Register a new user
    */
-  async register(name: string, email: string, password: string): Promise<{ user: User; message: string }> {
+  async register(
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<{ user: User; message: string }> {
     // Check if user already exists
     const existingUser = await this.userModel.findOne({ email });
     if (existingUser) {
@@ -46,14 +55,18 @@ export class AuthService {
 
     return {
       user,
-      message: 'Registration successful. Please check your email to verify your account.',
+      message:
+        'Registration successful. Please check your email to verify your account.',
     };
   }
 
   /**
    * Login user
    */
-  async login(email: string, password: string): Promise<{ accessToken: string; user: Partial<User> }> {
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ accessToken: string; user: Partial<User> }> {
     // Find user
     const user = await this.userModel.findOne({ email });
     if (!user) {
@@ -68,7 +81,9 @@ export class AuthService {
 
     // Check if user is active
     if (!user.isActive) {
-      throw new UnauthorizedException('Your account has been deactivated. Please contact support.');
+      throw new UnauthorizedException(
+        'Your account has been deactivated. Please contact support.',
+      );
     }
 
     // Generate JWT token
@@ -107,11 +122,15 @@ export class AuthService {
     }
 
     // Create verification token
-    const token = await this.authTokenService.createToken(user._id, TokenType.EMAIL_VERIFICATION, 48);
+    const token = await this.authTokenService.createToken(
+      user._id,
+      TokenType.EMAIL_VERIFICATION,
+      48,
+    );
 
     // Send email with verification link
     const verificationUrl = `${process.env.FRONTEND_URL}/auth/verify-email?token=${token}`;
-    
+
     try {
       await this.emailService.sendEmail({
         to: user.email,
@@ -137,7 +156,9 @@ export class AuthService {
       });
     } catch (error) {
       console.error('Failed to send verification email:', error);
-      throw new BadRequestException('Failed to send verification email. Please try again later.');
+      throw new BadRequestException(
+        'Failed to send verification email. Please try again later.',
+      );
     }
 
     return { message: 'Verification email sent successfully' };
@@ -147,14 +168,21 @@ export class AuthService {
    * Verify email with token
    */
   async verifyEmail(token: string): Promise<{ message: string }> {
-    const result = await this.authTokenService.verifyAndConsumeToken(token, TokenType.EMAIL_VERIFICATION);
+    const result = await this.authTokenService.verifyAndConsumeToken(
+      token,
+      TokenType.EMAIL_VERIFICATION,
+    );
 
     if (!result.valid) {
-      throw new BadRequestException(result.reason || 'Invalid verification token');
+      throw new BadRequestException(
+        result.reason || 'Invalid verification token',
+      );
     }
 
     // Update user's email verified status
-    await this.userModel.findByIdAndUpdate(result.userId, { emailVerified: true });
+    await this.userModel.findByIdAndUpdate(result.userId, {
+      emailVerified: true,
+    });
 
     return { message: 'Email verified successfully! You can now log in.' };
   }
@@ -164,14 +192,21 @@ export class AuthService {
    */
   async requestPasswordReset(email: string): Promise<{ message: string }> {
     const user = await this.userModel.findOne({ email });
-    
+
     // Don't reveal if user exists or not for security
     if (!user) {
-      return { message: 'If an account with that email exists, a password reset link has been sent.' };
+      return {
+        message:
+          'If an account with that email exists, a password reset link has been sent.',
+      };
     }
 
     // Create reset token
-    const token = await this.authTokenService.createToken(user._id, TokenType.PASSWORD_RESET, 2); // 2 hours
+    const token = await this.authTokenService.createToken(
+      user._id,
+      TokenType.PASSWORD_RESET,
+      2,
+    ); // 2 hours
 
     // Send password reset email
     const resetUrl = `${process.env.FRONTEND_URL}/auth/reset-password?token=${token}`;
@@ -201,28 +236,46 @@ export class AuthService {
       });
     } catch (error) {
       console.error('Failed to send password reset email:', error);
-      throw new BadRequestException('Failed to send password reset email. Please try again later.');
+      throw new BadRequestException(
+        'Failed to send password reset email. Please try again later.',
+      );
     }
 
-    return { message: 'If an account with that email exists, a password reset link has been sent.' };
+    return {
+      message:
+        'If an account with that email exists, a password reset link has been sent.',
+    };
   }
 
   /**
    * Reset password with token
    */
-  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
-    const result = await this.authTokenService.verifyAndConsumeToken(token, TokenType.PASSWORD_RESET);
+  async resetPassword(
+    token: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    const result = await this.authTokenService.verifyAndConsumeToken(
+      token,
+      TokenType.PASSWORD_RESET,
+    );
 
     if (!result.valid) {
-      throw new BadRequestException(result.reason || 'Invalid or expired reset token');
+      throw new BadRequestException(
+        result.reason || 'Invalid or expired reset token',
+      );
     }
 
     // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // Update user's password
-    await this.userModel.findByIdAndUpdate(result.userId, { password: hashedPassword });
+    await this.userModel.findByIdAndUpdate(result.userId, {
+      password: hashedPassword,
+    });
 
-    return { message: 'Password reset successfully! You can now log in with your new password.' };
+    return {
+      message:
+        'Password reset successfully! You can now log in with your new password.',
+    };
   }
 }

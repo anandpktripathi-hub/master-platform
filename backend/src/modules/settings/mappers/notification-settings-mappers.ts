@@ -7,7 +7,10 @@ import {
 
 export const NOTIFICATION_KEY = 'notification.settings';
 
-const DEFAULT_NOTIFICATION_EVENTS: Record<string, NotificationChannelSettingsDto> = {
+const DEFAULT_NOTIFICATION_EVENTS: Record<
+  string,
+  NotificationChannelSettingsDto
+> = {
   'crm.deal.created': { email: true, inApp: false, sms: false },
   'crm.deal.stage_changed': { email: true, inApp: false, sms: false },
   'crm.task.assigned': { email: true, inApp: false, sms: false },
@@ -16,7 +19,11 @@ const DEFAULT_NOTIFICATION_EVENTS: Record<string, NotificationChannelSettingsDto
   'billing.invoice.created': { email: true, inApp: true, sms: false },
   'billing.payment.succeeded': { email: true, inApp: true, sms: false },
   'billing.payment.failed': { email: true, inApp: true, sms: true },
-  'billing.package.reactivated_offline': { email: true, inApp: true, sms: false },
+  'billing.package.reactivated_offline': {
+    email: true,
+    inApp: true,
+    sms: false,
+  },
   'billing.subscription.expiring_soon': { email: true, inApp: true, sms: true },
   'billing.subscription.terminated': { email: true, inApp: true, sms: true },
   'billing.ssl.expiring_soon': { email: true, inApp: true, sms: true },
@@ -31,10 +38,7 @@ export function notificationDtoToEntries(
 export function entriesToNotificationDto(
   items: Record<string, unknown>,
 ): NotificationSettingsDto {
-  const raw = ((items && items[NOTIFICATION_KEY]) || {}) as Record<
-    string,
-    any
-  >;
+  const raw = ((items && items[NOTIFICATION_KEY]) || {}) as Record<string, any>;
 
   const eventsRaw = (raw.events || {}) as Record<
     string,
@@ -58,6 +62,7 @@ export function entriesToNotificationDto(
 
   return {
     events,
-    defaultEmailTemplatePrefix: (raw.defaultEmailTemplatePrefix as string) || '',
+    defaultEmailTemplatePrefix:
+      (raw.defaultEmailTemplatePrefix as string) || '',
   };
 }

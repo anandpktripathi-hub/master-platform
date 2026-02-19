@@ -25,7 +25,8 @@ export class CrmNotificationService {
     private readonly settingsService: SettingsService,
     private readonly emailService: EmailService,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @InjectModel(Tenant.name) private readonly tenantModel: Model<TenantDocument>,
+    @InjectModel(Tenant.name)
+    private readonly tenantModel: Model<TenantDocument>,
     private readonly notifications: NotificationsService,
   ) {}
 

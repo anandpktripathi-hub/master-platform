@@ -21,12 +21,13 @@ export class SlackIntegrationService {
     },
   ): Promise<boolean> {
     try {
-      const settings = await this.settingsService.getIntegrationSettings(
-        tenantId,
-      );
+      const settings =
+        await this.settingsService.getIntegrationSettings(tenantId);
 
       if (!settings?.slack?.enabled || !settings.slack.webhookUrl) {
-        this.logger.debug(`Slack integration not configured for tenant ${tenantId}`);
+        this.logger.debug(
+          `Slack integration not configured for tenant ${tenantId}`,
+        );
         return false;
       }
 
@@ -64,9 +65,8 @@ export class SlackIntegrationService {
     attachments: any[],
   ): Promise<boolean> {
     try {
-      const settings = await this.settingsService.getIntegrationSettings(
-        tenantId,
-      );
+      const settings =
+        await this.settingsService.getIntegrationSettings(tenantId);
 
       if (!settings?.slack?.enabled || !settings.slack.webhookUrl) {
         return false;

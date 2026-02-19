@@ -20,16 +20,17 @@ export class TelegramIntegrationService {
     },
   ): Promise<boolean> {
     try {
-      const settings = await this.settingsService.getIntegrationSettings(
-        tenantId,
-      );
+      const settings =
+        await this.settingsService.getIntegrationSettings(tenantId);
 
       if (
         !settings?.telegram?.enabled ||
         !settings.telegram.botToken ||
         !settings.telegram.chatId
       ) {
-        this.logger.debug(`Telegram integration not configured for tenant ${tenantId}`);
+        this.logger.debug(
+          `Telegram integration not configured for tenant ${tenantId}`,
+        );
         return false;
       }
 
@@ -71,9 +72,8 @@ export class TelegramIntegrationService {
     caption?: string,
   ): Promise<boolean> {
     try {
-      const settings = await this.settingsService.getIntegrationSettings(
-        tenantId,
-      );
+      const settings =
+        await this.settingsService.getIntegrationSettings(tenantId);
 
       if (
         !settings?.telegram?.enabled ||

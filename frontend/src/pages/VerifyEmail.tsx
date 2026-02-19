@@ -9,9 +9,7 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import api from '../lib/api';
 
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();
@@ -38,7 +36,7 @@ export default function VerifyEmail() {
     setError(null);
 
     try {
-      const response = await axios.post(`${API_URL}/api/auth/verify-email`, {
+      await api.post('/auth/verify-email', {
         token,
       });
       setSuccess(true);
@@ -96,7 +94,7 @@ export default function VerifyEmail() {
                 <Button variant="contained" onClick={() => navigate('/login')}>
                   Go to Login
                 </Button>
-                <Button variant="outlined" onClick={() => navigate('/register')}>
+                <Button variant="outlined" onClick={() => navigate('/signup')}>
                   Register Again
                 </Button>
               </Box>

@@ -24,5 +24,6 @@ export class TrainingSession {
   tenantId!: Types.ObjectId;
 }
 
-export const TrainingSessionSchema = SchemaFactory.createForClass(TrainingSession);
+export const TrainingSessionSchema =
+  SchemaFactory.createForClass(TrainingSession);
 TrainingSessionSchema.index({ tenantId: 1, startDate: 1 });

@@ -39,7 +39,7 @@ Before production deployment:
 
 ## Production Deployment
 
-**Reference:** See backend/frontend [README.md](../../backend/README.md), [README.md](../../frontend/README.md) for build/run instructions.
+**Reference:** See backend/frontend [README.md](../backend/README.md), [README.md](../frontend/README.md) for build/run instructions.
 
 ### 1. Configure Environment Variables
 Update `.env.production` with production values:
@@ -160,7 +160,7 @@ This platform supports two SSL modes:
 - **Database connection errors:** Confirm MongoDB/Redis are running and accessible
 - **SSL errors:** Verify DNS and certificate setup
 
-For more, see [backend/README.md](../../backend/README.md) and [frontend/README.md](../../frontend/README.md).
+For more, see [backend/README.md](../backend/README.md) and [frontend/README.md](../frontend/README.md).
 - Origin Server: Generate origin certificate in Cloudflare
 - Download certificate and key
 - Install on your origin server (Nginx)

@@ -17,9 +17,8 @@ export class TwilioIntegrationService {
     message: string,
   ): Promise<boolean> {
     try {
-      const settings = await this.settingsService.getIntegrationSettings(
-        tenantId,
-      );
+      const settings =
+        await this.settingsService.getIntegrationSettings(tenantId);
 
       if (
         !settings?.twilio?.enabled ||
@@ -27,7 +26,9 @@ export class TwilioIntegrationService {
         !settings.twilio.authToken ||
         !settings.twilio.fromNumber
       ) {
-        this.logger.debug(`Twilio integration not configured for tenant ${tenantId}`);
+        this.logger.debug(
+          `Twilio integration not configured for tenant ${tenantId}`,
+        );
         return false;
       }
 
@@ -75,9 +76,8 @@ export class TwilioIntegrationService {
     message: string,
   ): Promise<boolean> {
     try {
-      const settings = await this.settingsService.getIntegrationSettings(
-        tenantId,
-      );
+      const settings =
+        await this.settingsService.getIntegrationSettings(tenantId);
 
       if (!settings?.twilio?.enabled) {
         return false;

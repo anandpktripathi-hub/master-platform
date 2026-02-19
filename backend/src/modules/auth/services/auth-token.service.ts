@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { AuthToken, AuthTokenDocument, TokenType } from '../schemas/auth-token.schema';
+import {
+  AuthToken,
+  AuthTokenDocument,
+  TokenType,
+} from '../schemas/auth-token.schema';
 import * as crypto from 'crypto';
 
 @Injectable()

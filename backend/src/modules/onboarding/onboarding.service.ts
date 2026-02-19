@@ -179,7 +179,7 @@ export class OnboardingService {
       },
     };
   }
-  
+
   async getSampleStatus(params: { tenantId: string }) {
     const tenantObjectId = new Types.ObjectId(params.tenantId);
 

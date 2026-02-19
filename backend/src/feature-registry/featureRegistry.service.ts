@@ -84,7 +84,7 @@ export class FeatureRegistryService {
   unassignRole(id: string, role: string): FeatureNode | undefined {
     const node = this.findById(id);
     if (node && node.allowedRoles) {
-      node.allowedRoles = node.allowedRoles.filter(r => r !== role);
+      node.allowedRoles = node.allowedRoles.filter((r) => r !== role);
     }
     return node;
   }
@@ -103,7 +103,7 @@ export class FeatureRegistryService {
   unassignTenant(id: string, tenant: string): FeatureNode | undefined {
     const node = this.findById(id);
     if (node && node.allowedTenants) {
-      node.allowedTenants = node.allowedTenants.filter(t => t !== tenant);
+      node.allowedTenants = node.allowedTenants.filter((t) => t !== tenant);
     }
     return node;
   }

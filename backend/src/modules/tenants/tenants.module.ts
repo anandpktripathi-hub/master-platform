@@ -7,7 +7,10 @@ import { TenantsController } from './tenants.controller';
 import { DomainModule } from '../../tenants/domain/domain.module';
 import { DatabaseModule } from '../../database/database.module';
 import { SslModule } from '../../tenants/ssl/ssl.module';
-import { BusinessReview, BusinessReviewSchema } from '../../database/schemas/business-review.schema';
+import {
+  BusinessReview,
+  BusinessReviewSchema,
+} from '../../database/schemas/business-review.schema';
 
 @Module({
   imports: [

@@ -24,5 +24,6 @@ export class TimesheetEntry {
   tenantId!: Types.ObjectId;
 }
 
-export const TimesheetEntrySchema = SchemaFactory.createForClass(TimesheetEntry);
+export const TimesheetEntrySchema =
+  SchemaFactory.createForClass(TimesheetEntry);
 TimesheetEntrySchema.index({ tenantId: 1, projectId: 1, date: 1 });

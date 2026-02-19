@@ -16,6 +16,7 @@ export class CustomDomain {
   domain!: string;
 
   @Prop({
+    type: String,
     enum: [
       'pending_verification',
       'verified',
@@ -31,7 +32,7 @@ export class CustomDomain {
   @Prop({ required: false })
   verificationToken!: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false, enum: ['TXT', 'CNAME'] })
   verificationMethod!: 'TXT' | 'CNAME';
 
   @Prop({ required: false })
@@ -40,7 +41,7 @@ export class CustomDomain {
   @Prop({ required: false })
   lastVerifiedAt!: Date;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false, enum: ['acme', 'manual'] })
   sslProvider!: 'acme' | 'manual'; // ACME (LetsEncrypt) or manually uploaded
 
   @Prop({ required: false })

@@ -1,8 +1,9 @@
 @echo off
 echo Starting SMETASC Full Stack...
-start "Backend" cmd /k "cd /d C:\Users\annes\Desktop\smetasc-saas-multi-tenancy-app && npm run start:dev"
+set "ROOT=%~dp0"
+start "Backend" cmd /k "cd /d %ROOT%backend && set PORT=4000 && npm run start:dev:with-db"
 timeout /t 5 /nobreak
-start "Frontend" cmd /k "cd /d C:\Users\annes\Desktop\smetasc-saas-multi-tenancy-app\frontend && npm run dev"
+start "Frontend" cmd /k "cd /d %ROOT%frontend && npm run dev"
 echo.
 echo Both servers are starting...
 echo Backend will be on: http://localhost:4000

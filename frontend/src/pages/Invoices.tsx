@@ -113,6 +113,10 @@ const Invoices: React.FC = () => {
     return formatCurrencyWithSettings(amountInCents, invoiceCurrency || null, currency);
   };
 
+  const getInvoiceAmountCents = (inv: Invoice) => {
+    return ((inv as any).totalAmount ?? (inv as any).amount ?? 0) as number;
+  };
+
   return (
     <ErrorBoundary>
       <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -170,7 +174,7 @@ const Invoices: React.FC = () => {
 
       {/* Empty State */}
       {!loading && !error && invoices.length === 0 && (
-        <Alert severity="info">No invoices found. Start by subscribing to a plan.</Alert>
+        <Alert severity="info">No billing records found yet.</Alert>
       )}
 
       {/* Invoice Details Dialog */}
@@ -210,7 +214,7 @@ const Invoices: React.FC = () => {
                     Total Amount
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '1.1rem' }}>
-                    {formatCurrency(selectedInvoice.totalAmount, selectedInvoice.currency)}
+                    {formatCurrency(getInvoiceAmountCents(selectedInvoice), selectedInvoice.currency)}
                   </Typography>
                 </Grid>
               </Grid>

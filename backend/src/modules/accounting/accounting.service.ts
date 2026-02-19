@@ -1,33 +1,58 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Account, AccountDocument } from '../../database/schemas/account.schema';
-import { Transaction, TransactionDocument } from '../../database/schemas/transaction.schema';
-import { Invoice, InvoiceDocument } from '../../database/schemas/invoice.schema';
+import {
+  Account,
+  AccountDocument,
+} from '../../database/schemas/account.schema';
+import {
+  Transaction,
+  TransactionDocument,
+} from '../../database/schemas/transaction.schema';
+import {
+  Invoice,
+  InvoiceDocument,
+} from '../../database/schemas/invoice.schema';
 import { Bill, BillDocument } from '../../database/schemas/bill.schema';
 import { Goal, GoalDocument } from '../../database/schemas/goal.schema';
 
 @Injectable()
 export class AccountingService {
   constructor(
-    @InjectModel(Account.name) private readonly accountModel: Model<AccountDocument>,
-    @InjectModel(Transaction.name) private readonly transactionModel: Model<TransactionDocument>,
-    @InjectModel(Invoice.name) private readonly invoiceModel: Model<InvoiceDocument>,
+    @InjectModel(Account.name)
+    private readonly accountModel: Model<AccountDocument>,
+    @InjectModel(Transaction.name)
+    private readonly transactionModel: Model<TransactionDocument>,
+    @InjectModel(Invoice.name)
+    private readonly invoiceModel: Model<InvoiceDocument>,
     @InjectModel(Bill.name) private readonly billModel: Model<BillDocument>,
     @InjectModel(Goal.name) private readonly goalModel: Model<GoalDocument>,
   ) {}
 
   // Accounts
   async listAccounts(tenantId: string): Promise<Account[]> {
-    return this.accountModel.find({ tenantId: new Types.ObjectId(tenantId) }).lean().exec();
+    return this.accountModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .lean()
+      .exec();
   }
 
-  async createAccount(tenantId: string, payload: Partial<Account>): Promise<Account> {
-    const doc = new this.accountModel({ ...payload, tenantId: new Types.ObjectId(tenantId) });
+  async createAccount(
+    tenantId: string,
+    payload: Partial<Account>,
+  ): Promise<Account> {
+    const doc = new this.accountModel({
+      ...payload,
+      tenantId: new Types.ObjectId(tenantId),
+    });
     return doc.save();
   }
 
-  async updateAccount(tenantId: string, id: string, payload: Partial<Account>): Promise<Account | null> {
+  async updateAccount(
+    tenantId: string,
+    id: string,
+    payload: Partial<Account>,
+  ): Promise<Account | null> {
     return this.accountModel
       .findOneAndUpdate(
         { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
@@ -39,20 +64,31 @@ export class AccountingService {
 
   async deleteAccount(tenantId: string, id: string): Promise<void> {
     await this.accountModel
-      .findOneAndDelete({ _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) })
+      .findOneAndDelete({
+        _id: new Types.ObjectId(id),
+        tenantId: new Types.ObjectId(tenantId),
+      })
       .exec();
   }
 
   // Transactions
-  async listTransactions(tenantId: string, accountId?: string): Promise<Transaction[]> {
-    const filter: Record<string, unknown> = { tenantId: new Types.ObjectId(tenantId) };
+  async listTransactions(
+    tenantId: string,
+    accountId?: string,
+  ): Promise<Transaction[]> {
+    const filter: Record<string, unknown> = {
+      tenantId: new Types.ObjectId(tenantId),
+    };
     if (accountId) {
       filter.accountId = new Types.ObjectId(accountId);
     }
     return this.transactionModel.find(filter).sort({ date: -1 }).lean().exec();
   }
 
-  async recordTransaction(tenantId: string, payload: Partial<Transaction>): Promise<Transaction> {
+  async recordTransaction(
+    tenantId: string,
+    payload: Partial<Transaction>,
+  ): Promise<Transaction> {
     const doc = new this.transactionModel({
       ...payload,
       tenantId: new Types.ObjectId(tenantId),
@@ -63,10 +99,17 @@ export class AccountingService {
 
   // Invoices
   async listInvoices(tenantId: string): Promise<Invoice[]> {
-    return this.invoiceModel.find({ tenantId: new Types.ObjectId(tenantId) }).sort({ issueDate: -1 }).lean().exec();
+    return this.invoiceModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .sort({ issueDate: -1 })
+      .lean()
+      .exec();
   }
 
-  async createInvoice(tenantId: string, payload: Partial<Invoice>): Promise<Invoice> {
+  async createInvoice(
+    tenantId: string,
+    payload: Partial<Invoice>,
+  ): Promise<Invoice> {
     const doc = new this.invoiceModel({
       ...payload,
       tenantId: new Types.ObjectId(tenantId),
@@ -74,7 +117,11 @@ export class AccountingService {
     return doc.save();
   }
 
-  async updateInvoice(tenantId: string, id: string, payload: Partial<Invoice>): Promise<Invoice | null> {
+  async updateInvoice(
+    tenantId: string,
+    id: string,
+    payload: Partial<Invoice>,
+  ): Promise<Invoice | null> {
     return this.invoiceModel
       .findOneAndUpdate(
         { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
@@ -86,7 +133,10 @@ export class AccountingService {
 
   async deleteInvoice(tenantId: string, id: string): Promise<void> {
     await this.invoiceModel
-      .findOneAndDelete({ _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) })
+      .findOneAndDelete({
+        _id: new Types.ObjectId(id),
+        tenantId: new Types.ObjectId(tenantId),
+      })
       .exec();
   }
 
@@ -107,7 +157,11 @@ export class AccountingService {
     return doc.save();
   }
 
-  async updateBill(tenantId: string, id: string, payload: Partial<Bill>): Promise<Bill | null> {
+  async updateBill(
+    tenantId: string,
+    id: string,
+    payload: Partial<Bill>,
+  ): Promise<Bill | null> {
     return this.billModel
       .findOneAndUpdate(
         { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
@@ -119,7 +173,10 @@ export class AccountingService {
 
   async deleteBill(tenantId: string, id: string): Promise<void> {
     await this.billModel
-      .findOneAndDelete({ _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) })
+      .findOneAndDelete({
+        _id: new Types.ObjectId(id),
+        tenantId: new Types.ObjectId(tenantId),
+      })
       .exec();
   }
 
@@ -140,7 +197,11 @@ export class AccountingService {
     return doc.save();
   }
 
-  async updateGoal(tenantId: string, id: string, payload: Partial<Goal>): Promise<Goal | null> {
+  async updateGoal(
+    tenantId: string,
+    id: string,
+    payload: Partial<Goal>,
+  ): Promise<Goal | null> {
     return this.goalModel
       .findOneAndUpdate(
         { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
@@ -152,7 +213,10 @@ export class AccountingService {
 
   async deleteGoal(tenantId: string, id: string): Promise<void> {
     await this.goalModel
-      .findOneAndDelete({ _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) })
+      .findOneAndDelete({
+        _id: new Types.ObjectId(id),
+        tenantId: new Types.ObjectId(tenantId),
+      })
       .exec();
   }
 
@@ -162,7 +226,12 @@ export class AccountingService {
     expense: number;
     outstandingInvoices: number;
     last30Days: { income: number; expense: number; net: number };
-    last6Months: { month: string; income: number; expense: number; net: number }[];
+    last6Months: {
+      month: string;
+      income: number;
+      expense: number;
+      net: number;
+    }[];
   }> {
     const tenantObjectId = new Types.ObjectId(tenantId);
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
@@ -267,7 +336,12 @@ export class AccountingService {
       }
     }
 
-    const last6Months: { month: string; income: number; expense: number; net: number }[] = [];
+    const last6Months: {
+      month: string;
+      income: number;
+      expense: number;
+      net: number;
+    }[] = [];
 
     // Generate series for the last 6 calendar months including current month
     for (let i = 5; i >= 0; i -= 1) {
@@ -299,7 +373,11 @@ export class AccountingService {
   }
 
   // Advanced reports: Profit & Loss (P&L) over a period, default last 12 months
-  async getProfitAndLoss(tenantId: string, from?: string, to?: string): Promise<{
+  async getProfitAndLoss(
+    tenantId: string,
+    from?: string,
+    to?: string,
+  ): Promise<{
     period: { from: Date; to: Date };
     totals: { income: number; expense: number; net: number };
     byMonth: { month: string; income: number; expense: number; net: number }[];
@@ -353,7 +431,12 @@ export class AccountingService {
       }
     }
 
-    const byMonth: { month: string; income: number; expense: number; net: number }[] = [];
+    const byMonth: {
+      month: string;
+      income: number;
+      expense: number;
+      net: number;
+    }[] = [];
 
     // Generate series month by month between fromDate and toDate (inclusive)
     const cursor = new Date(fromDate.getFullYear(), fromDate.getMonth(), 1);
@@ -396,7 +479,10 @@ export class AccountingService {
   }
 
   // Advanced reports: simple balance sheet-style snapshot as of a date
-  async getBalanceSheet(tenantId: string, asOf?: string): Promise<{
+  async getBalanceSheet(
+    tenantId: string,
+    asOf?: string,
+  ): Promise<{
     asOf: Date;
     byType: { type: string; balance: number }[];
     totals: { assets: number; liabilities: number; equity: number };
@@ -430,10 +516,7 @@ export class AccountingService {
       ])
       .exec();
 
-    const typeMap = new Map<
-      string,
-      { debit: number; credit: number }
-    >();
+    const typeMap = new Map<string, { debit: number; credit: number }>();
 
     for (const row of agg) {
       const accountType: string = row._id.accountType;

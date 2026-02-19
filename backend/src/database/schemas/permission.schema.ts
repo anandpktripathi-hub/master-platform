@@ -26,16 +26,39 @@ export type ModuleName =
   | 'Employee'
   | 'POS';
 
-
 @Schema({ timestamps: true })
 export class Permission {
   @Prop({
+    type: String,
     required: true,
     enum: ['manage', 'create', 'edit', 'delete', 'show'],
   })
   action!: PermissionAction;
 
-  @Prop({ required: true })
+  @Prop({
+    type: String,
+    required: true,
+    enum: [
+      'User',
+      'Role',
+      'Client',
+      'Product & service',
+      'Constant unit',
+      'Constant tax',
+      'Constant category',
+      'Account',
+      'HRM',
+      'Expense',
+      'Invoice',
+      'Department',
+      'Designation',
+      'Branch',
+      'Document Type',
+      'Zoom meeting',
+      'Employee',
+      'POS',
+    ],
+  })
   module!: ModuleName;
 
   @Prop({ required: false })

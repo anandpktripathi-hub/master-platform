@@ -1,5 +1,4 @@
-﻿console.log('TEST LOG: file loaded (backend/src/modules/auth/auth.controller.ts)');
-import {
+﻿import {
   Controller,
   Post,
   Body,
@@ -23,12 +22,18 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('logout')
+  @HttpCode(200)
+  async logout() {
+    // Stateless JWT logout: client clears tokens. Placeholder for refresh-token revocation.
+    return { success: true };
+  }
+
   // Simple login: expects { email, password }
   @Post('login')
   @HttpCode(200)
   @UseGuards(RateLimitGuard)
   async login(@Body() body: LoginDto) {
-    console.log('GUARANTEED LOG: login() method in AuthController was called. Body:', body);
     logger.info('here');
     logger.info('[LOGIN CONTROLLER] Received login request body', { body });
     const { email, password } = body;
@@ -132,7 +137,9 @@ export class AuthController {
     // req.user contains the OAuth profile from GoogleStrategy
     const token = await this.authService.handleOAuthLogin(req.user);
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?token=${token}`);
+    res.redirect(
+      `${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?token=${token}`,
+    );
   }
 
   /**
@@ -153,6 +160,8 @@ export class AuthController {
     // req.user contains the OAuth profile from GithubStrategy
     const token = await this.authService.handleOAuthLogin(req.user);
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/callback?token=${token}`);
+    res.redirect(
+      `${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?token=${token}`,
+    );
   }
 }

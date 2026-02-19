@@ -19,7 +19,11 @@ export class UserTenant {
   @Prop({ default: true })
   isLoginEnabled!: boolean;
 
-  @Prop({ enum: ['active', 'inactive', 'suspended'], default: 'active' })
+  @Prop({
+    type: String,
+    enum: ['active', 'inactive', 'suspended'],
+    default: 'active',
+  })
   status!: string;
 
   // Track last login

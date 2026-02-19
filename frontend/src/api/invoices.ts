@@ -1,11 +1,55 @@
 import api from '../lib/api';
 import type { Invoice, PaginatedResponse } from '../types/billing.types';
 
+type BillingRecord = {
+  _id: string;
+  tenantId: string;
+  amount: number;
+  currency: string;
+  status: string;
+  createdAt: string;
+};
+
+function mapBillingToInvoice(b: BillingRecord): Invoice {
+  const amountCents = Math.round((typeof b.amount === 'number' ? b.amount : 0) * 100);
+  return {
+    _id: b._id,
+    tenantId: b.tenantId,
+    subscriptionId: 'manual',
+    planId: 'package',
+    invoiceNumber: b._id,
+    amount: amountCents,
+    currency: b.currency,
+    description: 'Manual/offline billing record',
+    dueDate: b.createdAt,
+    status: (b.status || 'PAID') as any,
+    paymentMethod: 'MANUAL',
+    lineItems: [],
+    refundedAmount: 0,
+    createdAt: b.createdAt,
+    updatedAt: b.createdAt,
+  };
+}
+
 export async function getInvoices(
   page: number = 1,
   limit: number = 10,
 ): Promise<PaginatedResponse<Invoice>> {
-  return api.get<PaginatedResponse<Invoice>>(`/invoices?page=${page}&limit=${limit}`);
+  const rows = (await api.get<BillingRecord[]>('/billings')) || [];
+  const sorted = [...rows].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+  const start = Math.max(0, (page - 1) * limit);
+  const end = start + limit;
+  const slice = sorted.slice(start, end);
+  const pages = Math.max(1, Math.ceil(sorted.length / limit));
+
+  return {
+    data: slice.map(mapBillingToInvoice),
+    total: sorted.length,
+    page,
+    pages,
+  };
 }
 
 export async function getLatestInvoice(): Promise<Invoice | null> {
@@ -17,18 +61,10 @@ export async function getLatestInvoice(): Promise<Invoice | null> {
 }
 
 export async function getInvoiceById(invoiceId: string): Promise<Invoice> {
-  return api.get<Invoice>(`/invoices/${invoiceId}`);
+  const row = await api.get<BillingRecord>(`/billings/${invoiceId}`);
+  return mapBillingToInvoice(row);
 }
 
 export async function downloadInvoicePdf(invoiceId: string): Promise<void> {
-  const blob = await api.get<Blob>(`/invoices/${invoiceId}/pdf`, {
-    responseType: 'blob' as any,
-  });
-
-  const url = URL.createObjectURL(blob as any);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `invoice-${invoiceId}.pdf`;
-  a.click();
-  URL.revokeObjectURL(url);
+  throw new Error('Invoice PDF download is not available in manual billing mode.');
 }

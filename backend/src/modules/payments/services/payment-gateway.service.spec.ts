@@ -119,7 +119,7 @@ describe('PaymentGatewayService', () => {
       charges: { create: stripeChargesCreate },
     }));
 
-    (jest.requireActual('stripe') as any).default = StripeMock;
+    jest.requireActual('stripe').default = StripeMock;
 
     const result = await service.processPayment({
       ...baseRequest,
@@ -128,7 +128,8 @@ describe('PaymentGatewayService', () => {
 
     expect(result.success).toBe(true);
     expect(billing.sendPaymentResultEmail).toHaveBeenCalledTimes(1);
-    const payload = (billing.sendPaymentResultEmail as jest.Mock).mock.calls[0][0];
+    const payload = (billing.sendPaymentResultEmail as jest.Mock).mock
+      .calls[0][0];
     expect(payload.success).toBe(true);
     expect(payload.amount).toBe(baseRequest.amount * 100);
     expect(payload.gatewayName).toBe('stripe');
@@ -152,7 +153,7 @@ describe('PaymentGatewayService', () => {
       charges: { create: stripeChargesCreate },
     }));
 
-    (jest.requireActual('stripe') as any).default = StripeMock;
+    jest.requireActual('stripe').default = StripeMock;
 
     const result = await service.processPayment({
       ...baseRequest,
@@ -161,7 +162,8 @@ describe('PaymentGatewayService', () => {
 
     expect(result.success).toBe(false);
     expect(billing.sendPaymentResultEmail).toHaveBeenCalledTimes(1);
-    const payload = (billing.sendPaymentResultEmail as jest.Mock).mock.calls[0][0];
+    const payload = (billing.sendPaymentResultEmail as jest.Mock).mock
+      .calls[0][0];
     expect(payload.success).toBe(false);
     expect(payload.error).toMatch(/Card declined/);
   });

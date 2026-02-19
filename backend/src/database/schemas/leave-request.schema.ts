@@ -17,7 +17,12 @@ export class LeaveRequest {
   @Prop({ required: true })
   type!: string;
 
-  @Prop({ required: true, enum: ['pending', 'approved', 'rejected'], default: 'pending' })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  })
   status!: 'pending' | 'approved' | 'rejected';
 
   @Prop()
@@ -28,4 +33,9 @@ export class LeaveRequest {
 }
 
 export const LeaveRequestSchema = SchemaFactory.createForClass(LeaveRequest);
-LeaveRequestSchema.index({ tenantId: 1, employeeId: 1, startDate: 1, endDate: 1 });
+LeaveRequestSchema.index({
+  tenantId: 1,
+  employeeId: 1,
+  startDate: 1,
+  endDate: 1,
+});

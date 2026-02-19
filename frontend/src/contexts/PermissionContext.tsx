@@ -24,7 +24,7 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const fetchPermissions = async () => {
     setIsLoading(true);
     try {
-      const resp = await api.get("/api/v1/rbac/permissions");
+      const resp = await api.get("/rbac/permissions");
       setPermissions(resp as Permission[]);
     } finally {
       setIsLoading(false);

@@ -6,7 +6,8 @@ import { HierarchyNode } from './hierarchy.schema';
 @Injectable()
 export class HierarchyService {
   constructor(
-    @InjectModel(HierarchyNode.name) private readonly nodeModel: Model<HierarchyNode>,
+    @InjectModel(HierarchyNode.name)
+    private readonly nodeModel: Model<HierarchyNode>,
   ) {}
 
   async createNode(data: Partial<HierarchyNode>): Promise<HierarchyNode> {
@@ -23,8 +24,13 @@ export class HierarchyService {
     return this.nodeModel.find({ parent: parentId });
   }
 
-  async updateNode(id: string, data: Partial<HierarchyNode>): Promise<HierarchyNode> {
-    const updated = await this.nodeModel.findByIdAndUpdate(id, data, { new: true }).exec();
+  async updateNode(
+    id: string,
+    data: Partial<HierarchyNode>,
+  ): Promise<HierarchyNode> {
+    const updated = await this.nodeModel
+      .findByIdAndUpdate(id, data, { new: true })
+      .exec();
     if (!updated) {
       throw new NotFoundException(`HierarchyNode with id ${id} not found`);
     }

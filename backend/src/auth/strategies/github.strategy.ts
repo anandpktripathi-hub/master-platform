@@ -13,7 +13,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
       clientSecret: configService.get<string>('GITHUB_CLIENT_SECRET'),
       callbackURL: configService.get<string>(
         'GITHUB_CALLBACK_URL',
-        'http://localhost:4000/auth/github/callback',
+        'http://localhost:4000/api/v1/auth/github/callback',
       ),
       scope: ['user:email'],
     });
@@ -38,7 +38,9 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         accessToken,
       };
 
-      this.logger.log(`GitHub OAuth user validated: ${user.email || user.username}`);
+      this.logger.log(
+        `GitHub OAuth user validated: ${user.email || user.username}`,
+      );
       done(null, user);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);

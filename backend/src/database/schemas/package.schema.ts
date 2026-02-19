@@ -41,7 +41,11 @@ export class Package {
   @Prop({ required: true })
   price!: number; // in cents or base currency unit
 
-  @Prop({ enum: ['monthly', 'annual', 'lifetime'], required: true })
+  @Prop({
+    type: String,
+    enum: ['monthly', 'annual', 'lifetime'],
+    required: true,
+  })
   billingCycle!: 'monthly' | 'annual' | 'lifetime';
 
   @Prop({ required: true, default: 0 })

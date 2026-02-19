@@ -19,8 +19,8 @@ import { useSnackbar } from 'notistack';
 import type { Plan, BillingPeriod } from '../types/billing.types';
 import { PricingCard } from '../components/billing/PricingCard';
 import { PlanComparisonTable } from '../components/billing/PlanComparisonTable';
-import billingService from '../services/billingService';
-import { subscribeToPlan, type PaymentProvider } from '../api/subscriptions';
+import api from '../services/api';
+import type { Package } from '../types/api.types';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
@@ -28,24 +28,83 @@ const Pricing: React.FC = () => {
   const location = useLocation();
 
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('MONTHLY');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
-  const [paymentProvider, setPaymentProvider] = useState<PaymentProvider>('RAZORPAY');
   const [prefilledFromQuery, setPrefilledFromQuery] = useState(false);
 
-  // Fetch plans on component mount
+  // Fetch packages (manual billing model)
   useEffect(() => {
-    const fetchPlans = async () => {
+    const toDisplayPlan = (pkg: Package): Plan => {
+      const featureList = Object.entries(pkg.featureSet || {})
+        .filter(([, v]) => v === true)
+        .map(([k]) => k);
+
+      const monthlyPaise =
+        pkg.billingCycle === 'monthly'
+          ? Math.round(pkg.price * 100)
+          : pkg.billingCycle === 'annual'
+            ? Math.round((pkg.price / 12) * 100)
+            : Math.round(pkg.price * 100);
+
+      const yearlyPaise =
+        pkg.billingCycle === 'annual'
+          ? Math.round(pkg.price * 100)
+          : pkg.billingCycle === 'monthly'
+            ? Math.round(pkg.price * 12 * 100)
+            : Math.round(pkg.price * 100);
+
+      return {
+        _id: pkg._id,
+        name: pkg.name,
+        slug: pkg.name.toLowerCase().replace(/\s+/g, '-'),
+        description: pkg.description || '',
+        priceMonthly: monthlyPaise,
+        priceYearly: yearlyPaise,
+        features: featureList,
+        userLimit:
+          typeof pkg.limits?.maxTeamMembers === 'number'
+            ? pkg.limits.maxTeamMembers
+            : -1,
+        storageLimitMB:
+          typeof pkg.limits?.maxStorageMb === 'number'
+            ? pkg.limits.maxStorageMb
+            : -1,
+        ordersLimit: -1,
+        productsLimit: -1,
+        isActive: pkg.isActive !== false,
+        displayOrder: typeof pkg.order === 'number' ? pkg.order : 0,
+        createdAt: pkg.createdAt,
+        updatedAt: pkg.updatedAt,
+      };
+    };
+
+    const fetchPackages = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await billingService.getPlans();
-        const activePlans = response.filter((plan) => plan.isActive !== false);
-        setPlans(activePlans);
+        const response = await api.get('/packages');
+        const list: Package[] = Array.isArray(response)
+          ? (response as Package[])
+          : ((response as any)?.data as Package[]) || [];
+
+        const active = (list || []).filter((p) => p.isActive !== false);
+        setPackages(active);
+
+        const filtered = active.filter((p) => {
+          if (billingPeriod === 'MONTHLY') return p.billingCycle === 'monthly';
+          return p.billingCycle === 'annual';
+        });
+
+        const mapped = filtered
+          .map(toDisplayPlan)
+          .sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
+
+        setPlans(mapped);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load pricing plans';
         setError(errorMessage);
@@ -55,8 +114,8 @@ const Pricing: React.FC = () => {
       }
     };
 
-    fetchPlans();
-  }, [enqueueSnackbar]);
+    fetchPackages();
+  }, [enqueueSnackbar, billingPeriod]);
 
   // If opened with planId/billingPeriod in the query string (e.g. from Billing Dashboard retry),
   // pre-select that plan and open the confirmation dialog.
@@ -99,66 +158,34 @@ const Pricing: React.FC = () => {
 
     try {
       setIsSubscribing(true);
-      // Use new subscriptions API which returns subscription + invoice + paymentIntent
-      const result = await subscribeToPlan({
-        planId: selectedPlan._id!,
-        billingPeriod,
-        provider: paymentProvider,
+      const pkg = packages.find((p) => p._id === selectedPlan._id);
+      if (!pkg) {
+        throw new Error('Selected package not found');
+      }
+
+      await api.post('/offline-payments', {
+        amount: pkg.price,
+        currency: 'USD',
+        method: 'bank_transfer',
+        description: `Package upgrade request: ${pkg.name} (${billingPeriod === 'MONTHLY' ? 'monthly' : 'annual'})`,
+        metadata: {
+          packageId: pkg._id,
+          billingPeriod,
+          billingCycle: pkg.billingCycle,
+        },
       });
 
-      if (!result.requiresPayment || !result.paymentIntent) {
-        enqueueSnackbar(`Successfully subscribed to ${selectedPlan.name} plan!`, {
-          variant: 'success',
-        });
-
-        setShowConfirmDialog(false);
-        setSelectedPlan(null);
-
-        setTimeout(() => {
-          navigate('/app/billing');
-        }, 1500);
-        return;
-      }
-
-      const pi = result.paymentIntent;
-
-      if (pi.provider === 'razorpay' && pi.paymentUrl) {
-        enqueueSnackbar('Redirecting to secure Razorpay checkout...', {
-          variant: 'info',
-        });
-        window.location.href = pi.paymentUrl;
-        return;
-      }
-      if (pi.provider === 'paypal' && pi.paymentUrl) {
-        enqueueSnackbar('Redirecting to secure PayPal checkout...', {
-          variant: 'info',
-        });
-        window.location.href = pi.paymentUrl;
-        return;
-      }
-
-      if (pi.provider === 'stripe' && pi.clientSecret) {
-        enqueueSnackbar('Redirecting to secure in-app Stripe checkout...', {
-          variant: 'info',
-        });
-        setShowConfirmDialog(false);
-        setSelectedPlan(null);
-        navigate('/app/billing/checkout/stripe', {
-          state: {
-            clientSecret: pi.clientSecret,
-            amount: pi.amount,
-            currency: pi.currency,
-            planName: selectedPlan?.name,
-          },
-        });
-        return;
-      }
-
-      // Fallback: subscription created but no actionable payment info
       enqueueSnackbar(
-        `Subscription created for ${selectedPlan.name}, but no payment URL was returned. Please contact support.`,
-        { variant: 'warning' },
+        'Offline payment request submitted. An admin will review and apply your upgrade once approved.',
+        { variant: 'success' },
       );
+
+      setShowConfirmDialog(false);
+      setSelectedPlan(null);
+
+      setTimeout(() => {
+        navigate('/app/billing/offline-payments');
+      }, 1200);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Subscription failed';
       enqueueSnackbar(errorMessage, { variant: 'error' });
@@ -276,21 +303,11 @@ const Pricing: React.FC = () => {
             </Typography>
             <Box sx={{ mt: 3 }}>
               <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                Payment Method
+                  Payment Method
               </Typography>
-              <ToggleButtonGroup
-                value={paymentProvider}
-                exclusive
-                onChange={(_, newValue: PaymentProvider | null) => {
-                  if (newValue) setPaymentProvider(newValue);
-                }}
-                aria-label="payment provider"
-                size="small"
-              >
-                <ToggleButton value="RAZORPAY">Razorpay</ToggleButton>
-                <ToggleButton value="STRIPE">Stripe (Card)</ToggleButton>
-                <ToggleButton value="PAYPAL">PayPal</ToggleButton>
-              </ToggleButtonGroup>
+                <Typography variant="body2" color="textSecondary">
+                  Offline / manual payment (bank transfer). After you submit the request, an admin will approve it and your package will be applied.
+                </Typography>
             </Box>
           </Box>
         </DialogContent>
@@ -306,7 +323,7 @@ const Pricing: React.FC = () => {
             variant="contained"
             disabled={isSubscribing}
           >
-            {isSubscribing ? 'Subscribing...' : 'Confirm Subscription'}
+            {isSubscribing ? 'Submitting...' : 'Submit Offline Payment Request'}
           </Button>
         </DialogActions>
       </Dialog>

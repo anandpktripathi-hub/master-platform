@@ -7,66 +7,71 @@ import {
   Body,
   Param,
   Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CmsMenuService } from '../services/cms-menu.service';
 import { CreateMenuItemDto } from '../dto/create-menu-item.dto';
+import { Tenant } from '../../decorators/tenant.decorator';
 
 @ApiTags('CMS - Menus')
-@Controller('api/cms/menus/:menuId')
+@Controller('cms/menus/:menuId')
 export class CmsMenuController {
   constructor(private readonly menuService: CmsMenuService) {}
 
   @Post('items')
   async createItem(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('menuId') menuId: string,
     @Body() dto: CreateMenuItemDto,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.menuService.createMenuItem(tenantId, menuId, dto);
   }
 
   @Get('items')
-  async getMenu(@Req() req: any, @Param('menuId') menuId: string) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+  async getMenu(@Tenant() tenantId: string, @Param('menuId') menuId: string) {
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.menuService.getMenu(tenantId, menuId);
   }
 
   @Get('tree')
-  async getMenuTree(@Req() req: any, @Param('menuId') menuId: string) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+  async getMenuTree(
+    @Tenant() tenantId: string,
+    @Param('menuId') menuId: string,
+  ) {
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.menuService.buildMenuTree(tenantId, menuId);
   }
 
   @Patch('items/:itemId')
   async updateItem(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('menuId') menuId: string,
     @Param('itemId') itemId: string,
     @Body() dto: Partial<CreateMenuItemDto>,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.menuService.updateMenuItem(tenantId, itemId, dto);
   }
 
   @Delete('items/:itemId')
   async deleteItem(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('menuId') menuId: string,
     @Param('itemId') itemId: string,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.menuService.deleteMenuItem(tenantId, itemId);
   }
 
   @Post('reorder')
   async reorderItems(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('menuId') menuId: string,
     @Body('order') order: { id: string; order: number }[],
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.menuService.reorderMenu(tenantId, menuId, order);
   }
 }

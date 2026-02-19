@@ -2,7 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CrmService } from './crm.service';
-import { CrmTask, CrmTaskDocument } from '../../database/schemas/crm-task.schema';
+import {
+  CrmTask,
+  CrmTaskDocument,
+} from '../../database/schemas/crm-task.schema';
 import { CrmNotificationService } from './crm-notification.service';
 import { CalendarService } from '../../common/calendar/calendar.service';
 
@@ -30,7 +33,13 @@ describe('CrmService - calendar integration for tasks', () => {
       providers: [
         CrmService,
         { provide: getModelToken(CrmTask.name), useValue: mockTaskModel },
-        { provide: CrmNotificationService, useValue: { notifyTaskAssigned: jest.fn(), notifyTaskCompleted: jest.fn() } },
+        {
+          provide: CrmNotificationService,
+          useValue: {
+            notifyTaskAssigned: jest.fn(),
+            notifyTaskCompleted: jest.fn(),
+          },
+        },
         { provide: CalendarService, useValue: calendarService },
         // Unused models in this focused test
         { provide: getModelToken('CrmContact'), useValue: {} },
@@ -58,7 +67,9 @@ describe('CrmService - calendar integration for tasks', () => {
     (taskModel.create as jest.Mock).mockResolvedValue(createdTask);
     (taskModel.updateOne as jest.Mock).mockResolvedValue({});
 
-    (calendarService.createEvent as jest.Mock).mockResolvedValue({ id: 'event-123' });
+    (calendarService.createEvent as jest.Mock).mockResolvedValue({
+      id: 'event-123',
+    });
 
     await service.createTask(tenantId, {
       title: createdTask.title,
@@ -93,7 +104,12 @@ describe('CrmService - calendar integration for tasks', () => {
 
     (taskModel.findOneAndUpdate as jest.Mock).mockResolvedValue(updatedTask);
 
-    await service.setTaskCompleted(tenantId, userId, taskId.toHexString(), true);
+    await service.setTaskCompleted(
+      tenantId,
+      userId,
+      taskId.toHexString(),
+      true,
+    );
 
     expect(calendarService.updateEvent).toHaveBeenCalledWith('event-123', {
       summary: updatedTask.title,

@@ -27,7 +27,8 @@ export class PushSubscription {
   };
 }
 
-export const PushSubscriptionSchema = SchemaFactory.createForClass(PushSubscription);
+export const PushSubscriptionSchema =
+  SchemaFactory.createForClass(PushSubscription);
 
 PushSubscriptionSchema.index({ tenantId: 1, userId: 1 });
 PushSubscriptionSchema.index({ tenantId: 1, endpoint: 1 });

@@ -1,5 +1,4 @@
-
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PaymentGatewayService } from './services/payment-gateway.service';
 import { PaymentLogService } from './services/payment-log.service';
@@ -18,12 +17,14 @@ import { OfflinePaymentsService } from './services/offline-payments.service';
 import { OfflinePaymentsController } from './controllers/offline-payments.controller';
 import { BillingModule } from '../billing/billing.module';
 import { TenantsModule } from '../tenants/tenants.module';
+import { PackagesModule } from '../packages/packages.module';
 
 @Module({
   imports: [
     SettingsModule,
     BillingModule,
     TenantsModule,
+    forwardRef(() => PackagesModule),
     MongooseModule.forFeature([
       { name: OfflinePaymentRequest.name, schema: OfflinePaymentRequestSchema },
       { name: TenantPackage.name, schema: TenantPackageSchema },
@@ -35,4 +36,3 @@ import { TenantsModule } from '../tenants/tenants.module';
   exports: [PaymentGatewayService, PaymentLogService, OfflinePaymentsService],
 })
 export class PaymentsModule {}
-

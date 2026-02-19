@@ -108,11 +108,11 @@ export class AuditLogService {
       filter.createdAt = {} as any;
 
       if (options.startDate) {
-        (filter.createdAt as any).$gte = options.startDate;
+        filter.createdAt.$gte = options.startDate;
       }
 
       if (options.endDate) {
-        (filter.createdAt as any).$lte = options.endDate;
+        filter.createdAt.$lte = options.endDate;
       }
     }
 
@@ -173,11 +173,11 @@ export class AuditLogService {
       filter.createdAt = {} as any;
 
       if (options.startDate) {
-        (filter.createdAt as any).$gte = options.startDate;
+        filter.createdAt.$gte = options.startDate;
       }
 
       if (options.endDate) {
-        (filter.createdAt as any).$lte = options.endDate;
+        filter.createdAt.$lte = options.endDate;
       }
     }
 

@@ -12,9 +12,9 @@ import { CrmService } from './crm.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import { PermissionsGuard } from '../../../../src/common/guards/permissions.guard';
-import { Permissions } from '../../../../src/common/decorators/permissions.decorator';
-import { Permission } from '../../../../src/common/enums/permission.enum';
+import { PermissionsGuard } from '../../common/guards/permissions.guard';
+import { Permissions } from '../../common/decorators/permissions.decorator';
+import { Permission } from '../../common/enums/permission.enum';
 
 interface AuthRequest extends Request {
   user?: {
@@ -26,7 +26,14 @@ interface AuthRequest extends Request {
 
 @Controller('crm')
 @UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
-@Roles('tenant_admin', 'staff', 'admin', 'owner', 'platform_admin', 'PLATFORM_SUPER_ADMIN')
+@Roles(
+  'tenant_admin',
+  'staff',
+  'admin',
+  'owner',
+  'platform_admin',
+  'PLATFORM_SUPER_ADMIN',
+)
 export class CrmController {
   constructor(private readonly crmService: CrmService) {}
 
@@ -113,37 +120,40 @@ export class CrmController {
     });
   }
 
-   @Patch('tasks/:id/completed')
+  @Patch('tasks/:id/completed')
   @Permissions(Permission.CRM_WRITE)
-   async setTaskCompleted(
-     @Req() req: AuthRequest,
-     @Param('id') id: string,
-     @Body() body: { completed?: boolean },
-   ) {
-     const tenantId = req.user?.tenantId;
-     const userId = req.user?.sub || req.user?._id;
-     if (!tenantId || !userId) throw new Error('Tenant or user ID not found');
-     if (typeof body.completed !== 'boolean') throw new Error('completed is required');
-     return this.crmService.setTaskCompleted(tenantId, String(userId), id, body.completed);
-   }
+  async setTaskCompleted(
+    @Req() req: AuthRequest,
+    @Param('id') id: string,
+    @Body() body: { completed?: boolean },
+  ) {
+    const tenantId = req.user?.tenantId;
+    const userId = req.user?.sub || req.user?._id;
+    if (!tenantId || !userId) throw new Error('Tenant or user ID not found');
+    if (typeof body.completed !== 'boolean')
+      throw new Error('completed is required');
+    return this.crmService.setTaskCompleted(
+      tenantId,
+      String(userId),
+      id,
+      body.completed,
+    );
+  }
 
   @Patch('tasks/:id/delete')
   @Permissions(Permission.CRM_WRITE)
-  async deleteTask(
-    @Req() req: AuthRequest,
-    @Param('id') id: string,
-  ) {
+  async deleteTask(@Req() req: AuthRequest, @Param('id') id: string) {
     const tenantId = req.user?.tenantId;
     const userId = req.user?.sub || req.user?._id;
     if (!tenantId || !userId) throw new Error('Tenant or user ID not found');
     return this.crmService.deleteTask(tenantId, String(userId), id);
   }
 
-   @Get('analytics')
+  @Get('analytics')
   @Permissions(Permission.CRM_READ)
-   async getAnalytics(@Req() req: AuthRequest) {
-     const tenantId = req.user?.tenantId;
-     if (!tenantId) throw new Error('Tenant ID not found');
-     return this.crmService.getAnalytics(tenantId);
-   }
+  async getAnalytics(@Req() req: AuthRequest) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) throw new Error('Tenant ID not found');
+    return this.crmService.getAnalytics(tenantId);
+  }
 }

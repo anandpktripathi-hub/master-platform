@@ -28,4 +28,5 @@ export class BusinessReview {
   ownerReply?: string;
 }
 
-export const BusinessReviewSchema = SchemaFactory.createForClass(BusinessReview);
+export const BusinessReviewSchema =
+  SchemaFactory.createForClass(BusinessReview);

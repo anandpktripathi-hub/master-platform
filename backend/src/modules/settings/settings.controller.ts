@@ -586,7 +586,10 @@ export class SettingsController {
     @Body() dto: UpdateNotificationSettingsDto,
   ): Promise<NotificationSettingsDto> {
     const entries = notificationDtoToEntries(dto);
-    const res = await this.settingsService.upsertGroup('notifications', entries);
+    const res = await this.settingsService.upsertGroup(
+      'notifications',
+      entries,
+    );
     return entriesToNotificationDto(res.items);
   }
 
@@ -666,7 +669,10 @@ export class SettingsController {
     @Body() dto: UpdateIpRestrictionSettingsDto,
   ): Promise<IpRestrictionSettingsDto> {
     const entries = ipRestrictionDtoToEntries(dto);
-    const res = await this.settingsService.upsertGroup('ip-restriction', entries);
+    const res = await this.settingsService.upsertGroup(
+      'ip-restriction',
+      entries,
+    );
     return entriesToIpRestrictionDto(res.items);
   }
 }

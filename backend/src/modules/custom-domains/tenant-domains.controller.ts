@@ -43,7 +43,7 @@ export class TenantDomainsController {
     if (!tenantId) {
       throw new Error('Tenant ID not found in auth context');
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
     return await this.customDomainService.getTenantDomainHealthSummary(
       String(tenantId),
     );
@@ -66,7 +66,7 @@ export class TenantDomainsController {
     if (!tenantId) {
       throw new Error('Tenant ID not found in auth context');
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
     return await this.customDomainService.listForTenant(String(tenantId));
   }
 

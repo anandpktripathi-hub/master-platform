@@ -7,7 +7,7 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -30,10 +30,11 @@
         "modules/*/dto"
       ],
       "@common-schemas/*": [
-        "../../src/common/schemas/*"
+        "common/schemas/*"
       ]
     },
     "incremental": true,
+    "tsBuildInfoFile": "./.tsbuildinfo",
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
@@ -42,6 +43,6 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*", "../../src/common/schemas/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -10,11 +15,15 @@ import {
   TenantPackage,
   TenantPackageDocument,
 } from '../../../database/schemas/tenant-package.schema';
-import { Package, PackageDocument } from '../../../database/schemas/package.schema';
+import {
+  Package,
+  PackageDocument,
+} from '../../../database/schemas/package.schema';
 import { BillingService } from '../../billing/billing.service';
 import { BillingNotificationService } from '../../billing/billing-notification.service';
 import { TenantsService } from '../../tenants/tenants.service';
 import { PaymentLogService } from './payment-log.service';
+import { PackageService } from '../../packages/services/package.service';
 
 @Injectable()
 export class OfflinePaymentsService {
@@ -29,6 +38,8 @@ export class OfflinePaymentsService {
     private readonly paymentLogService: PaymentLogService,
     private readonly billingNotifications: BillingNotificationService,
     private readonly tenantsService: TenantsService,
+    @Inject(forwardRef(() => PackageService))
+    private readonly packageService: PackageService,
   ) {}
 
   async createRequest(params: {
@@ -39,8 +50,18 @@ export class OfflinePaymentsService {
     method: string;
     description?: string;
     proofUrl?: string;
+    metadata?: Record<string, unknown>;
   }): Promise<OfflinePaymentRequest> {
-    const { tenantId, userId, amount, currency, method, description, proofUrl } = params;
+    const {
+      tenantId,
+      userId,
+      amount,
+      currency,
+      method,
+      description,
+      proofUrl,
+      metadata,
+    } = params;
 
     if (!amount || amount <= 0) {
       throw new BadRequestException('Amount must be greater than zero');
@@ -54,6 +75,7 @@ export class OfflinePaymentsService {
       method,
       description,
       proofUrl,
+      metadata,
       status: 'pending' as OfflinePaymentRequestStatus,
     });
 
@@ -97,29 +119,72 @@ export class OfflinePaymentsService {
       status: status === 'approved' ? 'success' : 'failed',
       createdAt: new Date(),
       error: status === 'approved' ? undefined : `Offline payment ${status}`,
-          gatewayName: 'offline',
+      gatewayName: 'offline',
     });
 
     // When approved, create a billing record to tie into billing history
     if (status === 'approved') {
-      await this.billingService.create(
-        {
-          amount: saved.amount,
-          currency: saved.currency,
-          status: 'PAID' as any,
-        } as any,
-        saved.tenantId.toString(),
-      );
+      try {
+        // If the request specifies a target package, apply it as the upgrade/downgrade.
+        // Otherwise, fall back to the legacy "reactivate/extend" logic.
+        const applied = await this.applyPackageAssignmentFromMetadata(saved);
+        if (!applied) {
+          await this.applySubscriptionAdjustmentForTenant(
+            saved.tenantId.toString(),
+            saved.amount,
+            saved.currency,
+          );
+        }
+      } catch (err) {
+        // If the upgrade/adjustment fails, revert approval so an admin can retry.
+        doc.status = 'pending';
+        await doc.save().catch(() => undefined);
+        throw err;
+      }
 
-      // Adjust tenant subscription/package if applicable
-      await this.applySubscriptionAdjustmentForTenant(
-        saved.tenantId.toString(),
-        saved.amount,
-        saved.currency,
-      );
+      // Best-effort billing record for history (do not block upgrade if billing history fails)
+      await this.billingService
+        .create(
+          {
+            amount: saved.amount,
+            currency: saved.currency,
+            status: 'PAID' as any,
+          } as any,
+          saved.tenantId.toString(),
+        )
+        .catch(() => undefined);
     }
 
     return saved;
+  }
+
+  private async applyPackageAssignmentFromMetadata(
+    request: OfflinePaymentRequestDocument,
+  ): Promise<boolean> {
+    const raw = request.metadata?.packageId;
+    if (typeof raw !== 'string') {
+      return false;
+    }
+    const packageId = raw.trim();
+    if (!packageId) {
+      return false;
+    }
+    if (!Types.ObjectId.isValid(packageId)) {
+      return false;
+    }
+
+    await this.packageService.assignPackageToTenant(
+      request.tenantId.toString(),
+      packageId,
+      {
+        startTrial: false,
+        skipPayment: true,
+        userId: request.userId?.toString?.() || undefined,
+        gatewayName: 'offline',
+      },
+    );
+
+    return true;
   }
 
   private async applySubscriptionAdjustmentForTenant(
@@ -158,9 +223,10 @@ export class OfflinePaymentsService {
     }
 
     const now = new Date();
-    let baseDate = tenantPackage.expiresAt && tenantPackage.expiresAt > now
-      ? tenantPackage.expiresAt
-      : now;
+    const baseDate =
+      tenantPackage.expiresAt && tenantPackage.expiresAt > now
+        ? tenantPackage.expiresAt
+        : now;
 
     let newExpiresAt: Date | undefined = tenantPackage.expiresAt;
     if (pkg.billingCycle === 'monthly') {

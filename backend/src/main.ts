@@ -1,11 +1,20 @@
 import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-// Try loading .env from project root and dist directory
-const rootEnv = path.resolve(__dirname, '../../.env');
-const distEnv = path.resolve(__dirname, '.env');
-dotenv.config({ path: rootEnv });
-dotenv.config({ path: distEnv });
+// Load environment variables from common locations.
+// In production, prefer real environment variables from the host/container.
+// Allow opting-in to dotenv via ENV_FILE (explicit) even in production.
+const envFile = process.env.ENV_FILE;
+if (envFile) {
+  dotenv.config({ path: path.resolve(process.cwd(), envFile) });
+} else if (process.env.NODE_ENV !== 'production') {
+  // We prefer process.cwd() so this works both in dev (nest start --watch)
+  // and when running compiled output from dist/.
+  const cwdEnv = path.resolve(process.cwd(), '.env');
+  const parentEnv = path.resolve(process.cwd(), '..', '.env');
+  dotenv.config({ path: cwdEnv });
+  dotenv.config({ path: parentEnv });
+}
 import { setupSwagger } from './config/swagger.config';
 import { errorHandler } from './middleware/error.handler';
 import logger from './config/logger.config';
@@ -26,15 +35,32 @@ process.on('uncaughtException', (err) => {
 
 function validateCriticalEnv(): void {
   const missing: string[] = [];
+  // Auth
+  if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+    missing.push('JWT_SECRET');
+  }
+
+  // Database
+  if (
+    process.env.NODE_ENV === 'production' &&
+    !process.env.DATABASE_URI &&
+    !process.env.DATABASE_URL
+  ) {
+    missing.push('DATABASE_URI');
+  }
   // Payments
   if (!process.env.STRIPE_SECRET_KEY) {
-    missing.push('STRIPE_SECRET_KEY');
+    // Do not hard-fail boot if Stripe isn't configured.
+    // Many environments (local dev, staging, some tenants) may run without Stripe.
+    logger.warn('STRIPE_SECRET_KEY is not set; Stripe payments will be disabled');
   }
 
   // SMTP/email
   if (!process.env.SMTP_HOST) {
     // Optional: email settings can also come from DB; log a warning instead
-    logger.warn('SMTP_HOST is not set; email delivery depends on DB settings only');
+    logger.warn(
+      'SMTP_HOST is not set; email delivery depends on DB settings only',
+    );
   }
 
   // Currency conversion JSON format (if provided)
@@ -55,12 +81,16 @@ function validateCriticalEnv(): void {
   // Domain/SSL hints for production
   if (process.env.NODE_ENV === 'production') {
     if (!process.env.PLATFORM_PRIMARY_DOMAIN) {
-      logger.warn('PLATFORM_PRIMARY_DOMAIN is not set; domain/SSL configuration may be incomplete');
+      logger.warn(
+        'PLATFORM_PRIMARY_DOMAIN is not set; domain/SSL configuration may be incomplete',
+      );
     }
   }
 
   if (missing.length > 0) {
-    logger.error(`Missing critical environment variables: ${missing.join(', ')}`);
+    logger.error(
+      `Missing critical environment variables: ${missing.join(', ')}`,
+    );
     throw new InternalServerErrorException(
       `Missing critical environment variables: ${missing.join(', ')}`,
     );
@@ -68,10 +98,14 @@ function validateCriticalEnv(): void {
 }
 
 async function bootstrap() {
+  // Critical environment validation for production-like deployments
+  // Run this before NestFactory.create() so we fail fast without doing any
+  // expensive module initialization or external connections.
+  validateCriticalEnv();
+
   const app = await NestFactory.create(AppModule);
 
-  // Critical environment validation for production-like deployments
-  validateCriticalEnv();
+  app.enableShutdownHooks();
 
   app.setGlobalPrefix('api/v1');
 
@@ -120,11 +154,15 @@ async function bootstrap() {
   //   res.end(register.metrics());
   // });
 
-  const port = Number(process.env.PLATFORM_BACKEND_PORT || 4100);
+  // Prefer the standard PORT env var (used by Docker/Heroku/etc.), then platform override.
+  const port = Number(process.env.PORT || process.env.PLATFORM_BACKEND_PORT || 4000);
   await app.listen(port);
   console.log(`Backend is running on http://localhost:${port}`);
   console.log(
     'Security features enabled: Helmet, CORS, Rate Limiting, Input Validation',
   );
 }
-void bootstrap();
+bootstrap().catch((err) => {
+  console.error('[BOOTSTRAP] Failed to start application:', err);
+  process.exit(1);
+});

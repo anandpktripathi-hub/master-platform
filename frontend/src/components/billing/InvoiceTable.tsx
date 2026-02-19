@@ -92,7 +92,10 @@ export const InvoiceTable: React.FC<InvoiceTableProps> = ({
                 <TableCell>{formatDate(invoice.createdAt)}</TableCell>
 
                 <TableCell align="right" sx={{ fontWeight: 600 }}>
-                  {formatCurrency(invoice.totalAmount, invoice.currency)}
+                  {formatCurrency(
+                    (invoice as any).totalAmount ?? (invoice as any).amount ?? 0,
+                    invoice.currency,
+                  )}
                 </TableCell>
 
                 <TableCell align="center">

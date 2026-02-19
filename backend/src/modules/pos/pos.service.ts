@@ -1,10 +1,26 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { WarehouseStock, WarehouseStockDocument } from '../../database/schemas/warehouse-stock.schema';
-import { StockMovement, StockMovementDocument } from '../../database/schemas/stock-movement.schema';
-import { PosOrder, PosOrderDocument } from '../../database/schemas/pos-order.schema';
-import { Product, ProductDocument } from '../../database/schemas/product.schema';
+import {
+  WarehouseStock,
+  WarehouseStockDocument,
+} from '../../database/schemas/warehouse-stock.schema';
+import {
+  StockMovement,
+  StockMovementDocument,
+} from '../../database/schemas/stock-movement.schema';
+import {
+  PosOrder,
+  PosOrderDocument,
+} from '../../database/schemas/pos-order.schema';
+import {
+  Product,
+  ProductDocument,
+} from '../../database/schemas/product.schema';
 
 interface OrderItemInput {
   productId: string;
@@ -29,10 +45,14 @@ interface AdjustStockInput {
 @Injectable()
 export class PosService {
   constructor(
-    @InjectModel(WarehouseStock.name) private readonly stockModel: Model<WarehouseStockDocument>,
-    @InjectModel(StockMovement.name) private readonly movementModel: Model<StockMovementDocument>,
-    @InjectModel(PosOrder.name) private readonly orderModel: Model<PosOrderDocument>,
-    @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>,
+    @InjectModel(WarehouseStock.name)
+    private readonly stockModel: Model<WarehouseStockDocument>,
+    @InjectModel(StockMovement.name)
+    private readonly movementModel: Model<StockMovementDocument>,
+    @InjectModel(PosOrder.name)
+    private readonly orderModel: Model<PosOrderDocument>,
+    @InjectModel(Product.name)
+    private readonly productModel: Model<ProductDocument>,
   ) {}
 
   private toObjectId(id: string): Types.ObjectId {
@@ -42,7 +62,11 @@ export class PosService {
     return new Types.ObjectId(id);
   }
 
-  async getSummary(tenantId: string): Promise<{ totalSales: number; totalOrders: number; lowStockItems: number }> {
+  async getSummary(tenantId: string): Promise<{
+    totalSales: number;
+    totalOrders: number;
+    lowStockItems: number;
+  }> {
     const tenantObjectId = this.toObjectId(tenantId);
 
     const [salesAgg, ordersCount, lowStockItems] = await Promise.all([
@@ -53,7 +77,12 @@ export class PosService {
         ])
         .exec(),
       this.orderModel.countDocuments({ tenantId: tenantObjectId }).exec(),
-      this.stockModel.countDocuments({ tenantId: tenantObjectId, $expr: { $lte: ['$quantity', '$minStock'] } }).exec(),
+      this.stockModel
+        .countDocuments({
+          tenantId: tenantObjectId,
+          $expr: { $lte: ['$quantity', '$minStock'] },
+        })
+        .exec(),
     ]);
 
     const totalSales = salesAgg[0]?.total || 0;
@@ -74,7 +103,10 @@ export class PosService {
     const tenantObjectId = this.toObjectId(tenantId);
     const productObjectId = this.toObjectId(input.productId);
 
-    const product = await this.productModel.findById(productObjectId).lean().exec();
+    const product = await this.productModel
+      .findById(productObjectId)
+      .lean()
+      .exec();
     if (!product) {
       throw new NotFoundException('Product not found');
     }
@@ -161,16 +193,19 @@ export class PosService {
     session.startTransaction();
 
     try {
-      const order = await this.orderModel.create([
-        {
-          tenantId: tenantObjectId,
-          items,
-          totalAmount,
-          status: 'completed',
-          paymentMethod: input.paymentMethod,
-          customerName: input.customerName,
-        },
-      ], { session });
+      const order = await this.orderModel.create(
+        [
+          {
+            tenantId: tenantObjectId,
+            items,
+            totalAmount,
+            status: 'completed',
+            paymentMethod: input.paymentMethod,
+            customerName: input.customerName,
+          },
+        ],
+        { session },
+      );
 
       // Decrement stock and create movements
       for (const item of items) {
@@ -186,16 +221,19 @@ export class PosService {
           throw new BadRequestException('Insufficient stock for sale');
         }
 
-        await this.movementModel.create([
-          {
-            tenantId: tenantObjectId,
-            productId: item.productId,
-            orderId: order[0]._id,
-            type: 'sale',
-            quantityDelta: -item.quantity,
-            reason: 'POS sale',
-          },
-        ], { session });
+        await this.movementModel.create(
+          [
+            {
+              tenantId: tenantObjectId,
+              productId: item.productId,
+              orderId: order[0]._id,
+              type: 'sale',
+              quantityDelta: -item.quantity,
+              reason: 'POS sale',
+            },
+          ],
+          { session },
+        );
       }
 
       await session.commitTransaction();

@@ -79,10 +79,15 @@ export class ChatController {
 
     const numericLimit = limit ? parseInt(limit, 10) : undefined;
 
-    return this.chatService.listMessagesForUser(String(tenantId), roomId, String(userId), {
-      before,
-      limit: Number.isFinite(numericLimit) ? numericLimit : undefined,
-    });
+    return this.chatService.listMessagesForUser(
+      String(tenantId),
+      roomId,
+      String(userId),
+      {
+        before,
+        limit: Number.isFinite(numericLimit) ? numericLimit : undefined,
+      },
+    );
   }
 
   @Post('rooms/:roomId/messages')
@@ -101,7 +106,12 @@ export class ChatController {
       throw new BadRequestException('Message content is required');
     }
 
-    return this.chatService.postMessage(String(tenantId), roomId, String(userId), body.content);
+    return this.chatService.postMessage(
+      String(tenantId),
+      roomId,
+      String(userId),
+      body.content,
+    );
   }
 
   @Post('rooms/:roomId/join')
@@ -162,7 +172,11 @@ export class ChatController {
         let canSee = visibilityCache.get(roomId);
         if (canSee === undefined) {
           try {
-            canSee = await this.chatService.canUserSeeRoom(tenantId, roomId, userId);
+            canSee = await this.chatService.canUserSeeRoom(
+              tenantId,
+              roomId,
+              userId,
+            );
           } catch {
             canSee = false;
           }
@@ -182,7 +196,12 @@ export class ChatController {
 
   @Patch('admin/rooms/:roomId/archive')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('platform_admin', 'tenant_admin', 'PLATFORM_SUPERADMIN', 'TENANT_ADMIN')
+  @Roles(
+    'platform_admin',
+    'tenant_admin',
+    'PLATFORM_SUPERADMIN',
+    'TENANT_ADMIN',
+  )
   async archiveRoom(
     @Req() req: AuthRequest,
     @Param('roomId') roomId: string,
@@ -196,12 +215,21 @@ export class ChatController {
       throw new BadRequestException('archived flag is required');
     }
 
-    return this.chatService.archiveRoom(String(tenantId), roomId, body.archived);
+    return this.chatService.archiveRoom(
+      String(tenantId),
+      roomId,
+      body.archived,
+    );
   }
 
   @Delete('admin/rooms/:roomId/members/:userId')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('platform_admin', 'tenant_admin', 'PLATFORM_SUPERADMIN', 'TENANT_ADMIN')
+  @Roles(
+    'platform_admin',
+    'tenant_admin',
+    'PLATFORM_SUPERADMIN',
+    'TENANT_ADMIN',
+  )
   async removeMember(
     @Req() req: AuthRequest,
     @Param('roomId') roomId: string,

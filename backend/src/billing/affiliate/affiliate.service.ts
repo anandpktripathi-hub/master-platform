@@ -33,10 +33,10 @@ export class AffiliateService {
     if (!affiliate) {
       let code: string;
       // Ensure unique code
-      // eslint-disable-next-line no-constant-condition
+
       while (true) {
         code = this.generateCode();
-        // eslint-disable-next-line no-await-in-loop
+
         const existing = await this.affiliateModel.findOne({ code }).lean();
         if (!existing) break;
       }

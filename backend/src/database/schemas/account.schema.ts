@@ -18,7 +18,11 @@ export class Account {
   @Prop({ required: true, unique: false })
   code!: string;
 
-  @Prop({ required: true, enum: ['asset', 'liability', 'equity', 'income', 'expense'] })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['asset', 'liability', 'equity', 'income', 'expense'],
+  })
   type!: AccountType;
 
   @Prop()

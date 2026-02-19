@@ -35,11 +35,14 @@ export class RbacModule implements OnModuleInit {
   async onModuleInit() {
     // Seed default permissions and roles when module initializes.
     // If seeding fails (e.g. transient DB connectivity), log but do not crash the app.
-    try {
-      await this.seedService.seed();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('[RbacModule] RBAC seeding failed, continuing without seeded roles/permissions:', error);
-    }
+    // Important: do not block application startup on seeding.
+    // If Mongo is slow/unavailable, awaiting this can prevent `app.listen()` and keep the
+    // container unhealthy even though the rest of the app could serve requests.
+    this.seedService.seed().catch((error) => {
+      console.error(
+        '[RbacModule] RBAC seeding failed, continuing without seeded roles/permissions:',
+        error,
+      );
+    });
   }
 }

@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { VcardsService } from './vcards.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -28,7 +37,11 @@ export class VcardsController {
   @Put('vcards/:id')
   @UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
   @Roles('tenant_admin', 'TENANT_ADMIN', 'PLATFORM_SUPERADMIN')
-  updateTenantVcard(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateTenantVcard(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.vcardsService.updateForTenant(tenantId, id, body);
   }
 

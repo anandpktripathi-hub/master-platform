@@ -1,16 +1,16 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { WorkspaceGuard } from './guards/workspace.guard';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { HealthModule } from './modules/health/health.module';
+import { HealthModule } from './health/health.module';
 import { FeatureRegistryModule } from './feature-registry/featureRegistry.module';
 import { DatabaseModule } from './database/database.module';
 import { TenantMiddleware } from './middleware/tenant.middleware';
 import { RateLimitMiddleware } from './middleware/rate-limit.middleware';
 import { SecurityHeadersMiddleware } from './middleware/security-headers.middleware';
 import { IpRestrictionMiddleware } from './middleware/ip-restriction.middleware';
+import { MetricsModule } from './metrics/metrics.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
@@ -57,26 +57,8 @@ import { StorageModule } from './common/storage/storage.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
-    ...(() => {
-      const uri = process.env.DATABASE_URI || process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/master-platform';
-      // eslint-disable-next-line no-console
-      console.log(`[AppModule] MongooseModule connecting to: ${uri}`);
-      try {
-        return [MongooseModule.forRoot(uri, {
-          connectionFactory: (connection) => {
-            connection.on('connected', () => console.log('[AppModule] MongoDB connected'));
-            connection.on('error', (err: unknown) => console.error('[AppModule] MongoDB error:', err));
-            return connection;
-          },
-        })];
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(`[AppModule] Failed to connect to MongoDB at ${uri}. Running in degraded mode. Error:`, err);
-        // Optionally, you could return a stub module or skip DB-dependent modules here
-        return [];
-      }
-    })(),
     HealthModule,
+    MetricsModule,
     DatabaseModule,
     UsersModule,
     TenantsModule,
@@ -124,6 +106,7 @@ import { StorageModule } from './common/storage/storage.module';
   controllers: [],
   providers: [
     IpRestrictionMiddleware,
+    TenantMiddleware,
     // WorkspaceGuard is no longer provided globally. Use @UseGuards(WorkspaceGuard) at controller/route level.
   ],
 })
@@ -132,43 +115,44 @@ export class AppModule implements NestModule {
     // Removed global wildcard and empty .forRoutes() for RateLimitMiddleware and SecurityHeadersMiddleware to avoid unsupported warnings
 
     // Only apply TenantMiddleware to tenant-specific routes
-    consumer
-      .apply(TenantMiddleware)
-      .forRoutes(
-        // Add all tenant-specific route patterns here
-        'api/v1/tenants/*path',
-        'api/v1/tenant/*path',
-        'api/v1/products/*path',
-        'api/v1/themes/*path',
-        'api/v1/dashboard/*path',
-        'api/v1/profile/*path',
-        'api/v1/rbac/*path',
-        'api/v1/domains/*path',
-        'api/v1/custom-domains/*path',
-        'api/v1/packages/*path',
-        'api/v1/coupons/*path',
-        'api/v1/cms/*path',
-        'api/v1/settings/*path',
-        'api/v1/support/*path',
-        'api/v1/crm/*path',
-        'api/v1/social/*path',
-        'api/v1/accounting/*path',
-        'api/v1/hrm/*path',
-        'api/v1/projects/*path',
-        'api/v1/pos/*path',
-        'api/v1/vcards/*path',
-        'api/v1/notifications/*path',
-        'api/v1/chat/*path',
-        'api/v1/reports/*path',
-        'api/v1/developer/*path',
-        'api/v1/marketplace/*path',
-        'api/v1/ai/*path'
-      );
+    consumer.apply(TenantMiddleware).forRoutes(
+      // Add all tenant-specific route patterns here
+      'api/v1/tenants/*path',
+      'api/v1/tenant/*path',
+      'api/v1/products/*path',
+      'api/v1/themes/*path',
+      'api/v1/dashboard/*path',
+      'api/v1/profile/*path',
+      'api/v1/rbac/*path',
+      'api/v1/domains/*path',
+      'api/v1/custom-domains/*path',
+      'api/v1/packages/*path',
+      'api/v1/coupons/*path',
+      'api/v1/cms/*path',
+      'api/v1/settings/*path',
+      'api/v1/support/*path',
+      'api/v1/crm/*path',
+      'api/v1/social/*path',
+      'api/v1/accounting/*path',
+      'api/v1/hrm/*path',
+      'api/v1/projects/*path',
+      'api/v1/pos/*path',
+      'api/v1/vcards/*path',
+      'api/v1/notifications/*path',
+      'api/v1/chat/*path',
+      'api/v1/reports/*path',
+      'api/v1/developer/*path',
+      'api/v1/marketplace/*path',
+      'api/v1/ai/*path',
+    );
 
     // Apply security, IP restriction, and rate limiting middleware globally to all API routes
     consumer
-      .apply(SecurityHeadersMiddleware, IpRestrictionMiddleware, RateLimitMiddleware)
-      .forRoutes('*');
+      .apply(
+        SecurityHeadersMiddleware,
+        IpRestrictionMiddleware,
+        RateLimitMiddleware,
+      )
+        .forRoutes({ path: '*path', method: RequestMethod.ALL });
   }
 }
-

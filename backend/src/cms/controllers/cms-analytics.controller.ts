@@ -1,30 +1,39 @@
-import { Controller, Get, Post, Param, Query, Body, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Query,
+  Body,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CmsAnalyticsService } from '../services/cms-analytics.service';
+import { Tenant } from '../../decorators/tenant.decorator';
 
 @ApiTags('CMS - Analytics')
-@Controller('api/cms/analytics')
+@Controller('cms/analytics')
 export class CmsAnalyticsController {
   constructor(private readonly analyticsService: CmsAnalyticsService) {}
 
   @Post(':pageId/track')
   async trackView(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('pageId') pageId: string,
     @Body() metadata?: any,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.analyticsService.trackPageView(tenantId, pageId, metadata);
   }
 
   @Get('page/:pageId')
   async getPageAnalytics(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('pageId') pageId: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.analyticsService.getPageAnalytics(
       tenantId,
       pageId,
@@ -35,27 +44,27 @@ export class CmsAnalyticsController {
 
   @Get('page/:pageId/stats')
   async getPageStats(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('pageId') pageId: string,
     @Query('days') days?: number,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.analyticsService.getPageStats(tenantId, pageId, days);
   }
 
   @Get('tenant')
-  async getTenantAnalytics(@Req() req: any, @Query('days') days?: number) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+  async getTenantAnalytics(@Tenant() tenantId: string, @Query('days') days?: number) {
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.analyticsService.getTenantAnalytics(tenantId, days);
   }
 
   @Post(':pageId/conversion')
   async recordConversion(
-    @Req() req: any,
+    @Tenant() tenantId: string,
     @Param('pageId') pageId: string,
     @Body('conversionType') conversionType: string,
   ) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.analyticsService.recordConversion(
       tenantId,
       pageId,

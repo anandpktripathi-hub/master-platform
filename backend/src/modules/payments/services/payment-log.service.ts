@@ -21,7 +21,7 @@ export class PaymentLogService {
   }
 
   list(tenantId?: string): PaymentLog[] {
-    if (tenantId) return this.logs.filter(l => l.tenantId === tenantId);
+    if (tenantId) return this.logs.filter((l) => l.tenantId === tenantId);
     return this.logs;
   }
 

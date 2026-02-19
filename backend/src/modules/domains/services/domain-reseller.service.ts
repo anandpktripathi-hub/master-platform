@@ -29,13 +29,17 @@ export class DomainResellerService {
     return this.provider.search(domain);
   }
 
-  async purchase(request: DomainPurchaseRequest): Promise<DomainPurchaseResult> {
+  async purchase(
+    request: DomainPurchaseRequest,
+  ): Promise<DomainPurchaseResult> {
     const result = await this.provider.purchase(request);
 
     await this.orderModel.create({
       tenantId: request.tenantId as unknown as Types.ObjectId,
       domain: request.domain,
-      provider: result.success ? result.providerOrderId?.split('-')[0] ?? 'unknown' : 'unknown',
+      provider: result.success
+        ? (result.providerOrderId?.split('-')[0] ?? 'unknown')
+        : 'unknown',
       providerOrderId: result.providerOrderId,
       status: result.success ? 'purchased' : 'failed',
       rawResponse: result,

@@ -31,12 +31,13 @@ export class SubscriptionExpiryScheduler {
       const windowDays = await this.packageService.getMaxExpiryWarningWindow(
         globalDaysBeforeExpiry,
       );
-      const processed = await this.packageService.sendSubscriptionExpiryWarnings(
-        globalDaysBeforeExpiry,
-        windowDays,
-        this.billingNotifications,
-        this.tenantsService,
-      );
+      const processed =
+        await this.packageService.sendSubscriptionExpiryWarnings(
+          globalDaysBeforeExpiry,
+          windowDays,
+          this.billingNotifications,
+          this.tenantsService,
+        );
       this.logger.log(
         `Subscription expiry warning job processed ${processed} tenant package(s) with globalWindow=${globalDaysBeforeExpiry} days and effectiveWindow=${windowDays} days`,
       );

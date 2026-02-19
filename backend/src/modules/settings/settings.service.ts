@@ -91,7 +91,9 @@ export class SettingsService {
    * Slack/Telegram/Twilio integration services. Currently these settings
    * are global, so the tenantId parameter is ignored.
    */
-  async getIntegrationSettings(_tenantId?: string): Promise<IntegrationSettingsDto> {
+  async getIntegrationSettings(
+    _tenantId?: string,
+  ): Promise<IntegrationSettingsDto> {
     const res = await this.getGroupAdmin('integrations');
     return entriesToIntegrationDto(res.items);
   }

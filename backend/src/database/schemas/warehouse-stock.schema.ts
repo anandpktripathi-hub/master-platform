@@ -18,5 +18,6 @@ export class WarehouseStock {
   minStock!: number;
 }
 
-export const WarehouseStockSchema = SchemaFactory.createForClass(WarehouseStock);
+export const WarehouseStockSchema =
+  SchemaFactory.createForClass(WarehouseStock);
 WarehouseStockSchema.index({ tenantId: 1, productId: 1 }, { unique: true });

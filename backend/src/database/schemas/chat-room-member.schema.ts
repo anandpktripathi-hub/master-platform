@@ -18,5 +18,9 @@ export class ChatRoomMember {
   role!: 'member' | 'admin';
 }
 
-export const ChatRoomMemberSchema = SchemaFactory.createForClass(ChatRoomMember);
-ChatRoomMemberSchema.index({ tenantId: 1, roomId: 1, userId: 1 }, { unique: true });
+export const ChatRoomMemberSchema =
+  SchemaFactory.createForClass(ChatRoomMember);
+ChatRoomMemberSchema.index(
+  { tenantId: 1, roomId: 1, userId: 1 },
+  { unique: true },
+);

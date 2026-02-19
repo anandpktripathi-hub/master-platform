@@ -21,7 +21,10 @@ export class VcardsService {
       .exec();
   }
 
-  async createForTenant(tenantId: string, payload: Partial<VCard>): Promise<VCard> {
+  async createForTenant(
+    tenantId: string,
+    payload: Partial<VCard>,
+  ): Promise<VCard> {
     const doc = new this.vcardModel({
       ...payload,
       tenantId: this.toObjectId(tenantId),
@@ -29,7 +32,11 @@ export class VcardsService {
     return doc.save();
   }
 
-  async updateForTenant(tenantId: string, id: string, payload: Partial<VCard>): Promise<VCard> {
+  async updateForTenant(
+    tenantId: string,
+    id: string,
+    payload: Partial<VCard>,
+  ): Promise<VCard> {
     const updated = await this.vcardModel
       .findOneAndUpdate(
         { _id: this.toObjectId(id), tenantId: this.toObjectId(tenantId) },
@@ -46,7 +53,10 @@ export class VcardsService {
 
   async deleteForTenant(tenantId: string, id: string): Promise<void> {
     const res = await this.vcardModel
-      .deleteOne({ _id: this.toObjectId(id), tenantId: this.toObjectId(tenantId) })
+      .deleteOne({
+        _id: this.toObjectId(id),
+        tenantId: this.toObjectId(tenantId),
+      })
       .exec();
     if (res.deletedCount === 0) {
       throw new NotFoundException('vCard not found');
@@ -54,7 +64,10 @@ export class VcardsService {
   }
 
   async getPublicVcard(id: string): Promise<VCard> {
-    const vcard = await this.vcardModel.findById(this.toObjectId(id)).lean().exec();
+    const vcard = await this.vcardModel
+      .findById(this.toObjectId(id))
+      .lean()
+      .exec();
     if (!vcard) {
       throw new NotFoundException('vCard not found');
     }

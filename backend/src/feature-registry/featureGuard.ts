@@ -3,7 +3,11 @@ import { Reflector } from '@nestjs/core';
 import { FeatureAccessService } from './featureAccess.service';
 
 export const RequireFeature = (featureId: string) => {
-  return (target: any, propertyKey?: string, descriptor?: PropertyDescriptor) => {
+  return (
+    target: any,
+    propertyKey?: string,
+    descriptor?: PropertyDescriptor,
+  ) => {
     if (descriptor) {
       Reflect.defineMetadata('featureId', featureId, descriptor.value);
     }
@@ -19,7 +23,10 @@ export class FeatureGuard implements CanActivate {
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const featureId = this.reflector.get<string>('featureId', context.getHandler());
+    const featureId = this.reflector.get<string>(
+      'featureId',
+      context.getHandler(),
+    );
     if (!featureId) return true; // No feature restriction
 
     const request = context.switchToHttp().getRequest();
@@ -30,6 +37,10 @@ export class FeatureGuard implements CanActivate {
     const userRoles = user.roles || [];
     const userTenant = user.tenantId || '';
 
-    return this.featureAccessService.hasAccess(featureId, userRoles, userTenant);
+    return this.featureAccessService.hasAccess(
+      featureId,
+      userRoles,
+      userTenant,
+    );
   }
 }

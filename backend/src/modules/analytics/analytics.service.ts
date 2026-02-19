@@ -1,14 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  Tenant,
-  TenantDocument,
-} from '../../database/schemas/tenant.schema';
-import {
-  User,
-  UserDocument,
-} from '../../database/schemas/user.schema';
+import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
+import { User, UserDocument } from '../../database/schemas/user.schema';
 import {
   TenantPackage,
   TenantPackageDocument,
@@ -21,10 +15,7 @@ import {
   Invoice,
   InvoiceDocument,
 } from '../../database/schemas/invoice.schema';
-import {
-  Domain,
-  DomainDocument,
-} from '../../database/schemas/domain.schema';
+import { Domain, DomainDocument } from '../../database/schemas/domain.schema';
 import {
   CustomDomain,
   CustomDomainDocument,
@@ -35,9 +26,7 @@ import {
 } from '../../database/schemas/pos-order.schema';
 
 import { PlanKey } from '../../database/schemas/tenant.schema';
-import {
-  CmsPageAnalyticsEntity,
-} from '../../cms/entities/cms.entities';
+import { CmsPageAnalyticsEntity } from '../../cms/entities/cms.entities';
 import { PaymentLogService } from '../payments/services/payment-log.service';
 
 interface SaasOverviewResponse {
@@ -251,7 +240,7 @@ export class AnalyticsService {
     let totalRevenue = 0;
     let currency: string | null = null;
 
-    for (const row of invoiceStatusAgg as any[]) {
+    for (const row of invoiceStatusAgg) {
       totalInvoices += row.count || 0;
       if (!currency && row.currency) {
         currency = row.currency;
@@ -262,7 +251,7 @@ export class AnalyticsService {
       }
     }
 
-    const monthlyRevenue = (monthlyRevenueAgg as any[]).map((row) => {
+    const monthlyRevenue = monthlyRevenueAgg.map((row) => {
       const year = row._id.year as number;
       const month = row._id.month as number;
       return {
@@ -272,11 +261,11 @@ export class AnalyticsService {
       };
     });
 
-    const ordersAggRow = (posOrdersAgg as any[])[0] || {
+    const ordersAggRow = posOrdersAgg[0] || {
       totalOrders: 0,
       totalSales: 0,
     };
-    const ordersLast30Series = (posOrdersLast30Series as any[]) || [];
+    const ordersLast30Series = posOrdersLast30Series || [];
 
     const last30Totals = ordersLast30Series.reduce(
       (acc, row) => {
@@ -287,12 +276,12 @@ export class AnalyticsService {
       { orders: 0, totalSales: 0 },
     );
 
-    const visitorsLast30Row = (visitorsLast30Agg as any[])[0] || {
+    const visitorsLast30Row = visitorsLast30Agg[0] || {
       totalViews: 0,
       totalUniqueVisitors: 0,
     };
-    const visitorsDailySeries = (visitorsLast30DailyAgg as any[]) || [];
-    const visitorsTopTenants = (visitorsTopTenantsAgg as any[]) || [];
+    const visitorsDailySeries = visitorsLast30DailyAgg || [];
+    const visitorsTopTenants = visitorsTopTenantsAgg || [];
 
     // SSL automation (ACME) status
     const [
@@ -333,7 +322,7 @@ export class AnalyticsService {
 
     // Resolve tenant names for top tenants by traffic
     const tenantIdSet = new Set<string>();
-    for (const row of visitorsTopTenants as any[]) {
+    for (const row of visitorsTopTenants) {
       if (row?._id) {
         tenantIdSet.add(String(row._id));
       }

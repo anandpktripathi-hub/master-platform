@@ -6,7 +6,19 @@ export class HierarchyNode extends Document {
   @Prop({ required: true })
   name!: string;
 
-  @Prop({ required: true, enum: ['module', 'submodule', 'feature', 'subfeature', 'option', 'suboption', 'point', 'subpoint'] })
+  @Prop({
+    required: true,
+    enum: [
+      'module',
+      'submodule',
+      'feature',
+      'subfeature',
+      'option',
+      'suboption',
+      'point',
+      'subpoint',
+    ],
+  })
   type!: string;
 
   @Prop({ type: Types.ObjectId, ref: 'HierarchyNode', default: null })

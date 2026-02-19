@@ -1,0 +1,1150 @@
+# Nexelit docs (sidebar-linked) — consolidated tree
+
+## Instruction
+- **Instruction**
+  - Purpose: Overview of Instruction documentation.
+  - Actions: configure, update
+  - Options/Fields:
+    - Email: xgenious51@gmail.com
+  - Flow/Steps:
+    - One Click Update Configure
+- **[Change Logs] Nexelit- Multipurpose Website CMS**
+  - Purpose: Guide: [Change Logs] Nexelit- Multipurpose Website CMS.
+  - Actions: update
+- **Installation Process**
+  - Purpose: Guide: Installation Process.
+  - Roles: user
+  - UI/Menu: 01. Now login to you cpanel and Navigate to > MySQL® Database Wizard | 08. Navigate to the link to install the script www.yoursite.com , you will see install wizard like below picture
+  - Actions: add, create, delete, download, install, login, update
+  - Options/Fields:
+    - envato username means: your envato user account username
+  - Flow/Steps:
+    - 04: Add user to the database. check all privileges and click make changes. then click “Next Step”
+    - make sure you have all the icon green, if you see anything in red color, then you have to install that php extension or have to increase you php version. now click next
+    - fill all the field with database username, database name, database username password. which we have create in step 02,03,04,05. once all input data is complete click on install now button
+  - Dependencies/Troubleshooting:
+    - Required PHP v8. 1
+    - database create is done, keep database user, database name, database password in a note
+    - this step make sure you have database required for the installation, click next
+- **localhost Installation**
+  - Purpose: Guide: localhost Installation.
+  - Roles: admin, super admin, user
+  - UI/Menu: We will show you how Lets you install any of xgenious script in Windows Pc using Xampp. Navigate to xampp download page website download xampp php 7.4 version and install it in your computer | Navigate to the link to install the script localhost/yourfoldername/install , you will see install wizard like below picture | after successful installation you will able to login to your admin panel via this admin info
+  - Actions: add, copy, create, download, install, login, show, update
+  - Options/Fields:
+    - database name: which we have created in step 06
+    - enter database username: root
+    - keep password field: empty
+    - Your name
+    - enter email for super admin
+    - enter password for super admin
+    - enter username for super admin
+  - Flow/Steps:
+    - enter database username: root
+    - database name: which we have created in step 06
+    - enter username for super admin
+    - enter password for super admin
+    - enter email for super admin
+    - clock on explorer then open htdocs folder
+    - now copy installable zip file (check Step 01 for the zip file) and paste it inside nexelit folder and unzip it. after unzip it will look like below screenshot
+    - make sure you have all the icon green, if you see anything in red color, then you have to install that php extension or have to increase you php version. now click next
+  - Dependencies/Troubleshooting:
+    - this step make sure you have database required for the installation, click next
+- **Manual Installation**
+  - Purpose: Guide: Manual Installation.
+  - Roles: admin, user
+  - UI/Menu: 01. Now login to you cpanel and Navigate to > MySQL® Database Wizard | 05. now you have to import script database to your newly created database. Navigate to phpmyadmin | 10. now Navigate to “@core” folder open “.env” file. if you did not see .env file, then copy env-smaple.txt content from install folder and make a new file .env paste all the content
+  - Actions: add, copy, create, download, import, install, login, update
+  - Flow/Steps:
+    - if you are using local development, then it’s recommended to install the script manually. we will guide you in this article step by step about manual install
+    - 04: Add user to the database. check all privileges and click make changes. then click “Next Step”
+  - Dependencies/Troubleshooting:
+    - database create is done, keep database user, database name, database password in a note
+- **Manual Update**
+  - Purpose: Guide: Manual Update.
+  - UI/Menu: Do not forget to upgrade your website database from “general settings>Upgrade database” | Do not forget to clear your website cache from “general settings>cache settings”
+  - Actions: copy, download, set, update
+  - Dependencies/Troubleshooting:
+    - Before continue this manual update. you have to know which file you have customised, or your developer customize for you. Lets you not override you customised file while update the script. if you replace that file you…
+    - Before doing update, we suggest to make a backup of your site and make a staging website for update it
+- **One Click Update Configure**
+  - Purpose: Guide: One Click Update Configure.
+  - Roles: admin, user
+  - UI/Menu: Navigate to Admin Panel > general settings -> license settings click on license settings | for update the script Navigate to Admin Panel > general settings -> check update
+  - Actions: configure, enable, update
+  - Flow/Steps:
+    - now click on get license key then enter your envato username, email and purchase code
+- **Server Requirement**
+  - Purpose: Guide: Server Requirement.
+- **Update Process**
+  - Purpose: Guide: Update Process.
+  - Roles: user
+  - UI/Menu: Login to your cpanel or any panel you have, Navigate to file manager and Navigate to the folder where you install the script | now Navigate to your domain.com/update url and hit enter to see update wizard, update wizard will be like below picture | Do not forget to upgrade your website database from “general settings>Upgrade database”
+  - Actions: add, create, delete, download, edit, install, login, remove, set, update
+  - Flow/Steps:
+    - click on “i agree next step” and then see all permission is ok or not. if all are green check mark click on “next” button
+
+## Admin Panel
+- **Admin Panel**
+  - Purpose: Overview of Admin Panel documentation.
+  - Roles: admin
+  - UI/Menu: # Admin Panel | Profile Settings
+  - Actions: login
+  - Options/Fields:
+    - Password Change
+- **Admin Login**
+  - Purpose: Guide: Admin Login.
+  - Roles: admin, super admin, user
+  - UI/Menu: Lets you access your admin dashboard by yourdomain.com/login/admin. then you will see option to login to admin panel
+  - Actions: create, login
+  - Options/Fields:
+    - Password: 12345678
+    - Username: super_admin
+  - Flow/Steps:
+    - Lets you access your admin dashboard by yourdomain.com/login/admin. then you will see option to login to admin panel
+    - Note: if you have create admin account during installation then login using that credential instead of trying default admin details
+  - Dependencies/Troubleshooting:
+    - Note: if you have create admin account during installation then login using that credential instead of trying default admin details
+- **Password Change**
+  - Purpose: Guide: Password Change.
+  - Roles: admin
+  - UI/Menu: How to edit your admin password, after login to admin panel check top right corner for change menu,
+  - Actions: add, edit, login
+- **Profile Settings**
+  - Purpose: Guide: Profile Settings.
+  - Roles: admin, user
+  - UI/Menu: # Profile Settings | How to edit your admin profile info, after login to admin panel check top right corner for edit profile menu,
+  - Actions: edit, login
+
+## Email Settings
+- **Email Settings**
+  - Purpose: Overview of Email Settings documentation.
+  - UI/Menu: # Email Settings | Email Message Settings
+  - Options/Fields:
+    - Email Message Settings
+    - Email Template
+    - Manual SMTP Setup
+    - SMTP Setup
+- **Email Template**
+  - Purpose: Guide: Email Template.
+  - Roles: admin, user
+  - UI/Menu: @company: this will retrieve your site details you put it in “general settings> basic settings” | you will find option to change in default email template from your admin panel “General Settings > Email Template”
+  - Options/Fields:
+    - @username: this will retrieve username if mail send to any registered user
+- **Email Message Settings**
+  - Purpose: Guide: Email Message Settings.
+  - Roles: user
+  - UI/Menu: # Email Message Settings | Lets you customise flash message for user, when they submit any form in frontend. to set your own message for user, Navigate to “General settings > email settings”
+  - Actions: set
+- **Manual SMTP Setup**
+  - Purpose: Guide: Manual SMTP Setup.
+  - Roles: user
+  - UI/Menu: Smtp settings is a much needed settings you need to with the cms, without setup your smtp and google captcha none of website form will work | to set your own smtp settings manually, open “@core > .env” file and change blow settings | you have to set all of these field in smtp settings with your proper info
+  - Actions: set
+  - Options/Fields:
+    - Smtp Mail Encryption: select smtp encryption type SSL TLS None
+    - Smtp Mail Host: enter you smtp mail host
+    - Smtp Mail Password: enter your smtp password or webmail password
+    - Smtp Mail Port: select your smtp mail port from list 587 465 2525
+    - Smtp Mail Username: enter your smtp username or webmail address
+    - Smtp Mailer: set one from those as your smtp mailer or Lets you say smtp driver SMTP Mailgum SendMail PostMark
+    - SMTP
+  - Flow/Steps:
+    - Smtp Mail Host : enter you smtp mail host
+    - Smtp Mail Port : select your smtp mail port from list 587 465 2525
+    - Smtp Mail Username : enter your smtp username or webmail address
+    - Smtp Mail Password: enter your smtp password or webmail password
+    - Smtp Mail Encryption: select smtp encryption type SSL TLS None
+- **SMTP Setup**
+  - Purpose: Guide: SMTP Setup.
+  - Roles: user
+  - UI/Menu: Smtp settings is a much needed settings you need to with the cms, without setup your smtp and google captcha none of website form will work | to set your own smtp settings, got to “General Settings > Smtp Settings” you will see below settings | you have to set all of these field in smtp settings with your proper info
+  - Actions: add, set
+  - Options/Fields:
+    - Smtp Mail Encryption: select smtp encryption type SSL TLS None
+    - Smtp Mail Host: enter you smtp mail host
+    - Smtp Mail Password: enter your smtp password or webmail password
+    - Smtp Mail Port: select your smtp mail port from list 587 465 25
+    - Smtp Mail Username: enter your smtp username or webmail address
+    - Smtp Mailer: set one from those as your smtp mailer or Lets you say smtp driver SMTP Mailgum SendMail PostMark
+    - NT: Do not forget to add your smtp email as your global email in “general settings > email template”
+    - SMTP
+  - Flow/Steps:
+    - Smtp Mail Host : enter you smtp mail host
+    - Smtp Mail Port : select your smtp mail port from list 587 465 25
+    - Smtp Mail Username : enter your smtp username or webmail address
+    - Smtp Mail Password: enter your smtp password or webmail password
+    - Smtp Mail Encryption: select smtp encryption type SSL TLS None
+
+## User Dashboard
+- **User Dashboard**
+  - Purpose: Overview of User Dashboard documentation.
+  - Roles: user
+  - Actions: edit, login, register
+  - Options/Fields:
+    - Change Password
+- **All Donations**
+  - Purpose: Guide: All Donations.
+  - Roles: admin, user
+  - UI/Menu: user can check their order packages from their user panel. Navigate to “All Donations “ form side menu
+  - Actions: download
+- **All Support Tickets**
+  - Purpose: Guide: All Support Tickets.
+  - Roles: admin, user
+  - UI/Menu: user can check their order packages from their user panel. Navigate to “All Support Tickets “ form side menu
+  - Options/Fields:
+    - Status: user can change ticket status from their user dashboard from status dropdown
+- **Booked Appointment**
+  - Purpose: Guide: Booked Appointment.
+  - Roles: user
+  - UI/Menu: user can check their appointment booking from their user panel. Navigate to “Booked Appointment “ form side menu
+- **Change Password**
+  - Purpose: Guide: Change Password.
+  - Roles: user
+  - UI/Menu: user change password info from user panel, navigate to change password from user panel side menu
+- **Downloads**
+  - Purpose: Guide: Downloads.
+  - Roles: user
+  - UI/Menu: user can check their downloadable product orders from their user panel. Navigate to “Product Downloads “ form side menu
+- **Edit Profile**
+  - Purpose: Guide: Edit Profile.
+  - Roles: user
+  - UI/Menu: user change edit their profile info from user panel, navigate to edit profile from user panel side menu
+  - Actions: edit
+- **Enrolled Courses**
+  - Purpose: Guide: Enrolled Courses.
+  - Roles: admin, user
+  - UI/Menu: user can check their enrolled Courses from their user panel. Navigate to “Courses Enrolled” form side menu
+- **Event Booking**
+  - Purpose: Guide: Event Booking.
+  - Roles: admin, user
+  - UI/Menu: user can check their event booking orders from their user panel. Navigate to “Events Booking” form side menu
+- **Login**
+  - Purpose: Guide: Login.
+  - Roles: user
+  - Actions: create, login
+- **Package Order**
+  - Purpose: Guide: Package Order.
+  - Roles: admin, user
+  - UI/Menu: user can check their order packages from their user panel. Navigate to “Package order “ form side menu
+  - Actions: download
+- **Product Downloads**
+  - Purpose: Guide: Product Downloads.
+  - Roles: user
+  - UI/Menu: user can check their downloadable product orders from their user panel. Navigate to “Product Downloads “ form side menu
+  - Actions: copy, download, login
+- **Product Orders**
+  - Purpose: Guide: Product Orders.
+  - Roles: admin, user
+  - UI/Menu: user can check their product orders from their user panel. Navigate to “Product Orders “ form side menu
+- **Register**
+  - Purpose: Guide: Register.
+  - Roles: user
+  - Actions: login, register
+  - Dependencies/Troubleshooting:
+    - after register to website user can navigate to their dashboard from topbar menu. here is screenshort of user dashboard. after register user must have to verify user email. user will get an email activation mail as lik…
+
+## Form Builder
+- **Form Builder**
+  - Purpose: Overview of Form Builder documentation.
+- **Apply Job Form**
+  - Purpose: Guide: Apply Job Form.
+  - Actions: add
+- **Build Custom Form**
+  - Purpose: Guide: Build Custom Form.
+  - Roles: admin
+  - UI/Menu: From Version 3.0.0 Lets you build your own custom form, for your purpose with our custom form builder. Navigate to admin panel “Appearance Settings > Form Builder > All custom form”
+  - Actions: create, edit
+- **Call Action Query Form**
+  - Purpose: Guide: Call Action Query Form.
+  - Actions: add
+- **Case Study Query Form**
+  - Purpose: Guide: Case Study Query Form.
+  - Actions: add
+- **Contact Form**
+  - Purpose: Guide: Contact Form.
+  - Actions: add
+- **Estimate Form**
+  - Purpose: Guide: Estimate Form.
+  - Actions: add
+- **Event Attendance Form**
+  - Purpose: Guide: Event Attendance Form.
+  - Actions: add
+- **Get In Touch Form Customise**
+  - Purpose: Guide: Get In Touch Form Customise.
+  - Actions: add
+- **Order Form**
+  - Purpose: Guide: Order Form.
+  - Actions: add
+- **Quote Form**
+  - Purpose: Guide: Quote Form.
+  - Actions: add
+- **Service Query Form Customise**
+  - Purpose: Guide: Service Query Form Customise.
+  - Actions: add
+
+## Popup Builder
+- **Popup Builder**
+  - Purpose: Overview of Popup Builder documentation.
+  - Actions: create, set
+- **create a new popup**
+  - Purpose: Guide: create a new popup.
+  - Roles: user
+  - UI/Menu: To create new popup, Navigate to “ Appearance Settings > Popup Builder “ click “Add New Popup”
+  - Actions: add, create, show
+  - Options/Fields:
+    - Name: give a title to your popup to recognise it later, it will not show anywhere in the frontend
+    - Title: this is popup title it will show in the popup
+    - Image – this will contain only an image
+    - Promotion – this will show a image in left side and content in right side
+    - Type
+  - Flow/Steps:
+    - Description: enter description for popup
+- **How to set popup**
+  - Purpose: How-to: How to set popup.
+  - UI/Menu: after adding new popup, you have to set it up to showing in the website, you will find popup showing settings in side “General Settings > Popup Settings”
+  - Actions: disable, enable, set, show
+  - Options/Fields:
+    - Popup Delay Time: Lets you set delay time, popup will show after this delay time. it only use mili seconds
+  - Flow/Steps:
+    - Select Popup: select your created popup to show it in frontend
+
+## Preloader Builder
+- **Preloader Builder**
+  - Purpose: Overview of Preloader Builder documentation.
+  - Actions: hide, set, show
+- **Custom Preloader**
+  - Purpose: Guide: Custom Preloader.
+  - UI/Menu: you use your own preloader for this script, Navigate to “General settings > preloader settings” , then enable custom preloader
+  - Actions: enable, show
+  - Flow/Steps:
+    - you use your own preloader for this script, Navigate to “General settings > preloader settings” , then enable custom preloader
+- **Set Preloader**
+  - Purpose: Guide: Set Preloader.
+  - UI/Menu: you use your own preloader for this script, Navigate to “General settings > preloader settings” , then enable custom preloader
+  - Actions: enable, set
+  - Flow/Steps:
+    - you use your own preloader for this script, Navigate to “General settings > preloader settings” , then enable custom preloader
+- **Show/Hide Preloader**
+  - Purpose: Guide: Show/Hide Preloader.
+  - UI/Menu: you use your own preloader for this script, Navigate to “General settings > preloader settings” , then enable custom preloader
+  - Actions: disable, enable, hide, show
+  - Flow/Steps:
+    - you use your own preloader for this script, Navigate to “General settings > preloader settings” , then enable custom preloader
+
+## Payment Gateway Settings
+- **Payment Gateway Settings**
+  - Purpose: Overview of Payment Gateway Settings documentation.
+  - UI/Menu: # Payment Gateway Settings | Currency Settings
+  - Actions: configure
+  - Options/Fields:
+    - Cashfree – Where to get App Id and Secret Key?
+    - CinetPay Integratoin- How to get Api Key and Site Id
+    - Currency Settings
+    - Instamojo – How do I get my Client ID and Client Secret?
+    - Payfast – How To Find my Merchant ID and Key?
+    - midtrans – how to get Merchant id and Client key and server key ?
+- **Authorize.net Payment Gateway Setup**
+  - Purpose: Guide: Authorize.net Payment Gateway Setup.
+  - Actions: generate, login, show
+  - Flow/Steps:
+    - now generate a new transaction key. check new transaction key, then click on submit button
+- **Cashfree – Where to get App Id and Secret Key?**
+  - Purpose: Guide: Cashfree – Where to get App Id and Secret Key?.
+  - UI/Menu: Navigate to Cashfree .com login to your dashboard. then click on Payment Gateway > Try Environment button | you will find option to Navigate to production mode in top right corner a button name Switch to Production
+  - Actions: login, update
+  - Flow/Steps:
+    - if you want to use Cashfree in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Cashfree gateway settings. Navigate to “General settings>Payment Gateway Settings > Cashf…
+    - Navigate to Cashfree .com login to your dashboard. then click on Payment Gateway > Try Environment button
+- **CinetPay Integratoin- How to get Api Key and Site Id**
+  - Purpose: Guide: CinetPay Integratoin- How to get Api Key and Site Id.
+  - Roles: admin
+  - UI/Menu: then add those info in your website admin panel “general settings > payment gateway settings > cinetpay”
+  - Actions: add, create, login
+  - Options/Fields:
+    - To get api key and site id for cinetpay payment gateway. login to your merchant panel using this url https: //app.cinetpay.com/marchand
+  - Flow/Steps:
+    - Navigate to “Intégration” page you will get apikey. then you have to create a service to get your siteid
+    - then add those info in your website admin panel “general settings > payment gateway settings > cinetpay”
+- **Currency Settings**
+  - Purpose: Guide: Currency Settings.
+  - Roles: user
+  - UI/Menu: # Currency Settings | Default Payment Gateway: set which will be your default payment gateway. that mean it will be selected automatically when user will Navigate to purchase anything
+  - Actions: set
+  - Options/Fields:
+    - Global Currency: set you currency will user for the website
+    - Symbol Position: Lets you set your currency symbol position
+    - to INR Exchange Rate: enter your currency conversation rate for INR. this is mandatory to use any indian payment gateway
+    - to NGN Exchange Rate: enter your currency conversation rate for NGN, this is mandatory to user Paystack payment gateway
+  - Flow/Steps:
+    - Default Payment Gateway: set which will be your default payment gateway. that mean it will be selected automatically when user will Navigate to purchase anything
+    - to INR Exchange Rate : enter your currency conversation rate for INR. this is mandatory to use any indian payment gateway
+    - to NGN Exchange Rate : enter your currency conversation rate for NGN, this is mandatory to user Paystack payment gateway
+- **Flutterwave**
+  - Purpose: Guide: Flutterwave.
+  - Roles: user
+  - UI/Menu: if you want to use Flutterwave in your cms, you have to setup your Flutterwave gateway settings. Navigate to “General settings>Payment Gateway Settings > Flutterwave settings” | to get you Flutterwave api keys, loging to your Flutterwave account, Navigate to Settings > api | Here is Flutterwave supported Currency List, if your currency is not supported by Flutterwave , then this cms will charge them in USD as per your give conversation rate in currency settings
+  - Actions: disable, enable, set
+  - Options/Fields:
+    - Flutterwave Logo: Lets you set you selected Flutterwave logo, which will be shown in frontend for user to select payment gateway
+    - Flutterwave Secret Key: enter Flutterwave secret, this is mandatory to work Flutterwave in this cms
+  - Flow/Steps:
+    - Flutterwave Logo : Lets you set you selected Flutterwave logo, which will be shown in frontend for user to select payment gateway
+    - Flutterwave Public Key : enter Flutterwave Publishable Key, this is mandatory to work Flutterwave in this cms
+    - Flutterwave Secret Key: enter Flutterwave secret, this is mandatory to work Flutterwave in this cms
+    - Here is Flutterwave supported Currency List, if your currency is not supported by Flutterwave , then this cms will charge them in USD as per your give conversation rate in currency settings
+- **How to Configure SenangPay**
+  - Purpose: How-to: How to Configure SenangPay.
+  - Roles: admin
+  - UI/Menu: 1. Navigate to Menu > Settings > Profile | you will get return url from admin panel. put all those information in Admin Panel > payment settings -> senangpay
+  - Actions: configure
+  - Dependencies/Troubleshooting:
+    - # A. Information required
+- **How to get Paytabs payment gateway api credentials**
+  - Purpose: How-to: How to get Paytabs payment gateway api credentials.
+  - UI/Menu: Navigate to “Api Keys > Key Management”
+  - Actions: login
+  - Options/Fields:
+    - To get api key and site id for Paytabs payment gateway. login to your merchant panel using this url https: //merchant-global.paytabs.com/merchant/home
+- **How to get Square Payment gateway Api Credentials**
+  - Purpose: How-to: How to get Square Payment gateway Api Credentials.
+  - Roles: admin
+  - UI/Menu: your squareup payment gateway setting is done, now add all those info in your website admin panel “General settings > payment Gateway settings”
+  - Actions: add, create, set
+  - Flow/Steps:
+    - To setup squareup payment gateway first you have to create a developer account from here https://developer.squareup.com/apps
+    - add account name and select your country then click create
+- **How To Setup Api For BillPlz Payment Gateway**
+  - Purpose: How-to: How To Setup Api For BillPlz Payment Gateway.
+  - Roles: admin
+  - UI/Menu: Step 01: Click on your profile then click on settings | Step 02: Navigate to Keys & Integration section, click on Billplz Secret Key and Xsignature Payment | Step 05: Now Navigate to your script admin panel > General settings > Payment Gateway Settings > BIllplz Settings
+  - Actions: add, copy, create, login
+  - Options/Fields:
+    - Step 02: Navigate to Keys & Integration section, click on Billplz Secret Key and Xsignature Payment
+    - To get api key and site id for BillPlz https: //www.billplz.com/ payment gateway. login to your dashboard panel using this url https://dashboard.billplz.com
+- **Instamojo – How do I get my Client ID and Client Secret?**
+  - Purpose: Guide: Instamojo – How do I get my Client ID and Client Secret?.
+  - UI/Menu: Navigate to Instamojo .com login to your dashboard. now click on api & plugins . then scroll down to create New Credentials and click on it
+  - Actions: create, generate, login
+  - Flow/Steps:
+    - if you want to use Instamojo in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Instamojo gateway settings. Navigate to “General settings>Payment Gateway Settings > Ins…
+    - Navigate to Instamojo .com login to your dashboard. now click on api & plugins . then scroll down to create New Credentials and click on it
+- **Manual Payment**
+  - Purpose: Guide: Manual Payment.
+  - Roles: user
+  - UI/Menu: if you want to use manual Payment in your cms, you have to setup your manual Payment gateway settings. Navigate to “General settings>Payment Gateway Settings > manual Payment settings”
+  - Actions: disable, enable, set
+  - Options/Fields:
+    - Manual Payment Logo
+    - Manual Payment Name: enter Manual Payment Name this is mandatory to work Manual Payment in this cms
+  - Flow/Steps:
+    - Manual Payment Logo : Lets you set you selected Manual Payment logo, which will be shown in frontend for user to select payment gateway
+    - Manual Payment Name : enter Manual Payment Name this is mandatory to work Manual Payment in this cms
+    - Manual Payment Description: enter description about manual payment, how user will pay you. and how can they provide payment details to you
+- **Mercadopago**
+  - Purpose: Guide: Mercadopago.
+  - Roles: admin
+  - Flow/Steps:
+    - if you want to use mercadopago in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your mercadopago gateway settings. Navigate to “General settings>Payment Gateway Settings >…
+- **midtrans – how to get Merchant id and Client key and server key ?**
+  - Purpose: Guide: midtrans – how to get Merchant id and Client key and server key ?.
+  - UI/Menu: Navigate to midtrans login to your dashboard. now click on Settings > Access Keys . you will get details
+  - Actions: login
+  - Flow/Steps:
+    - if you want to use midtrans in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your midtrans gateway settings. Navigate to “General settings>Payment Gateway Settings > midtr…
+- **Mollie**
+  - Purpose: Guide: Mollie.
+  - Roles: user
+  - UI/Menu: if you want to use Mollie in your cms, you have to setup your Mollie gateway settings. Navigate to “General settings>Payment Gateway Settings > Mollie settings” | to get you Mollie api keys, loging to your Mollie account, Navigate to Developers > ap i keys | you must have to enable payment methods for mollie, for that Navigate to mollie dashboard > settings > website profiles > payment methods enable methods which you want
+  - Actions: disable, enable, set
+  - Options/Fields:
+    - Mollie Logo: Lets you set you selected Mollie logo, which will be shown in frontend for user to select payment gateway
+  - Flow/Steps:
+    - Mollie Logo : Lets you set you selected Mollie logo, which will be shown in frontend for user to select payment gateway
+    - Mollie Public Key : enter Mollie Public Key, this is mandatory to work Mollie in this cms
+    - Here is Mollie supported Currency List, if your currency is not supported by Mollie , then this cms will charge them in USD as per your give conversation rate in currency settings
+  - Dependencies/Troubleshooting:
+    - you must have to enable payment methods for mollie, for that Navigate to mollie dashboard > settings > website profiles > payment methods enable methods which you want
+- **Payfast – How To Find my Merchant ID and Key?**
+  - Purpose: Guide: Payfast – How To Find my Merchant ID and Key?.
+  - UI/Menu: Navigate to Payfast .com login to your dashboard. Navigate to Account > Personal Information . you will see you Merchant ID and Key at right top
+  - Actions: login
+  - Flow/Steps:
+    - if you want to use Payfast in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Payfast gateway settings. Navigate to “General settings>Payment Gateway Settings > Payfast…
+- **Paypal**
+  - Purpose: Guide: Paypal.
+  - Roles: user
+  - UI/Menu: if you want to use paypal in your cms, you have to setup your payal gateway settings. Navigate to “General settings>Payment Gateway Settings > paypal settings” | Here is paypal supported Currency List, if your currency is not supported by paypal, then this cms will charge them in USD as per your give conversation rate in currency settings
+  - Actions: create, disable, edit, enable, set
+  - Options/Fields:
+    - Paypal App Client ID: enter paypal app client id ( or paypal marchant id ), this is mandatory to work paypal in this cms
+    - Paypal App Secret: enter paypal app secret, this is mandatory to work paypal in this cms
+    - Paypal Logo: Lets you set you selected paypal logo, which will be shown in frontend for user to select payment gateway
+  - Flow/Steps:
+    - Paypal Logo : Lets you set you selected paypal logo, which will be shown in frontend for user to select payment gateway
+    - Paypal App Client ID : enter paypal app client id ( or paypal marchant id ), this is mandatory to work paypal in this cms
+    - Paypal App Secret: enter paypal app secret, this is mandatory to work paypal in this cms
+    - Here is paypal supported Currency List, if your currency is not supported by paypal, then this cms will charge them in USD as per your give conversation rate in currency settings
+- **Paystack**
+  - Purpose: Guide: Paystack.
+  - Roles: admin, user
+  - UI/Menu: if you want to use Paystack in your cms, you have to setup your Paystack gateway settings. Navigate to “General settings>Payment Gateway Settings > Paystack settings” | follow below image to image to get you paystack api keys. Login to your paystack account then Navigate to settings>API Keys & Webhooks | Do not forget to add Callback url to your paystack api setttings. you will get call back url in the cms admin panel paystack settings
+  - Actions: add, disable, enable, login, set
+  - Options/Fields:
+    - PayStack Merchant Email: enter your Paystack merchant email, this is mandatory to use Paystack in this cms
+    - Paystack Logo: Lets you set you selected Paystack logo, which will be shown in frontend for user to select payment gateway
+    - Paystack Secret Key: enter Paystack secret key, this is mandatory to work Paystack in this cms
+  - Flow/Steps:
+    - Paystack Logo : Lets you set you selected Paystack logo, which will be shown in frontend for user to select payment gateway
+    - Paystack Public Key : enter Paystack public key, this is mandatory to work Paystack in this cms
+    - Paystack Secret Key: enter Paystack secret key, this is mandatory to work Paystack in this cms
+    - PayStack Merchant Email : enter your Paystack merchant email, this is mandatory to use Paystack in this cms
+    - follow below image to image to get you paystack api keys. Login to your paystack account then Navigate to settings>API Keys & Webhooks
+    - Here is Paystack supported Currency List, if your currency is not supported by Paystack, then this cms will charge them in NGN as per your give conversation rate in currency settings
+- **Paytm**
+  - Purpose: Guide: Paytm.
+  - Roles: user
+  - UI/Menu: if you want to use Paytm in your cms, you have to setup your Paytm gateway settings. Navigate to “General settings>Payment Gateway Settings > Paytm settings” | Here is Paytm supported Currency List, if your currency is not supported by Paytm, then this cms will charge them in INR as per your give conversation rate in currency settings
+  - Actions: disable, enable, set
+  - Options/Fields:
+    - Paytm Logo: Lets you set you selected Paytm logo, which will be shown in frontend for user to select payment gateway
+    - Paytm Merchant ID: enter Paytm Merchant ID, this is mandatory to work Paytm in this cms
+    - Paytm Merchant Key: enter Paytm Merchant Key, this is mandatory to work Paytm in this cms
+    - Paytm Merchant Website: enter Paytm Merchant Website, this is mandatory to work Paytm in this cms
+  - Flow/Steps:
+    - Paytm Logo : Lets you set you selected Paytm logo, which will be shown in frontend for user to select payment gateway
+    - Paytm Merchant Key : enter Paytm Merchant Key, this is mandatory to work Paytm in this cms
+    - Paytm Merchant ID: enter Paytm Merchant ID, this is mandatory to work Paytm in this cms
+    - Paytm Merchant Website: enter Paytm Merchant Website, this is mandatory to work Paytm in this cms
+    - Here is Paytm supported Currency List, if your currency is not supported by Paytm, then this cms will charge them in INR as per your give conversation rate in currency settings
+- **PayUMoney – How to get PayUMoney Api Credentials**
+  - Purpose: Guide: PayUMoney – How to get PayUMoney Api Credentials.
+  - UI/Menu: Navigate to PayUMoney login to your dashboard. now click on Online payments . then scroll down to create New Store and click on it
+  - Actions: create, login
+  - Flow/Steps:
+    - if you want to use PayUMoney in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your PayUMoney gateway settings. Navigate to “General settings>Payment Gateway Settings > Pay…
+    - Navigate to PayUMoney login to your dashboard. now click on Online payments . then scroll down to create New Store and click on it
+- **Razorpay**
+  - Purpose: Guide: Razorpay.
+  - Roles: user
+  - UI/Menu: if you want to use Razorpay in your cms, you have to setup your Razorpay gateway settings. Navigate to “General settings>Payment Gateway Settings > Razorpay settings” | to get you Razorpay api keys, loging to your Razorpay account, Navigate to Settings → API Keys → Generate Key to generate key for the selected mode | Here is Razorpay supported Currency List, if your currency is not supported by Razorpay , then this cms will charge them in INR as per your give conversation rate in currency settings
+  - Actions: disable, enable, generate, set
+  - Options/Fields:
+    - Razorpay Logo: Lets you set you selected Razorpay logo, which will be shown in frontend for user to select payment gateway
+    - Razorpay Secret: enter Razorpay Secret this is mandatory to work Razorpay in this cms
+  - Flow/Steps:
+    - Razorpay Logo : Lets you set you selected Razorpay logo, which will be shown in frontend for user to select payment gateway
+    - Razorpay Key : enter Razorpay Key this is mandatory to work Razorpay in this cms
+    - Razorpay Secret : enter Razorpay Secret this is mandatory to work Razorpay in this cms
+    - Here is Razorpay supported Currency List, if your currency is not supported by Razorpay , then this cms will charge them in INR as per your give conversation rate in currency settings
+- **Stripe**
+  - Purpose: Guide: Stripe.
+  - Roles: user
+  - UI/Menu: if you want to use Stipe in your cms, you have to setup your Stipe gateway settings. Navigate to “General settings>Payment Gateway Settings > Stipe settings” | to get you Stipe api keys, loging to your stripe account, Navigate to developer > api keys , | Here is Stipe supported Currency List, if your currency is not supported by Stipe , then this cms will charge them in USD as per your give conversation rate in currency settings
+  - Actions: disable, enable, set
+  - Options/Fields:
+    - Stripe Logo: Lets you set you selected Stripe logo, which will be shown in frontend for user to select payment gateway
+    - Stripe Secret: enter stripe secret, this is mandatory to work Stripe in this cms
+  - Flow/Steps:
+    - Stripe Logo : Lets you set you selected Stripe logo, which will be shown in frontend for user to select payment gateway
+    - Stripe Publishable Key : enter Stripe Publishable Key, this is mandatory to work Stripe in this cms
+    - Stripe Secret: enter stripe secret, this is mandatory to work Stripe in this cms
+    - Here is Stipe supported Currency List, if your currency is not supported by Stipe , then this cms will charge them in USD as per your give conversation rate in currency settings
+- **Toyyibpay payment gateway setup**
+  - Purpose: Guide: Toyyibpay payment gateway setup.
+  - Roles: admin
+  - UI/Menu: now add your secret key and category code in admin panel > general settings > payment gateway settings
+  - Actions: add, create, login
+- **Transaction Cloud Payment Gateway Setup**
+  - Purpose: Guide: Transaction Cloud Payment Gateway Setup.
+  - Roles: admin
+  - UI/Menu: Navigate to https://sandbox-app.transaction.cloud/ and login to your sandbox account | Now you you need to create api, Navigate to API set up page, copy api login and api password and add it into the admin panel
+  - Actions: add, configure, copy, create, login, set
+  - Flow/Steps:
+    - create a new one time payment product , from sidebar products then click create product
+- **Zitopay – Payment gateway setup**
+  - Purpose: Guide: Zitopay – Payment gateway setup.
+  - Roles: admin, user
+  - UI/Menu: To use Zitopay Navigate to zitopay website, after signup/login to your dashboard you will see this screen | no copy your zitopay username and Navigate to your website admin panel “General Settings > Zitopay” add your zitopay username and save it
+  - Actions: add, copy, login
+
+## Languages
+- **Languages**
+  - Purpose: Overview of Languages documentation.
+  - Actions: add, clone
+  - Options/Fields:
+    - Add new string
+- **Add new languages**
+  - Purpose: Guide: Add new languages.
+  - Roles: admin
+  - UI/Menu: this cms comes with multilingual support. it means Lets you use multiple language support to it. To add new language you have to Navigate to admin panel “Languages>add new language”
+  - Actions: add
+- **Add new string**
+  - Purpose: Guide: Add new string.
+  - Roles: admin
+  - UI/Menu: this cms has option to add missing translate string to admin panel words or frontend words
+  - Actions: add
+  - Options/Fields:
+    - String: Add missing string
+    - Translated String: add your translated string for missing string
+- **Clone new Languages**
+  - Purpose: Guide: Clone new Languages.
+  - UI/Menu: # Clone language settings
+  - Actions: clone, copy
+  - Dependencies/Troubleshooting:
+    - you must have to select language name from dropdown, select direction and status of the language,
+    - it recommended to keep your language in draft mode, until you fill all the data required for your newly added languages
+    - To work the multilingual feature properly you have put all the required data for your newly cloned languages
+- **Translate Words**
+  - Purpose: Guide: Translate Words.
+  - Roles: admin
+  - UI/Menu: you will get all words your need to translate for admin panel, Lets you also add missing string by “add new string’
+  - Actions: add
+
+## General Questions
+- **General Questions**
+  - Purpose: Overview of General Questions documentation.
+  - Roles: admin, super admin, user
+  - Actions: add, create, disable, enable, login, register, remove, update
+  - Options/Fields:
+    - How To Change Home Page Variant
+    - How To Increase Logo Height
+    - User Email Verify Showing 500 Error
+  - Dependencies/Troubleshooting:
+    - how to change 404 page content
+    - All the pages are throwing 404 except the home screen – in Nexelit
+    - SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’
+    - User Email Verify Showing 500 Error
+    - How To Fix 503 Server Unavailable Issue
+- **All the pages are throwing 404 except the home screen – in Nexelit**
+  - Purpose: Guide: All the pages are throwing 404 except the home screen – in Nexelit.
+  - UI/Menu: login to your cpanel and Navigate to script root folder check there .htaccess file available or not , if not available create one with below code
+  - Actions: create, login
+  - Dependencies/Troubleshooting:
+    - # All the pages are throwing 404 except the home screen – in Nexelit
+    - usually any script throwing 404 because of missing pretty url
+- **Did not find Appointment Module after update ?**
+  - Purpose: Guide: Did not find Appointment Module after update ?.
+  - Roles: admin
+  - UI/Menu: enable module from admin panel
+  - Actions: add, edit, enable, update
+- **Did not find Course module after update**
+  - Purpose: Guide: Did not find Course module after update.
+  - Roles: admin
+  - UI/Menu: enable module from admin panel
+  - Actions: add, edit, enable, update
+- **Did not find support ticket option after update ?**
+  - Purpose: Guide: Did not find support ticket option after update ?.
+  - Roles: admin
+  - UI/Menu: enable module from admin panel
+  - Actions: add, edit, enable, update
+- **facebook login**
+  - Purpose: Guide: facebook login.
+  - Roles: admin
+  - UI/Menu: login to your facebook and Navigate to https://developers.facebook.com | now Navigate to facebook login settings area | now Navigate to settings > basic settings
+  - Actions: add, create, enable, login
+  - Flow/Steps:
+    - if facebook login is not enable, then enable it and add facebook app id and app secret
+  - Dependencies/Troubleshooting:
+    - add your app domain and your email, remember your app domain must be your website url
+- **How To Setup Google Login System In Nexelit**
+  - Purpose: How-to: How To Setup Google Login System In Nexelit.
+  - Roles: admin
+  - UI/Menu: Navigate to https://console.cloud.google.com site and login to your gmail account go get access to the google cloud console | now Navigate to api overview from your project dashboard | now Navigate to your website admin dashboard for add google oAuth client id and client secret, Navigate to “General settings > third Party script” if you see google login disable then enable it and add google oauth cr…
+  - Actions: add, create, disable, enable, login
+  - Flow/Steps:
+    - howto setup google login system in the Nexelit or Any Other xgenious script you have to create google console api credential first. follow below step to get those credentials
+    - click on credential then select oAuth client ID
+    - if you dod not have o auth consent screen setup you have to setup it first, then Lets you create a credentials
+    - now Navigate to your website admin dashboard for add google oAuth client id and client secret, Navigate to “General settings > third Party script” if you see google login disable then enable it and add google oauth cr…
+  - Dependencies/Troubleshooting:
+    - give all the details required for create a project
+- **how add google recaptcha ?**
+  - Purpose: Guide: how add google recaptcha ?.
+  - Roles: admin
+  - UI/Menu: Step 01: sign up for an Api key pair for your site, Navigate to Google Captcha site | Step 10: now you have to add those captcha key to admin panel “General settings > Third Party Script”
+  - Actions: add, copy, register
+  - Options/Fields:
+    - Google Captcha V3 Secret Key: copy google captcha v3 secret key and paste it here
+    - Step 05: select reCAPTCHA type to reCAPTCHA v3
+    - Step 01: sign up for an Api key pair for your site, Navigate to Google Captcha site
+  - Flow/Steps:
+    - Step 04: enter label for recognise it later
+    - Step 05: select reCAPTCHA type to reCAPTCHA v3
+    - Step 06: enter your Domains
+    - Step 07: add Owners
+    - Step 08 : Accept the reCAPTCHA Terms of Service
+    - Step 09: click on submit button, Your API keys will be generated
+- **how solve working alert in the website ?**
+  - Purpose: Guide: how solve working alert in the website ?.
+  - UI/Menu: To remove this alert you have to Navigate to “ general settings > third party script .” remove marked code in below picture, then clear your browser cache. that’s it alert will be remove
+  - Actions: remove
+  - Flow/Steps:
+    - To remove this alert you have to Navigate to “ general settings > third party script .” remove marked code in below picture, then clear your browser cache. that’s it alert will be remove
+- **how to add google analytics**
+  - Purpose: How-to: how to add google analytics.
+  - Actions: add
+- **how to add third party script**
+  - Purpose: How-to: how to add third party script.
+  - UI/Menu: Lets you add any third party script code , example: facebook pixels, google tags manager etc. To Add code Navigate to “General settings > Page Settings” . This code will be add inside </head> tag
+  - Actions: add
+- **how to add whatsapp button in the cms**
+  - Purpose: How-to: how to add whatsapp button in the cms.
+  - Roles: admin
+  - UI/Menu: Lets you add any third party script code , example: facebook pixels, google tags manager etc. To Add code Navigate to “General settings > Page Settings” . This code will be add inside </head> tag | Now add button code in third party script code. in admin panel “General settings > third party script”
+  - Actions: add
+- **how to change 404 page content**
+  - Purpose: How-to: how to change 404 page content.
+  - UI/Menu: This cms comes with many home page variant, Lets you use any of them for your website, Navigate to “Appearance Settings > 404 Page Manage” select your home page variant and save change
+  - Options/Fields:
+    - Title: enter title for 404 page
+  - Flow/Steps:
+    - Title: enter title for 404 page
+    - Button Text: enter button text
+  - Dependencies/Troubleshooting:
+    - # how to change 404 page content
+    - Title: enter title for 404 page
+    - This cms comes with many home page variant, Lets you use any of them for your website, Navigate to “Appearance Settings > 404 Page Manage” select your home page variant and save change
+- **how to change about page content**
+  - Purpose: How-to: how to change about page content.
+  - Roles: admin
+  - UI/Menu: Lets you easily manage all of home page content from admin panel ” All Page Settings > About Page Manage” it has all the section setting separately
+  - Actions: hide, show
+- **how to change breadcrumb color**
+  - Purpose: How-to: how to change breadcrumb color.
+  - Roles: admin
+  - UI/Menu: From version 3.0.0, the script has option to change footer colors from admin panel. for that Navigate to “General Settings > appearance > Breadcrumb settings’
+- **how to change contact page**
+  - Purpose: How-to: how to change contact page.
+  - Roles: admin
+  - UI/Menu: Lets you easily manage all of home page content from admin panel ” All Page Settings > Contact Page Manage” it has all the section setting separately
+- **how to change feedback page content**
+  - Purpose: How-to: how to change feedback page content.
+  - Roles: admin
+  - UI/Menu: Lets you easily manage all of home page content from admin panel ” All Page Settings > Feedback Page Manage” it has all the section setting separately | Feedback Page Settings
+- **How to change Footer Background color and text color ?**
+  - Purpose: How-to: How to change Footer Background color and text color ?.
+  - Roles: admin
+  - UI/Menu: To change footer background color you need to add below css code in admin panel Custom CSS | you need to add those css code in admin panel “General settings > custom css” , follow Custom Css article for more info about add new css code in the script
+  - Actions: add
+- **How to change Footer Color**
+  - Purpose: How-to: How to change Footer Color.
+  - Roles: admin
+  - UI/Menu: From version 3.0.0, the script has option to change footer colors from admin panel. for that Navigate to “General Settings > appearance > footer color settings’
+- **how to change home page contents**
+  - Purpose: How-to: how to change home page contents.
+  - Roles: admin
+  - UI/Menu: Lets you easily manage all of home page content from admin panel ” All Page Settings > Home Page Manage” it has all the section setting separately
+  - Actions: hide, show
+- **How To Change Home Page Variant**
+  - Purpose: How-to: How To Change Home Page Variant.
+  - UI/Menu: This cms comes with many home page variant, Lets you use any of them for your website, Navigate to “Appearance Settings > Home Variant” select your home page variant and save change
+- **how to change maintain page content**
+  - Purpose: How-to: how to change maintain page content.
+  - Roles: admin
+  - UI/Menu: # Maintenance mode page settings | to enable/disable maintains mode you have to Navigate to “General settings > basic settings”
+  - Actions: disable, enable
+- **how to change navbar color**
+  - Purpose: How-to: how to change navbar color.
+  - Roles: admin
+  - UI/Menu: From version 3.0.0, the script has option to change footer colors from admin panel. for that Navigate to “General Settings > appearance > navbar settings’
+- **How to change navbar style**
+  - Purpose: How-to: How to change navbar style.
+  - Roles: admin
+  - UI/Menu: From version 3.0.0, the script has option to change footer colors from admin panel. for that Navigate to “General Settings > appearance > navbar settings’
+- **How to change website colors?**
+  - Purpose: How-to: How to change website colors?.
+  - UI/Menu: To change color of the script you have to Navigate to “ general settings > Color Settings .” now Lets you change all the color of all home page variant and also change heading and paragraph colors
+- **How to create a page?**
+  - Purpose: How-to: How to create a page?.
+  - Roles: admin
+  - UI/Menu: this cms has option to crate your own pages, in many cases we need to create our own pages for the website, to create a new page you to Navigate to admin panel “Pages > Add new page” and fill the content then save cha…
+  - Actions: add, create
+  - Flow/Steps:
+    - this cms has option to crate your own pages, in many cases we need to create our own pages for the website, to create a new page you to Navigate to admin panel “Pages > Add new page” and fill the content then save cha…
+- **How To Enable/Disable Any Module**
+  - Purpose: How-to: How To Enable/Disable Any Module.
+  - UI/Menu: Lets you enable/disable module from this script. Navigate to “General Settings > Module Settings” . select which module you need and which you don’t
+  - Actions: disable, enable
+- **How To Fix 503 Server Unavailable Issue**
+  - Purpose: How-to: How To Fix 503 Server Unavailable Issue.
+  - UI/Menu: before trying to update it again, make sure you have a good internet connection. and your php ini settings as follows
+  - Actions: delete, update
+  - Flow/Steps:
+    - then reload the webpage, it should work fine
+  - Dependencies/Troubleshooting:
+    - # How To Fix 503 Server Unavailable Issue
+    - before trying to update it again, make sure you have a good internet connection. and your php ini settings as follows
+- **How to fix mixed content issue in installer**
+  - Purpose: How-to: How to fix mixed content issue in installer.
+  - Roles: editor
+  - UI/Menu: Step 01: Navigate to Install folder open index.php file
+  - Actions: add, edit, install
+  - Flow/Steps:
+    - then add this code in your index.php before <head> tag closing
+  - Dependencies/Troubleshooting:
+    - then add this code in your index.php before <head> tag closing
+- **How To Increase Logo Height**
+  - Purpose: How-to: How To Increase Logo Height.
+  - UI/Menu: Lets you increase frontend logo height by use below code in “General settings > custom css”
+  - Actions: add
+- **How to remove Login/Register**
+  - Purpose: How-to: How to remove Login/Register.
+  - Roles: admin
+  - UI/Menu: Right now this script does not have this option to hide login/register url from admin panel, but Lets you do it in manually. in this article i will show you how Lets you do this | login to your cpanel and Navigate to the script installed path | navigate to “@core>resources>views>frontend>partials>supportbar.blade.php”
+  - Actions: edit, hide, login, register, remove, show
+  - Dependencies/Troubleshooting:
+    - removed marked code from the file. Don’t forget to keep a backup of the file, before edit it
+- **SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’**
+  - Purpose: Guide: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’.
+  - Roles: admin, super admin, user
+  - Actions: create, login
+  - Options/Fields:
+    - password: 12345678
+    - username: super_admin
+  - Dependencies/Troubleshooting:
+    - # SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’
+    - This is mysql error, this error mean you already have an admin account with username of super_admin. now you need to change this username if you want to create a new admin. or Lets you login to your website admin pane…
+- **User Email Verify Showing 500 Error**
+  - Purpose: Guide: User Email Verify Showing 500 Error.
+  - Roles: admin, user
+  - UI/Menu: To fix this error 500 issue, you have to Make sure you have setup your smtp settings first, | After making sure you have properly setup your SMTP and google reCaptcha, Now Login to admin panel Navigate to “Appearance Settings> All Email Templates > User Verify Mail”
+  - Actions: add, login, set
+  - Flow/Steps:
+    - To fix this error 500 issue, you have to Make sure you have setup your smtp settings first,
+  - Dependencies/Troubleshooting:
+    - # User Email Verify Showing 500 Error
+    - If your system is getting 500 error after user registration or getting error 500 when click on send verify mail. this article will be helpful for you to resolve your error. This article is based on Nexelit – Multipurp…
+    - To fix this error 500 issue, you have to Make sure you have setup your smtp settings first,
+
+## Menu Manage
+- **Menu Manage**
+  - Purpose: Overview of Menu Manage documentation.
+  - Actions: add, create
+- **Add new item to menu**
+  - Purpose: Guide: Add new item to menu.
+  - Actions: add, create, set
+- **Create a new menu**
+  - Purpose: Guide: Create a new menu.
+  - UI/Menu: This cms comes with Drag & Drop menu builder Lets you build your own menu easily, To create a new menu Navigate to ” Appearance Settings> Menu Manage”
+  - Actions: add, create, download, edit
+  - Options/Fields:
+    - Step 01: create a menu, give it a title and select language
+
+## Widget Builder
+- **Widget Builder**
+  - Purpose: Overview of Widget Builder documentation.
+- **Footer Widgets**
+  - Purpose: Guide: Footer Widgets.
+  - Roles: admin
+  - UI/Menu: this cms comes with drag & drop widget builder, which help you to build our own footer as you want. Navigate to admin panel ” Appearance Settings > Widgets Builder”
+
+## Sitemap
+- **Sitemap**
+  - Purpose: Overview of Sitemap documentation.
+  - Actions: generate
+- **Generate Sitemap**
+  - Purpose: Guide: Generate Sitemap.
+  - Roles: admin
+  - UI/Menu: sitemap is a very important for your website seo, Lets you generate any website sitemap from the website admin panel, Navigate to “General Settings > Sitemap Settings”
+  - Actions: delete, download, generate
+  - Options/Fields:
+    - Title
+  - Flow/Steps:
+    - Title: enter website title to recognise sitemap. ( do not put any website url in title, do not put any space between title words )
+    - Url: enter website url, to generate sitemap, it will take several minutes depend on website content, while it is in progress to leave the page or close the page
+  - Dependencies/Troubleshooting:
+    - sitemap is a very important for your website seo, Lets you generate any website sitemap from the website admin panel, Navigate to “General Settings > Sitemap Settings”
+
+## Products Module
+- **Products Module**
+  - Purpose: Overview of Products Module documentation.
+  - UI/Menu: Tax Settings
+  - Actions: add
+  - Options/Fields:
+    - Tax Settings
+- **Add New Products**
+  - Purpose: Guide: Add New Products.
+  - UI/Menu: To add new product Navigate to “All Module > Products Manage>Add New Product”
+  - Actions: add
+- **Coupon**
+  - Purpose: Guide: Coupon.
+  - UI/Menu: To manage product shipping method Navigate to “All Module > Products Manage>Coupon”
+  - Actions: add, delete, edit, update
+- **Orders**
+  - Purpose: Guide: Orders.
+  - Roles: user
+  - UI/Menu: To manage product shipping method Navigate to “All Module > Products Manage>Orders”
+  - Actions: add, approve, edit, set, update
+- **Ratings**
+  - Purpose: Guide: Ratings.
+  - UI/Menu: To manage product shipping method Navigate to “All Module > Products Manage>Ratings”
+  - Actions: delete
+- **Shipping**
+  - Purpose: Guide: Shipping.
+  - UI/Menu: To manage product shipping method Navigate to “All Module > Products Manage>Shipping”
+  - Actions: add, delete, edit, set
+- **Tax Settings**
+  - Purpose: Guide: Tax Settings.
+  - UI/Menu: # Tax Settings | To manage product shipping method Navigate to “All Module > Products Manage>Tax Settings” | Product Tax Settings
+  - Actions: disable, enable, set
+- **variants**
+  - Purpose: Guide: variants.
+  - Roles: admin
+  - UI/Menu: From version 3.0.0. we have added variant support to products module. Navigate to admin panel “All Modules > Product Module > Variants”
+  - Actions: add
+
+## Events Module
+- **Events Module**
+  - Purpose: Overview of Events Module documentation.
+  - UI/Menu: Settings
+  - Actions: add
+- **Add New Events**
+  - Purpose: Guide: Add New Events.
+  - Actions: add
+- **Event Payment Logs**
+  - Purpose: Guide: Event Payment Logs.
+- **Events Attendances Logs**
+  - Purpose: Guide: Events Attendances Logs.
+- **Settings**
+  - Purpose: Guide: Settings.
+  - UI/Menu: # Settings
+
+## Dontions Module
+- **Dontions Module**
+  - Purpose: Overview of Dontions Module documentation.
+  - UI/Menu: Donation Page Settings | Donation Single Page Settings
+- **Donation Page Settings**
+  - Purpose: Guide: Donation Page Settings.
+  - UI/Menu: # Donation Page Settings | To manage product shipping method Navigate to “All Module > Donations Manage>Donation Page Settings” | Donation page Settings
+- **Donation Payment Logs**
+  - Purpose: Guide: Donation Payment Logs.
+  - UI/Menu: To manage product shipping method Navigate to “All Module > Donations Manage>All Donation Logs”
+  - Actions: delete
+- **Donation Single Page Settings**
+  - Purpose: Guide: Donation Single Page Settings.
+  - UI/Menu: # Donation Single Page Settings | To manage product shipping method Navigate to “All Module > Donations Manage>Donation Single Page Settings” | Donation Single page Settings
+- **New Donation**
+  - Purpose: Guide: New Donation.
+  - UI/Menu: To manage product shipping method Navigate to “All Module > Donations Manage>New Donation”
+  - Actions: add
+
+## Course Module
+- **Course Module**
+  - Purpose: Overview of Course Module documentation.
+  - Roles: admin
+  - UI/Menu: settings
+  - Actions: add
+- **add new course**
+  - Purpose: Guide: add new course.
+  - UI/Menu: To manage Courses Navigate to “All Module > Courses Manage>New Courses”
+  - Actions: add
+- **all coupons**
+  - Purpose: Guide: all coupons.
+  - UI/Menu: To manage Courses Navigate to “All Module > Courses Manage>Coupon”
+  - Actions: add
+- **all lesson**
+  - Purpose: Guide: all lesson.
+  - UI/Menu: To manage Courses Navigate to “All Module > Courses Manage>All Lessons”
+- **all reviews**
+  - Purpose: Guide: all reviews.
+  - UI/Menu: To manage Courses Navigate to “All Module > Courses Manage>All Reviews”
+- **Enrollments**
+  - Purpose: Guide: Enrollments.
+  - UI/Menu: To manage Courses Navigate to “All Module > Courses Manage>All Enrollment”
+- **Instructor**
+  - Purpose: Guide: Instructor.
+  - Roles: admin
+  - UI/Menu: To manage Courses Navigate to “All Module > Courses Manage>Instructor”
+  - Actions: add
+- **settings**
+  - Purpose: Guide: settings.
+  - UI/Menu: # settings | To manage Courses Navigate to “All Module > Courses Manage>Settings” | Settings
+
+## Knowledgebase Module
+- **Knowledgebase Module**
+  - Purpose: Overview of Knowledgebase Module documentation.
+  - UI/Menu: page settings
+  - Actions: add
+- **add new article**
+  - Purpose: Guide: add new article.
+  - UI/Menu: To manage Knowledge Base Navigate to “All Module > Knowledge Base>Add New Article ”
+  - Actions: add
+- **page settings**
+  - Purpose: Guide: page settings.
+  - UI/Menu: # page settings | To manage Knowledge Base Navigate to “All Module > Knowledge Base>Knowledge Base Page Settings” | Knowledge Base Page Settings
+- **Topics**
+  - Purpose: Guide: Topics.
+  - UI/Menu: To manage Knowledge Base Navigate to “All Module > Knowledge Base>Topics”
+  - Actions: add
+
+## Jobs Module
+- **Jobs Module**
+  - Purpose: Overview of Jobs Module documentation.
+  - Actions: add
+- **add new job post**
+  - Purpose: Guide: add new job post.
+  - UI/Menu: To manage Job module Navigate to “All Module > Jobs Module>New Job Post”
+  - Actions: add
+- **all applicant**
+  - Purpose: Guide: all applicant.
+  - UI/Menu: To manage Job module Navigate to “All Module > Jobs Module>All Applicant”
+
+## Appointments Module
+- **Appointments Module**
+  - Purpose: Overview of Appointments Module documentation.
+  - UI/Menu: Settings
+  - Actions: add
+- **add new appointment**
+  - Purpose: Guide: add new appointment.
+  - UI/Menu: To manage Appointment Module Navigate to “All Module > Appointment Manage>New Appointment”
+  - Actions: add
+- **All Appointment Booking**
+  - Purpose: Guide: All Appointment Booking.
+  - UI/Menu: To manage appointment Manage Navigate to “All Module > Appointment Manage>All Appointment Booking”
+  - Actions: approve, delete, edit
+- **Booking Time**
+  - Purpose: Guide: Booking Time.
+- **Reviews**
+  - Purpose: Guide: Reviews.
+  - UI/Menu: To manage appointment Manage Navigate to “All Module > Appointment Manage>All Reviews”
+- **Settings**
+  - Purpose: Guide: Settings.
+  - UI/Menu: # Settings | To manage Appointment Module Navigate to “All Module > Appointment Manage>Settings” | Settings
+
+## Support Ticket
+- **Support Ticket**
+  - Purpose: Overview of Support Ticket documentation.
+  - UI/Menu: Page Settings
+  - Actions: add
+- **Add New Ticket**
+  - Purpose: Guide: Add New Ticket.
+  - UI/Menu: To manage Support Module Navigate to “All Module >Support Tickets>Add new ticket”
+  - Actions: add
+- **All Tickets**
+  - Purpose: Guide: All Tickets.
+  - UI/Menu: To manage Support Module Navigate to “All Module >Support Tickets>All tickets”
+  - Actions: add, delete
+- **Page Settings**
+  - Purpose: Guide: Page Settings.
+  - UI/Menu: # Page Settings | To manage Support Module Navigate to “All Module >Support Tickets>page settings” | Page Settings
+
+## Quote Manage
+- **Quote Manage**
+  - Purpose: Overview of Quote Manage documentation.
+- **All Quote**
+  - Purpose: Guide: All Quote.
+  - Roles: user
+  - UI/Menu: To manage Appointment Module Navigate to “All Module > All Quote Manage>All Quote”
+  - Actions: delete, update
+- **Page manage**
+  - Purpose: Guide: Page manage.
+  - UI/Menu: To manage Appointment Module Navigate to “All Module > All Quote Manage>Quote page Manage” | Quote Page Settings:
+
+## Basic Settings
+- **Basic Settings**
+  - Purpose: Overview of Basic Settings documentation.
+  - UI/Menu: # Basic Settings | Seo & og meta settings | Page settings
+  - Options/Fields:
+    - Logo & Site title
+- **cache settings**
+  - Purpose: Guide: cache settings.
+  - Roles: admin
+  - UI/Menu: # cache settings | sometime you need to clear your system cache, this cms comes with option to do it from admin panel. Navigate to “General Settings > Cache Settings”
+  - Actions: configure
+- **Custom css**
+  - Purpose: Guide: Custom css.
+  - UI/Menu: this cms comes with option to add you own css to change or customise anything in the website. Navigate to “General settings > Custom CSS” , add you own css code here and Navigate to website you will see changes as per…
+  - Actions: add
+  - Flow/Steps:
+    - NT:: some time you see it not change then clear your browser cache by ctrl+shift+r ( window ) cmd+shift+r ( macos )
+- **custom js**
+  - Purpose: Guide: custom js.
+  - UI/Menu: this cms comes with option to add you own js to change or customise anything in the website. Navigate to “General settings > Custom Js” , add you own js code here and Navigate to website you will see changes as per yo…
+  - Actions: add
+  - Flow/Steps:
+    - NT:: some time you see it not change then clear your browser cache by ctrl+shift+r ( window ) cmd+shift+r ( macos )
+- **live Chat**
+  - Purpose: Guide: live Chat.
+  - Roles: admin
+  - UI/Menu: Step 01: Navigate to tawk.to and click sign up free button to open a new account | Step 05: Team Members , Invite your coworkers and set their access level. An Admin can configure and customize settings, an Agent can only answer chats and tickets | Step 07: copy marked embed code in to website admin panel “General Settings > third party scripts” Tawk.to API Widget Code. paste copied embed code to the field
+  - Actions: add, configure, copy, create, install, set
+  - Options/Fields:
+    - Step 03: select your language and lick next
+    - Step 04: enter your property details, it will ask you about your website title your website url and widget name
+- **Logo & Site title**
+  - Purpose: Guide: Logo & Site title.
+  - Roles: admin, user
+  - UI/Menu: # Site Title Settings | Dark Mode For Admin Dashboard : your can enable/disable admin panel dark mode | Site Main Color Settings: Lets you change website main color
+  - Actions: copy, disable, enable, hide, show
+  - Options/Fields:
+    - Breadcrumb Image: upload your website breadcrumb area
+    - Disable User Email Verify: Lets you enable/disable user email verification
+    - Language Select Show/Hide: Lets you show/hide language dropdown form your website
+    - Site Logo: upload your own logo for the website
+    - Site Title: enter your website title, it very important for your website seo
+    - White Site Logo: upload your own white logo for the website
+  - Flow/Steps:
+    - Site Logo: upload your own logo for the website
+    - White Site Logo : upload your own white logo for the website
+    - Favicon : upload your website favicon
+    - Breadcrumb Image: upload your website breadcrumb area
+    - Site Title: enter your website title, it very important for your website seo
+    - Site Tag Line: enter your tag line
+    - Language Select Show/Hide : Lets you show/hide language dropdown form your website
+  - Dependencies/Troubleshooting:
+    - Site Title: enter your website title, it very important for your website seo
+- **Page settings**
+  - Purpose: Guide: Page settings.
+  - UI/Menu: # Page settings
+  - Actions: set
+- **Seo & og meta settings**
+  - Purpose: Guide: Seo & og meta settings.
+  - UI/Menu: # Seo & og meta settings | Lets you change your website SEO Settings you have to Navigate to “General settings > SEO Settings”
+  - Actions: add, set, show
+  - Options/Fields:
+    - OG Meta Image
+    - OG Meta Site Name: Lets you set og meta site name for your website
+    - OG Meta Title
+- **Typography**
+  - Purpose: Guide: Typography.
+  - UI/Menu: this script comes with option to use google fonts as you choice, it has included over 500+ google fonts, to use your chosen fonts for the cms, you have to Navigate to “General settings > typography settings”
+  - Actions: disable, set
+  - Dependencies/Troubleshooting:
+    - this script comes with option to use google fonts as you choice, it has included over 500+ google fonts, to use your chosen fonts for the cms, you have to Navigate to “General settings > typography settings”
+    - body font means, the font will be use all paragraph and inline element the website. when ever you select a font family you must have to set font variant for the font family, otherwise it the font change not work
+
+## Package Orders Manage
+- **Package Orders manage**
+  - Purpose: Overview of Package Orders manage documentation.
+  - UI/Menu: Settings
+- **All Orders**
+  - Purpose: Guide: All Orders.
+  - UI/Menu: To manage Package Module Navigate to “All Module > Package Orders Manage>All Order”
+  - Actions: delete, download, update
+- **All Payments Logs**
+  - Purpose: Guide: All Payments Logs.
+  - UI/Menu: To manage Package Module Navigate to “All Module > Package Orders Manage>All Payment Logs”
+  - Actions: approve, delete
+- **Settings**
+  - Purpose: Guide: Settings.
+  - UI/Menu: # Settings | To manage Package Module Navigate to “All Module > Package Orders Manage>Settings” | Settings
+
+## Rss Feed
+- **RSS Feed**
+  - Purpose: Overview of RSS Feed documentation.
+- **How to setup RSS Feed**
+  - Purpose: How-to: How to setup RSS Feed.
+  - Roles: admin
+  - UI/Menu: To configure your RSS feed, Navigate to admin panel > general settings > Rss feed
+  - Actions: configure
+
+## Pages with low/unclear detail
+- https://docs.xgenious.com/docs/nexelit/instruction/server-requirement/
+- https://docs.xgenious.com/docs/nexelit/form-builder/
+- https://docs.xgenious.com/docs/nexelit/widget-builder/
+- https://docs.xgenious.com/docs/nexelit/events-module/event-payment-logs/
+- https://docs.xgenious.com/docs/nexelit/events-module/events-attendances-logs/
+- https://docs.xgenious.com/docs/nexelit/appointments-module/booking-time/
+- https://docs.xgenious.com/docs/nexelit/quote-manage/
+- https://docs.xgenious.com/docs/nexelit/rss-feed/

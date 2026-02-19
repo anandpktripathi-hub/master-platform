@@ -14,9 +14,10 @@ import { RolesGuard } from '../../../guards/roles.guard';
 import { Roles } from '../../../decorators/roles.decorator';
 import { Tenant } from '../../../decorators/tenant.decorator';
 import { RateLimitGuard } from '../../../common/guards/rate-limit.guard';
+import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
 
 @Controller('offline-payments')
-@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class OfflinePaymentsController {
   constructor(private readonly offlinePayments: OfflinePaymentsService) {}
 
@@ -32,6 +33,7 @@ export class OfflinePaymentsController {
       method: string;
       description?: string;
       proofUrl?: string;
+      metadata?: Record<string, unknown>;
     },
   ) {
     const userId =
@@ -45,6 +47,7 @@ export class OfflinePaymentsController {
       method: body.method,
       description: body.description,
       proofUrl: body.proofUrl,
+      metadata: body.metadata,
     });
   }
 

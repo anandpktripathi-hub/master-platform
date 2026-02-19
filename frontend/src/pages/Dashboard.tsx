@@ -181,19 +181,17 @@ export default function Dashboard() {
     const [
       tenantOverviewResult,
       productsResult,
-      customersResult,
       ordersResult,
-      teamResult,
+      usersStatsResult,
       accountingResult,
       hrmResult,
       projectsResult,
       posResult,
     ] = await Promise.allSettled([
-      api.get("/api/tenant/dashboard"),
+      api.get("/tenant/dashboard"),
       api.get("/products/stats/dashboard"),
-      api.get("/customers/stats/dashboard"),
       api.get("/orders/stats/dashboard"),
-      api.get("/team-members/stats/dashboard"),
+      api.get("/users/stats/dashboard"),
       api.get("/accounting/summary"),
       api.get("/hrm/summary"),
       api.get("/projects/summary"),
@@ -254,22 +252,33 @@ export default function Dashboard() {
       };
     }
 
-    // Process customers stats
-    if (customersResult.status === "fulfilled") {
-      const data = customersResult.value;
+    // Process users stats (customers + team members)
+    if (usersStatsResult.status === "fulfilled") {
+      const response: any = usersStatsResult.value;
+      const data: any = response?.data ?? response;
       newStats.customers = {
         ...newStats.customers,
-        value: data?.count ?? data?.total ?? 0,
+        value: data?.customers ?? 0,
+        loading: false,
+      };
+      newStats.teamMembers = {
+        ...newStats.teamMembers,
+        value: data?.teamMembers ?? 0,
         loading: false,
       };
     } else {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
-        console.error("❌ Customers stats failed:", customersResult.reason);
+        console.error("❌ Users stats failed:", usersStatsResult.reason);
       }
       newStats.customers = {
         ...newStats.customers,
-        error: "Failed to load customers stats",
+        error: "Failed to load users stats",
+        loading: false,
+      };
+      newStats.teamMembers = {
+        ...newStats.teamMembers,
+        error: "Failed to load users stats",
         loading: false,
       };
     }
@@ -294,26 +303,7 @@ export default function Dashboard() {
       };
     }
 
-    // Process team members stats
-    if (teamResult.status === "fulfilled") {
-      const response: any = teamResult.value;
-      const data: any = response?.data ?? response;
-      newStats.teamMembers = {
-        ...newStats.teamMembers,
-        value: data?.teamMembers ?? data?.totalUsers ?? data?.count ?? data?.total ?? 0,
-        loading: false,
-      };
-    } else {
-      if (process.env.NODE_ENV !== 'production') {
-        // eslint-disable-next-line no-console
-        console.error("❌ Team members stats failed:", teamResult.reason);
-      }
-      newStats.teamMembers = {
-        ...newStats.teamMembers,
-        error: "Failed to load team members stats",
-        loading: false,
-      };
-    }
+    // Team members stat is handled via usersStatsResult above
 
     // Accounting KPI: show net income (all time), 30d cashflow and 6-month cashflow series
     if (accountingResult.status === "fulfilled") {
@@ -459,9 +449,8 @@ export default function Dashboard() {
     const allFailed =
       tenantOverviewResult.status === "rejected" &&
       productsResult.status === "rejected" &&
-      customersResult.status === "rejected" &&
       ordersResult.status === "rejected" &&
-      teamResult.status === "rejected" &&
+      usersStatsResult.status === "rejected" &&
       accountingResult.status === "rejected" &&
       hrmResult.status === "rejected" &&
       projectsResult.status === "rejected" &&

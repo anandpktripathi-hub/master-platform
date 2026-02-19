@@ -8,7 +8,14 @@ import { WorkspaceGuard } from '../../guards/workspace.guard';
 
 @Controller('pos')
 @UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
-@Roles('tenant_admin', 'staff', 'admin', 'owner', 'platform_admin', 'PLATFORM_SUPER_ADMIN')
+@Roles(
+  'tenant_admin',
+  'staff',
+  'admin',
+  'owner',
+  'platform_admin',
+  'PLATFORM_SUPER_ADMIN',
+)
 export class PosController {
   constructor(private readonly posService: PosService) {}
 

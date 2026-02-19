@@ -18,9 +18,9 @@ export class UsersService {
   async countByRole(role: string): Promise<number> {
     return this.userModel.countDocuments({ role });
   }
-    async deleteByEmail(email: string): Promise<void> {
-      await this.userModel.deleteOne({ email }).exec();
-    }
+  async deleteByEmail(email: string): Promise<void> {
+    await this.userModel.deleteOne({ email }).exec();
+  }
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<SafeUser> {

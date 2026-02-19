@@ -15,7 +15,10 @@ import {
   CustomDomain,
   CustomDomainSchema,
 } from '../../database/schemas/custom-domain.schema';
-import { PosOrder, PosOrderSchema } from '../../database/schemas/pos-order.schema';
+import {
+  PosOrder,
+  PosOrderSchema,
+} from '../../database/schemas/pos-order.schema';
 import {
   CmsPageAnalyticsEntity,
   CmsPageAnalyticsSchema,

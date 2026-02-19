@@ -37,23 +37,23 @@ export class PackageController {
     private readonly tenantsService: TenantsService,
   ) {}
 
-    /**
-     * Get all available package features
-     */
-    @Get('features')
-    async getAllFeatures() {
-      // Replace with actual service call or static list as needed
-      // Example: return this.packageService.getAllFeatures();
-      // For now, return a static example
-      return {
-        features: [
-          { _id: '1', name: 'Multi-tenancy', label: 'Multi-tenancy' },
-          { _id: '2', name: 'Custom Domains', label: 'Custom Domains' },
-          { _id: '3', name: 'Advanced Billing', label: 'Advanced Billing' },
-          { _id: '4', name: 'CMS Integration', label: 'CMS Integration' },
-        ],
-      };
-    }
+  /**
+   * Get all available package features
+   */
+  @Get('features')
+  async getAllFeatures() {
+    // Replace with actual service call or static list as needed
+    // Example: return this.packageService.getAllFeatures();
+    // For now, return a static example
+    return {
+      features: [
+        { _id: '1', name: 'Multi-tenancy', label: 'Multi-tenancy' },
+        { _id: '2', name: 'Custom Domains', label: 'Custom Domains' },
+        { _id: '3', name: 'Advanced Billing', label: 'Advanced Billing' },
+        { _id: '4', name: 'CMS Integration', label: 'CMS Integration' },
+      ],
+    };
+  }
 
   /**
    * TENANT ENDPOINTS
@@ -253,13 +253,10 @@ export class PackageController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
   @HttpCode(200)
-  async sendExpiryWarnings(
-    @Body() body: { daysBeforeExpiry?: number },
-  ) {
+  async sendExpiryWarnings(@Body() body: { daysBeforeExpiry?: number }) {
     const daysBeforeExpiry = body.daysBeforeExpiry ?? 3;
-    const windowDays = await this.packageService.getMaxExpiryWarningWindow(
-      daysBeforeExpiry,
-    );
+    const windowDays =
+      await this.packageService.getMaxExpiryWarningWindow(daysBeforeExpiry);
     const processed = await this.packageService.sendSubscriptionExpiryWarnings(
       daysBeforeExpiry,
       windowDays,

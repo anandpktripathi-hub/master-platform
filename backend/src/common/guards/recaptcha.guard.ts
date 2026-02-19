@@ -23,7 +23,8 @@ export class RecaptchaGuard implements CanActivate {
 
   constructor(private readonly configService: ConfigService) {
     this.secretKey = this.configService.get<string>('RECAPTCHA_SECRET_KEY', '');
-    this.enabled = this.configService.get<string>('RECAPTCHA_ENABLED', 'false') === 'true';
+    this.enabled =
+      this.configService.get<string>('RECAPTCHA_ENABLED', 'false') === 'true';
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -33,7 +34,9 @@ export class RecaptchaGuard implements CanActivate {
     }
 
     if (!this.secretKey) {
-      this.logger.warn('reCAPTCHA secret key not configured, skipping verification');
+      this.logger.warn(
+        'reCAPTCHA secret key not configured, skipping verification',
+      );
       return true;
     }
 

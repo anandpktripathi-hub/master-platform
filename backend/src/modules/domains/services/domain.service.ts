@@ -163,9 +163,10 @@ export class DomainService {
     ) {
       const hostname = `${saved.value}.${PLATFORM_DOMAIN}`;
       const serverIp = process.env.SERVER_IP;
-      const providerId = process.env.DOMAIN_RESELLER_PROVIDER === 'cloudflare'
-        ? 'cloudflare'
-        : 'stub';
+      const providerId =
+        process.env.DOMAIN_RESELLER_PROVIDER === 'cloudflare'
+          ? 'cloudflare'
+          : 'stub';
 
       if (serverIp) {
         const records: DnsRecord[] = [

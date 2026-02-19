@@ -52,7 +52,9 @@ export class BrandingController {
           );
           // Use fieldname as key for asset URL mapping
           assetUrls[file.fieldname] = result.url;
-          this.logger.log(`Uploaded ${file.originalname} for tenant ${tenantId}: ${result.url}`);
+          this.logger.log(
+            `Uploaded ${file.originalname} for tenant ${tenantId}: ${result.url}`,
+          );
         } catch (err) {
           this.logger.error(`Failed to upload ${file.originalname}: ${err}`);
         }

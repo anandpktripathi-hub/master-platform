@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SettingsController } from './settings.controller';
 import { SettingsService } from './settings.service';
@@ -11,7 +12,7 @@ import { Setting, SettingSchema } from './schemas/setting.schema';
     MongooseModule.forFeature([{ name: Setting.name, schema: SettingSchema }]),
   ],
   controllers: [SettingsController],
-  providers: [SettingsService, EmailService, RoleGuard],
+  providers: [SettingsService, EmailService, Reflector, RoleGuard],
   exports: [SettingsService, EmailService],
 })
 export class SettingsModule {}

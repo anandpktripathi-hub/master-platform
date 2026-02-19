@@ -30,6 +30,8 @@ import ResetPassword from "./pages/ResetPassword";
 import Onboarding from "./pages/Onboarding";
 
 import CmsPageBuilder from "./pages/CmsPageBuilder";
+import CmsAnalyticsPage from "./pages/cms/CmsAnalyticsPage";
+import CmsSeoAuditPage from "./pages/cms/CmsSeoAuditPage";
 import SupportTickets from "./pages/SupportTickets";
 import ProfilePublicEdit from "./pages/ProfilePublicEdit";
 import PublicUserProfileView from "./pages/PublicUserProfileView";
@@ -40,6 +42,7 @@ import PlatformOverviewDashboard from "./pages/admin/PlatformOverviewDashboard";
 import PaymentLogsPage from "./pages/admin/PaymentLogsPage";
 import TenantsPage from "./pages/admin/Tenants";
 import AdminDomainsPage from "./pages/admin/AdminDomainsPage";
+import AdminNavigationMapPage from "./pages/admin/AdminNavigationMapPage";
 import CrmContactsPage from "./pages/CrmContactsPage";
 import CrmDealsPage from "./pages/CrmDealsPage";
 import CrmMyTasksPage from "./pages/CrmMyTasksPage";
@@ -66,6 +69,8 @@ import DeveloperPortalPage from "./pages/developer/DeveloperPortalPage";
 import MarketplacePage from "./pages/marketplace/MarketplacePage";
 import AiToolsPage from "./pages/AiToolsPage";
 import TenantDomainHealthPage from "./pages/domains/TenantDomainHealthPage";
+import SeoToolsPage from "./pages/SeoToolsPage";
+import ApiDocsPage from "./pages/ApiDocsPage";
 
 const CmsMenuManagement = lazy(() => import("./pages/dashboard/CmsMenuManagement"));
 const TenantQuotaUsage = lazy(() => import("./pages/dashboard/TenantQuotaUsage"));
@@ -78,6 +83,10 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
+  },
+  {
+    path: "/docs",
+    element: <ApiDocsPage />,
   },
   {
     path: "/app",
@@ -107,6 +116,7 @@ export const router = createBrowserRouter([
       { path: "admin/invoices", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminInvoicesPage /></RequireRole></ProtectedRoute> },
       { path: "admin/tenants", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><TenantsPage /></RequireRole></ProtectedRoute> },
       { path: "admin/domains", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminDomainsPage /></RequireRole></ProtectedRoute> },
+      { path: "admin/navigation-map", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminNavigationMapPage /></RequireRole></ProtectedRoute> },
       { path: "crm/contacts", element: <ProtectedRoute><CrmContactsPage /></ProtectedRoute> },
       { path: "crm/deals", element: <ProtectedRoute><CrmDealsPage /></ProtectedRoute> },
       { path: "crm/tasks", element: <ProtectedRoute><CrmMyTasksPage /></ProtectedRoute> },
@@ -130,6 +140,8 @@ export const router = createBrowserRouter([
       { path: "tenant/theme/select", element: <ProtectedRoute><TenantThemeSelectorPage /></ProtectedRoute> },
       { path: "tenant/theme/customize", element: <ProtectedRoute><TenantThemeCustomizerPage /></ProtectedRoute> },
       { path: "cms/page-builder", element: <ProtectedRoute><CmsPageBuilder /></ProtectedRoute> },
+      { path: "cms/analytics", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><CmsAnalyticsPage /></RequireRole></ProtectedRoute> },
+      { path: "cms/seo-audit", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><CmsSeoAuditPage /></RequireRole></ProtectedRoute> },
       { path: "dashboard/cms-menu", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><Suspense fallback={<div>Loading...</div>}><CmsMenuManagement /></Suspense></RequireRole></ProtectedRoute> },
       { path: "dashboard/tenant-quota", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><Suspense fallback={<div>Loading...</div>}><TenantQuotaUsage /></Suspense></RequireRole></ProtectedRoute> },
       { path: "dashboard/audit-logs", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><Suspense fallback={<div>Loading...</div>}><AuditLogs /></Suspense></RequireRole></ProtectedRoute> },
@@ -137,6 +149,7 @@ export const router = createBrowserRouter([
       { path: "dashboard/package-features", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><Suspense fallback={<div>Loading...</div>}><PackageFeatures /></Suspense></RequireRole></ProtectedRoute> },
       { path: "dashboard/system-health", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><Suspense fallback={<div>Loading...</div>}><SystemHealthPage /></Suspense></RequireRole></ProtectedRoute> },
       { path: "accounting", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><AccountingDashboard /></RequireRole></ProtectedRoute> },
+      { path: "seo", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "PLATFORM_SUPERADMIN"]}><SeoToolsPage /></RequireRole></ProtectedRoute> },
       { path: "developer", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "TENANT_STAFF", "PLATFORM_SUPERADMIN"]}><DeveloperPortalPage /></RequireRole></ProtectedRoute> },
       { path: "marketplace", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "TENANT_STAFF", "PLATFORM_SUPERADMIN"]}><MarketplacePage /></RequireRole></ProtectedRoute> },
       { path: "ai-tools", element: <ProtectedRoute><RequireRole allowedRoles={["TENANT_ADMIN", "TENANT_STAFF", "PLATFORM_SUPERADMIN"]}><AiToolsPage /></RequireRole></ProtectedRoute> },

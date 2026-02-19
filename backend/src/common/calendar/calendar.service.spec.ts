@@ -39,13 +39,8 @@ jest.mock('googleapis', () => {
   };
 });
 
-const { mockInsert, mockUpdate, mockDelete } = (jest.requireMock('googleapis') as {
-  _mocks: {
-    mockInsert: jest.Mock;
-    mockUpdate: jest.Mock;
-    mockDelete: jest.Mock;
-  };
-})._mocks;
+const { mockInsert, mockUpdate, mockDelete } =
+  jest.requireMock('googleapis')._mocks;
 
 describe('CalendarService', () => {
   let service: CalendarService;
@@ -111,9 +106,10 @@ describe('CalendarService', () => {
   });
 
   it('returns null and does not call googleapis when disabled in settings', async () => {
-    const m = require('../../modules/settings/mappers/calendar-settings-mappers') as {
-      entriesToCalendarDto: jest.Mock;
-    };
+    const m =
+      require('../../modules/settings/mappers/calendar-settings-mappers') as {
+        entriesToCalendarDto: jest.Mock;
+      };
 
     m.entriesToCalendarDto.mockReturnValueOnce({
       enabled: false,

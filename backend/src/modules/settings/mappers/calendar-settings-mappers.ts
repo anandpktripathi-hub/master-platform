@@ -19,7 +19,6 @@ export function entriesToCalendarDto(
   return {
     enabled: Boolean(raw.enabled),
     googleCalendarId: (raw.googleCalendarId as string) || '',
-    googleServiceAccountJson:
-      (raw.googleServiceAccountJson as string) || '',
+    googleServiceAccountJson: (raw.googleServiceAccountJson as string) || '',
   };
 }

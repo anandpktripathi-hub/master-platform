@@ -2,8 +2,14 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CrmService } from './crm.service';
 import { CrmController } from './crm.controller';
-import { CrmContact, CrmContactSchema } from '../../database/schemas/crm-contact.schema';
-import { CrmCompany, CrmCompanySchema } from '../../database/schemas/crm-company.schema';
+import {
+  CrmContact,
+  CrmContactSchema,
+} from '../../database/schemas/crm-contact.schema';
+import {
+  CrmCompany,
+  CrmCompanySchema,
+} from '../../database/schemas/crm-company.schema';
 import { CrmDeal, CrmDealSchema } from '../../database/schemas/crm-deal.schema';
 import { CrmTask, CrmTaskSchema } from '../../database/schemas/crm-task.schema';
 import { User, UserSchema } from '../../database/schemas/user.schema';

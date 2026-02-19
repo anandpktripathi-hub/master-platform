@@ -6,7 +6,8 @@ import { Ticket, TicketDocument } from '../../database/schemas/ticket.schema';
 @Injectable()
 export class SupportService {
   constructor(
-    @InjectModel(Ticket.name) private readonly ticketModel: Model<TicketDocument>,
+    @InjectModel(Ticket.name)
+    private readonly ticketModel: Model<TicketDocument>,
   ) {}
 
   async createTicket(params: {
@@ -17,7 +18,9 @@ export class SupportService {
   }) {
     const doc = await this.ticketModel.create({
       userId: new Types.ObjectId(params.userId),
-      tenantId: params.tenantId ? new Types.ObjectId(params.tenantId) : undefined,
+      tenantId: params.tenantId
+        ? new Types.ObjectId(params.tenantId)
+        : undefined,
       subject: params.subject,
       message: params.message,
       status: 'open',

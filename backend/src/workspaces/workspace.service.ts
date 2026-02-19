@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../database/schemas/user.schema';
@@ -19,25 +23,32 @@ export interface WorkspaceDto {
 export class WorkspaceService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @InjectModel(Tenant.name) private readonly tenantModel: Model<TenantDocument>,
+    @InjectModel(Tenant.name)
+    private readonly tenantModel: Model<TenantDocument>,
   ) {}
 
   private isPlatformAdmin(role: string | undefined): boolean {
     if (!role) return false;
     return (
-      role === Role.PLATFORM_SUPER_ADMIN ||
-      role === Role.PLATFORM_ADMIN_LEGACY
+      role === Role.PLATFORM_SUPER_ADMIN || role === Role.PLATFORM_ADMIN_LEGACY
     );
   }
 
   async getWorkspacesForUser(userId: string): Promise<WorkspaceDto[]> {
-    const user = await this.userModel.findById(userId).lean<UserDocument>().exec();
+    const user = await this.userModel
+      .findById(userId)
+      .lean<UserDocument>()
+      .exec();
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    const userTenantId = user.tenantId ? new Types.ObjectId(user.tenantId) : null;
-    const isPlatformAdmin = this.isPlatformAdmin(user.role as string | undefined);
+    const userTenantId = user.tenantId
+      ? new Types.ObjectId(user.tenantId)
+      : null;
+    const isPlatformAdmin = this.isPlatformAdmin(
+      user.role as string | undefined,
+    );
 
     let tenants: TenantDocument[] = [];
 

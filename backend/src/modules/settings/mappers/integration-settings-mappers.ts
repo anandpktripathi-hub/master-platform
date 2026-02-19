@@ -18,13 +18,11 @@ export function integrationDtoToEntries(
 export function entriesToIntegrationDto(
   items: Record<string, unknown>,
 ): IntegrationSettingsDto {
-  const raw = ((items && items[INTEGRATION_KEY]) || {}) as Record<
-    string,
-    any
-  >;
+  const raw = ((items && items[INTEGRATION_KEY]) || {}) as Record<string, any>;
 
   const slackRaw = (raw.slack || {}) as Partial<SlackIntegrationSettingsDto>;
-  const telegramRaw = (raw.telegram || {}) as Partial<TelegramIntegrationSettingsDto>;
+  const telegramRaw = (raw.telegram ||
+    {}) as Partial<TelegramIntegrationSettingsDto>;
   const twilioRaw = (raw.twilio || {}) as Partial<TwilioIntegrationSettingsDto>;
 
   return {

@@ -187,9 +187,9 @@ export class RevenueController {
           },
         ])
         .exec(),
-      ]);
+    ]);
 
-    const byCurrency: BillingRevenueByCurrencyBucket[] = (currencyAgg as any[])
+    const byCurrency: BillingRevenueByCurrencyBucket[] = currencyAgg
       .filter((row) => row._id)
       .map((row) => ({
         currency: row._id as string,
@@ -206,14 +206,14 @@ export class RevenueController {
       defaultCurrency = top?.currency ?? null;
     }
 
-    const last30Row = (last30Agg as any[])[0] || {
+    const last30Row = last30Agg[0] || {
       totalAmount: 0,
     };
-    const last365Row = (last365Agg as any[])[0] || {
+    const last365Row = last365Agg[0] || {
       totalAmount: 0,
     };
 
-    const byMonth: BillingRevenueMonthBucket[] = (monthlyAgg as any[])
+    const byMonth: BillingRevenueMonthBucket[] = monthlyAgg
       .filter((row) => row._id && row._id.year && row._id.month)
       .map((row) => {
         const year = row._id.year as number;
@@ -234,7 +234,7 @@ export class RevenueController {
       cancelled: 0,
     };
 
-    for (const row of statusAgg as any[]) {
+    for (const row of statusAgg) {
       const status = row._id as string;
       const count = row.count || 0;
       if (status === 'overdue') statusSummary.overdue = count;
@@ -247,7 +247,7 @@ export class RevenueController {
       .exec();
     statusSummary.paidLast30 = paidLast30;
 
-    const mrrRow = (mrrMonthAgg as any[])[0] || {
+    const mrrRow = mrrMonthAgg[0] || {
       totalAmount: 0,
       currency: defaultCurrency,
     };

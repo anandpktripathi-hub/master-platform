@@ -1,10 +1,22 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { CrmContact, CrmContactDocument } from '../../database/schemas/crm-contact.schema';
-import { CrmCompany, CrmCompanyDocument } from '../../database/schemas/crm-company.schema';
-import { CrmDeal, CrmDealDocument } from '../../database/schemas/crm-deal.schema';
-import { CrmTask, CrmTaskDocument } from '../../database/schemas/crm-task.schema';
+import {
+  CrmContact,
+  CrmContactDocument,
+} from '../../database/schemas/crm-contact.schema';
+import {
+  CrmCompany,
+  CrmCompanyDocument,
+} from '../../database/schemas/crm-company.schema';
+import {
+  CrmDeal,
+  CrmDealDocument,
+} from '../../database/schemas/crm-deal.schema';
+import {
+  CrmTask,
+  CrmTaskDocument,
+} from '../../database/schemas/crm-task.schema';
 import { CrmNotificationService } from './crm-notification.service';
 import { CalendarService } from '../../common/calendar/calendar.service';
 
@@ -147,7 +159,11 @@ export class CrmService {
 
     // Fire notification for stage change (best-effort)
     this.crmNotificationService
-      .notifyDealStageChanged(tenantId, updated as unknown as CrmDeal, existing.stage)
+      .notifyDealStageChanged(
+        tenantId,
+        updated as unknown as CrmDeal,
+        existing.stage,
+      )
       .catch(() => undefined);
 
     return updated;
@@ -186,7 +202,13 @@ export class CrmService {
 
   async createTask(
     tenantId: string,
-    payload: { title?: string; description?: string; assigneeId?: string; dueDate?: string; dealId?: string },
+    payload: {
+      title?: string;
+      description?: string;
+      assigneeId?: string;
+      dueDate?: string;
+      dealId?: string;
+    },
   ) {
     if (!payload.title || !payload.assigneeId) {
       throw new BadRequestException('Title and assigneeId are required');
@@ -205,7 +227,9 @@ export class CrmService {
       if (task.dueDate) {
         const startIso = task.dueDate.toISOString();
         // Default to 30-minute duration for CRM tasks
-        const endIso = new Date(task.dueDate.getTime() + 30 * 60 * 1000).toISOString();
+        const endIso = new Date(
+          task.dueDate.getTime() + 30 * 60 * 1000,
+        ).toISOString();
 
         const event = await this.calendarService.createEvent({
           summary: task.title,
@@ -234,7 +258,12 @@ export class CrmService {
     return task;
   }
 
-  async setTaskCompleted(tenantId: string, userId: string, id: string, completed: boolean) {
+  async setTaskCompleted(
+    tenantId: string,
+    userId: string,
+    id: string,
+    completed: boolean,
+  ) {
     const updated = await this.taskModel
       .findOneAndUpdate(
         {
@@ -361,5 +390,3 @@ export class CrmService {
     };
   }
 }
-
-

@@ -1,10 +1,25 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Employee, EmployeeSchema } from '../../database/schemas/employee.schema';
-import { Attendance, AttendanceSchema } from '../../database/schemas/attendance.schema';
-import { LeaveRequest, LeaveRequestSchema } from '../../database/schemas/leave-request.schema';
-import { JobPosting, JobPostingSchema } from '../../database/schemas/job-posting.schema';
-import { TrainingSession, TrainingSessionSchema } from '../../database/schemas/training-session.schema';
+import {
+  Employee,
+  EmployeeSchema,
+} from '../../database/schemas/employee.schema';
+import {
+  Attendance,
+  AttendanceSchema,
+} from '../../database/schemas/attendance.schema';
+import {
+  LeaveRequest,
+  LeaveRequestSchema,
+} from '../../database/schemas/leave-request.schema';
+import {
+  JobPosting,
+  JobPostingSchema,
+} from '../../database/schemas/job-posting.schema';
+import {
+  TrainingSession,
+  TrainingSessionSchema,
+} from '../../database/schemas/training-session.schema';
 import { HrmController } from './hrm.controller';
 import { HrmService } from './hrm.service';
 import { RolesGuard } from '../../guards/roles.guard';

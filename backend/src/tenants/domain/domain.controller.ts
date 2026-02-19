@@ -20,7 +20,7 @@ import { AuthGuard } from '../../common/guards/auth.guard';
 import { TenantGuard } from '../../common/guards/tenant.guard';
 import rateLimit from 'express-rate-limit';
 
-@Controller('api/tenants/domain')
+@Controller('tenants/domain')
 @UseGuards(AuthGuard, TenantGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class DomainController {

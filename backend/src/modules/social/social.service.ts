@@ -1,9 +1,18 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { UserConnection, UserConnectionDocument } from '../../database/schemas/user-connection.schema';
-import { UserPost, UserPostDocument } from '../../database/schemas/user-post.schema';
-import { PostComment, PostCommentDocument } from '../../database/schemas/post-comment.schema';
+import {
+  UserConnection,
+  UserConnectionDocument,
+} from '../../database/schemas/user-connection.schema';
+import {
+  UserPost,
+  UserPostDocument,
+} from '../../database/schemas/user-post.schema';
+import {
+  PostComment,
+  PostCommentDocument,
+} from '../../database/schemas/post-comment.schema';
 
 @Injectable()
 export class SocialService {
@@ -18,7 +27,11 @@ export class SocialService {
 
   // ===== Connections =====
 
-  async sendConnectionRequest(requesterId: string, recipientId: string, tenantId: string) {
+  async sendConnectionRequest(
+    requesterId: string,
+    recipientId: string,
+    tenantId: string,
+  ) {
     if (requesterId === recipientId) {
       throw new BadRequestException('Cannot connect to yourself');
     }
@@ -41,7 +54,11 @@ export class SocialService {
     });
   }
 
-  async acceptConnectionRequest(userId: string, connectionId: string, tenantId: string) {
+  async acceptConnectionRequest(
+    userId: string,
+    connectionId: string,
+    tenantId: string,
+  ) {
     const tenantOid = new Types.ObjectId(tenantId);
     const conn = await this.connectionModel.findOne({
       _id: connectionId,
@@ -58,7 +75,11 @@ export class SocialService {
     return conn;
   }
 
-  async rejectConnectionRequest(userId: string, connectionId: string, tenantId: string) {
+  async rejectConnectionRequest(
+    userId: string,
+    connectionId: string,
+    tenantId: string,
+  ) {
     const tenantOid = new Types.ObjectId(tenantId);
     const conn = await this.connectionModel.findOne({
       _id: connectionId,
@@ -92,8 +113,16 @@ export class SocialService {
     const connections = await this.connectionModel
       .find({
         $or: [
-          { tenantId: tenantOid, requesterId: new Types.ObjectId(userId), status: 'ACCEPTED' },
-          { tenantId: tenantOid, recipientId: new Types.ObjectId(userId), status: 'ACCEPTED' },
+          {
+            tenantId: tenantOid,
+            requesterId: new Types.ObjectId(userId),
+            status: 'ACCEPTED',
+          },
+          {
+            tenantId: tenantOid,
+            recipientId: new Types.ObjectId(userId),
+            status: 'ACCEPTED',
+          },
         ],
       })
       .populate('requesterId', 'name email')
@@ -112,12 +141,26 @@ export class SocialService {
     });
   }
 
-  async areConnected(userId1: string, userId2: string, tenantId: string): Promise<boolean> {
+  async areConnected(
+    userId1: string,
+    userId2: string,
+    tenantId: string,
+  ): Promise<boolean> {
     const tenantOid = new Types.ObjectId(tenantId);
     const conn = await this.connectionModel.findOne({
       $or: [
-        { tenantId: tenantOid, requesterId: userId1, recipientId: userId2, status: 'ACCEPTED' },
-        { tenantId: tenantOid, requesterId: userId2, recipientId: userId1, status: 'ACCEPTED' },
+        {
+          tenantId: tenantOid,
+          requesterId: userId1,
+          recipientId: userId2,
+          status: 'ACCEPTED',
+        },
+        {
+          tenantId: tenantOid,
+          requesterId: userId2,
+          recipientId: userId1,
+          status: 'ACCEPTED',
+        },
       ],
     });
     return !!conn;
@@ -125,7 +168,12 @@ export class SocialService {
 
   // ===== Posts =====
 
-  async createPost(authorId: string, content: string, visibility: UserPost['visibility'] = 'PUBLIC', tenantId: string) {
+  async createPost(
+    authorId: string,
+    content: string,
+    visibility: UserPost['visibility'] = 'PUBLIC',
+    tenantId: string,
+  ) {
     if (!content?.trim()) {
       throw new BadRequestException('Content is required');
     }
@@ -147,8 +195,16 @@ export class SocialService {
     const connections = await this.connectionModel
       .find({
         $or: [
-          { tenantId: tenantOid, requesterId: new Types.ObjectId(userId), status: 'ACCEPTED' },
-          { tenantId: tenantOid, recipientId: new Types.ObjectId(userId), status: 'ACCEPTED' },
+          {
+            tenantId: tenantOid,
+            requesterId: new Types.ObjectId(userId),
+            status: 'ACCEPTED',
+          },
+          {
+            tenantId: tenantOid,
+            recipientId: new Types.ObjectId(userId),
+            status: 'ACCEPTED',
+          },
         ],
       })
       .lean();
@@ -164,7 +220,11 @@ export class SocialService {
         $or: [
           { tenantId: tenantOid, authorId: new Types.ObjectId(userId) },
           { tenantId: tenantOid, visibility: 'PUBLIC' },
-          { tenantId: tenantOid, visibility: 'CONNECTIONS_ONLY', authorId: { $in: connectionIds } },
+          {
+            tenantId: tenantOid,
+            visibility: 'CONNECTIONS_ONLY',
+            authorId: { $in: connectionIds },
+          },
         ],
       })
       .populate('authorId', 'name email')
@@ -180,7 +240,10 @@ export class SocialService {
 
   async toggleLike(postId: string, userId: string, tenantId: string) {
     const tenantOid = new Types.ObjectId(tenantId);
-    const post = await this.postModel.findOne({ _id: postId, tenantId: tenantOid });
+    const post = await this.postModel.findOne({
+      _id: postId,
+      tenantId: tenantOid,
+    });
     if (!post) {
       throw new BadRequestException('Post not found');
     }
@@ -197,12 +260,20 @@ export class SocialService {
     return post.toObject();
   }
 
-  async addComment(postId: string, authorId: string, content: string, tenantId: string) {
+  async addComment(
+    postId: string,
+    authorId: string,
+    content: string,
+    tenantId: string,
+  ) {
     if (!content?.trim()) {
       throw new BadRequestException('Content is required');
     }
     const tenantOid = new Types.ObjectId(tenantId);
-    const post = await this.postModel.findOne({ _id: postId, tenantId: tenantOid });
+    const post = await this.postModel.findOne({
+      _id: postId,
+      tenantId: tenantOid,
+    });
     if (!post) {
       throw new BadRequestException('Post not found');
     }
@@ -212,7 +283,9 @@ export class SocialService {
       tenantId: tenantOid,
       content,
     });
-    await this.postModel.findByIdAndUpdate(postId, { $inc: { commentCount: 1 } });
+    await this.postModel.findByIdAndUpdate(postId, {
+      $inc: { commentCount: 1 },
+    });
     return comment;
   }
 

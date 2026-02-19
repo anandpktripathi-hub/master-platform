@@ -30,6 +30,7 @@ export class TenantPackage {
   packageId!: Types.ObjectId;
 
   @Prop({
+    type: String,
     enum: ['trial', 'active', 'expired', 'suspended', 'cancelled'],
     default: 'trial',
   })
@@ -59,9 +60,9 @@ export class TenantPackage {
   @Prop({ required: false })
   notes!: string;
 
-    // Track whether a subscription expiry warning email has been sent
-    @Prop({ default: false })
-    expiryWarningSent!: boolean;
+  // Track whether a subscription expiry warning email has been sent
+  @Prop({ default: false })
+  expiryWarningSent!: boolean;
 
   createdAt?: Date;
   updatedAt?: Date;

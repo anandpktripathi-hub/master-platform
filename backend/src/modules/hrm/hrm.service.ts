@@ -1,29 +1,58 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Employee, EmployeeDocument } from '../../database/schemas/employee.schema';
-import { Attendance, AttendanceDocument } from '../../database/schemas/attendance.schema';
-import { LeaveRequest, LeaveRequestDocument } from '../../database/schemas/leave-request.schema';
-import { JobPosting, JobPostingDocument } from '../../database/schemas/job-posting.schema';
-import { TrainingSession, TrainingSessionDocument } from '../../database/schemas/training-session.schema';
+import {
+  Employee,
+  EmployeeDocument,
+} from '../../database/schemas/employee.schema';
+import {
+  Attendance,
+  AttendanceDocument,
+} from '../../database/schemas/attendance.schema';
+import {
+  LeaveRequest,
+  LeaveRequestDocument,
+} from '../../database/schemas/leave-request.schema';
+import {
+  JobPosting,
+  JobPostingDocument,
+} from '../../database/schemas/job-posting.schema';
+import {
+  TrainingSession,
+  TrainingSessionDocument,
+} from '../../database/schemas/training-session.schema';
 
 @Injectable()
 export class HrmService {
   constructor(
-    @InjectModel(Employee.name) private readonly employeeModel: Model<EmployeeDocument>,
-    @InjectModel(Attendance.name) private readonly attendanceModel: Model<AttendanceDocument>,
-    @InjectModel(LeaveRequest.name) private readonly leaveRequestModel: Model<LeaveRequestDocument>,
-    @InjectModel(JobPosting.name) private readonly jobPostingModel: Model<JobPostingDocument>,
-    @InjectModel(TrainingSession.name) private readonly trainingModel: Model<TrainingSessionDocument>,
+    @InjectModel(Employee.name)
+    private readonly employeeModel: Model<EmployeeDocument>,
+    @InjectModel(Attendance.name)
+    private readonly attendanceModel: Model<AttendanceDocument>,
+    @InjectModel(LeaveRequest.name)
+    private readonly leaveRequestModel: Model<LeaveRequestDocument>,
+    @InjectModel(JobPosting.name)
+    private readonly jobPostingModel: Model<JobPostingDocument>,
+    @InjectModel(TrainingSession.name)
+    private readonly trainingModel: Model<TrainingSessionDocument>,
   ) {}
 
   // Employees
   async listEmployees(tenantId: string): Promise<Employee[]> {
-    return this.employeeModel.find({ tenantId: new Types.ObjectId(tenantId) }).lean().exec();
+    return this.employeeModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .lean()
+      .exec();
   }
 
-  async createEmployee(tenantId: string, payload: Partial<Employee>): Promise<Employee> {
-    const doc = new this.employeeModel({ ...payload, tenantId: new Types.ObjectId(tenantId) });
+  async createEmployee(
+    tenantId: string,
+    payload: Partial<Employee>,
+  ): Promise<Employee> {
+    const doc = new this.employeeModel({
+      ...payload,
+      tenantId: new Types.ObjectId(tenantId),
+    });
     return doc.save();
   }
 
@@ -39,7 +68,14 @@ export class HrmService {
     return this.attendanceModel.find(filter).lean().exec();
   }
 
-  async recordAttendance(tenantId: string, payload: { employeeId: string; status: 'present' | 'absent' | 'remote' | 'on_leave'; date?: string }): Promise<Attendance> {
+  async recordAttendance(
+    tenantId: string,
+    payload: {
+      employeeId: string;
+      status: 'present' | 'absent' | 'remote' | 'on_leave';
+      date?: string;
+    },
+  ): Promise<Attendance> {
     const date = payload.date ? new Date(payload.date) : new Date();
     const doc = new this.attendanceModel({
       employeeId: new Types.ObjectId(payload.employeeId),
@@ -52,10 +88,16 @@ export class HrmService {
 
   // Leave requests
   async listLeaveRequests(tenantId: string): Promise<LeaveRequest[]> {
-    return this.leaveRequestModel.find({ tenantId: new Types.ObjectId(tenantId) }).lean().exec();
+    return this.leaveRequestModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .lean()
+      .exec();
   }
 
-  async createLeaveRequest(tenantId: string, payload: Partial<LeaveRequest>): Promise<LeaveRequest> {
+  async createLeaveRequest(
+    tenantId: string,
+    payload: Partial<LeaveRequest>,
+  ): Promise<LeaveRequest> {
     const doc = new this.leaveRequestModel({
       ...payload,
       tenantId: new Types.ObjectId(tenantId),
@@ -63,7 +105,11 @@ export class HrmService {
     return doc.save();
   }
 
-  async updateLeaveStatus(tenantId: string, id: string, status: 'pending' | 'approved' | 'rejected'): Promise<LeaveRequest | null> {
+  async updateLeaveStatus(
+    tenantId: string,
+    id: string,
+    status: 'pending' | 'approved' | 'rejected',
+  ): Promise<LeaveRequest | null> {
     return this.leaveRequestModel
       .findOneAndUpdate(
         { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
@@ -75,35 +121,70 @@ export class HrmService {
 
   // Job postings
   async listJobPostings(tenantId: string): Promise<JobPosting[]> {
-    return this.jobPostingModel.find({ tenantId: new Types.ObjectId(tenantId) }).lean().exec();
+    return this.jobPostingModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .lean()
+      .exec();
   }
 
-  async createJobPosting(tenantId: string, payload: Partial<JobPosting>): Promise<JobPosting> {
-    const doc = new this.jobPostingModel({ ...payload, tenantId: new Types.ObjectId(tenantId) });
+  async createJobPosting(
+    tenantId: string,
+    payload: Partial<JobPosting>,
+  ): Promise<JobPosting> {
+    const doc = new this.jobPostingModel({
+      ...payload,
+      tenantId: new Types.ObjectId(tenantId),
+    });
     return doc.save();
   }
 
   // Training sessions
   async listTrainingSessions(tenantId: string): Promise<TrainingSession[]> {
-    return this.trainingModel.find({ tenantId: new Types.ObjectId(tenantId) }).lean().exec();
+    return this.trainingModel
+      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .lean()
+      .exec();
   }
 
-  async createTrainingSession(tenantId: string, payload: Partial<TrainingSession>): Promise<TrainingSession> {
-    const doc = new this.trainingModel({ ...payload, tenantId: new Types.ObjectId(tenantId) });
+  async createTrainingSession(
+    tenantId: string,
+    payload: Partial<TrainingSession>,
+  ): Promise<TrainingSession> {
+    const doc = new this.trainingModel({
+      ...payload,
+      tenantId: new Types.ObjectId(tenantId),
+    });
     return doc.save();
   }
 
-  async getSummary(tenantId: string): Promise<{ activeEmployees: number; todayPresent: number; openJobs: number; upcomingTrainings: number }> {
+  async getSummary(tenantId: string): Promise<{
+    activeEmployees: number;
+    todayPresent: number;
+    openJobs: number;
+    upcomingTrainings: number;
+  }> {
     const tenantObjectId = new Types.ObjectId(tenantId);
 
-    const [activeEmployees, todayAttendance, openJobs, upcomingTrainings] = await Promise.all([
-      this.employeeModel.countDocuments({ tenantId: tenantObjectId, status: 'active' }).exec(),
-      this.listAttendance(tenantId, new Date().toISOString()),
-      this.jobPostingModel.countDocuments({ tenantId: tenantObjectId, status: 'open' }).exec(),
-      this.trainingModel.countDocuments({ tenantId: tenantObjectId, startDate: { $gte: new Date() } }).exec(),
-    ]);
+    const [activeEmployees, todayAttendance, openJobs, upcomingTrainings] =
+      await Promise.all([
+        this.employeeModel
+          .countDocuments({ tenantId: tenantObjectId, status: 'active' })
+          .exec(),
+        this.listAttendance(tenantId, new Date().toISOString()),
+        this.jobPostingModel
+          .countDocuments({ tenantId: tenantObjectId, status: 'open' })
+          .exec(),
+        this.trainingModel
+          .countDocuments({
+            tenantId: tenantObjectId,
+            startDate: { $gte: new Date() },
+          })
+          .exec(),
+      ]);
 
-    const todayPresent = todayAttendance.filter((a) => a.status === 'present' || a.status === 'remote').length;
+    const todayPresent = todayAttendance.filter(
+      (a) => a.status === 'present' || a.status === 'remote',
+    ).length;
 
     return {
       activeEmployees,
@@ -115,14 +196,22 @@ export class HrmService {
 
   async getAttendanceOverview(tenantId: string): Promise<{
     totalEmployees: number;
-    last30Days: { date: string; present: number; remote: number; onLeave: number; absent: number }[];
+    last30Days: {
+      date: string;
+      present: number;
+      remote: number;
+      onLeave: number;
+      absent: number;
+    }[];
   }> {
     const tenantObjectId = new Types.ObjectId(tenantId);
     const today = new Date();
     const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
 
     const [totalEmployees, dailyAgg] = await Promise.all([
-      this.employeeModel.countDocuments({ tenantId: tenantObjectId, status: 'active' }).exec(),
+      this.employeeModel
+        .countDocuments({ tenantId: tenantObjectId, status: 'active' })
+        .exec(),
       this.attendanceModel
         .aggregate([
           {
@@ -168,11 +257,22 @@ export class HrmService {
       if (status === 'absent') entry.absent += row.count || 0;
     }
 
-    const last30Days: { date: string; present: number; remote: number; onLeave: number; absent: number }[] = [];
+    const last30Days: {
+      date: string;
+      present: number;
+      remote: number;
+      onLeave: number;
+      absent: number;
+    }[] = [];
     for (let i = 29; i >= 0; i -= 1) {
       const d = new Date(today.getTime() - i * 24 * 60 * 60 * 1000);
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      const entry = map.get(key) || { present: 0, remote: 0, onLeave: 0, absent: 0 };
+      const entry = map.get(key) || {
+        present: 0,
+        remote: 0,
+        onLeave: 0,
+        absent: 0,
+      };
       last30Days.push({ date: key, ...entry });
     }
 

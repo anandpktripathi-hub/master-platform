@@ -13,7 +13,7 @@ export class AuthToken {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId!: Types.ObjectId;
 
-  @Prop({ required: true, enum: Object.values(TokenType) })
+  @Prop({ type: String, required: true, enum: Object.values(TokenType) })
   type!: TokenType;
 
   @Prop({ required: true, unique: true })

@@ -9,32 +9,40 @@ export type SettingScope = 'GLOBAL' | 'TENANT';
 
 @Schema({ timestamps: true })
 export class Setting {
-	@Prop({ required: true })
-	group!: string; // e.g. "basic", "system", "branding", "email", "payment", "integrations"
+  @Prop({ required: true })
+  group!: string; // e.g. "basic", "system", "branding", "email", "payment", "integrations"
 
-	@Prop({ required: true })
-	key!: string; // setting key inside the group
+  @Prop({ required: true })
+  key!: string; // setting key inside the group
 
-	@Prop({ required: true, enum: ['GLOBAL', 'TENANT'], default: 'GLOBAL' })
-	scope!: SettingScope;
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['GLOBAL', 'TENANT'],
+    default: 'GLOBAL',
+  })
+  scope!: SettingScope;
 
-	@Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
-	tenantId?: Types.ObjectId | null;
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
+  tenantId?: Types.ObjectId | null;
 
-	@Prop({ type: String, required: false })
-	locale?: string | null;
+  @Prop({ type: String, required: false })
+  locale?: string | null;
 
-	// Arbitrary JSON value for this setting (string, number, object, etc.)
-	@Prop({ type: MongooseSchema.Types.Mixed, required: true })
-	value!: any;
+  // Arbitrary JSON value for this setting (string, number, object, etc.)
+  @Prop({ type: MongooseSchema.Types.Mixed, required: true })
+  value!: any;
 
-	@Prop({ default: true })
-	isActive!: boolean;
+  @Prop({ default: true })
+  isActive!: boolean;
 }
 
 export const SettingSchema = SchemaFactory.createForClass(Setting);
 
 // Helpful indexes for fast lookups
-SettingSchema.index({ group: 1, key: 1, scope: 1, tenantId: 1, locale: 1 }, {
-	unique: true,
-});
+SettingSchema.index(
+  { group: 1, key: 1, scope: 1, tenantId: 1, locale: 1 },
+  {
+    unique: true,
+  },
+);

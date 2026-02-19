@@ -27,12 +27,11 @@ describe('DomainResellerService', () => {
     };
 
     const createMock = jest.fn();
-    const mockModel = { create: createMock } as unknown as Model<DomainResellerOrderDocument>;
+    const mockModel = {
+      create: createMock,
+    } as unknown as Model<DomainResellerOrderDocument>;
 
-    const service = new DomainResellerService(
-      mockProvider,
-      mockModel,
-    );
+    const service = new DomainResellerService(mockProvider, mockModel);
 
     const request: DomainPurchaseRequest = {
       domain: 'example.test',
@@ -47,7 +46,8 @@ describe('DomainResellerService', () => {
     expect(mockProvider.purchase).toHaveBeenCalledWith(request);
     expect(createMock).toHaveBeenCalledTimes(1);
 
-    const savedDoc = createMock.mock.calls[0][0] as Partial<DomainResellerOrder>;
+    const savedDoc = createMock.mock
+      .calls[0][0] as Partial<DomainResellerOrder>;
     expect(savedDoc.tenantId).toBe('tenant-1');
     expect(savedDoc.domain).toBe('example.test');
     expect(savedDoc.providerOrderId).toBe('stub-123');

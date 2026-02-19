@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../../database/schemas/user.schema';
-import { PosOrder, PosOrderDocument } from '../../database/schemas/pos-order.schema';
+import {
+  PosOrder,
+  PosOrderDocument,
+} from '../../database/schemas/pos-order.schema';
 import {
   UserNotification,
   UserNotificationDocument,
@@ -33,11 +36,12 @@ export class DashboardService {
     tenantId: string,
     user: TenantDashboardUserContext,
   ) {
-    const roles: string[] = Array.isArray(user.roles) && user.roles.length
-      ? user.roles
-      : user.role
-        ? [user.role]
-        : [];
+    const roles: string[] =
+      Array.isArray(user.roles) && user.roles.length
+        ? user.roles
+        : user.role
+          ? [user.role]
+          : [];
 
     if (!tenantId) {
       return {
@@ -57,12 +61,7 @@ export class DashboardService {
         ? new Types.ObjectId(userId)
         : null;
 
-    const [
-      userCount,
-      posAgg,
-      cmsAnalytics,
-      notifications,
-    ] = await Promise.all([
+    const [userCount, posAgg, cmsAnalytics, notifications] = await Promise.all([
       this.userModel
         .countDocuments({ tenantId: tenantObjectId, isActive: true })
         .exec(),

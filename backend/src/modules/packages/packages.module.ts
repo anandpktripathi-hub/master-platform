@@ -36,7 +36,12 @@ import { SubscriptionExpiryScheduler } from './subscription-expiry.scheduler';
     SettingsModule,
   ],
   controllers: [PackageController],
-  providers: [PackageService, AuditLogService, RoleGuard, SubscriptionExpiryScheduler],
+  providers: [
+    PackageService,
+    AuditLogService,
+    RoleGuard,
+    SubscriptionExpiryScheduler,
+  ],
   exports: [PackageService],
 })
 export class PackagesModule {}

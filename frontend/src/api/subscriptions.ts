@@ -31,18 +31,28 @@ export interface SubscribeRequestPayload {
 export async function subscribeToPlan(
   payload: SubscribeRequestPayload,
 ): Promise<SubscribeResponse> {
-  // Backend is mounted under /api/v1, and SubscriptionsController uses @Controller('subscriptions')
-  return api.post<SubscribeResponse>('/subscriptions/subscribe', payload);
+  void payload;
+  throw new Error(
+    'Subscriptions are not available in manual billing mode. Use /packages + /offline-payments instead.',
+  );
 }
 
 export async function getCurrentSubscription(): Promise<Subscription> {
-  return api.get<Subscription>('/subscriptions/current');
+  throw new Error(
+    'Subscriptions are not available in manual billing mode. Use GET /packages/me instead.',
+  );
 }
 
 export async function changePlan(payload: ChangePlanRequest): Promise<Subscription> {
-  return api.patch<Subscription>('/subscriptions/change-plan', payload);
+  void payload;
+  throw new Error(
+    'Plan changes are not available in manual billing mode. Submit an offline payment request to upgrade.',
+  );
 }
 
 export async function cancelSubscription(atPeriodEnd: boolean = false): Promise<Subscription> {
-  return api.patch<Subscription>(`/subscriptions/cancel?atPeriodEnd=${atPeriodEnd}`, {});
+  void atPeriodEnd;
+  throw new Error(
+    'Subscription cancellation is not available in manual billing mode.',
+  );
 }

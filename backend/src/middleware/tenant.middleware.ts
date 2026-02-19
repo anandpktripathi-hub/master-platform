@@ -4,60 +4,102 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { Request as ExpressRequest, Response, NextFunction } from 'express';
+import { TenantsService } from '../modules/tenants/tenants.service';
 
 // Extend Express Request to include 'tenant' property
 export interface TenantRequest extends ExpressRequest {
   tenant?: any;
+  tenantId?: string;
 }
 
 @Injectable()
 export class TenantMiddleware implements NestMiddleware {
-  private tenantCache: Map<string, any> = new Map();
+  private tenantCache: Map<string, { tenant: any; expiresAt: number }> =
+    new Map();
+  private readonly cacheTtlMs = Number(
+    process.env.TENANT_CACHE_TTL_MS || 5 * 60 * 1000,
+  );
+
+  constructor(private readonly tenantsService: TenantsService) {}
 
   async use(req: TenantRequest, res: Response, next: NextFunction) {
     try {
-      let tenant: any;
-      if (req.headers['x-tenant-id']) {
-        tenant = await this.resolveTenantByHost(
-          req.headers['x-tenant-id'] as string,
-        );
-      } else if (req.path.startsWith('/tenant/')) {
-        tenant = this.resolveTenantByPath(req.path);
+      const headerTenantRaw =
+        (req.headers['x-tenant-id'] as string | string[] | undefined) ||
+        (req.headers['x-workspace-id'] as string | string[] | undefined);
+      const headerTenant = Array.isArray(headerTenantRaw)
+        ? headerTenantRaw[0]
+        : headerTenantRaw;
+
+      const hostRaw =
+        (req.headers['x-tenant-host'] as string | undefined) ||
+        (req.headers.host as string | undefined) ||
+        (req.hostname as string | undefined);
+
+      const cacheKey = headerTenant
+        ? `id:${String(headerTenant)}`
+        : hostRaw
+          ? `host:${String(hostRaw)}`
+          : '';
+
+      const cached = cacheKey ? this.getCached(cacheKey) : null;
+      if (cached) {
+        req.tenant = cached;
+        req.tenantId = String(cached._id || cached.id);
+        return next();
       }
-      if (!tenant) throw new BadRequestException('Tenant not found');
-      req.tenant = tenant;
-      this.cacheResult(tenant);
+
+      let tenant: any | null = null;
+
+      if (headerTenant) {
+        // Header is treated as tenant/workspace id.
+        tenant = await this.tenantsService.resolveTenantById(
+          String(headerTenant),
+        );
+
+        // If the header isn't an ObjectId, allow domain/slug resolution.
+        if (!tenant) {
+          tenant = await this.tenantsService.resolveTenantByHost(
+            String(headerTenant),
+          );
+        }
+      } else if (hostRaw) {
+        tenant = await this.tenantsService.resolveTenantByHost(String(hostRaw));
+      }
+
+      if (!tenant) {
+        throw new BadRequestException(
+          'Tenant context missing or invalid. Provide x-tenant-id (or x-workspace-id) header.',
+        );
+      }
+
+      const tenantId = String((tenant as any)._id || (tenant as any).id);
+      req.tenantId = tenantId;
+      // Backward-compatible shape used by some controllers
+      req.tenant = { ...tenant, id: tenantId };
+      if (cacheKey) {
+        this.setCached(cacheKey, req.tenant);
+      }
       next();
     } catch (err) {
       next(err);
     }
   }
 
-  private async resolveTenantByHost(host: string): Promise<any> {
-    // Simulate async DB lookup
-    if (this.tenantCache.has(host)) return this.tenantCache.get(host);
-    // ...fetch from DB or service...
-    const tenant = { id: host, name: `Tenant for ${host}` };
-    this.tenantCache.set(host, tenant);
-    return tenant;
+  private getCached(cacheKey: string): any | null {
+    const cached = this.tenantCache.get(cacheKey);
+    if (!cached) return null;
+    if (cached.expiresAt <= Date.now()) {
+      this.tenantCache.delete(cacheKey);
+      return null;
+    }
+    return cached.tenant;
   }
 
-  private resolveTenantByPath(path: string): any {
-    // Extract tenant from path, e.g. /tenant/:tenantId/...
-    const match = path.match(/^\/tenant\/([^/]+)/);
-    if (match) {
-      const tenantId = match[1];
-      if (this.tenantCache.has(tenantId)) return this.tenantCache.get(tenantId);
-      const tenant = { id: tenantId, name: `Tenant for ${tenantId}` };
-      this.tenantCache.set(tenantId, tenant);
-      return tenant;
-    }
-    return null;
-  }
-
-  private cacheResult(tenant: any) {
-    if (tenant && tenant.id) {
-      this.tenantCache.set(tenant.id, tenant);
-    }
+  private setCached(cacheKey: string, tenant: any) {
+    this.tenantCache.set(cacheKey, {
+      tenant,
+      expiresAt: Date.now() + this.cacheTtlMs,
+    });
   }
 }

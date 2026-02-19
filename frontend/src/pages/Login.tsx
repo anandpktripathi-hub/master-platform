@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link as RouterLink, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Box, Card, CardContent, Typography, TextField, Button, Alert, Link } from "@mui/material";
 
@@ -9,12 +9,21 @@ interface LoginError {
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { login } = useAuth();
 
   const [email, setEmail] = useState("admin@example.com");
   const [password, setPassword] = useState("password");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = searchParams.get('token');
+    if (token) {
+      localStorage.setItem('token', token);
+      navigate('/app/dashboard', { replace: true });
+    }
+  }, [navigate, searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +99,7 @@ export default function Login() {
             <Box display="flex" justifyContent="center" mt={2}>
               <Typography variant="body2">
                 Don't have an account?{' '}
-                <Link component={RouterLink} to="/register">
+                <Link component={RouterLink} to="/signup">
                   Sign up
                 </Link>
               </Typography>

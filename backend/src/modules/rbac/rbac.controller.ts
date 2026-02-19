@@ -22,7 +22,7 @@ import {
 } from './dto/rbac.dto';
 import { CurrentTenant } from '../../decorators/tenant.decorator';
 
-@Controller('api/v1/rbac')
+@Controller('rbac')
 @UseGuards(JwtAuthGuard)
 export class RbacController {
   constructor(private rbacService: RbacService) {}
@@ -35,7 +35,8 @@ export class RbacController {
    */
   @Post('check-field-permission')
   async checkFieldPermission(
-    @Body() body: { roleId: string; module: string; action: string; field?: string },
+    @Body()
+    body: { roleId: string; module: string; action: string; field?: string },
     @CurrentTenant() tenantId: string,
   ) {
     const role = await this.rbacService.getRoleById(tenantId, body.roleId);

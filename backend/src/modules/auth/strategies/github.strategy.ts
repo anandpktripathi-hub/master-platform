@@ -12,18 +12,22 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
     const clientSecret = configService.get<string>('GITHUB_CLIENT_SECRET');
     const callbackURL = configService.get<string>(
       'GITHUB_CALLBACK_URL',
-      'http://localhost:4000/auth/github/callback',
+      'http://localhost:4000/api/v1/auth/github/callback',
     );
+
+    if (!clientID || !clientSecret) {
+      // Do not crash the whole server if OAuth isn't configured.
+      // The routes will fail if invoked, but local dev can still run.
+      this.logger.warn(
+        'GITHUB_CLIENT_ID/GITHUB_CLIENT_SECRET missing; GitHub OAuth is disabled until configured.',
+      );
+    }
     super({
-      clientID,
-      clientSecret,
+      clientID: clientID || 'disabled',
+      clientSecret: clientSecret || 'disabled',
       callbackURL,
       scope: ['user:email'],
     });
-    if (!clientID || !clientSecret) {
-      console.error('Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET in environment/config.');
-      throw new Error('GitHub OAuth2Strategy requires both clientID and clientSecret. Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET in your environment variables or config.');
-    }
   }
 
   async validate(
@@ -49,7 +53,10 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
       this.logger.log(`GitHub OAuth user validated: ${user.email}`);
       done(null, user);
     } catch (err: any) {
-      this.logger.error(`GitHub OAuth validation error: ${err.message}`, err.stack);
+      this.logger.error(
+        `GitHub OAuth validation error: ${err.message}`,
+        err.stack,
+      );
       done(err, false);
     }
   }

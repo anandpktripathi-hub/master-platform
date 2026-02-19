@@ -56,7 +56,9 @@ function normalizeRole(rawRole?: string | null): CanonicalRole | null {
   return 'STAFF';
 }
 
-function normalizeRequiredRoles(required: string[] | undefined): CanonicalRole[] {
+function normalizeRequiredRoles(
+  required: string[] | undefined,
+): CanonicalRole[] {
   if (!required || required.length === 0) return [];
 
   const mapped = required
@@ -93,7 +95,12 @@ function normalizeRequiredRoles(required: string[] | undefined): CanonicalRole[]
         return 'CLIENT' as const;
       }
 
-      if (role === 'STAFF' || role === 'staff' || role === 'user' || role === 'USER') {
+      if (
+        role === 'STAFF' ||
+        role === 'staff' ||
+        role === 'user' ||
+        role === 'USER'
+      ) {
         return 'STAFF' as const;
       }
 

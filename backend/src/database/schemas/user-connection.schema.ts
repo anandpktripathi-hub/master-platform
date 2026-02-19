@@ -25,7 +25,8 @@ export class UserConnection {
   acceptedAt?: Date;
 }
 
-export const UserConnectionSchema = SchemaFactory.createForClass(UserConnection);
+export const UserConnectionSchema =
+  SchemaFactory.createForClass(UserConnection);
 
 // Compound index for lookups (per tenant)
 UserConnectionSchema.index(

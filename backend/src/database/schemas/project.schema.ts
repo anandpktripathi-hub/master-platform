@@ -11,7 +11,11 @@ export class Project {
   @Prop()
   description?: string;
 
-  @Prop({ enum: ['planned', 'in_progress', 'completed', 'on_hold'], default: 'planned' })
+  @Prop({
+    type: String,
+    enum: ['planned', 'in_progress', 'completed', 'on_hold'],
+    default: 'planned',
+  })
   status!: 'planned' | 'in_progress' | 'completed' | 'on_hold';
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })

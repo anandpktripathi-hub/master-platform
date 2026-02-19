@@ -14,7 +14,9 @@ export class UsersStatsController {
     // Team members
     const teamMembers = await this.usersService.countByRole('STAFF_LEGACY');
     // Platform admins
-    const platformAdmins = await this.usersService.countByRole('PLATFORM_SUPER_ADMIN');
+    const platformAdmins = await this.usersService.countByRole(
+      'PLATFORM_SUPER_ADMIN',
+    );
     return {
       totalUsers: total,
       customers,

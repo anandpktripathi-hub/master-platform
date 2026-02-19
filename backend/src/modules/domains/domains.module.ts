@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Domain, DomainSchema } from '../../database/schemas/domain.schema';
-import { DomainResellerOrder, DomainResellerOrderSchema } from '../../database/schemas/domain-reseller-order.schema';
+import {
+  DomainResellerOrder,
+  DomainResellerOrderSchema,
+} from '../../database/schemas/domain-reseller-order.schema';
 import {
   TenantPackage,
   TenantPackageSchema,

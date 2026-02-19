@@ -12,7 +12,6 @@ import {
   ModuleName,
 } from '../../../database/schemas/permission.schema';
 
-
 export class CreatePermissionDto {
   @IsEnum(['manage', 'create', 'edit', 'delete', 'show'])
   action!: PermissionAction;
@@ -32,7 +31,6 @@ export class CreatePermissionDto {
   @IsString({ each: true })
   fields?: string[];
 }
-
 
 export class PermissionDto {
   _id!: string;

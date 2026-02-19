@@ -6,13 +6,18 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "node -e \"console.log('[root] This repo uses ./backend as the canonical backend for Docker and local runs.')\" && nest build",
+    "backend:build": "cd backend && npm run build",
+    "backend:dev": "cd backend && npm run start:dev",
+    "backend:prod": "cd backend && npm run build && npm run start:prod",
+    "backend:dev:with-db": "cd backend && npm run start:dev:with-db",
+    "frontend:dev": "cd frontend && npm run dev",
     "postbuild": "node scripts/copy-env-to-dist.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "node scripts/start-root-dev.js",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "npm run build && node dist/main.js",
     "dev:db": "docker compose up -d mongodb",
     "dev:redis": "docker compose up -d redis",
     "start:dev:with-db": "npm run dev:db || echo \"[dev:db] Docker not available or not running. Please ensure MongoDB is running on localhost:27017. Continuing to start backend...\" && npm run start:dev",
@@ -22,7 +27,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "audit:admin-nav": "node -e \"console.log('Removed: audit script was deleted to avoid heavy file scanning in this workspace.')\"",
+    "report:launch-blockers": "node -e \"console.log('Removed: report script was deleted to avoid heavy file scanning in this workspace.')\""
   },
   "dependencies": {
     "@nestjs/bull": "^10.0.0",
@@ -111,7 +118,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.4.6",
     "ts-loader": "^9.5.2",
-    "ts-node": "^1.7.1",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.20.0"

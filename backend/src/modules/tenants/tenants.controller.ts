@@ -23,46 +23,46 @@ import { UpdateTenantPublicProfileDto } from './dto/tenant-public-profile.dto';
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
-    /**
-     * GET /tenants/custom-domains
-     * Returns custom domains for current tenant
-     */
-    @UseGuards(JwtAuthGuard)
-    @Get('custom-domains')
-    async getCustomDomains(@Req() req: { user?: { tenantId?: string } }) {
-      const tenantId = req.user?.tenantId;
-      if (!tenantId) {
-        throw new BadRequestException('Tenant ID is required');
-      }
-      // Fetch custom domains from tenant
-      const tenant = await this.tenantsService.getCurrentTenant(tenantId);
-      if (!tenant) throw new BadRequestException('Tenant not found');
-      // Example: tenant.customDomains is an array
-      return { domains: tenant.customDomains ?? [] };
+  /**
+   * GET /tenants/custom-domains
+   * Returns custom domains for current tenant
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('custom-domains')
+  async getCustomDomains(@Req() req: { user?: { tenantId?: string } }) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) {
+      throw new BadRequestException('Tenant ID is required');
     }
+    // Fetch custom domains from tenant
+    const tenant = await this.tenantsService.getCurrentTenant(tenantId);
+    if (!tenant) throw new BadRequestException('Tenant not found');
+    // Example: tenant.customDomains is an array
+    return { domains: tenant.customDomains ?? [] };
+  }
 
-    /**
-     * GET /tenants/quota
-     * Returns quota usage for current tenant
-     */
-    @UseGuards(JwtAuthGuard)
-    @Get('quota')
-    async getQuota(@Req() req: { user?: { tenantId?: string } }) {
-      const tenantId = req.user?.tenantId;
-      if (!tenantId) {
-        throw new BadRequestException('Tenant ID is required');
-      }
-      // Fetch quota info from tenant
-      const tenant = await this.tenantsService.getCurrentTenant(tenantId);
-      if (!tenant) throw new BadRequestException('Tenant not found');
-      // Example quota fields, adjust as needed
-      return {
-        maxApiCallsPerDay: tenant.maxApiCallsPerDay ?? 10000,
-        usedApiCallsToday: tenant.usedApiCallsToday ?? 0,
-        maxStorageMb: tenant.maxStorageMb ?? 1024,
-        usedStorageMb: tenant.usedStorageMb ?? 0,
-      };
+  /**
+   * GET /tenants/quota
+   * Returns quota usage for current tenant
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('quota')
+  async getQuota(@Req() req: { user?: { tenantId?: string } }) {
+    const tenantId = req.user?.tenantId;
+    if (!tenantId) {
+      throw new BadRequestException('Tenant ID is required');
     }
+    // Fetch quota info from tenant
+    const tenant = await this.tenantsService.getCurrentTenant(tenantId);
+    if (!tenant) throw new BadRequestException('Tenant not found');
+    // Example quota fields, adjust as needed
+    return {
+      maxApiCallsPerDay: tenant.maxApiCallsPerDay ?? 10000,
+      usedApiCallsToday: tenant.usedApiCallsToday ?? 0,
+      maxStorageMb: tenant.maxStorageMb ?? 1024,
+      usedStorageMb: tenant.usedStorageMb ?? 0,
+    };
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')

@@ -1,5 +1,4 @@
-﻿import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+﻿import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 // ...existing code...
@@ -32,13 +31,6 @@ import { DatabaseModule } from './database/database.module';
       envFilePath: '.env',
       ignoreEnvFile: false,
     }),
-    MongooseModule.forRoot(
-      process.env.DATABASE_URL || 'mongodb://localhost:27017/master-platform',
-      {
-        retryAttempts: 3,
-        retryDelay: 3000,
-      },
-    ),
     AuthModule,
     // ...existing code...
     CategoriesModule,
@@ -87,15 +79,6 @@ export class AppModule implements NestModule {
     // 3. TenantContextMiddleware - Populates TenantContextService for DI
     consumer
       .apply(DomainTenantMiddleware, TenantMiddleware, TenantContextMiddleware)
-      .forRoutes('*');
-  }
-  constructor() {
-    console.log('🔍 DATABASE_URL from env:', process.env.DATABASE_URL);
-    if (!process.env.DATABASE_URL) {
-      console.warn('⚠️ DATABASE_URL not found in environment variables!');
-      console.warn(
-        '⚠️ Using fallback: mongodb://localhost:27017/master-platform',
-      );
-    }
+      .forRoutes({ path: '*path', method: RequestMethod.ALL });
   }
 }

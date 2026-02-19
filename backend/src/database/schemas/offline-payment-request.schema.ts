@@ -28,12 +28,19 @@ export class OfflinePaymentRequest {
   @Prop()
   proofUrl?: string;
 
-  @Prop({ required: true, enum: ['pending', 'approved', 'rejected'], default: 'pending' })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  })
   status!: OfflinePaymentRequestStatus;
 
   @Prop({ type: Object })
   metadata?: Record<string, unknown>;
 }
 
-export const OfflinePaymentRequestSchema = SchemaFactory.createForClass(OfflinePaymentRequest);
+export const OfflinePaymentRequestSchema = SchemaFactory.createForClass(
+  OfflinePaymentRequest,
+);
 OfflinePaymentRequestSchema.index({ tenantId: 1, createdAt: -1 });

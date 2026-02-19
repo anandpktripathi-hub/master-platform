@@ -4,9 +4,8 @@ import { WorkspaceController } from './workspace.controller';
 import { WorkspaceSharedModule } from './workspace-shared.module';
 
 @Module({
-  imports: [
-    WorkspaceSharedModule,
-  ],
+  imports: [WorkspaceSharedModule],
   controllers: [WorkspaceController],
+  exports: [WorkspaceSharedModule],
 })
 export class WorkspaceModule {}

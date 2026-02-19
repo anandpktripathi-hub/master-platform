@@ -30,12 +30,17 @@ export class PushNotificationService {
   private readonly provider: 'webpush' | 'fcm';
 
   constructor(private readonly configService: ConfigService) {
-    this.provider = (this.configService.get<string>('PUSH_PROVIDER') || 'webpush') as any;
+    this.provider = (this.configService.get<string>('PUSH_PROVIDER') ||
+      'webpush') as any;
 
     if (this.provider === 'webpush') {
-      this.logger.log('PushNotificationService: Web Push mode. Ensure VAPID keys are configured.');
+      this.logger.log(
+        'PushNotificationService: Web Push mode. Ensure VAPID keys are configured.',
+      );
     } else if (this.provider === 'fcm') {
-      this.logger.log('PushNotificationService: FCM mode. Ensure FIREBASE_SERVICE_ACCOUNT_JSON is configured.');
+      this.logger.log(
+        'PushNotificationService: FCM mode. Ensure FIREBASE_SERVICE_ACCOUNT_JSON is configured.',
+      );
     }
   }
 
@@ -91,17 +96,21 @@ export class PushNotificationService {
   ): Promise<boolean> {
     const vapidPublicKey = this.configService.get<string>('VAPID_PUBLIC_KEY');
     const vapidPrivateKey = this.configService.get<string>('VAPID_PRIVATE_KEY');
-    const vapidSubject = this.configService.get<string>('VAPID_SUBJECT') || 'mailto:admin@yourdomain.com';
+    const vapidSubject =
+      this.configService.get<string>('VAPID_SUBJECT') ||
+      'mailto:admin@yourdomain.com';
 
     if (!vapidPublicKey || !vapidPrivateKey) {
-      this.logger.error('VAPID keys are not configured. Cannot send Web Push notification.');
+      this.logger.error(
+        'VAPID keys are not configured. Cannot send Web Push notification.',
+      );
       return false;
     }
 
     try {
       // Dynamically require web-push to avoid hard dependency
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const webPush = require('web-push') as any;
+
+      const webPush = require('web-push');
 
       webPush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
 
@@ -145,10 +154,14 @@ export class PushNotificationService {
       data?: Record<string, any>;
     },
   ): Promise<boolean> {
-    const serviceAccountJson = this.configService.get<string>('FIREBASE_SERVICE_ACCOUNT_JSON');
+    const serviceAccountJson = this.configService.get<string>(
+      'FIREBASE_SERVICE_ACCOUNT_JSON',
+    );
 
     if (!serviceAccountJson) {
-      this.logger.error('FIREBASE_SERVICE_ACCOUNT_JSON is not configured. Cannot send FCM notification.');
+      this.logger.error(
+        'FIREBASE_SERVICE_ACCOUNT_JSON is not configured. Cannot send FCM notification.',
+      );
       return false;
     }
 
@@ -160,8 +173,8 @@ export class PushNotificationService {
       const credentials = JSON.parse(raw);
 
       // Dynamically require firebase-admin
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const admin = require('firebase-admin') as any;
+
+      const admin = require('firebase-admin');
 
       // Initialize Firebase Admin SDK if not already initialized
       if (!admin.apps.length) {
@@ -182,7 +195,9 @@ export class PushNotificationService {
 
       await admin.messaging().send(message);
 
-      this.logger.log(`FCM notification sent to token ${subscription.endpoint}`);
+      this.logger.log(
+        `FCM notification sent to token ${subscription.endpoint}`,
+      );
       return true;
     } catch (err: any) {
       this.logger.error(`Failed to send FCM notification: ${err.message}`);

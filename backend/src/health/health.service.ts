@@ -3,6 +3,8 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs/promises';
+import { constants as fsConstants } from 'fs';
+import * as path from 'path';
 
 interface HealthCheck {
   status: 'up' | 'down';
@@ -36,11 +38,24 @@ export class HealthService {
       memory: this.checkMemory(),
     };
 
-    const allUp = Object.values(checks).every((c) => c.status === 'up');
-    const anyDown = Object.values(checks).some((c) => c.status === 'down');
+    const criticalKeys: Array<keyof typeof checks> = ['database', 'storage'];
+    const nonCriticalKeys: Array<keyof typeof checks> = ['memory'];
+
+    const anyCriticalDown = criticalKeys.some(
+      (key) => checks[key].status === 'down',
+    );
+    const anyNonCriticalDown = nonCriticalKeys.some(
+      (key) => checks[key].status === 'down',
+    );
+
+    const status: HealthReport['status'] = anyCriticalDown
+      ? 'unhealthy'
+      : anyNonCriticalDown
+        ? 'degraded'
+        : 'healthy';
 
     return {
-      status: allUp ? 'healthy' : anyDown ? 'unhealthy' : 'degraded',
+      status,
       timestamp: new Date().toISOString(),
       checks,
     };
@@ -95,8 +110,14 @@ export class HealthService {
         const basePath =
           this.configService.get<string>('STORAGE_LOCAL_BASE_PATH') ||
           './uploads';
+
+        const resolvedBasePath = path.resolve(basePath);
+
+        // Ensure the directory exists before testing writability.
+        await fs.mkdir(resolvedBasePath, { recursive: true });
+
         // Check if storage path is writable
-        await fs.access(basePath, fs.constants.W_OK);
+        await fs.access(resolvedBasePath, fsConstants.W_OK);
       }
       // For S3/Cloudinary, could add actual connectivity checks here
 

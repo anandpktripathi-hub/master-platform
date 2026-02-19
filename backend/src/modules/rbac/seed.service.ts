@@ -227,7 +227,10 @@ export class SeedService {
       // If MongoDB is not yet fully connected or any other error occurs,
       // log it but do not rethrow. This prevents unhandled rejections
       // from crashing the entire application during startup.
-      this.logger.error('RBAC seed failed, continuing without seeded data', error as Error);
+      this.logger.error(
+        'RBAC seed failed, continuing without seeded data',
+        error as Error,
+      );
     }
   }
 }

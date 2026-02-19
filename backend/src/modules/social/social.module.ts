@@ -1,8 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserConnection, UserConnectionSchema } from '../../database/schemas/user-connection.schema';
-import { UserPost, UserPostSchema } from '../../database/schemas/user-post.schema';
-import { PostComment, PostCommentSchema } from '../../database/schemas/post-comment.schema';
+import {
+  UserConnection,
+  UserConnectionSchema,
+} from '../../database/schemas/user-connection.schema';
+import {
+  UserPost,
+  UserPostSchema,
+} from '../../database/schemas/user-post.schema';
+import {
+  PostComment,
+  PostCommentSchema,
+} from '../../database/schemas/post-comment.schema';
 import { SocialService } from './social.service';
 import { SocialController } from './social.controller';
 

@@ -1,4 +1,7 @@
-import { CloudflareDomainResellerProvider, StubDomainResellerProvider } from './domain-reseller.provider';
+import {
+  CloudflareDomainResellerProvider,
+  StubDomainResellerProvider,
+} from './domain-reseller.provider';
 
 describe('StubDomainResellerProvider', () => {
   it('marks odd-length (without dots) domains as available and even-length as unavailable', async () => {

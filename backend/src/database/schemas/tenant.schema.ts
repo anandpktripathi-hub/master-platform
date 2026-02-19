@@ -23,7 +23,7 @@ export class Tenant {
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   createdByUserId!: Types.ObjectId;
 
-  @Prop({ enum: ['FREE', 'PRO', 'ENTERPRISE'], default: 'FREE' })
+  @Prop({ type: String, enum: ['FREE', 'PRO', 'ENTERPRISE'], default: 'FREE' })
   planKey!: PlanKey;
 
   @Prop({ default: 'trialing' })

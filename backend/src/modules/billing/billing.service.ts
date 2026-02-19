@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, InternalServerErrorException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -23,7 +28,10 @@ export class BillingService {
       this.logger.log(`Fetching all billing records for tenant: ${tenantId}`);
       return await this.billingModel.find({ tenantId }).exec();
     } catch (error) {
-      this.logger.error(`Error fetching billing records for tenant ${tenantId}:`, error);
+      this.logger.error(
+        `Error fetching billing records for tenant ${tenantId}:`,
+        error,
+      );
       throw new InternalServerErrorException('Failed to fetch billing records');
     }
   }
@@ -66,12 +74,15 @@ export class BillingService {
           currency: saved.currency,
         })
         .catch((err) =>
-          this.logger.error('Failed to send billing invoice notification', err as any),
+          this.logger.error('Failed to send billing invoice notification', err),
         );
 
       return saved;
     } catch (error) {
-      this.logger.error(`Error creating billing record for tenant ${tenantId}:`, error);
+      this.logger.error(
+        `Error creating billing record for tenant ${tenantId}:`,
+        error,
+      );
       throw new InternalServerErrorException('Failed to create billing record');
     }
   }
@@ -129,5 +140,74 @@ export class BillingService {
       this.logger.error(`Error removing billing record ${id}:`, error);
       throw new InternalServerErrorException('Failed to remove billing record');
     }
+  }
+
+  /**
+   * PLATFORM ADMIN ENDPOINTS
+   */
+
+  async findAllForAdmin(filter?: {
+    tenantId?: string;
+    status?: string;
+    from?: Date;
+    to?: Date;
+  }): Promise<Billing[]> {
+    try {
+      const query: Record<string, any> = {};
+      if (filter?.tenantId) {
+        query.tenantId = filter.tenantId;
+      }
+      if (filter?.status) {
+        query.status = filter.status;
+      }
+      if (filter?.from || filter?.to) {
+        query.createdAt = {};
+        if (filter.from) query.createdAt.$gte = filter.from;
+        if (filter.to) query.createdAt.$lte = filter.to;
+      }
+
+      return await this.billingModel
+        .find(query)
+        .sort({ createdAt: -1 })
+        .exec();
+    } catch (error) {
+      this.logger.error('Error fetching billing records for admin:', error);
+      throw new InternalServerErrorException('Failed to fetch billing records');
+    }
+  }
+
+  async createForTenant(
+    createBillingDto: Omit<Billing, 'tenantId'>,
+    tenantId: string,
+  ): Promise<Billing> {
+    return this.create(createBillingDto as Billing, tenantId);
+  }
+
+  async updateForAdmin(
+    id: string,
+    update: Partial<Pick<Billing, 'amount' | 'currency' | 'status'>>,
+  ): Promise<Billing> {
+    try {
+      const existing = await this.billingModel.findById(id).exec();
+      if (!existing) {
+        throw new NotFoundException(`Billing record with id ${id} not found`);
+      }
+
+      if (typeof update.amount === 'number') existing.amount = update.amount;
+      if (typeof update.currency === 'string') existing.currency = update.currency;
+      if (typeof update.status === 'string') existing.status = update.status;
+
+      return await existing.save();
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(`Error updating billing record ${id} for admin:`, error);
+      throw new InternalServerErrorException('Failed to update billing record');
+    }
+  }
+
+  async removeForAdmin(id: string) {
+    return this.remove(id);
   }
 }

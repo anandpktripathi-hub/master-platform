@@ -11,10 +11,10 @@ export class Coupon {
   @Prop({ required: false })
   description!: string;
 
-  @Prop({ enum: ['single', 'multi'], required: true })
+  @Prop({ type: String, enum: ['single', 'multi'], required: true })
   type!: 'single' | 'multi';
 
-  @Prop({ enum: ['percent', 'fixed'], required: true })
+  @Prop({ type: String, enum: ['percent', 'fixed'], required: true })
   discountType!: 'percent' | 'fixed';
 
   @Prop({ required: true })
@@ -41,7 +41,11 @@ export class Coupon {
   @Prop({ type: [Types.ObjectId], ref: 'Tenant', default: [] })
   allowedTenantIds!: Types.ObjectId[]; // If private, which tenants can use
 
-  @Prop({ enum: ['active', 'inactive', 'expired'], default: 'active' })
+  @Prop({
+    type: String,
+    enum: ['active', 'inactive', 'expired'],
+    default: 'active',
+  })
   status!: string;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { UploadCloud, X, Figma } from 'lucide-react';
-import axios from 'axios';
+import api from '../../lib/api';
 
 interface FileImportModalProps {
   open: boolean;
@@ -35,10 +35,10 @@ const FileImportModal: React.FC<FileImportModalProps> = ({ open, onClose, onImpo
     const formData = new FormData();
     formData.append('file', file);
     formData.append('tenantId', tenantId);
-    const res = await axios.post('/api/cms/import/zip', formData, {
+    const res = await api.post('/cms/import/zip', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    onImport(res.data);
+    onImport(res);
     setUploading(false);
     onClose();
   };
@@ -46,12 +46,13 @@ const FileImportModal: React.FC<FileImportModalProps> = ({ open, onClose, onImpo
   const importFigma = async () => {
     setUploading(true);
     try {
-      const res = await axios.post('/api/cms/import/figma', {
-        url: figmaUrl,
-        token: figmaToken,
+      const res = await api.post('/cms/import/figma', {
+        figmaUrl,
+        accessToken: figmaToken,
         tenantId,
       });
-      onImport(res.data);
+      // backend returns { designJson, layers }
+      onImport((res as any)?.designJson ?? res);
       onClose();
     } catch (error) {
       console.error('Error importing Figma file:', error);
@@ -65,7 +66,15 @@ const FileImportModal: React.FC<FileImportModalProps> = ({ open, onClose, onImpo
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
         <Dialog.Content className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-8 w-[400px] flex flex-col items-center gap-4">
-          <button className="absolute top-2 right-2 p-1" onClick={onClose}><X size={20} /></button>
+          <button
+            className="absolute top-2 right-2 p-1"
+            onClick={onClose}
+            type="button"
+            aria-label="Close"
+            title="Close"
+          >
+            <X size={20} />
+          </button>
           <div className="flex gap-4 mb-4">
             <button className={`flex items-center gap-1 px-3 py-1 rounded ${tab==='zip'?'bg-blue-100':'bg-gray-100'}`} onClick={()=>setTab('zip')}><UploadCloud size={16}/> ZIP</button>
             <button className={`flex items-center gap-1 px-3 py-1 rounded ${tab==='figma'?'bg-blue-100':'bg-gray-100'}`} onClick={()=>setTab('figma')}><Figma size={16}/> Figma</button>
@@ -86,6 +95,8 @@ const FileImportModal: React.FC<FileImportModalProps> = ({ open, onClose, onImpo
                   ref={inputRef}
                   type="file"
                   accept=".zip"
+                  aria-label="Select ZIP file"
+                  title="Select ZIP file"
                   className="hidden"
                   onChange={handleFileChange}
                 />

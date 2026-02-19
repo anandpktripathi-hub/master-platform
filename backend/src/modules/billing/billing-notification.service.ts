@@ -43,7 +43,10 @@ export class BillingNotificationService {
       const cfg = settings.events?.[eventKey];
       return !!cfg?.email;
     } catch (error) {
-      this.logger.error(`Failed to load notification settings for ${eventKey}`, error as any);
+      this.logger.error(
+        `Failed to load notification settings for ${eventKey}`,
+        error as any,
+      );
       return false;
     }
   }
@@ -102,7 +105,9 @@ export class BillingNotificationService {
 
     if (pushEnabled && params.tenantId) {
       try {
-        const subscriptions = await this.pushSubscriptions.getForTenant(params.tenantId);
+        const subscriptions = await this.pushSubscriptions.getForTenant(
+          params.tenantId,
+        );
 
         if (subscriptions.length) {
           await this.pushNotifications.sendBatchNotifications(
@@ -121,7 +126,10 @@ export class BillingNotificationService {
           );
         }
       } catch (error) {
-        this.logger.error(`Failed to send push notification for ${eventKey}`, error as any);
+        this.logger.error(
+          `Failed to send push notification for ${eventKey}`,
+          error as any,
+        );
       }
     }
   }
@@ -171,9 +179,7 @@ export class BillingNotificationService {
             tenantId: params.tenantId,
             userId,
             eventKey,
-            title: params.success
-              ? 'Payment succeeded'
-              : 'Payment failed',
+            title: params.success ? 'Payment succeeded' : 'Payment failed',
             message: params.success
               ? `Payment of ${formattedAmount} via ${
                   params.gatewayName || 'gateway'
@@ -409,7 +415,9 @@ export class BillingNotificationService {
     }
   }
 
-  private async resolveTenantPrimaryUserId(tenantId: string): Promise<string | null> {
+  private async resolveTenantPrimaryUserId(
+    tenantId: string,
+  ): Promise<string | null> {
     try {
       const tenant = await this.tenantsService.getCurrentTenant(tenantId);
       if (!tenant) return null;
@@ -428,7 +436,9 @@ export class BillingNotificationService {
     }
   }
 
-  private async resolveTenantBillingPhone(tenantId: string): Promise<string | null> {
+  private async resolveTenantBillingPhone(
+    tenantId: string,
+  ): Promise<string | null> {
     try {
       const tenant = await this.tenantsService.getCurrentTenant(tenantId);
       if (!tenant) {

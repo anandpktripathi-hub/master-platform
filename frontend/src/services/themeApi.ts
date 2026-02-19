@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+import api from '../lib/api';
 
 // ========== TYPE DEFINITIONS ==========
 
@@ -95,47 +93,42 @@ export interface CustomizeThemeDto {
  * Create a new theme (super admin only)
  */
 export const createTheme = async (data: CreateThemeDto): Promise<ThemeResponse> => {
-  const response = await axios.post(`${API_BASE_URL}/admin/themes`, data);
-  return response.data;
+  return api.post(`/admin/themes`, data);
 };
 
 /**
  * Get all themes (super admin only)
  */
 export const getAllThemes = async (): Promise<ThemeResponse[]> => {
-  const response = await axios.get(`${API_BASE_URL}/admin/themes`);
-  return response.data;
+  return api.get(`/admin/themes`);
 };
 
 /**
  * Get a theme by ID (super admin only)
  */
 export const getThemeById = async (id: string): Promise<ThemeResponse> => {
-  const response = await axios.get(`${API_BASE_URL}/admin/themes/${id}`);
-  return response.data;
+  return api.get(`/admin/themes/${id}`);
 };
 
 /**
  * Update a theme (super admin only)
  */
 export const updateTheme = async (id: string, data: UpdateThemeDto): Promise<ThemeResponse> => {
-  const response = await axios.put(`${API_BASE_URL}/admin/themes/${id}`, data);
-  return response.data;
+  return api.put(`/admin/themes/${id}`, data);
 };
 
 /**
  * Delete a theme (super admin only)
  */
 export const deleteTheme = async (id: string): Promise<void> => {
-  await axios.delete(`${API_BASE_URL}/admin/themes/${id}`);
+  await api.delete(`/admin/themes/${id}`);
 };
 
 /**
  * Set a theme as default (super admin only)
  */
 export const setDefaultTheme = async (id: string): Promise<ThemeResponse> => {
-  const response = await axios.post(`${API_BASE_URL}/admin/themes/${id}/set-default`);
-  return response.data;
+  return api.post(`/admin/themes/${id}/set-default`);
 };
 
 // ========== TENANT THEME API ==========
@@ -144,38 +137,33 @@ export const setDefaultTheme = async (id: string): Promise<ThemeResponse> => {
  * Get available themes for tenant selection
  */
 export const getAvailableThemes = async (): Promise<ThemeResponse[]> => {
-  const response = await axios.get(`${API_BASE_URL}/tenant/themes/available`);
-  return response.data;
+  return api.get(`/tenant/themes/available`);
 };
 
 /**
  * Get current tenant theme (with customizations)
  */
 export const getCurrentTheme = async (): Promise<TenantThemeResponse> => {
-  const response = await axios.get(`${API_BASE_URL}/tenant/themes/current`);
-  return response.data;
+  return api.get(`/tenant/themes/current`);
 };
 
 /**
  * Select a theme for tenant
  */
 export const selectTheme = async (baseThemeId: string): Promise<TenantThemeResponse> => {
-  const response = await axios.post(`${API_BASE_URL}/tenant/themes/select`, { baseThemeId });
-  return response.data;
+  return api.post(`/tenant/themes/select`, { baseThemeId });
 };
 
 /**
  * Customize tenant theme
  */
 export const customizeTheme = async (customizations: CustomizeThemeDto): Promise<TenantThemeResponse> => {
-  const response = await axios.put(`${API_BASE_URL}/tenant/themes/customize`, customizations);
-  return response.data;
+  return api.put(`/tenant/themes/customize`, customizations);
 };
 
 /**
  * Reset theme to base (remove customizations)
  */
 export const resetTheme = async (): Promise<TenantThemeResponse> => {
-  const response = await axios.post(`${API_BASE_URL}/tenant/themes/reset`);
-  return response.data;
+  return api.post(`/tenant/themes/reset`);
 };

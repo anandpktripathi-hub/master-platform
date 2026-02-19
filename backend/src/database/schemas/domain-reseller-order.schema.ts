@@ -23,12 +23,18 @@ export class DomainResellerOrder {
   @Prop()
   providerOrderId?: string;
 
-  @Prop({ required: true, enum: ['pending', 'purchased', 'failed', 'cancelled'], default: 'pending' })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['pending', 'purchased', 'failed', 'cancelled'],
+    default: 'pending',
+  })
   status!: DomainResellerOrderStatus;
 
   @Prop({ type: Object })
   rawResponse?: unknown;
 }
 
-export const DomainResellerOrderSchema = SchemaFactory.createForClass(DomainResellerOrder);
+export const DomainResellerOrderSchema =
+  SchemaFactory.createForClass(DomainResellerOrder);
 DomainResellerOrderSchema.index({ tenantId: 1, domain: 1 });

@@ -2,7 +2,10 @@ import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Project, ProjectSchema } from '../../database/schemas/project.schema';
 import { Task, TaskSchema } from '../../database/schemas/task.schema';
-import { TimesheetEntry, TimesheetEntrySchema } from '../../database/schemas/timesheet.schema';
+import {
+  TimesheetEntry,
+  TimesheetEntrySchema,
+} from '../../database/schemas/timesheet.schema';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 import { RolesGuard } from '../../guards/roles.guard';

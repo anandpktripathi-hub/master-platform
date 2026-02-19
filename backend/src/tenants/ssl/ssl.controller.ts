@@ -5,7 +5,7 @@ import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
 
-@Controller('api/tenants/ssl')
+@Controller('tenants/ssl')
 export class SslController {
   constructor(
     private readonly sslService: SslService,

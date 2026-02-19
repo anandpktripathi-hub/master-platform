@@ -82,11 +82,11 @@ export class CmsFileImportService {
 
   // 4. HISTORY
   async getImportHistory(tenantId: string): Promise<CmsImportRecord[]> {
-    return this.cmsImportRepository.find({
-      where: { tenantId },
-      order: { createdAt: 'DESC' },
-      take: 50,
-    });
+    return this.cmsImportRepository
+      .find({ tenantId })
+      .sort({ createdAt: -1 })
+      .limit(50)
+      .lean();
   }
 
   private async extractAndCreatePages(zipBuffer: Buffer, tenantId: string) {

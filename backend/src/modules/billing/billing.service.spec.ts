@@ -109,7 +109,7 @@ describe('BillingService', () => {
       });
 
       mockBillingModel.save = mockSave;
-      
+
       // Mock constructor
       jest.spyOn(model, 'constructor' as any).mockImplementation(() => ({
         save: mockSave,
@@ -141,7 +141,7 @@ describe('BillingService', () => {
       expect(mockBillingModel.findByIdAndUpdate).toHaveBeenCalledWith(
         id,
         { ...updateBillingDto, tenantId },
-        { new: true }
+        { new: true },
       );
     });
   });

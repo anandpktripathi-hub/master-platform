@@ -2,9 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import Stripe from 'stripe';
 import axios from 'axios';
 import { SettingsService } from '../../settings/settings.service';
-import {
-  entriesToPaymentDto,
-} from '../../settings/mappers/payment-settings-mappers';
+import { entriesToPaymentDto } from '../../settings/mappers/payment-settings-mappers';
 import {
   PaymentGatewayConfigDto,
   PaymentSettingsDto,
@@ -237,8 +235,8 @@ export class PaymentGatewayService {
 
     // Use a dynamic import/require so that TypeScript does not need
     // explicit type declarations for the PayPal SDK.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const paypalSdk = require('@paypal/checkout-server-sdk') as any;
+
+    const paypalSdk = require('@paypal/checkout-server-sdk');
 
     const mode = (process.env.PAYPAL_MODE || 'sandbox').toLowerCase();
     const environment =
@@ -311,7 +309,8 @@ export class PaymentGatewayService {
     // multi-currency setups behave consistently, then simulate success.
     this.normalizeAmountForGateway(request, config);
 
-    const simulatedId = `${(config.name || 'gateway').toLowerCase()}_` +
+    const simulatedId =
+      `${(config.name || 'gateway').toLowerCase()}_` +
       Math.random().toString(36).substring(2, 12);
 
     return {
@@ -371,12 +370,17 @@ export class PaymentGatewayService {
       return {
         success,
         transactionId: data?.data?.id || reference,
-        error: success ? undefined : data?.message || 'Paystack verification failed',
+        error: success
+          ? undefined
+          : data?.message || 'Paystack verification failed',
       };
     } catch (err: any) {
       return {
         success: false,
-        error: err?.response?.data?.message || err?.message || 'Paystack payment failed',
+        error:
+          err?.response?.data?.message ||
+          err?.message ||
+          'Paystack payment failed',
       };
     }
   }
@@ -444,4 +448,3 @@ export class PaymentGatewayService {
     return rate;
   }
 }
-

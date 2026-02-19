@@ -9,9 +9,7 @@ import {
   Button,
   Alert,
 } from '@mui/material';
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import api from '../lib/api';
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -46,7 +44,7 @@ export default function ResetPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/api/auth/reset-password`, {
+      await api.post('/auth/reset-password', {
         token,
         newPassword,
       });

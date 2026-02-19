@@ -1,9 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { FeatureRegistryService } from './featureRegistry.service';
 
 @Controller('features')
 export class FeatureRegistryController {
-  constructor(private readonly featureRegistryService: FeatureRegistryService) {}
+  constructor(
+    private readonly featureRegistryService: FeatureRegistryService,
+  ) {}
 
   @Get()
   getAll() {

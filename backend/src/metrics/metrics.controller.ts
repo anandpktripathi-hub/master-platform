@@ -25,8 +25,10 @@ export class MetricsController {
       responses: {
         byStatus: metrics.responsesByStatus,
         avgResponseTime: Math.round(avgResponseTime),
-        maxResponseTime: metrics.maxResponseTime === 0 ? 0 : metrics.maxResponseTime,
-        minResponseTime: metrics.minResponseTime === Infinity ? 0 : metrics.minResponseTime,
+        maxResponseTime:
+          metrics.maxResponseTime === 0 ? 0 : metrics.maxResponseTime,
+        minResponseTime:
+          metrics.minResponseTime === Infinity ? 0 : metrics.minResponseTime,
       },
       memory: {
         heapUsed: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
@@ -70,9 +72,7 @@ export class MetricsController {
 
     // Add per-status metrics
     Object.entries(metrics.responsesByStatus).forEach(([status, count]) => {
-      lines.push(
-        `http_responses_total{status="${status}"} ${count}`,
-      );
+      lines.push(`http_responses_total{status="${status}"} ${count}`);
     });
 
     return lines.join('\n');

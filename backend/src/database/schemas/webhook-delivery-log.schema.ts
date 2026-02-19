@@ -32,7 +32,11 @@ export class WebhookDeliveryLog {
   @Prop({ required: false })
   responseBody?: string;
 
-  @Prop({ default: 'pending', enum: ['pending', 'success', 'failure'] })
+  @Prop({
+    type: String,
+    default: 'pending',
+    enum: ['pending', 'success', 'failure'],
+  })
   status!: string;
 
   @Prop({ required: false })

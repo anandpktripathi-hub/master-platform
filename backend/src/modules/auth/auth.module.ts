@@ -1,4 +1,5 @@
 ﻿import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DatabaseModule } from '../../database/database.module';
@@ -18,9 +19,13 @@ import { GithubStrategy } from './strategies/github.strategy';
 @Module({
   imports: [
     DatabaseModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || 'your-secret-key',
-      signOptions: { expiresIn: '60m' },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET') || 'your-secret-key',
+        signOptions: { expiresIn: '60m' },
+      }),
     }),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },

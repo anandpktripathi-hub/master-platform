@@ -26,7 +26,9 @@ export class NotificationsService {
     private readonly telegram: TelegramIntegrationService,
   ) {}
 
-  async createForUser(input: CreateNotificationInput): Promise<UserNotification> {
+  async createForUser(
+    input: CreateNotificationInput,
+  ): Promise<UserNotification> {
     const doc = new this.notificationModel({
       tenantId: new Types.ObjectId(input.tenantId),
       userId: new Types.ObjectId(input.userId),
@@ -41,9 +43,7 @@ export class NotificationsService {
 
     const summary = `Notification: ${input.title}`;
 
-    void this.slack
-      .sendMessage(input.tenantId, summary)
-      .catch(() => undefined);
+    void this.slack.sendMessage(input.tenantId, summary).catch(() => undefined);
 
     void this.telegram
       .sendMessage(input.tenantId, summary, { disableNotification: false })

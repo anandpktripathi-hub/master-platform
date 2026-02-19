@@ -4,7 +4,15 @@
 export interface FeatureNode {
   id: string;
   name: string;
-  type: 'module' | 'submodule' | 'feature' | 'subfeature' | 'option' | 'suboption' | 'point' | 'subpoint';
+  type:
+    | 'module'
+    | 'submodule'
+    | 'feature'
+    | 'subfeature'
+    | 'option'
+    | 'suboption'
+    | 'point'
+    | 'subpoint';
   enabled: boolean;
   children?: FeatureNode[];
   description?: string;
@@ -313,8 +321,7 @@ export const featureRegistry: FeatureNode[] = [
         name: 'Project Profitability',
         type: 'feature',
         enabled: true,
-        description:
-          'Revenue, costs and margin per project and client.',
+        description: 'Revenue, costs and margin per project and client.',
       },
     ],
   },
@@ -339,8 +346,7 @@ export const featureRegistry: FeatureNode[] = [
         name: 'SEO Audit',
         type: 'feature',
         enabled: true,
-        description:
-          'Automated SEO audits with recommendations per page.',
+        description: 'Automated SEO audits with recommendations per page.',
       },
     ],
   },
@@ -454,7 +460,7 @@ export const featureRegistry: FeatureNode[] = [
         id: 'customer-billing-portal',
         name: 'Billing & Subscription Portal',
         type: 'feature',
-        enabled: true,
+        enabled: false,
         description:
           'Self‑service invoices, payment methods, subscription upgrades and cancellations.',
       },
@@ -470,7 +476,7 @@ export const featureRegistry: FeatureNode[] = [
         id: 'customer-orders-history',
         name: 'Orders & Activity History',
         type: 'feature',
-        enabled: true,
+        enabled: false,
         description:
           'Order, project and engagement history surfaced to each end customer.',
       },

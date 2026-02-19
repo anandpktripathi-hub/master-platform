@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { UnifiedRegistrationService } from './unified-registration.service';
 
-@Controller('api/auth/unified-register')
+@Controller('auth/unified-register')
 export class UnifiedRegistrationController {
   constructor(
     private readonly unifiedRegistrationService: UnifiedRegistrationService,

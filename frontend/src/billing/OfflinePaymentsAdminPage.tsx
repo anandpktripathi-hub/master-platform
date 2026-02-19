@@ -11,7 +11,7 @@ import {
   CircularProgress,
   Alert,
 } from '@mui/material';
-import api from '../api/client';
+import api from '../services/api';
 import type { OfflinePaymentRequest } from '../types/billing.types';
 
 const OfflinePaymentsAdminPage: React.FC = () => {

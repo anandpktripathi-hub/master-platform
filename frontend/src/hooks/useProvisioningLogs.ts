@@ -1,7 +1,7 @@
 export type { ProvisioningResourceType } from '../types/api.types';
 import { useMemo } from 'react';
 import type { UseQueryResult } from '@tanstack/react-query';
-import api from '../api/client';
+import api from '../services/api';
 import usePollingQuery from './usePollingQuery';
 import type { ProvisioningLog } from '../types/api.types';
 

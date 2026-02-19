@@ -82,14 +82,12 @@ export class CustomDomainSslScheduler {
 
       for (const domain of expiringSoon) {
         const tenantId = String(domain.tenantId);
-        const email = await this.tenantsService.getTenantBillingEmail(
-          tenantId,
-        );
+        const email = await this.tenantsService.getTenantBillingEmail(tenantId);
         if (!email) {
           continue;
         }
 
-        const expiresAt = domain.sslExpiresAt as Date;
+        const expiresAt = domain.sslExpiresAt;
         const millisRemaining = expiresAt.getTime() - now.getTime();
         const daysRemaining = Math.max(
           1,

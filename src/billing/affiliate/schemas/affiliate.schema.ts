@@ -28,6 +28,3 @@ export class Affiliate {
 }
 
 export const AffiliateSchema = SchemaFactory.createForClass(Affiliate);
-
-AffiliateSchema.index({ userId: 1 });
-AffiliateSchema.index({ code: 1 }, { unique: true });

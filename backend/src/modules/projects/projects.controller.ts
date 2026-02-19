@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
@@ -12,7 +21,14 @@ interface AuthRequest extends Request {
 
 @Controller('projects')
 @UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
-@Roles('tenant_admin', 'staff', 'admin', 'owner', 'platform_admin', 'PLATFORM_SUPER_ADMIN')
+@Roles(
+  'tenant_admin',
+  'staff',
+  'admin',
+  'owner',
+  'platform_admin',
+  'PLATFORM_SUPER_ADMIN',
+)
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
@@ -34,7 +50,11 @@ export class ProjectsController {
   }
 
   @Patch(':id')
-  updateProject(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateProject(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.projectsService.updateProject(tenantId, id, body);
   }
 
@@ -45,12 +65,20 @@ export class ProjectsController {
   }
 
   @Post(':projectId/tasks')
-  createTask(@Tenant() tenantId: string, @Param('projectId') projectId: string, @Body() body: any) {
+  createTask(
+    @Tenant() tenantId: string,
+    @Param('projectId') projectId: string,
+    @Body() body: any,
+  ) {
     return this.projectsService.createTask(tenantId, projectId, body);
   }
 
   @Patch('tasks/:id')
-  updateTask(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateTask(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.projectsService.updateTask(tenantId, id, body);
   }
 
@@ -61,8 +89,15 @@ export class ProjectsController {
   }
 
   @Post('timesheets/log')
-  logTime(@Tenant() tenantId: string, @Req() req: AuthRequest, @Body() body: any) {
+  logTime(
+    @Tenant() tenantId: string,
+    @Req() req: AuthRequest,
+    @Body() body: any,
+  ) {
     const userId = req.user?.sub || (req.user as any)?._id;
-    return this.projectsService.logTime(tenantId, { ...body, userId: String(userId) });
+    return this.projectsService.logTime(tenantId, {
+      ...body,
+      userId: String(userId),
+    });
   }
 }

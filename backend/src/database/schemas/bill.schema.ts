@@ -3,7 +3,12 @@ import { Document, Types } from 'mongoose';
 
 export type BillDocument = Bill & Document;
 
-export type BillStatus = 'draft' | 'open' | 'partially_paid' | 'paid' | 'cancelled';
+export type BillStatus =
+  | 'draft'
+  | 'open'
+  | 'partially_paid'
+  | 'paid'
+  | 'cancelled';
 
 @Schema({ timestamps: true })
 export class Bill {
@@ -29,6 +34,7 @@ export class Bill {
   dueDate!: Date;
 
   @Prop({
+    type: String,
     required: true,
     enum: ['draft', 'open', 'partially_paid', 'paid', 'cancelled'],
     default: 'draft',

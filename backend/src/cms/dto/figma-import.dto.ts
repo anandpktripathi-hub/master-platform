@@ -1,12 +1,31 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional, ValidateIf } from 'class-validator';
 
 export class FigmaImportDto {
+  // Preferred field name
+  @ValidateIf((o) => !o.url)
   @IsNotEmpty()
-  figmaUrl!: string;
+  @IsOptional()
+  figmaUrl?: string;
 
+  // Backwards-compatible alias used by some frontend code
+  @ValidateIf((o) => !o.figmaUrl)
   @IsNotEmpty()
-  accessToken!: string;
+  @IsOptional()
+  url?: string;
 
+  // Preferred field name
+  @ValidateIf((o) => !o.token)
   @IsNotEmpty()
-  tenantId!: string;
+  @IsOptional()
+  accessToken?: string;
+
+  // Backwards-compatible alias used by some frontend code
+  @ValidateIf((o) => !o.accessToken)
+  @IsNotEmpty()
+  @IsOptional()
+  token?: string;
+
+  // Prefer tenant context header; allow explicit tenantId for backwards compatibility
+  @IsOptional()
+  tenantId?: string;
 }

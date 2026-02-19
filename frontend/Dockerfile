@@ -9,7 +9,7 @@ RUN npm install --legacy-peer-deps
 COPY . .
 
 # Skip TypeScript strict checking, just build with Vite
-RUN npm run vite build 2>/dev/null || vite build
+RUN npm run build
 
 FROM nginx:alpine
 

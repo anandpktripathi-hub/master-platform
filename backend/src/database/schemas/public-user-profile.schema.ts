@@ -84,4 +84,5 @@ export class PublicUserProfile {
   isComplete!: boolean;
 }
 
-export const PublicUserProfileSchema = SchemaFactory.createForClass(PublicUserProfile);
+export const PublicUserProfileSchema =
+  SchemaFactory.createForClass(PublicUserProfile);

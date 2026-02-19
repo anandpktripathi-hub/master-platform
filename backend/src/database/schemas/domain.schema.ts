@@ -8,13 +8,14 @@ export class Domain {
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
   tenantId!: Types.ObjectId;
 
-  @Prop({ enum: ['path', 'subdomain'], required: true })
+  @Prop({ type: String, enum: ['path', 'subdomain'], required: true })
   type!: 'path' | 'subdomain';
 
   @Prop({ required: true, lowercase: true, trim: true })
   value!: string; // slug for path or subdomain
 
   @Prop({
+    type: String,
     enum: ['pending', 'active', 'suspended', 'blocked'],
     default: 'pending',
   })

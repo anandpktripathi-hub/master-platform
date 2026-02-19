@@ -17,7 +17,7 @@ export class JobPosting {
   @Prop()
   description?: string;
 
-  @Prop({ enum: ['open', 'closed'], default: 'open' })
+  @Prop({ type: String, enum: ['open', 'closed'], default: 'open' })
   status!: 'open' | 'closed';
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })

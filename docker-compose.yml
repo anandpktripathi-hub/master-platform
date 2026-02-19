@@ -1,6 +1,4 @@
-﻿version: '3.8'
-
-services:
+﻿services:
   mongodb:
     image: mongo:7.0
     ports:
@@ -15,7 +13,7 @@ services:
     restart: unless-stopped
 
   redis:
-    image: redis:7
+    image: redis:7-alpine
     ports:
       - "6379:6379"
     networks:
@@ -30,6 +28,7 @@ services:
       - "4000:4000"
     environment:
       DATABASE_URI: mongodb://mongodb:27017/smetasc-saas
+      REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-your-secret-key}
       NODE_ENV: production
       PORT: 4000
@@ -37,11 +36,12 @@ services:
       CORS_ORIGIN: http://localhost
     depends_on:
       - mongodb
+      - redis
     networks:
       - smetasc-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4000/api/v1/health"]
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4000/api/v1/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
       interval: 30s
       timeout: 10s
       retries: 3

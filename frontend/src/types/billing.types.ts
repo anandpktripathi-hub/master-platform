@@ -143,6 +143,7 @@ export interface OfflinePaymentRequest {
   description?: string;
   proofUrl?: string;
   status: 'pending' | 'approved' | 'rejected';
+  metadata?: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
 }

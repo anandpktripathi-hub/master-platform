@@ -11,7 +11,11 @@ export class Attendance {
   @Prop({ type: Date, required: true })
   date!: Date;
 
-  @Prop({ required: true, enum: ['present', 'absent', 'remote', 'on_leave'] })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['present', 'absent', 'remote', 'on_leave'],
+  })
   status!: 'present' | 'absent' | 'remote' | 'on_leave';
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
@@ -19,4 +23,7 @@ export class Attendance {
 }
 
 export const AttendanceSchema = SchemaFactory.createForClass(Attendance);
-AttendanceSchema.index({ tenantId: 1, employeeId: 1, date: 1 }, { unique: true });
+AttendanceSchema.index(
+  { tenantId: 1, employeeId: 1, date: 1 },
+  { unique: true },
+);

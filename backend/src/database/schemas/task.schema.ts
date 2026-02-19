@@ -14,7 +14,11 @@ export class Task {
   @Prop()
   description?: string;
 
-  @Prop({ enum: ['todo', 'in_progress', 'done'], default: 'todo' })
+  @Prop({
+    type: String,
+    enum: ['todo', 'in_progress', 'done'],
+    default: 'todo',
+  })
   status!: 'todo' | 'in_progress' | 'done';
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })

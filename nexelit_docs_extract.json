@@ -1,0 +1,4080 @@
+{
+  "base": "https://docs.xgenious.com/docs/nexelit/",
+  "count": 183,
+  "errors": [],
+  "pages": [
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/",
+      "module": "overview",
+      "slug": "",
+      "title": "Nexelit – Multipurpose Website CMS Documentation",
+      "purpose": "",
+      "roles": [
+        "admin",
+        "super admin",
+        "user"
+      ],
+      "ui_paths": [
+        "- Admin Panel Admin Login Profile Settings Password Change",
+        "- Profile Settings",
+        "- Email Settings SMTP Setup Manual SMTP Setup Email Template Email Message Settings",
+        "- Email Message Settings",
+        "- Currency Settings",
+        "- Products Module Add New Products Shipping Coupon Orders Ratings Tax Settings variants",
+        "- Tax Settings",
+        "- Events Module Add New Events Settings Event Payment Logs Events Attendances Logs"
+      ],
+      "actions": [
+        "add",
+        "clone",
+        "configure",
+        "create",
+        "disable",
+        "edit",
+        "enable",
+        "generate",
+        "hide",
+        "login",
+        "register",
+        "remove",
+        "set",
+        "show",
+        "update"
+      ],
+      "options_fields": [
+        "Add new string",
+        "Admin Panel Admin Login Profile Settings Password Change",
+        "Basic Settings Seo & og meta settings Logo & Site title Page settings Custom css custom js cache settings live Chat Typography",
+        "Cashfree – Where to get App Id and Secret Key?",
+        "Change Password",
+        "CinetPay Integratoin- How to get Api Key and Site Id",
+        "Currency Settings",
+        "Email Message Settings",
+        "Email Settings SMTP Setup Manual SMTP Setup Email Template Email Message Settings",
+        "Email Template",
+        "How To Change Home Page Variant",
+        "How To Increase Logo Height",
+        "Instamojo – How do I get my Client ID and Client Secret?",
+        "Languages Add new languages Clone new Languages Add new string Translate Words",
+        "Logo & Site title",
+        "Manual SMTP Setup",
+        "Password Change",
+        "Payfast – How To Find my Merchant ID and Key?",
+        "Products Module Add New Products Shipping Coupon Orders Ratings Tax Settings variants",
+        "SMTP Setup"
+      ],
+      "steps": [
+        "Instruction Server Requirement Installation Process Manual Installation Update Process Manual Update One Click Update Configure [Change Logs] Nexelit- Multipurpose Website CMS localhost Installation",
+        "One Click Update Configure"
+      ],
+      "dependencies_troubleshooting": [
+        "- how to change 404 page content",
+        "- All the pages are throwing 404 except the home screen – in Nexelit",
+        "- SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’",
+        "- User Email Verify Showing 500 Error",
+        "- How To Fix 503 Server Unavailable Issue"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/admin-panel/",
+      "module": "admin panel",
+      "slug": "",
+      "title": "Admin Panel",
+      "purpose": "",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "# Admin Panel",
+        "- Profile Settings"
+      ],
+      "actions": [
+        "login"
+      ],
+      "options_fields": [
+        "Password Change"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/admin-panel/login/",
+      "module": "admin panel",
+      "slug": "login",
+      "title": "Admin Login",
+      "purpose": "You can access your admin dashboard by yourdomain.com/login/admin. then you will see option to login to admin panel",
+      "roles": [
+        "admin",
+        "super admin",
+        "user"
+      ],
+      "ui_paths": [
+        "You can access your admin dashboard by yourdomain.com/login/admin. then you will see option to login to admin panel"
+      ],
+      "actions": [
+        "create",
+        "login"
+      ],
+      "options_fields": [
+        "- Password : 12345678",
+        "- Username : super_admin",
+        "Password : 12345678",
+        "Username : super_admin"
+      ],
+      "steps": [
+        "You can access your admin dashboard by yourdomain.com/login/admin. then you will see option to login to admin panel",
+        "Note: if you have create admin account during installation then login using that credential instead of trying default admin details"
+      ],
+      "dependencies_troubleshooting": [
+        "Note: if you have create admin account during installation then login using that credential instead of trying default admin details"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/admin-panel/password-change/",
+      "module": "admin panel",
+      "slug": "password change",
+      "title": "Password Change",
+      "purpose": "It’s verify easy to edit your admin password, after login to admin panel check top right corner for change menu, as like below image",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "It’s verify easy to edit your admin password, after login to admin panel check top right corner for change menu, as like below image"
+      ],
+      "actions": [
+        "add",
+        "edit",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/admin-panel/profile-settings/",
+      "module": "admin panel",
+      "slug": "profile settings",
+      "title": "Profile Settings",
+      "purpose": "It’s verify easy to edit your admin profile info, after login to admin panel check top right corner for edit profile menu, as like below image",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "# Profile Settings",
+        "It’s verify easy to edit your admin profile info, after login to admin panel check top right corner for edit profile menu, as like below image"
+      ],
+      "actions": [
+        "edit",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/appointments-module/",
+      "module": "appointments module",
+      "slug": "",
+      "title": "Appointments Module",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- Settings"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/appointments-module/add-new-appointment/",
+      "module": "appointments module",
+      "slug": "add new appointment",
+      "title": "add new appointment",
+      "purpose": "To manage Appointment Module go to “All Module > Appointment Manage>New Appointment”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Appointment Module go to “All Module > Appointment Manage>New Appointment”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/appointments-module/all-appointment-booking/",
+      "module": "appointments module",
+      "slug": "all appointment booking",
+      "title": "All Appointment Booking",
+      "purpose": "To manage appointment Manage go to “All Module > Appointment Manage>All Appointment Booking”",
+      "roles": [],
+      "ui_paths": [
+        "To manage appointment Manage go to “All Module > Appointment Manage>All Appointment Booking”"
+      ],
+      "actions": [
+        "approve",
+        "delete",
+        "edit"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/appointments-module/booking-time/",
+      "module": "appointments module",
+      "slug": "booking time",
+      "title": "Booking Time",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/appointments-module/reviews/",
+      "module": "appointments module",
+      "slug": "reviews",
+      "title": "Reviews",
+      "purpose": "To manage appointment Manage go to “All Module > Appointment Manage>All Reviews”",
+      "roles": [],
+      "ui_paths": [
+        "To manage appointment Manage go to “All Module > Appointment Manage>All Reviews”"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/appointments-module/settings/",
+      "module": "appointments module",
+      "slug": "settings",
+      "title": "Settings",
+      "purpose": "To manage Appointment Module go to “All Module > Appointment Manage>Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# Settings",
+        "To manage Appointment Module go to “All Module > Appointment Manage>Settings”",
+        "Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/",
+      "module": "basic settings",
+      "slug": "",
+      "title": "Basic Settings",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "# Basic Settings",
+        "- Seo & og meta settings",
+        "- Page settings",
+        "- cache settings"
+      ],
+      "actions": [],
+      "options_fields": [
+        "Logo & Site title"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/cache-settings/",
+      "module": "basic settings",
+      "slug": "cache settings",
+      "title": "cache settings",
+      "purpose": "sometime you need to clear your system cache, this cms comes with option to do it from admin panel. go to “General Settings > Cache Settings” .",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "# cache settings",
+        "sometime you need to clear your system cache, this cms comes with option to do it from admin panel. go to “General Settings > Cache Settings” ."
+      ],
+      "actions": [
+        "configure"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/custom-css/",
+      "module": "basic settings",
+      "slug": "custom css",
+      "title": "Custom css",
+      "purpose": "this cms comes with option to add you own css to change or customise anything in the website. goto “General settings > Custom CSS” , add you own css code here and go to website you will see changes as per your css code.",
+      "roles": [],
+      "ui_paths": [
+        "this cms comes with option to add you own css to change or customise anything in the website. goto “General settings > Custom CSS” , add you own css code here and go to website you will see changes as per your css code."
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [
+        "NT:: some time you see it not change then clear your browser cache by ctrl+shift+r ( window ) cmd+shift+r ( macos )."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/custom-js/",
+      "module": "basic settings",
+      "slug": "custom js",
+      "title": "custom js",
+      "purpose": "this cms comes with option to add you own js to change or customise anything in the website. goto “General settings > Custom Js” , add you own js code here and go to website you will see changes as per your js code.",
+      "roles": [],
+      "ui_paths": [
+        "this cms comes with option to add you own js to change or customise anything in the website. goto “General settings > Custom Js” , add you own js code here and go to website you will see changes as per your js code."
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [
+        "NT:: some time you see it not change then clear your browser cache by ctrl+shift+r ( window ) cmd+shift+r ( macos )."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/live-chat/",
+      "module": "basic settings",
+      "slug": "live chat",
+      "title": "live Chat",
+      "purpose": "this cms has option to add live chat via Tawk.to . if you want to use you have to configure it for your cms. follow below step to add your own tawk.to account and integrate it to the cms.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "Step 01: go to tawk.to and click sign up free button to open a new account.",
+        "Step 05: Team Members , Invite your coworkers and set their access level. An Admin can configure and customize settings, an Agent can only answer chats and tickets",
+        "Step 07: copy marked embed code in to website admin panel “General Settings > third party scripts” Tawk.to API Widget Code. paste copied embed code to the field."
+      ],
+      "actions": [
+        "add",
+        "configure",
+        "copy",
+        "create",
+        "install",
+        "set"
+      ],
+      "options_fields": [
+        "Step 03: select your language and lick next",
+        "Step 04: enter your property details, it will ask you about your website title your website url and widget name"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/logo-site-title/",
+      "module": "basic settings",
+      "slug": "logo site title",
+      "title": "Logo & Site title",
+      "purpose": "you can change your website logo you have to go to “General settings > site identity” .",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "# Site Title Settings",
+        "- Dark Mode For Admin Dashboard : your can enable/disable admin panel dark mode",
+        "- Site Main Color Settings: you can change website main color",
+        "- Site Base Color Two Settings: you can change website base color two",
+        "you can change your website logo you have to go to “General settings > site identity” .",
+        "you can change your website logo you have to go to “General settings > Basic identity” ."
+      ],
+      "actions": [
+        "copy",
+        "disable",
+        "enable",
+        "hide",
+        "show"
+      ],
+      "options_fields": [
+        "- Breadcrumb Image: upload your website breadcrumb area",
+        "- Disable User Email Verify : you can enable/disable user email verification.",
+        "- Language Select Show/Hide : you can show/hide language dropdown form your website",
+        "- Site Logo: upload your own logo for the website",
+        "- Site Title: enter your website title, it very important for your website seo",
+        "- White Site Logo : upload your own white logo for the website",
+        "Breadcrumb Image: upload your website breadcrumb area",
+        "Disable User Email Verify : you can enable/disable user email verification.",
+        "Language Select Show/Hide : you can show/hide language dropdown form your website",
+        "Site Logo: upload your own logo for the website",
+        "Site Title: enter your website title, it very important for your website seo",
+        "White Site Logo : upload your own white logo for the website"
+      ],
+      "steps": [
+        "Site Logo: upload your own logo for the website",
+        "White Site Logo : upload your own white logo for the website",
+        "Favicon : upload your website favicon",
+        "Breadcrumb Image: upload your website breadcrumb area",
+        "Site Title: enter your website title, it very important for your website seo",
+        "Site Tag Line: enter your tag line",
+        "Language Select Show/Hide : you can show/hide language dropdown form your website"
+      ],
+      "dependencies_troubleshooting": [
+        "- Site Title: enter your website title, it very important for your website seo"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/page-settings/",
+      "module": "basic settings",
+      "slug": "page settings",
+      "title": "Page settings",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "# Page settings"
+      ],
+      "actions": [
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/seo-og-meta-settings/",
+      "module": "basic settings",
+      "slug": "seo og meta settings",
+      "title": "Seo & og meta settings",
+      "purpose": "you can change your website SEO Settings you have to go to “General settings > SEO Settings” .",
+      "roles": [],
+      "ui_paths": [
+        "# Seo & og meta settings",
+        "you can change your website SEO Settings you have to go to “General settings > SEO Settings” ."
+      ],
+      "actions": [
+        "add",
+        "set",
+        "show"
+      ],
+      "options_fields": [
+        "- OG Meta Image: you can set og meta image for your website. if you add this og meta it will show the details of your website in social media.",
+        "- OG Meta Site Name: you can set og meta site name for your website.",
+        "- OG Meta Title: you can set og meta title for your website, it can be multilingual, if you add this og meta it will show the details of your website in social media.",
+        "OG Meta Image: you can set og meta image for your website. if you add this og meta it will show the details of your website in social media.",
+        "OG Meta Site Name: you can set og meta site name for your website.",
+        "OG Meta Title: you can set og meta title for your website, it can be multilingual, if you add this og meta it will show the details of your website in social media."
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/basic-settings/typography/",
+      "module": "basic settings",
+      "slug": "typography",
+      "title": "Typography",
+      "purpose": "this script comes with option to use google fonts as you choice, it has included over 500+ google fonts, to use your chosen fonts for the cms, you have to go to “General settings > typography settings”",
+      "roles": [],
+      "ui_paths": [
+        "this script comes with option to use google fonts as you choice, it has included over 500+ google fonts, to use your chosen fonts for the cms, you have to go to “General settings > typography settings”"
+      ],
+      "actions": [
+        "disable",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "this script comes with option to use google fonts as you choice, it has included over 500+ google fonts, to use your chosen fonts for the cms, you have to go to “General settings > typography settings”",
+        "body font means, the font will be use all paragraph and inline element the website. when ever you select a font family you must have to set font variant for the font family, otherwise it the font change not work."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/",
+      "module": "course module",
+      "slug": "",
+      "title": "Course Module",
+      "purpose": "",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "- settings"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/add-new-course/",
+      "module": "course module",
+      "slug": "add new course",
+      "title": "add new course",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>New Courses”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Courses go to “All Module > Courses Manage>New Courses”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/all-coupons/",
+      "module": "course module",
+      "slug": "all coupons",
+      "title": "all coupons",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>Coupon”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Courses go to “All Module > Courses Manage>Coupon”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/all-lesson/",
+      "module": "course module",
+      "slug": "all lesson",
+      "title": "all lesson",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>All Lessons”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Courses go to “All Module > Courses Manage>All Lessons”"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/all-reviews/",
+      "module": "course module",
+      "slug": "all reviews",
+      "title": "all reviews",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>All Reviews”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Courses go to “All Module > Courses Manage>All Reviews”"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/enrollments/",
+      "module": "course module",
+      "slug": "enrollments",
+      "title": "Enrollments",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>All Enrollment”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Courses go to “All Module > Courses Manage>All Enrollment”"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/instructor/",
+      "module": "course module",
+      "slug": "instructor",
+      "title": "Instructor",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>Instructor”",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "To manage Courses go to “All Module > Courses Manage>Instructor”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/course-module/settings/",
+      "module": "course module",
+      "slug": "settings",
+      "title": "settings",
+      "purpose": "To manage Courses go to “All Module > Courses Manage>Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# settings",
+        "To manage Courses go to “All Module > Courses Manage>Settings”",
+        "Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/dontions-module/",
+      "module": "dontions module",
+      "slug": "",
+      "title": "Dontions Module",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- Donation Page Settings",
+        "- Donation Single Page Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/dontions-module/donation-page-settings/",
+      "module": "dontions module",
+      "slug": "donation page settings",
+      "title": "Donation Page Settings",
+      "purpose": "To manage product shipping method go to “All Module > Donations Manage>Donation Page Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# Donation Page Settings",
+        "To manage product shipping method go to “All Module > Donations Manage>Donation Page Settings”",
+        "Donation page Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/dontions-module/donation-payment-log/",
+      "module": "dontions module",
+      "slug": "donation payment log",
+      "title": "Donation Payment Logs",
+      "purpose": "To manage product shipping method go to “All Module > Donations Manage>All Donation Logs”",
+      "roles": [],
+      "ui_paths": [
+        "To manage product shipping method go to “All Module > Donations Manage>All Donation Logs”"
+      ],
+      "actions": [
+        "delete"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/dontions-module/donation-single-page-settings/",
+      "module": "dontions module",
+      "slug": "donation single page settings",
+      "title": "Donation Single Page Settings",
+      "purpose": "To manage product shipping method go to “All Module > Donations Manage>Donation Single Page Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# Donation Single Page Settings",
+        "To manage product shipping method go to “All Module > Donations Manage>Donation Single Page Settings”",
+        "Donation Single page Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/dontions-module/new-donation/",
+      "module": "dontions module",
+      "slug": "new donation",
+      "title": "New Donation",
+      "purpose": "To manage product shipping method go to “All Module > Donations Manage>New Donation”",
+      "roles": [],
+      "ui_paths": [
+        "To manage product shipping method go to “All Module > Donations Manage>New Donation”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/email-settings/",
+      "module": "email settings",
+      "slug": "",
+      "title": "Email Settings",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "# Email Settings",
+        "- Email Message Settings"
+      ],
+      "actions": [],
+      "options_fields": [
+        "Email Message Settings",
+        "Email Template",
+        "Manual SMTP Setup",
+        "SMTP Setup"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/email-settings/email-tempalte/",
+      "module": "email settings",
+      "slug": "email tempalte",
+      "title": "Email Template",
+      "purpose": "you will find option to change in default email template from your admin panel “General Settings > Email Template”",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "- @company: this will retrieve your site details you put it in “general settings> basic settings”",
+        "you will find option to change in default email template from your admin panel “General Settings > Email Template”"
+      ],
+      "actions": [],
+      "options_fields": [
+        "- @username: this will retrieve username if mail send to any registered user",
+        "@username: this will retrieve username if mail send to any registered user"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/email-settings/global-email-setup/",
+      "module": "email settings",
+      "slug": "global email setup",
+      "title": "Email Message Settings",
+      "purpose": "you can customise flash message for user, when they submit any form in frontend. to set your own message for user, go to “General settings > email settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "# Email Message Settings",
+        "you can customise flash message for user, when they submit any form in frontend. to set your own message for user, go to “General settings > email settings”."
+      ],
+      "actions": [
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/email-settings/manual-smtp-setup/",
+      "module": "email settings",
+      "slug": "manual smtp setup",
+      "title": "Manual SMTP Setup",
+      "purpose": "Smtp settings is a much needed settings you need to with the cms, without setup your smtp and google captcha none of website form will work.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "Smtp settings is a much needed settings you need to with the cms, without setup your smtp and google captcha none of website form will work.",
+        "to set your own smtp settings manually, open “@core > .env” file and change blow settings",
+        "you have to set all of these field in smtp settings with your proper info"
+      ],
+      "actions": [
+        "set"
+      ],
+      "options_fields": [
+        "- Smtp Mail Encryption: select smtp encryption type SSL TLS None",
+        "- Smtp Mail Host : enter you smtp mail host",
+        "- Smtp Mail Password: enter your smtp password or webmail password",
+        "- Smtp Mail Port : select your smtp mail port from list 587 465 2525",
+        "- Smtp Mail Username : enter your smtp username or webmail address",
+        "- Smtp Mailer : set one from those as your smtp mailer or you can say smtp driver SMTP Mailgum SendMail PostMark",
+        "SMTP",
+        "Smtp Mail Encryption: select smtp encryption type SSL TLS None",
+        "Smtp Mail Host : enter you smtp mail host",
+        "Smtp Mail Password: enter your smtp password or webmail password",
+        "Smtp Mail Port : select your smtp mail port from list 587 465 2525",
+        "Smtp Mail Username : enter your smtp username or webmail address",
+        "Smtp Mailer : set one from those as your smtp mailer or you can say smtp driver SMTP Mailgum SendMail PostMark"
+      ],
+      "steps": [
+        "Smtp Mail Host : enter you smtp mail host",
+        "Smtp Mail Port : select your smtp mail port from list 587 465 2525",
+        "Smtp Mail Username : enter your smtp username or webmail address",
+        "Smtp Mail Password: enter your smtp password or webmail password",
+        "Smtp Mail Encryption: select smtp encryption type SSL TLS None"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/email-settings/smtp-setup/",
+      "module": "email settings",
+      "slug": "smtp setup",
+      "title": "SMTP Setup",
+      "purpose": "Smtp settings is a much needed settings you need to with the cms, without setup your smtp and google captcha none of website form will work.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "Smtp settings is a much needed settings you need to with the cms, without setup your smtp and google captcha none of website form will work.",
+        "to set your own smtp settings, got to “General Settings > Smtp Settings” you will see below settings.",
+        "you have to set all of these field in smtp settings with your proper info",
+        "NT: Do not forget to add your smtp email as your global email in “general settings > email template”."
+      ],
+      "actions": [
+        "add",
+        "set"
+      ],
+      "options_fields": [
+        "- Smtp Mail Encryption: select smtp encryption type SSL TLS None",
+        "- Smtp Mail Host : enter you smtp mail host",
+        "- Smtp Mail Password: enter your smtp password or webmail password",
+        "- Smtp Mail Port : select your smtp mail port from list 587 465 25",
+        "- Smtp Mail Username : enter your smtp username or webmail address",
+        "- Smtp Mailer : set one from those as your smtp mailer or you can say smtp driver SMTP Mailgum SendMail PostMark",
+        "NT: Do not forget to add your smtp email as your global email in “general settings > email template”.",
+        "SMTP",
+        "Smtp Mail Encryption: select smtp encryption type SSL TLS None",
+        "Smtp Mail Host : enter you smtp mail host",
+        "Smtp Mail Password: enter your smtp password or webmail password",
+        "Smtp Mail Port : select your smtp mail port from list 587 465 25",
+        "Smtp Mail Username : enter your smtp username or webmail address",
+        "Smtp Mailer : set one from those as your smtp mailer or you can say smtp driver SMTP Mailgum SendMail PostMark"
+      ],
+      "steps": [
+        "Smtp Mail Host : enter you smtp mail host",
+        "Smtp Mail Port : select your smtp mail port from list 587 465 25",
+        "Smtp Mail Username : enter your smtp username or webmail address",
+        "Smtp Mail Password: enter your smtp password or webmail password",
+        "Smtp Mail Encryption: select smtp encryption type SSL TLS None"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/events-module/",
+      "module": "events module",
+      "slug": "",
+      "title": "Events Module",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- Settings"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/events-module/add-new-events/",
+      "module": "events module",
+      "slug": "add new events",
+      "title": "Add New Events",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/events-module/event-payment-logs/",
+      "module": "events module",
+      "slug": "event payment logs",
+      "title": "Event Payment Logs",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/events-module/events-attendances-logs/",
+      "module": "events module",
+      "slug": "events attendances logs",
+      "title": "Events Attendances Logs",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/events-module/settings/",
+      "module": "events module",
+      "slug": "settings",
+      "title": "Settings",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "# Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/",
+      "module": "form builder",
+      "slug": "",
+      "title": "Form Builder",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/apply-job-form/",
+      "module": "form builder",
+      "slug": "apply job form",
+      "title": "Apply Job Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Apply Job Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/builder-custom-form/",
+      "module": "form builder",
+      "slug": "builder custom form",
+      "title": "Build Custom Form",
+      "purpose": "From Version 3.0.0 you can build your own custom form, for your purpose with our custom form builder. go to admin panel “Appearance Settings > Form Builder > All custom form”",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "From Version 3.0.0 you can build your own custom form, for your purpose with our custom form builder. go to admin panel “Appearance Settings > Form Builder > All custom form”"
+      ],
+      "actions": [
+        "create",
+        "edit"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/call-action-query-form/",
+      "module": "form builder",
+      "slug": "call action query form",
+      "title": "Call Action Query Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Call to action Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/case-study-query-form/",
+      "module": "form builder",
+      "slug": "case study query form",
+      "title": "Case Study Query Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Case Study Query Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/contact-form/",
+      "module": "form builder",
+      "slug": "contact form",
+      "title": "Contact Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Contact Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/estimate-form/",
+      "module": "form builder",
+      "slug": "estimate form",
+      "title": "Estimate Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Estimate Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/event-attendance-form/",
+      "module": "form builder",
+      "slug": "event attendance form",
+      "title": "Event Attendance Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Event Attendance Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/get-in-touch-form/",
+      "module": "form builder",
+      "slug": "get in touch form",
+      "title": "Get In Touch Form Customise",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Get in touch form” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/order-form/",
+      "module": "form builder",
+      "slug": "order form",
+      "title": "Order Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Order Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/quote-form/",
+      "module": "form builder",
+      "slug": "quote form",
+      "title": "Quote Form",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Quote Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/form-builder/service-query-form/",
+      "module": "form builder",
+      "slug": "service query form",
+      "title": "Service Query Form Customise",
+      "purpose": "This cms is come with a beautiful features for customise the website form. it has Drag & Drop Form builder to customise all of the website forms. to customise order form you have to go to ” Form Builder > Service Query Form Builder” .",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/",
+      "module": "general questions",
+      "slug": "",
+      "title": "General Questions",
+      "purpose": "",
+      "roles": [
+        "admin",
+        "super admin",
+        "user"
+      ],
+      "ui_paths": [],
+      "actions": [
+        "add",
+        "create",
+        "disable",
+        "enable",
+        "login",
+        "register",
+        "remove",
+        "update"
+      ],
+      "options_fields": [
+        "How To Change Home Page Variant",
+        "How To Increase Logo Height",
+        "User Email Verify Showing 500 Error"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "- how to change 404 page content",
+        "- All the pages are throwing 404 except the home screen – in Nexelit",
+        "- SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’",
+        "- User Email Verify Showing 500 Error",
+        "- How To Fix 503 Server Unavailable Issue"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/all-the-pages-are-throwing-404-except-the-home-screen/",
+      "module": "general questions",
+      "slug": "all the pages are throwing 404 except the home screen",
+      "title": "All the pages are throwing 404 except the home screen – in Nexelit",
+      "purpose": "if you face this issue in your website that, mean you have missed .htaccess file. nexelit or any of xgenious cms.",
+      "roles": [],
+      "ui_paths": [
+        "login to your cpanel and go to script root folder check there .htaccess file available or not , if not available create one with below code"
+      ],
+      "actions": [
+        "create",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "# All the pages are throwing 404 except the home screen – in Nexelit",
+        "usually any script throwing 404 because of missing pretty url."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/did-not-find-appointment-module-after-update/",
+      "module": "general questions",
+      "slug": "did not find appointment module after update",
+      "title": "Did not find Appointment Module after update ?",
+      "purpose": "if you are upgrade to v2.4 if you did not find option to this module.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "enable module from admin panel."
+      ],
+      "actions": [
+        "add",
+        "edit",
+        "enable",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/did-not-find-course-module-after-udate/",
+      "module": "general questions",
+      "slug": "did not find course module after udate",
+      "title": "Did not find Course module after update",
+      "purpose": "if you are upgrade to v2.4 if you did not find option to this module.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "enable module from admin panel."
+      ],
+      "actions": [
+        "add",
+        "edit",
+        "enable",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/did-not-find-support-ticket-option-after-update/",
+      "module": "general questions",
+      "slug": "did not find support ticket option after update",
+      "title": "Did not find support ticket option after update ?",
+      "purpose": "if you are upgrade to v2.4 if you did not find option to this module.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "enable module from admin panel."
+      ],
+      "actions": [
+        "add",
+        "edit",
+        "enable",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/facebook-login/",
+      "module": "general questions",
+      "slug": "facebook login",
+      "title": "facebook login",
+      "purpose": "To add your own facebook login system to the script you need to create an facebook app. for that follow below steps",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "login to your facebook and go to https://developers.facebook.com .",
+        "now go to facebook login settings area",
+        "now go to settings > basic settings",
+        "now you have to add your facebook app id and app secret to your website admin panel, for this go to “General Settings > third party scripts”"
+      ],
+      "actions": [
+        "add",
+        "create",
+        "enable",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if facebook login is not enable, then enable it and add facebook app id and app secret"
+      ],
+      "dependencies_troubleshooting": [
+        "add your app domain and your email, remember your app domain must be your website url."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/google-login/",
+      "module": "general questions",
+      "slug": "google login",
+      "title": "How To Setup Google Login System In Nexelit",
+      "purpose": "howto setup google login system in the Nexelit or Any Other xgenious script you have to create google console api credential first. follow below step to get those credentials",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "go to https://console.cloud.google.com site and login to your gmail account go get access to the google cloud console.",
+        "now go to api overview from your project dashboard",
+        "now go to your website admin dashboard for add google oAuth client id and client secret, go to “General settings > third Party script” if you see google login disable then enable it and add google oauth crendetials."
+      ],
+      "actions": [
+        "add",
+        "create",
+        "disable",
+        "enable",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [
+        "howto setup google login system in the Nexelit or Any Other xgenious script you have to create google console api credential first. follow below step to get those credentials",
+        "click on credential then select oAuth client ID",
+        "if you dod not have o auth consent screen setup you have to setup it first, then you can create a credentials",
+        "now go to your website admin dashboard for add google oAuth client id and client secret, go to “General settings > third Party script” if you see google login disable then enable it and add google oauth crendetials."
+      ],
+      "dependencies_troubleshooting": [
+        "give all the details required for create a project"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-add-google-recaptcha/",
+      "module": "general questions",
+      "slug": "how add google recaptcha",
+      "title": "how add google recaptcha ?",
+      "purpose": "It is mandatory to setup your google reCAPTCHA v3 api key to work all of your frontend form. follow below step to get you own captcha key.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "Step 01: sign up for an Api key pair for your site, Go to Google Captcha site",
+        "Step 10: now you have to add those captcha key to admin panel “General settings > Third Party Script”"
+      ],
+      "actions": [
+        "add",
+        "copy",
+        "register"
+      ],
+      "options_fields": [
+        "- Google Captcha V3 Secret Key: copy google captcha v3 secret key and paste it here",
+        "- Step 05: select reCAPTCHA type to reCAPTCHA v3",
+        "Google Captcha V3 Secret Key: copy google captcha v3 secret key and paste it here",
+        "Step 01: sign up for an Api key pair for your site, Go to Google Captcha site",
+        "Step 05: select reCAPTCHA type to reCAPTCHA v3"
+      ],
+      "steps": [
+        "- Step 04: enter label for recognise it later",
+        "Step 04: enter label for recognise it later",
+        "- Step 05: select reCAPTCHA type to reCAPTCHA v3",
+        "Step 05: select reCAPTCHA type to reCAPTCHA v3",
+        "- Step 06: enter your Domains",
+        "Step 06: enter your Domains",
+        "- Step 07: add Owners",
+        "- Step 08 : Accept the reCAPTCHA Terms of Service",
+        "- Step 09: click on submit button, Your API keys will be generated.",
+        "Step 09: click on submit button, Your API keys will be generated."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-solve-working-alert-in-the-website/",
+      "module": "general questions",
+      "slug": "how solve working alert in the website",
+      "title": "how solve working alert in the website ?",
+      "purpose": "To remove this alert you have to go to “ general settings > third party script .” remove marked code in below picture, then clear your browser cache. that’s it alert will be remove.",
+      "roles": [],
+      "ui_paths": [
+        "To remove this alert you have to go to “ general settings > third party script .” remove marked code in below picture, then clear your browser cache. that’s it alert will be remove."
+      ],
+      "actions": [
+        "remove"
+      ],
+      "options_fields": [],
+      "steps": [
+        "To remove this alert you have to go to “ general settings > third party script .” remove marked code in below picture, then clear your browser cache. that’s it alert will be remove."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-add-google-analytics/",
+      "module": "general questions",
+      "slug": "how to add google analytics",
+      "title": "how to add google analytics",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-add-third-party-script/",
+      "module": "general questions",
+      "slug": "how to add third party script",
+      "title": "how to add third party script",
+      "purpose": "you can add any third party script code , example: facebook pixels, google tags manager etc. To Add code go to “General settings > Page Settings” . This code will be add inside </head> tag",
+      "roles": [],
+      "ui_paths": [
+        "you can add any third party script code , example: facebook pixels, google tags manager etc. To Add code go to “General settings > Page Settings” . This code will be add inside </head> tag"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-add-whatsapp-button-in-the-cms/",
+      "module": "general questions",
+      "slug": "how to add whatsapp button in the cms",
+      "title": "how to add whatsapp button in the cms",
+      "purpose": "you can add any third party script code , example: facebook pixels, google tags manager etc. To Add code go to “General settings > Page Settings” . This code will be add inside </head> tag",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "you can add any third party script code , example: facebook pixels, google tags manager etc. To Add code go to “General settings > Page Settings” . This code will be add inside </head> tag",
+        "Now add button code in third party script code. in admin panel “General settings > third party script”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-404-page-content/",
+      "module": "general questions",
+      "slug": "how to change 404 page content",
+      "title": "how to change 404 page content",
+      "purpose": "This cms comes with many home page variant, you can use any of them for your website, go to “Appearance Settings > 404 Page Manage” select your home page variant and save change.",
+      "roles": [],
+      "ui_paths": [
+        "This cms comes with many home page variant, you can use any of them for your website, go to “Appearance Settings > 404 Page Manage” select your home page variant and save change."
+      ],
+      "actions": [],
+      "options_fields": [
+        "- Title: enter title for 404 page",
+        "Title: enter title for 404 page"
+      ],
+      "steps": [
+        "Title: enter title for 404 page",
+        "Button Text: enter button text"
+      ],
+      "dependencies_troubleshooting": [
+        "# how to change 404 page content",
+        "- Title: enter title for 404 page",
+        "This cms comes with many home page variant, you can use any of them for your website, go to “Appearance Settings > 404 Page Manage” select your home page variant and save change."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-about-page-content/",
+      "module": "general questions",
+      "slug": "how to change about page content",
+      "title": "how to change about page content",
+      "purpose": "you can easily manage all of home page content from admin panel ” All Page Settings > About Page Manage” it has all the section setting separately.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "you can easily manage all of home page content from admin panel ” All Page Settings > About Page Manage” it has all the section setting separately."
+      ],
+      "actions": [
+        "hide",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-breadcrumb-color/",
+      "module": "general questions",
+      "slug": "how to change breadcrumb color",
+      "title": "how to change breadcrumb color",
+      "purpose": "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > Breadcrumb settings’",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > Breadcrumb settings’"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-contact-page/",
+      "module": "general questions",
+      "slug": "how to change contact page",
+      "title": "how to change contact page",
+      "purpose": "you can easily manage all of home page content from admin panel ” All Page Settings > Contact Page Manage” it has all the section setting separately.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "you can easily manage all of home page content from admin panel ” All Page Settings > Contact Page Manage” it has all the section setting separately."
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-feedback-page-content/",
+      "module": "general questions",
+      "slug": "how to change feedback page content",
+      "title": "how to change feedback page content",
+      "purpose": "you can easily manage all of home page content from admin panel ” All Page Settings > Feedback Page Manage” it has all the section setting separately.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "you can easily manage all of home page content from admin panel ” All Page Settings > Feedback Page Manage” it has all the section setting separately.",
+        "Feedback Page Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-footer-background-color-and-text-color/",
+      "module": "general questions",
+      "slug": "how to change footer background color and text color",
+      "title": "How to change Footer Background color and text color ?",
+      "purpose": "To change footer background color you need to add below css code in admin panel Custom CSS .",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "To change footer background color you need to add below css code in admin panel Custom CSS .",
+        "you need to add those css code in admin panel “General settings > custom css” , follow Custom Css article for more info about add new css code in the script."
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-footer-color/",
+      "module": "general questions",
+      "slug": "how to change footer color",
+      "title": "How to change Footer Color",
+      "purpose": "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > footer color settings’",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > footer color settings’"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-home-page-contents/",
+      "module": "general questions",
+      "slug": "how to change home page contents",
+      "title": "how to change home page contents",
+      "purpose": "you can easily manage all of home page content from admin panel ” All Page Settings > Home Page Manage” it has all the section setting separately.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "you can easily manage all of home page content from admin panel ” All Page Settings > Home Page Manage” it has all the section setting separately."
+      ],
+      "actions": [
+        "hide",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-home-page-variant/",
+      "module": "general questions",
+      "slug": "how to change home page variant",
+      "title": "How To Change Home Page Variant",
+      "purpose": "This cms comes with many home page variant, you can use any of them for your website, go to “Appearance Settings > Home Variant” select your home page variant and save change.",
+      "roles": [],
+      "ui_paths": [
+        "This cms comes with many home page variant, you can use any of them for your website, go to “Appearance Settings > Home Variant” select your home page variant and save change."
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-maintain-page-content/",
+      "module": "general questions",
+      "slug": "how to change maintain page content",
+      "title": "how to change maintain page content",
+      "purpose": "this cms has option to put your website in Maintenance mode, in Maintenance mode all pages are visible only for website admin. all the visitor will see the Maintenance page in that time.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "# Maintenance mode page settings",
+        "to enable/disable maintains mode you have to go to “General settings > basic settings”"
+      ],
+      "actions": [
+        "disable",
+        "enable"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-navbar-color/",
+      "module": "general questions",
+      "slug": "how to change navbar color",
+      "title": "how to change navbar color",
+      "purpose": "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > navbar settings’",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > navbar settings’"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-navbar-style/",
+      "module": "general questions",
+      "slug": "how to change navbar style",
+      "title": "How to change navbar style",
+      "purpose": "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > navbar settings’",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "From version 3.0.0, the script has option to change footer colors from admin panel. for that go to “General Settings > appearance > navbar settings’"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-change-website-colors/",
+      "module": "general questions",
+      "slug": "how to change website colors",
+      "title": "How to change website colors?",
+      "purpose": "To change color of the script you have to go to “ general settings > Color Settings .” now you can change all the color of all home page variant and also change heading and paragraph colors.",
+      "roles": [],
+      "ui_paths": [
+        "To change color of the script you have to go to “ general settings > Color Settings .” now you can change all the color of all home page variant and also change heading and paragraph colors."
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-create-a-page/",
+      "module": "general questions",
+      "slug": "how to create a page",
+      "title": "How to create a page?",
+      "purpose": "this cms has option to crate your own pages, in many cases we need to create our own pages for the website, to create a new page you to go to admin panel “Pages > Add new page” and fill the content then save changes.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "this cms has option to crate your own pages, in many cases we need to create our own pages for the website, to create a new page you to go to admin panel “Pages > Add new page” and fill the content then save changes."
+      ],
+      "actions": [
+        "add",
+        "create"
+      ],
+      "options_fields": [],
+      "steps": [
+        "this cms has option to crate your own pages, in many cases we need to create our own pages for the website, to create a new page you to go to admin panel “Pages > Add new page” and fill the content then save changes."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-enable-disable-any-module/",
+      "module": "general questions",
+      "slug": "how to enable disable any module",
+      "title": "How To Enable/Disable Any Module",
+      "purpose": "you can enable/disable module from this script. go to “General Settings > Module Settings” . select which module you need and which you don’t.",
+      "roles": [],
+      "ui_paths": [
+        "you can enable/disable module from this script. go to “General Settings > Module Settings” . select which module you need and which you don’t."
+      ],
+      "actions": [
+        "disable",
+        "enable"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-fix-503-server-unavailable-issue/",
+      "module": "general questions",
+      "slug": "how to fix 503 server unavailable issue",
+      "title": "How To Fix 503 Server Unavailable Issue",
+      "purpose": "Usually this issue happend when website is in maintenance mode, it happend when your are trying to update the website but it failed due to server connection timeout.",
+      "roles": [],
+      "ui_paths": [
+        "before trying to update it again, make sure you have a good internet connection. and your php ini settings as follows"
+      ],
+      "actions": [
+        "delete",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [
+        "then reload the webpage, it should work fine."
+      ],
+      "dependencies_troubleshooting": [
+        "# How To Fix 503 Server Unavailable Issue",
+        "before trying to update it again, make sure you have a good internet connection. and your php ini settings as follows"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-fix-mixed-content-issue-in-installer/",
+      "module": "general questions",
+      "slug": "how to fix mixed content issue in installer",
+      "title": "How to fix mixed content issue in installer",
+      "purpose": "if you are facing in progress for long time while installing the script, it usually happend due browser mixed content policy.",
+      "roles": [
+        "editor"
+      ],
+      "ui_paths": [
+        "Step 01: go to Install folder open index.php file"
+      ],
+      "actions": [
+        "add",
+        "edit",
+        "install"
+      ],
+      "options_fields": [],
+      "steps": [
+        "then add this code in your index.php before <head> tag closing."
+      ],
+      "dependencies_troubleshooting": [
+        "then add this code in your index.php before <head> tag closing."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-increase-logo-height/",
+      "module": "general questions",
+      "slug": "how to increase logo height",
+      "title": "How To Increase Logo Height",
+      "purpose": "you can increase frontend logo height by use below code in “General settings > custom css”",
+      "roles": [],
+      "ui_paths": [
+        "you can increase frontend logo height by use below code in “General settings > custom css”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/how-to-remove-login-register/",
+      "module": "general questions",
+      "slug": "how to remove login register",
+      "title": "How to remove Login/Register",
+      "purpose": "Right now this script does not have this option to hide login/register url from admin panel, but you can do it in manually. in this article i will show you how you can do this.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "Right now this script does not have this option to hide login/register url from admin panel, but you can do it in manually. in this article i will show you how you can do this.",
+        "login to your cpanel and go to the script installed path",
+        "navigate to “@core>resources>views>frontend>partials>supportbar.blade.php”"
+      ],
+      "actions": [
+        "edit",
+        "hide",
+        "login",
+        "register",
+        "remove",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "removed marked code from the file. Don’t forget to keep a backup of the file, before edit it."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/sqlstate23000-integrity-constraint-violation-1062-duplicate-entry-super_admin-for-key-admins_username_unique/",
+      "module": "general questions",
+      "slug": "sqlstate23000 integrity constraint violation 1062 duplicate entry super_admin for key admins_username_unique",
+      "title": "SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’",
+      "purpose": "",
+      "roles": [
+        "admin",
+        "super admin",
+        "user"
+      ],
+      "ui_paths": [],
+      "actions": [
+        "create",
+        "login"
+      ],
+      "options_fields": [
+        "- password : 12345678",
+        "- username : super_admin",
+        "password : 12345678",
+        "username : super_admin"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "# SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry ‘super_admin’ for key ‘admins_username_unique’",
+        "This is mysql error, this error mean you already have an admin account with username of super_admin. now you need to change this username if you want to create a new admin. or you can login to your website admin panel by default admin credentials"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/general-questions/user-email-verify-showing-500-error/",
+      "module": "general questions",
+      "slug": "user email verify showing 500 error",
+      "title": "User Email Verify Showing 500 Error",
+      "purpose": "If your system is getting 500 error after user registration or getting error 500 when click on send verify mail. this article will be helpful for you to resolve your error. This article is based on Nexelit – Multipurpose CMS",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "To fix this error 500 issue, you have to Make sure you have setup your smtp settings first,",
+        "After making sure you have properly setup your SMTP and google reCaptcha, Now Login to admin panel Go to “Appearance Settings> All Email Templates > User Verify Mail”"
+      ],
+      "actions": [
+        "add",
+        "login",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [
+        "To fix this error 500 issue, you have to Make sure you have setup your smtp settings first,"
+      ],
+      "dependencies_troubleshooting": [
+        "# User Email Verify Showing 500 Error",
+        "If your system is getting 500 error after user registration or getting error 500 when click on send verify mail. this article will be helpful for you to resolve your error. This article is based on Nexelit – Multipurpose CMS",
+        "To fix this error 500 issue, you have to Make sure you have setup your smtp settings first,"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/",
+      "module": "instruction",
+      "slug": "",
+      "title": "Instruction",
+      "purpose": "Nexelit – Multipurpose Website & Business Management System CMS",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "configure",
+        "update"
+      ],
+      "options_fields": [
+        "- Email: xgenious51@gmail.com",
+        "Email: xgenious51@gmail.com"
+      ],
+      "steps": [
+        "One Click Update Configure"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/change-logs/",
+      "module": "instruction",
+      "slug": "change logs",
+      "title": "[Change Logs] Nexelit- Multipurpose Website CMS",
+      "purpose": "Welcome to Nexelit – Multipurpose Website CMS Changes log. you will find all the details of the script regarding update, what we have fixed or what features we have added.",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/installation-proccess/",
+      "module": "instruction",
+      "slug": "installation proccess",
+      "title": "Installation Process",
+      "purpose": "Download file from codecanyon and extract in your pc and you will get 03 folder. Listed below",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "01. Now login to you cpanel and go to > MySQL® Database Wizard",
+        "08. Go To the link to install the script www.yoursite.com , you will see install wizard like below picture"
+      ],
+      "actions": [
+        "add",
+        "create",
+        "delete",
+        "download",
+        "install",
+        "login",
+        "update"
+      ],
+      "options_fields": [
+        "envato username means: your envato user account username."
+      ],
+      "steps": [
+        "04: Add user to the database. check all privileges and click make changes. then click “Next Step”",
+        "make sure you have all the icon green, if you see anything in red color, then you have to install that php extension or have to increase you php version. now click next",
+        "fill all the field with database username, database name, database username password. which we have create in step 02,03,04,05. once all input data is complete click on install now button."
+      ],
+      "dependencies_troubleshooting": [
+        "Required PHP v8. 1",
+        "database create is done, keep database user, database name, database password in a note.",
+        "this step make sure you have database required for the installation, click next"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/localhost-installation/",
+      "module": "instruction",
+      "slug": "localhost installation",
+      "title": "localhost Installation",
+      "purpose": "We will show you how you can install any of xgenious script in Windows Pc using Xampp. Go to xampp download page website download xampp php 7.4 version and install it in your computer.",
+      "roles": [
+        "admin",
+        "super admin",
+        "user"
+      ],
+      "ui_paths": [
+        "We will show you how you can install any of xgenious script in Windows Pc using Xampp. Go to xampp download page website download xampp php 7.4 version and install it in your computer.",
+        "Go To the link to install the script localhost/yourfoldername/install , you will see install wizard like below picture",
+        "after successful installation you will able to login to your admin panel via this admin info"
+      ],
+      "actions": [
+        "add",
+        "copy",
+        "create",
+        "download",
+        "install",
+        "login",
+        "show",
+        "update"
+      ],
+      "options_fields": [
+        "- database name: which we have created in step 06",
+        "- enter database username: root",
+        "- keep password field: empty",
+        "Your name",
+        "database name: which we have created in step 06",
+        "enter database username: root",
+        "enter email for super admin",
+        "enter password for super admin",
+        "enter username for super admin",
+        "keep password field: empty"
+      ],
+      "steps": [
+        "enter database username: root",
+        "- database name: which we have created in step 06",
+        "enter username for super admin",
+        "enter password for super admin",
+        "enter email for super admin",
+        "clock on explorer then open htdocs folder",
+        "now copy installable zip file (check Step 01 for the zip file) and paste it inside nexelit folder and unzip it. after unzip it will look like below screenshot",
+        "make sure you have all the icon green, if you see anything in red color, then you have to install that php extension or have to increase you php version. now click next"
+      ],
+      "dependencies_troubleshooting": [
+        "this step make sure you have database required for the installation, click next"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/manual-installtion/",
+      "module": "instruction",
+      "slug": "manual installtion",
+      "title": "Manual Installation",
+      "purpose": "if you are using local development, then it’s recommended to install the script manually. we will guide you in this article step by step about manual install.",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "01. Now login to you cpanel and go to > MySQL® Database Wizard",
+        "05. now you have to import script database to your newly created database. go to phpmyadmin",
+        "10. now go to “@core” folder open “.env” file. if you did not see .env file, then copy env-smaple.txt content from install folder and make a new file .env paste all the content.",
+        "13. your installation is done, now go to the website and check it, it should work fine, if you see it still not working, then clear your browser cache, contact support for any issue."
+      ],
+      "actions": [
+        "add",
+        "copy",
+        "create",
+        "download",
+        "import",
+        "install",
+        "login",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if you are using local development, then it’s recommended to install the script manually. we will guide you in this article step by step about manual install.",
+        "04: Add user to the database. check all privileges and click make changes. then click “Next Step”"
+      ],
+      "dependencies_troubleshooting": [
+        "database create is done, keep database user, database name, database password in a note."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/manual-update/",
+      "module": "instruction",
+      "slug": "manual update",
+      "title": "Manual Update",
+      "purpose": "this article will help you to update your website manually, this article for you if you did some modification and now want to upgrade to latest version.",
+      "roles": [],
+      "ui_paths": [
+        "Do not forget to upgrade your website database from “general settings>Upgrade database”",
+        "Do not forget to clear your website cache from “general settings>cache settings”"
+      ],
+      "actions": [
+        "copy",
+        "download",
+        "set",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "Before continue this manual update. you have to know which file you have customised, or your developer customize for you. you can not override you customised file while update the script. if you replace that file you customisation will removed.",
+        "Before doing update, we suggest to make a backup of your site and make a staging website for update it."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/one-click-update-configure/",
+      "module": "instruction",
+      "slug": "one click update configure",
+      "title": "One Click Update Configure",
+      "purpose": "goto admin panel -> general settings -> license settings click on license settings",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "goto admin panel -> general settings -> license settings click on license settings",
+        "for update the script go to admin panel -> general settings -> check update"
+      ],
+      "actions": [
+        "configure",
+        "enable",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [
+        "now click on get license key then enter your envato username, email and purchase code"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/server-requirement/",
+      "module": "instruction",
+      "slug": "server requirement",
+      "title": "Server Requirement",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/instruction/update-process/",
+      "module": "instruction",
+      "slug": "update process",
+      "title": "Update Process",
+      "purpose": "Nexelit – Multipurpose Website & Business Management System CMS",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "Login to your cpanel or any panel you have, go to file manager and go to the folder where you install the script.",
+        "now go to your domain.com/update url and hit enter to see update wizard, update wizard will be like below picture.",
+        "Do not forget to upgrade your website database from “general settings>Upgrade database”",
+        "Do not forget to clear your website cache from “general settings>cache settings”"
+      ],
+      "actions": [
+        "add",
+        "create",
+        "delete",
+        "download",
+        "edit",
+        "install",
+        "login",
+        "remove",
+        "set",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [
+        "click on “i agree next step” and then see all permission is ok or not. if all are green check mark click on “next” button."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/jobs-module/",
+      "module": "jobs module",
+      "slug": "",
+      "title": "Jobs Module",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/jobs-module/add-new-job-post/",
+      "module": "jobs module",
+      "slug": "add new job post",
+      "title": "add new job post",
+      "purpose": "To manage Job module go to “All Module > Jobs Module>New Job Post”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Job module go to “All Module > Jobs Module>New Job Post”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/jobs-module/all-applicant/",
+      "module": "jobs module",
+      "slug": "all applicant",
+      "title": "all applicant",
+      "purpose": "To manage Job module go to “All Module > Jobs Module>All Applicant”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Job module go to “All Module > Jobs Module>All Applicant”"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/knowledgebase-module/",
+      "module": "knowledgebase module",
+      "slug": "",
+      "title": "Knowledgebase Module",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- page settings"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/knowledgebase-module/add-new-article/",
+      "module": "knowledgebase module",
+      "slug": "add new article",
+      "title": "add new article",
+      "purpose": "To manage Knowledge Base go to “All Module > Knowledge Base>Add New Article ”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Knowledge Base go to “All Module > Knowledge Base>Add New Article ”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/knowledgebase-module/page-settings/",
+      "module": "knowledgebase module",
+      "slug": "page settings",
+      "title": "page settings",
+      "purpose": "To manage Knowledge Base go to “All Module > Knowledge Base>Knowledge Base Page Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# page settings",
+        "To manage Knowledge Base go to “All Module > Knowledge Base>Knowledge Base Page Settings”",
+        "Knowledge Base Page Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/knowledgebase-module/topics/",
+      "module": "knowledgebase module",
+      "slug": "topics",
+      "title": "Topics",
+      "purpose": "To manage Knowledge Base go to “All Module > Knowledge Base>Topics”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Knowledge Base go to “All Module > Knowledge Base>Topics”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/languages/",
+      "module": "languages",
+      "slug": "",
+      "title": "Languages",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add",
+        "clone"
+      ],
+      "options_fields": [
+        "Add new string"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/languages/add-new-languages/",
+      "module": "languages",
+      "slug": "add new languages",
+      "title": "Add new languages",
+      "purpose": "this cms comes with multilingual support. it means you can use multiple language support to it. To add new language you have to go to admin panel “Languages>add new language” .",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "this cms comes with multilingual support. it means you can use multiple language support to it. To add new language you have to go to admin panel “Languages>add new language” ."
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/languages/add-new-string/",
+      "module": "languages",
+      "slug": "add new string",
+      "title": "Add new string",
+      "purpose": "this cms has option to add missing translate string to admin panel words or frontend words.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "this cms has option to add missing translate string to admin panel words or frontend words."
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [
+        "- String: Add missing string",
+        "- Translated String: add your translated string for missing string",
+        "String: Add missing string",
+        "Translated String: add your translated string for missing string"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/languages/clone-new-languages/",
+      "module": "languages",
+      "slug": "clone new languages",
+      "title": "Clone new Languages",
+      "purpose": "this cms comes with an awesome option like clone language, it will clone you selected language into a new language with a minimum data require for the website to run it. To clone a language to new language you have click on copy icon.",
+      "roles": [],
+      "ui_paths": [
+        "# Clone language settings"
+      ],
+      "actions": [
+        "clone",
+        "copy"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "you must have to select language name from dropdown, select direction and status of the language,",
+        "it recommended to keep your language in draft mode, until you fill all the data required for your newly added languages.",
+        "To work the multilingual feature properly you have put all the required data for your newly cloned languages."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/languages/translate-words/",
+      "module": "languages",
+      "slug": "translate words",
+      "title": "Translate Words",
+      "purpose": "All languages has two kind of translate option",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "you will get all words your need to translate for admin panel, you can also add missing string by “add new string’ ."
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/menu-manage/",
+      "module": "menu manage",
+      "slug": "",
+      "title": "Menu Manage",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add",
+        "create"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/menu-manage/add-new-item-to-menu/",
+      "module": "menu manage",
+      "slug": "add new item to menu",
+      "title": "Add new item to menu",
+      "purpose": "select the page you want to add in the menu, click on add to menu, it will added at the bottom of the menu.",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "add",
+        "create",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/menu-manage/create-a-new-menu/",
+      "module": "menu manage",
+      "slug": "create a new menu",
+      "title": "Create a new menu",
+      "purpose": "This cms comes with Drag & Drop menu builder you can build your own menu easily, To create a new menu go to ” Appearance Settings> Menu Manage” .",
+      "roles": [],
+      "ui_paths": [
+        "This cms comes with Drag & Drop menu builder you can build your own menu easily, To create a new menu go to ” Appearance Settings> Menu Manage” ."
+      ],
+      "actions": [
+        "add",
+        "create",
+        "download",
+        "edit"
+      ],
+      "options_fields": [
+        "Step 01: create a menu, give it a title and select language"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/package-orders-manage/",
+      "module": "package orders manage",
+      "slug": "",
+      "title": "Package Orders manage",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/package-orders-manage/all-orders/",
+      "module": "package orders manage",
+      "slug": "all orders",
+      "title": "All Orders",
+      "purpose": "To manage Package Module go to “All Module > Package Orders Manage>All Order”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Package Module go to “All Module > Package Orders Manage>All Order”"
+      ],
+      "actions": [
+        "delete",
+        "download",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/package-orders-manage/all-payments-logs/",
+      "module": "package orders manage",
+      "slug": "all payments logs",
+      "title": "All Payments Logs",
+      "purpose": "To manage Package Module go to “All Module > Package Orders Manage>All Payment Logs”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Package Module go to “All Module > Package Orders Manage>All Payment Logs”"
+      ],
+      "actions": [
+        "approve",
+        "delete"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/package-orders-manage/settings/",
+      "module": "package orders manage",
+      "slug": "settings",
+      "title": "Settings",
+      "purpose": "To manage Package Module go to “All Module > Package Orders Manage>Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# Settings",
+        "To manage Package Module go to “All Module > Package Orders Manage>Settings”",
+        "Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/",
+      "module": "payment gateway settings",
+      "slug": "",
+      "title": "Payment Gateway Settings",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "# Payment Gateway Settings",
+        "- Currency Settings"
+      ],
+      "actions": [
+        "configure"
+      ],
+      "options_fields": [
+        "Cashfree – Where to get App Id and Secret Key?",
+        "CinetPay Integratoin- How to get Api Key and Site Id",
+        "Currency Settings",
+        "Instamojo – How do I get my Client ID and Client Secret?",
+        "Payfast – How To Find my Merchant ID and Key?",
+        "midtrans – how to get Merchant id and Client key and server key ?"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/authorize-payment-gateway-setup/",
+      "module": "payment gateway settings",
+      "slug": "authorize payment gateway setup",
+      "title": "Authorize.net Payment Gateway Setup",
+      "purpose": "Login to your Authorize.net account click on account menu.",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "generate",
+        "login",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [
+        "now generate a new transaction key. check new transaction key, then click on submit button"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/cashfree/",
+      "module": "payment gateway settings",
+      "slug": "cashfree",
+      "title": "Cashfree – Where to get App Id and Secret Key?",
+      "purpose": "if you want to use Cashfree in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Cashfree gateway settings. Go to “General settings>Payment Gateway Settings > Cashfree settings”.",
+      "roles": [],
+      "ui_paths": [
+        "Go to Cashfree .com login to your dashboard. then click on Payment Gateway > Try Environment button.",
+        "you will find option to go to production mode in top right corner a button name Switch to Production"
+      ],
+      "actions": [
+        "login",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if you want to use Cashfree in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Cashfree gateway settings. Go to “General settings>Payment Gateway Settings > Cashfree settings”.",
+        "Go to Cashfree .com login to your dashboard. then click on Payment Gateway > Try Environment button."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/cinetpay/",
+      "module": "payment gateway settings",
+      "slug": "cinetpay",
+      "title": "CinetPay Integratoin- How to get Api Key and Site Id",
+      "purpose": "To get api key and site id for cinetpay payment gateway. login to your merchant panel using this url https://app.cinetpay.com/marchand",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "then add those info in your website admin panel “general settings > payment gateway settings > cinetpay”"
+      ],
+      "actions": [
+        "add",
+        "create",
+        "login"
+      ],
+      "options_fields": [
+        "To get api key and site id for cinetpay payment gateway. login to your merchant panel using this url https://app.cinetpay.com/marchand"
+      ],
+      "steps": [
+        "Goto “Intégration” page you will get apikey. then you have to create a service to get your siteid.",
+        "then add those info in your website admin panel “general settings > payment gateway settings > cinetpay”"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/currency-settings/",
+      "module": "payment gateway settings",
+      "slug": "currency settings",
+      "title": "Currency Settings",
+      "purpose": "",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "# Currency Settings",
+        "- Default Payment Gateway: set which will be your default payment gateway. that mean it will be selected automatically when user will go to purchase anything."
+      ],
+      "actions": [
+        "set"
+      ],
+      "options_fields": [
+        "- Global Currency: set you currency will user for the website",
+        "- Symbol Position: you can set your currency symbol position",
+        "- to INR Exchange Rate : enter your currency conversation rate for INR. this is mandatory to use any indian payment gateway.",
+        "- to NGN Exchange Rate : enter your currency conversation rate for NGN, this is mandatory to user Paystack payment gateway.",
+        "Global Currency: set you currency will user for the website",
+        "Symbol Position: you can set your currency symbol position",
+        "to INR Exchange Rate : enter your currency conversation rate for INR. this is mandatory to use any indian payment gateway.",
+        "to NGN Exchange Rate : enter your currency conversation rate for NGN, this is mandatory to user Paystack payment gateway."
+      ],
+      "steps": [
+        "Default Payment Gateway: set which will be your default payment gateway. that mean it will be selected automatically when user will go to purchase anything.",
+        "to INR Exchange Rate : enter your currency conversation rate for INR. this is mandatory to use any indian payment gateway.",
+        "to NGN Exchange Rate : enter your currency conversation rate for NGN, this is mandatory to user Paystack payment gateway."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/flutterwave/",
+      "module": "payment gateway settings",
+      "slug": "flutterwave",
+      "title": "Flutterwave",
+      "purpose": "if you want to use Flutterwave in your cms, you have to setup your Flutterwave gateway settings. Go to “General settings>Payment Gateway Settings > Flutterwave settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use Flutterwave in your cms, you have to setup your Flutterwave gateway settings. Go to “General settings>Payment Gateway Settings > Flutterwave settings”.",
+        "to get you Flutterwave api keys, loging to your Flutterwave account, go to Settings > api",
+        "Here is Flutterwave supported Currency List, if your currency is not supported by Flutterwave , then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set"
+      ],
+      "options_fields": [
+        "- Flutterwave Logo : you can set you selected Flutterwave logo, which will be shown in frontend for user to select payment gateway.",
+        "- Flutterwave Secret Key: enter Flutterwave secret, this is mandatory to work Flutterwave in this cms",
+        "Flutterwave Logo : you can set you selected Flutterwave logo, which will be shown in frontend for user to select payment gateway.",
+        "Flutterwave Secret Key: enter Flutterwave secret, this is mandatory to work Flutterwave in this cms"
+      ],
+      "steps": [
+        "Flutterwave Logo : you can set you selected Flutterwave logo, which will be shown in frontend for user to select payment gateway.",
+        "Flutterwave Public Key : enter Flutterwave Publishable Key, this is mandatory to work Flutterwave in this cms",
+        "Flutterwave Secret Key: enter Flutterwave secret, this is mandatory to work Flutterwave in this cms",
+        "Here is Flutterwave supported Currency List, if your currency is not supported by Flutterwave , then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/how-to-configure-senangpay/",
+      "module": "payment gateway settings",
+      "slug": "how to configure senangpay",
+      "title": "How to Configure SenangPay",
+      "purpose": "To start, we will need the information as below. These can be retrieved in the senangPay Dashboard.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "1. Go to Menu > Settings > Profile",
+        "you will get return url from admin panel. put all those information in admin panel -> payment settings -> senangpay"
+      ],
+      "actions": [
+        "configure"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "# A. Information required"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/how-to-get-paytabs-payment-gateway-api-credentials/",
+      "module": "payment gateway settings",
+      "slug": "how to get paytabs payment gateway api credentials",
+      "title": "How to get Paytabs payment gateway api credentials",
+      "purpose": "To get api key and site id for Paytabs payment gateway. login to your merchant panel using this url https://merchant-global.paytabs.com/merchant/home",
+      "roles": [],
+      "ui_paths": [
+        "Go to “Api Keys > Key Management”"
+      ],
+      "actions": [
+        "login"
+      ],
+      "options_fields": [
+        "To get api key and site id for Paytabs payment gateway. login to your merchant panel using this url https://merchant-global.paytabs.com/merchant/home"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/how-to-get-square-payment-gateway-api-credentials/",
+      "module": "payment gateway settings",
+      "slug": "how to get square payment gateway api credentials",
+      "title": "How to get Square Payment gateway Api Credentials",
+      "purpose": "To setup squareup payment gateway first you have to create a developer account from here https://developer.squareup.com/apps .",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "your squareup payment gateway setting is done, now add all those info in your website admin panel “General settings > payment Gateway settings”"
+      ],
+      "actions": [
+        "add",
+        "create",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [
+        "To setup squareup payment gateway first you have to create a developer account from here https://developer.squareup.com/apps .",
+        "add account name and select your country then click create"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/how-to-setup-api-for-billplz-payment-gateway/",
+      "module": "payment gateway settings",
+      "slug": "how to setup api for billplz payment gateway",
+      "title": "How To Setup Api For BillPlz Payment Gateway",
+      "purpose": "To get api key and site id for BillPlz https://www.billplz.com/ payment gateway. login to your dashboard panel using this url https://dashboard.billplz.com",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "Step 01: Click on your profile then click on settings",
+        "Step 02: go to Keys & Integration section, click on Billplz Secret Key and Xsignature Payment",
+        "Step 05: Now Go to your script admin panel > General settings > Payment Gateway Settings > BIllplz Settings"
+      ],
+      "actions": [
+        "add",
+        "copy",
+        "create",
+        "login"
+      ],
+      "options_fields": [
+        "Step 02: go to Keys & Integration section, click on Billplz Secret Key and Xsignature Payment",
+        "To get api key and site id for BillPlz https://www.billplz.com/ payment gateway. login to your dashboard panel using this url https://dashboard.billplz.com"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/instamojo/",
+      "module": "payment gateway settings",
+      "slug": "instamojo",
+      "title": "Instamojo – How do I get my Client ID and Client Secret?",
+      "purpose": "if you want to use Instamojo in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Instamojo gateway settings. Go to “General settings>Payment Gateway Settings > Instamojo settings”.",
+      "roles": [],
+      "ui_paths": [
+        "Go to Instamojo .com login to your dashboard. now click on api & plugins . then scroll down to create New Credentials and click on it."
+      ],
+      "actions": [
+        "create",
+        "generate",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if you want to use Instamojo in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Instamojo gateway settings. Go to “General settings>Payment Gateway Settings > Instamojo settings”.",
+        "Go to Instamojo .com login to your dashboard. now click on api & plugins . then scroll down to create New Credentials and click on it."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/manual-payment/",
+      "module": "payment gateway settings",
+      "slug": "manual payment",
+      "title": "Manual Payment",
+      "purpose": "if you want to use manual Payment in your cms, you have to setup your manual Payment gateway settings. Go to “General settings>Payment Gateway Settings > manual Payment settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use manual Payment in your cms, you have to setup your manual Payment gateway settings. Go to “General settings>Payment Gateway Settings > manual Payment settings”."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set"
+      ],
+      "options_fields": [
+        "- Manual Payment Logo : you can set you selected Manual Payment logo, which will be shown in frontend for user to select payment gateway.",
+        "- Manual Payment Name : enter Manual Payment Name this is mandatory to work Manual Payment in this cms",
+        "Manual Payment Logo : you can set you selected Manual Payment logo, which will be shown in frontend for user to select payment gateway.",
+        "Manual Payment Name : enter Manual Payment Name this is mandatory to work Manual Payment in this cms"
+      ],
+      "steps": [
+        "Manual Payment Logo : you can set you selected Manual Payment logo, which will be shown in frontend for user to select payment gateway.",
+        "Manual Payment Name : enter Manual Payment Name this is mandatory to work Manual Payment in this cms",
+        "Manual Payment Description: enter description about manual payment, how user will pay you. and how can they provide payment details to you."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/mercadopago/",
+      "module": "payment gateway settings",
+      "slug": "mercadopago",
+      "title": "Mercadopago",
+      "purpose": "if you want to use mercadopago in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your mercadopago gateway settings. Go to “General settings>Payment Gateway Settings > mercadopago settings”.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [
+        "if you want to use mercadopago in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your mercadopago gateway settings. Go to “General settings>Payment Gateway Settings > mercadopago settings”."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/midtrans/",
+      "module": "payment gateway settings",
+      "slug": "midtrans",
+      "title": "midtrans – how to get Merchant id and Client key and server key ?",
+      "purpose": "if you want to use midtrans in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your midtrans gateway settings. Go to “General settings>Payment Gateway Settings > midtrans settings”.",
+      "roles": [],
+      "ui_paths": [
+        "Go to midtrans login to your dashboard. now click on Settings > Access Keys . you will get details"
+      ],
+      "actions": [
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if you want to use midtrans in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your midtrans gateway settings. Go to “General settings>Payment Gateway Settings > midtrans settings”."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/mollie/",
+      "module": "payment gateway settings",
+      "slug": "mollie",
+      "title": "Mollie",
+      "purpose": "if you want to use Mollie in your cms, you have to setup your Mollie gateway settings. Go to “General settings>Payment Gateway Settings > Mollie settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use Mollie in your cms, you have to setup your Mollie gateway settings. Go to “General settings>Payment Gateway Settings > Mollie settings”.",
+        "to get you Mollie api keys, loging to your Mollie account, go to Developers > ap i keys",
+        "you must have to enable payment methods for mollie, for that go to mollie dashboard > settings > website profiles > payment methods enable methods which you want",
+        "Here is Mollie supported Currency List, if your currency is not supported by Mollie , then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set"
+      ],
+      "options_fields": [
+        "- Mollie Logo : you can set you selected Mollie logo, which will be shown in frontend for user to select payment gateway.",
+        "Mollie Logo : you can set you selected Mollie logo, which will be shown in frontend for user to select payment gateway."
+      ],
+      "steps": [
+        "Mollie Logo : you can set you selected Mollie logo, which will be shown in frontend for user to select payment gateway.",
+        "Mollie Public Key : enter Mollie Public Key, this is mandatory to work Mollie in this cms",
+        "Here is Mollie supported Currency List, if your currency is not supported by Mollie , then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [
+        "you must have to enable payment methods for mollie, for that go to mollie dashboard > settings > website profiles > payment methods enable methods which you want"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/payfast/",
+      "module": "payment gateway settings",
+      "slug": "payfast",
+      "title": "Payfast – How To Find my Merchant ID and Key?",
+      "purpose": "if you want to use Payfast in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Payfast gateway settings. Go to “General settings>Payment Gateway Settings > Payfast settings”.",
+      "roles": [],
+      "ui_paths": [
+        "Go to Payfast .com login to your dashboard. Navigate to Account > Personal Information . you will see you Merchant ID and Key at right top."
+      ],
+      "actions": [
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if you want to use Payfast in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your Payfast gateway settings. Go to “General settings>Payment Gateway Settings > Payfast settings”."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/paypal/",
+      "module": "payment gateway settings",
+      "slug": "paypal",
+      "title": "Paypal",
+      "purpose": "if you want to use paypal in your cms, you have to setup your payal gateway settings. Go to “General settings>Payment Gateway Settings > paypal settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use paypal in your cms, you have to setup your payal gateway settings. Go to “General settings>Payment Gateway Settings > paypal settings”.",
+        "Here is paypal supported Currency List, if your currency is not supported by paypal, then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "create",
+        "disable",
+        "edit",
+        "enable",
+        "set"
+      ],
+      "options_fields": [
+        "- Paypal App Client ID : enter paypal app client id ( or paypal marchant id ), this is mandatory to work paypal in this cms",
+        "- Paypal App Secret: enter paypal app secret, this is mandatory to work paypal in this cms",
+        "- Paypal Logo : you can set you selected paypal logo, which will be shown in frontend for user to select payment gateway.",
+        "Paypal App Client ID : enter paypal app client id ( or paypal marchant id ), this is mandatory to work paypal in this cms",
+        "Paypal App Secret: enter paypal app secret, this is mandatory to work paypal in this cms",
+        "Paypal Logo : you can set you selected paypal logo, which will be shown in frontend for user to select payment gateway."
+      ],
+      "steps": [
+        "Paypal Logo : you can set you selected paypal logo, which will be shown in frontend for user to select payment gateway.",
+        "Paypal App Client ID : enter paypal app client id ( or paypal marchant id ), this is mandatory to work paypal in this cms",
+        "Paypal App Secret: enter paypal app secret, this is mandatory to work paypal in this cms",
+        "Here is paypal supported Currency List, if your currency is not supported by paypal, then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/paystack/",
+      "module": "payment gateway settings",
+      "slug": "paystack",
+      "title": "Paystack",
+      "purpose": "if you want to use Paystack in your cms, you have to setup your Paystack gateway settings. Go to “General settings>Payment Gateway Settings > Paystack settings”.",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use Paystack in your cms, you have to setup your Paystack gateway settings. Go to “General settings>Payment Gateway Settings > Paystack settings”.",
+        "follow below image to image to get you paystack api keys. Login to your paystack account then go to settings>API Keys & Webhooks",
+        "Do not forget to add Callback url to your paystack api setttings. you will get call back url in the cms admin panel paystack settings",
+        "Here is Paystack supported Currency List, if your currency is not supported by Paystack, then this cms will charge them in NGN as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "add",
+        "disable",
+        "enable",
+        "login",
+        "set"
+      ],
+      "options_fields": [
+        "- PayStack Merchant Email : enter your Paystack merchant email, this is mandatory to use Paystack in this cms",
+        "- Paystack Logo : you can set you selected Paystack logo, which will be shown in frontend for user to select payment gateway.",
+        "- Paystack Secret Key: enter Paystack secret key, this is mandatory to work Paystack in this cms",
+        "PayStack Merchant Email : enter your Paystack merchant email, this is mandatory to use Paystack in this cms",
+        "Paystack Logo : you can set you selected Paystack logo, which will be shown in frontend for user to select payment gateway.",
+        "Paystack Secret Key: enter Paystack secret key, this is mandatory to work Paystack in this cms"
+      ],
+      "steps": [
+        "Paystack Logo : you can set you selected Paystack logo, which will be shown in frontend for user to select payment gateway.",
+        "Paystack Public Key : enter Paystack public key, this is mandatory to work Paystack in this cms",
+        "Paystack Secret Key: enter Paystack secret key, this is mandatory to work Paystack in this cms",
+        "PayStack Merchant Email : enter your Paystack merchant email, this is mandatory to use Paystack in this cms",
+        "follow below image to image to get you paystack api keys. Login to your paystack account then go to settings>API Keys & Webhooks",
+        "Here is Paystack supported Currency List, if your currency is not supported by Paystack, then this cms will charge them in NGN as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/paytm/",
+      "module": "payment gateway settings",
+      "slug": "paytm",
+      "title": "Paytm",
+      "purpose": "if you want to use Paytm in your cms, you have to setup your Paytm gateway settings. Go to “General settings>Payment Gateway Settings > Paytm settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use Paytm in your cms, you have to setup your Paytm gateway settings. Go to “General settings>Payment Gateway Settings > Paytm settings”.",
+        "Here is Paytm supported Currency List, if your currency is not supported by Paytm, then this cms will charge them in INR as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set"
+      ],
+      "options_fields": [
+        "- Paytm Logo : you can set you selected Paytm logo, which will be shown in frontend for user to select payment gateway.",
+        "- Paytm Merchant ID: enter Paytm Merchant ID, this is mandatory to work Paytm in this cms",
+        "- Paytm Merchant Key : enter Paytm Merchant Key, this is mandatory to work Paytm in this cms",
+        "- Paytm Merchant Website: enter Paytm Merchant Website, this is mandatory to work Paytm in this cms",
+        "Paytm Logo : you can set you selected Paytm logo, which will be shown in frontend for user to select payment gateway.",
+        "Paytm Merchant ID: enter Paytm Merchant ID, this is mandatory to work Paytm in this cms",
+        "Paytm Merchant Key : enter Paytm Merchant Key, this is mandatory to work Paytm in this cms",
+        "Paytm Merchant Website: enter Paytm Merchant Website, this is mandatory to work Paytm in this cms"
+      ],
+      "steps": [
+        "Paytm Logo : you can set you selected Paytm logo, which will be shown in frontend for user to select payment gateway.",
+        "Paytm Merchant Key : enter Paytm Merchant Key, this is mandatory to work Paytm in this cms",
+        "Paytm Merchant ID: enter Paytm Merchant ID, this is mandatory to work Paytm in this cms",
+        "Paytm Merchant Website: enter Paytm Merchant Website, this is mandatory to work Paytm in this cms",
+        "Here is Paytm supported Currency List, if your currency is not supported by Paytm, then this cms will charge them in INR as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/payumoney/",
+      "module": "payment gateway settings",
+      "slug": "payumoney",
+      "title": "PayUMoney – How to get PayUMoney Api Credentials",
+      "purpose": "if you want to use PayUMoney in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your PayUMoney gateway settings. Go to “General settings>Payment Gateway Settings > PayUMoney settings”.",
+      "roles": [],
+      "ui_paths": [
+        "Go to PayUMoney login to your dashboard. now click on Online payments . then scroll down to create New Store and click on it."
+      ],
+      "actions": [
+        "create",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [
+        "if you want to use PayUMoney in Nexelit cms, At first you need to get your client id and client secrets , you have to setup your PayUMoney gateway settings. Go to “General settings>Payment Gateway Settings > PayUMoney settings”.",
+        "Go to PayUMoney login to your dashboard. now click on Online payments . then scroll down to create New Store and click on it."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/razorpay/",
+      "module": "payment gateway settings",
+      "slug": "razorpay",
+      "title": "Razorpay",
+      "purpose": "if you want to use Razorpay in your cms, you have to setup your Razorpay gateway settings. Go to “General settings>Payment Gateway Settings > Razorpay settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use Razorpay in your cms, you have to setup your Razorpay gateway settings. Go to “General settings>Payment Gateway Settings > Razorpay settings”.",
+        "to get you Razorpay api keys, loging to your Razorpay account, go to Settings → API Keys → Generate Key to generate key for the selected mode.",
+        "Here is Razorpay supported Currency List, if your currency is not supported by Razorpay , then this cms will charge them in INR as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "generate",
+        "set"
+      ],
+      "options_fields": [
+        "- Razorpay Logo : you can set you selected Razorpay logo, which will be shown in frontend for user to select payment gateway.",
+        "- Razorpay Secret : enter Razorpay Secret this is mandatory to work Razorpay in this cms",
+        "Razorpay Logo : you can set you selected Razorpay logo, which will be shown in frontend for user to select payment gateway.",
+        "Razorpay Secret : enter Razorpay Secret this is mandatory to work Razorpay in this cms"
+      ],
+      "steps": [
+        "Razorpay Logo : you can set you selected Razorpay logo, which will be shown in frontend for user to select payment gateway.",
+        "Razorpay Key : enter Razorpay Key this is mandatory to work Razorpay in this cms",
+        "Razorpay Secret : enter Razorpay Secret this is mandatory to work Razorpay in this cms",
+        "Here is Razorpay supported Currency List, if your currency is not supported by Razorpay , then this cms will charge them in INR as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/stripe/",
+      "module": "payment gateway settings",
+      "slug": "stripe",
+      "title": "Stripe",
+      "purpose": "if you want to use Stipe in your cms, you have to setup your Stipe gateway settings. Go to “General settings>Payment Gateway Settings > Stipe settings”.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "if you want to use Stipe in your cms, you have to setup your Stipe gateway settings. Go to “General settings>Payment Gateway Settings > Stipe settings”.",
+        "to get you Stipe api keys, loging to your stripe account, go to developer > api keys ,",
+        "Here is Stipe supported Currency List, if your currency is not supported by Stipe , then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set"
+      ],
+      "options_fields": [
+        "- Stripe Logo : you can set you selected Stripe logo, which will be shown in frontend for user to select payment gateway.",
+        "- Stripe Secret: enter stripe secret, this is mandatory to work Stripe in this cms",
+        "Stripe Logo : you can set you selected Stripe logo, which will be shown in frontend for user to select payment gateway.",
+        "Stripe Secret: enter stripe secret, this is mandatory to work Stripe in this cms"
+      ],
+      "steps": [
+        "Stripe Logo : you can set you selected Stripe logo, which will be shown in frontend for user to select payment gateway.",
+        "Stripe Publishable Key : enter Stripe Publishable Key, this is mandatory to work Stripe in this cms",
+        "Stripe Secret: enter stripe secret, this is mandatory to work Stripe in this cms",
+        "Here is Stipe supported Currency List, if your currency is not supported by Stipe , then this cms will charge them in USD as per your give conversation rate in currency settings."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/toyyibpay-payment-gateway-setup/",
+      "module": "payment gateway settings",
+      "slug": "toyyibpay payment gateway setup",
+      "title": "Toyyibpay payment gateway setup",
+      "purpose": "Login to your toyyibpay account https://toyyibpay.com/access/login",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "now add your secret key and category code in admin panel > general settings > payment gateway settings"
+      ],
+      "actions": [
+        "add",
+        "create",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/transaction-cloud-payment-gateway-setup/",
+      "module": "payment gateway settings",
+      "slug": "transaction cloud payment gateway setup",
+      "title": "Transaction Cloud Payment Gateway Setup",
+      "purpose": "go to https://sandbox-app.transaction.cloud/ and login to your sandbox account.",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "go to https://sandbox-app.transaction.cloud/ and login to your sandbox account.",
+        "Now you you need to create api, go to API set up page, copy api login and api password and add it into the admin panel.."
+      ],
+      "actions": [
+        "add",
+        "configure",
+        "copy",
+        "create",
+        "login",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [
+        "create a new one time payment product , from sidebar products then click create product ."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/payment-gateway-settings/zitopay-payment-gateway-setup/",
+      "module": "payment gateway settings",
+      "slug": "zitopay payment gateway setup",
+      "title": "Zitopay – Payment gateway setup",
+      "purpose": "To use Zitopay go to zitopay website, after signup/login to your dashboard you will see this screen",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "To use Zitopay go to zitopay website, after signup/login to your dashboard you will see this screen",
+        "no copy your zitopay username and go to your website admin panel “General Settings > Zitopay” add your zitopay username and save it."
+      ],
+      "actions": [
+        "add",
+        "copy",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/popup-builder/",
+      "module": "popup builder",
+      "slug": "",
+      "title": "Popup Builder",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "create",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/popup-builder/create-a-new-popup/",
+      "module": "popup builder",
+      "slug": "create a new popup",
+      "title": "create a new popup",
+      "purpose": "To create new popup, go to “ Appearance Settings > Popup Builder “ click “Add New Popup” .",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "To create new popup, go to “ Appearance Settings > Popup Builder “ click “Add New Popup” ."
+      ],
+      "actions": [
+        "add",
+        "create",
+        "show"
+      ],
+      "options_fields": [
+        "- Name: give a title to your popup to recognise it later, it will not show anywhere in the frontend.",
+        "- Title: this is popup title it will show in the popup",
+        "Image – this will contain only an image",
+        "Name: give a title to your popup to recognise it later, it will not show anywhere in the frontend.",
+        "Promotion – this will show a image in left side and content in right side",
+        "Title: this is popup title it will show in the popup",
+        "Type: popup builder has 3type of popup pre build, all type are listed below Image – this will contain only an image Promotion – this will show a image in left side and content in right side Discount – this will show an countdown time with the popup content Notice – this is for showing notice to user"
+      ],
+      "steps": [
+        "Description: enter description for popup"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/popup-builder/how-to-set-popup/",
+      "module": "popup builder",
+      "slug": "how to set popup",
+      "title": "How to set popup",
+      "purpose": "after adding new popup, you have to set it up to showing in the website, you will find popup showing settings in side “General Settings > Popup Settings” .",
+      "roles": [],
+      "ui_paths": [
+        "after adding new popup, you have to set it up to showing in the website, you will find popup showing settings in side “General Settings > Popup Settings” ."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set",
+        "show"
+      ],
+      "options_fields": [
+        "- Popup Delay Time: you can set delay time, popup will show after this delay time. it only use mili seconds",
+        "Popup Delay Time: you can set delay time, popup will show after this delay time. it only use mili seconds"
+      ],
+      "steps": [
+        "Select Popup: select your created popup to show it in frontend."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/preloader-builder/",
+      "module": "preloader builder",
+      "slug": "",
+      "title": "Preloader Builder",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "hide",
+        "set",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/preloader-builder/custom-preloader/",
+      "module": "preloader builder",
+      "slug": "custom preloader",
+      "title": "Custom Preloader",
+      "purpose": "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader",
+      "roles": [],
+      "ui_paths": [
+        "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader"
+      ],
+      "actions": [
+        "enable",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [
+        "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader"
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/preloader-builder/set-preloader/",
+      "module": "preloader builder",
+      "slug": "set preloader",
+      "title": "Set Preloader",
+      "purpose": "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader.",
+      "roles": [],
+      "ui_paths": [
+        "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader."
+      ],
+      "actions": [
+        "enable",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [
+        "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/preloader-builder/show-hide-preloader/",
+      "module": "preloader builder",
+      "slug": "show hide preloader",
+      "title": "Show/Hide Preloader",
+      "purpose": "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader.",
+      "roles": [],
+      "ui_paths": [
+        "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader."
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "hide",
+        "show"
+      ],
+      "options_fields": [],
+      "steps": [
+        "you use your own preloader for this script, go to “General settings > preloader settings” , then enable custom preloader."
+      ],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/",
+      "module": "products module",
+      "slug": "",
+      "title": "Products Module",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- Tax Settings"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [
+        "Tax Settings"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/add-new-products/",
+      "module": "products module",
+      "slug": "add new products",
+      "title": "Add New Products",
+      "purpose": "To add new product go to “All Module > Products Manage>Add New Product”",
+      "roles": [],
+      "ui_paths": [
+        "To add new product go to “All Module > Products Manage>Add New Product”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/coupon/",
+      "module": "products module",
+      "slug": "coupon",
+      "title": "Coupon",
+      "purpose": "To manage product shipping method go to “All Module > Products Manage>Coupon”",
+      "roles": [],
+      "ui_paths": [
+        "To manage product shipping method go to “All Module > Products Manage>Coupon”"
+      ],
+      "actions": [
+        "add",
+        "delete",
+        "edit",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/orders/",
+      "module": "products module",
+      "slug": "orders",
+      "title": "Orders",
+      "purpose": "To manage product shipping method go to “All Module > Products Manage>Orders”",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "To manage product shipping method go to “All Module > Products Manage>Orders”"
+      ],
+      "actions": [
+        "add",
+        "approve",
+        "edit",
+        "set",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/ratings/",
+      "module": "products module",
+      "slug": "ratings",
+      "title": "Ratings",
+      "purpose": "To manage product shipping method go to “All Module > Products Manage>Ratings”",
+      "roles": [],
+      "ui_paths": [
+        "To manage product shipping method go to “All Module > Products Manage>Ratings”"
+      ],
+      "actions": [
+        "delete"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/shipping/",
+      "module": "products module",
+      "slug": "shipping",
+      "title": "Shipping",
+      "purpose": "To manage product shipping method go to “All Module > Products Manage>Shipping”",
+      "roles": [],
+      "ui_paths": [
+        "To manage product shipping method go to “All Module > Products Manage>Shipping”"
+      ],
+      "actions": [
+        "add",
+        "delete",
+        "edit",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/tax-settings/",
+      "module": "products module",
+      "slug": "tax settings",
+      "title": "Tax Settings",
+      "purpose": "To manage product shipping method go to “All Module > Products Manage>Tax Settings”",
+      "roles": [],
+      "ui_paths": [
+        "# Tax Settings",
+        "To manage product shipping method go to “All Module > Products Manage>Tax Settings”",
+        "Product Tax Settings",
+        "you can enable/disable tax for product module, you can also set exclusive tax or inclusive. also you can tax calculate type for product settings, also can set flat tax rate"
+      ],
+      "actions": [
+        "disable",
+        "enable",
+        "set"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/products-module/variants/",
+      "module": "products module",
+      "slug": "variants",
+      "title": "variants",
+      "purpose": "From version 3.0.0. we have added variant support to products module. go to admin panel “All Modules > Product Module > Variants”",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "From version 3.0.0. we have added variant support to products module. go to admin panel “All Modules > Product Module > Variants”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/quote-manage/",
+      "module": "quote manage",
+      "slug": "",
+      "title": "Quote Manage",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/quote-manage/all-quote/",
+      "module": "quote manage",
+      "slug": "all quote",
+      "title": "All Quote",
+      "purpose": "To manage Appointment Module go to “All Module > All Quote Manage>All Quote”",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "To manage Appointment Module go to “All Module > All Quote Manage>All Quote”"
+      ],
+      "actions": [
+        "delete",
+        "update"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/quote-manage/page-manage/",
+      "module": "quote manage",
+      "slug": "page manage",
+      "title": "Page manage",
+      "purpose": "To manage Appointment Module go to “All Module > All Quote Manage>Quote page Manage”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Appointment Module go to “All Module > All Quote Manage>Quote page Manage”",
+        "Quote Page Settings:"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/rss-feed/",
+      "module": "rss feed",
+      "slug": "",
+      "title": "RSS Feed",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/rss-feed/how-to-setup-rss-feed/",
+      "module": "rss feed",
+      "slug": "how to setup rss feed",
+      "title": "How to setup RSS Feed",
+      "purpose": "To configure your RSS feed, go to admin panel > general settings > Rss feed",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "To configure your RSS feed, go to admin panel > general settings > Rss feed"
+      ],
+      "actions": [
+        "configure"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/sitemap/",
+      "module": "sitemap",
+      "slug": "",
+      "title": "Sitemap",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [
+        "generate"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/sitemap/generate-sitemap/",
+      "module": "sitemap",
+      "slug": "generate sitemap",
+      "title": "Generate Sitemap",
+      "purpose": "sitemap is a very important for your website seo, you can generate any website sitemap from the website admin panel, Go to “General Settings > Sitemap Settings”",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "sitemap is a very important for your website seo, you can generate any website sitemap from the website admin panel, Go to “General Settings > Sitemap Settings”"
+      ],
+      "actions": [
+        "delete",
+        "download",
+        "generate"
+      ],
+      "options_fields": [
+        "- Title: enter website title to recognise sitemap. ( do not put any website url in title, do not put any space between title words )",
+        "Title: enter website title to recognise sitemap. ( do not put any website url in title, do not put any space between title words )"
+      ],
+      "steps": [
+        "Title: enter website title to recognise sitemap. ( do not put any website url in title, do not put any space between title words )",
+        "Url: enter website url, to generate sitemap, it will take several minutes depend on website content, while it is in progress to leave the page or close the page."
+      ],
+      "dependencies_troubleshooting": [
+        "sitemap is a very important for your website seo, you can generate any website sitemap from the website admin panel, Go to “General Settings > Sitemap Settings”"
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/support-ticket/",
+      "module": "support ticket",
+      "slug": "",
+      "title": "Support Ticket",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [
+        "- Page Settings"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/support-ticket/add-new-ticket/",
+      "module": "support ticket",
+      "slug": "add new ticket",
+      "title": "Add New Ticket",
+      "purpose": "To manage Support Module go to “All Module >Support Tickets>Add new ticket”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Support Module go to “All Module >Support Tickets>Add new ticket”"
+      ],
+      "actions": [
+        "add"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/support-ticket/all-tickets/",
+      "module": "support ticket",
+      "slug": "all tickets",
+      "title": "All Tickets",
+      "purpose": "To manage Support Module go to “All Module >Support Tickets>All tickets”",
+      "roles": [],
+      "ui_paths": [
+        "To manage Support Module go to “All Module >Support Tickets>All tickets”"
+      ],
+      "actions": [
+        "add",
+        "delete"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/support-ticket/page-settings/",
+      "module": "support ticket",
+      "slug": "page settings",
+      "title": "Page Settings",
+      "purpose": "To manage Support Module go to “All Module >Support Tickets>page settings”",
+      "roles": [],
+      "ui_paths": [
+        "# Page Settings",
+        "To manage Support Module go to “All Module >Support Tickets>page settings”",
+        "Page Settings"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/",
+      "module": "user dashboard",
+      "slug": "",
+      "title": "User Dashboard",
+      "purpose": "",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [],
+      "actions": [
+        "edit",
+        "login",
+        "register"
+      ],
+      "options_fields": [
+        "Change Password"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/all-donations/",
+      "module": "user dashboard",
+      "slug": "all donations",
+      "title": "All Donations",
+      "purpose": "user can check their order packages from their user panel. go to “All Donations “ form side menu",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their order packages from their user panel. go to “All Donations “ form side menu"
+      ],
+      "actions": [
+        "download"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/all-support-tickets/",
+      "module": "user dashboard",
+      "slug": "all support tickets",
+      "title": "All Support Tickets",
+      "purpose": "user can check their order packages from their user panel. go to “All Support Tickets “ form side menu",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their order packages from their user panel. go to “All Support Tickets “ form side menu"
+      ],
+      "actions": [],
+      "options_fields": [
+        "Status: user can change ticket status from their user dashboard from status dropdown"
+      ],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/booked-appointment/",
+      "module": "user dashboard",
+      "slug": "booked appointment",
+      "title": "Booked Appointment",
+      "purpose": "user can check their appointment booking from their user panel. go to “Booked Appointment “ form side menu",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their appointment booking from their user panel. go to “Booked Appointment “ form side menu"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/change-password/",
+      "module": "user dashboard",
+      "slug": "change password",
+      "title": "Change Password",
+      "purpose": "user change password info from user panel, navigate to change password from user panel side menu",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "user change password info from user panel, navigate to change password from user panel side menu"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/downloads/",
+      "module": "user dashboard",
+      "slug": "downloads",
+      "title": "Downloads",
+      "purpose": "user can check their downloadable product orders from their user panel. go to “Product Downloads “ form side menu",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their downloadable product orders from their user panel. go to “Product Downloads “ form side menu"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/edit-profile/",
+      "module": "user dashboard",
+      "slug": "edit profile",
+      "title": "Edit Profile",
+      "purpose": "user change edit their profile info from user panel, navigate to edit profile from user panel side menu",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "user change edit their profile info from user panel, navigate to edit profile from user panel side menu"
+      ],
+      "actions": [
+        "edit"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/enrolled-courses/",
+      "module": "user dashboard",
+      "slug": "enrolled courses",
+      "title": "Enrolled Courses",
+      "purpose": "user can check their enrolled Courses from their user panel. go to “Courses Enrolled” form side menu",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their enrolled Courses from their user panel. go to “Courses Enrolled” form side menu"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/event-booking/",
+      "module": "user dashboard",
+      "slug": "event booking",
+      "title": "Event Booking",
+      "purpose": "user can check their event booking orders from their user panel. go to “Events Booking” form side menu",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their event booking orders from their user panel. go to “Events Booking” form side menu"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/login/",
+      "module": "user dashboard",
+      "slug": "login",
+      "title": "Login",
+      "purpose": "It has user dashboard to manage user orders and profile info.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [],
+      "actions": [
+        "create",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/package-order/",
+      "module": "user dashboard",
+      "slug": "package order",
+      "title": "Package Order",
+      "purpose": "user can check their order packages from their user panel. go to “Package order “ form side menu",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their order packages from their user panel. go to “Package order “ form side menu"
+      ],
+      "actions": [
+        "download"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/product-downloads/",
+      "module": "user dashboard",
+      "slug": "product downloads",
+      "title": "Product Downloads",
+      "purpose": "user can check their downloadable product orders from their user panel. go to “Product Downloads “ form side menu",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their downloadable product orders from their user panel. go to “Product Downloads “ form side menu"
+      ],
+      "actions": [
+        "copy",
+        "download",
+        "login"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/product-orders/",
+      "module": "user dashboard",
+      "slug": "product orders",
+      "title": "Product Orders",
+      "purpose": "user can check their product orders from their user panel. go to “Product Orders “ form side menu",
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "ui_paths": [
+        "user can check their product orders from their user panel. go to “Product Orders “ form side menu"
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/user-dashboard/register/",
+      "module": "user dashboard",
+      "slug": "register",
+      "title": "Register",
+      "purpose": "it has user dashboard to manage user purchase packages and profile info.",
+      "roles": [
+        "user"
+      ],
+      "ui_paths": [],
+      "actions": [
+        "login",
+        "register"
+      ],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [
+        "after register to website user can navigate to their dashboard from topbar menu. here is screenshort of user dashboard. after register user must have to verify user email. user will get an email activation mail as like below."
+      ],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/widget-builder/",
+      "module": "widget builder",
+      "slug": "",
+      "title": "Widget Builder",
+      "purpose": "",
+      "roles": [],
+      "ui_paths": [],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    },
+    {
+      "url": "https://docs.xgenious.com/docs/nexelit/widget-builder/footer-widgets/",
+      "module": "widget builder",
+      "slug": "footer widgets",
+      "title": "Footer Widgets",
+      "purpose": "this cms comes with drag & drop widget builder, which help you to build our own footer as you want. go to admin panel ” Appearance Settings > Widgets Builder” .",
+      "roles": [
+        "admin"
+      ],
+      "ui_paths": [
+        "this cms comes with drag & drop widget builder, which help you to build our own footer as you want. go to admin panel ” Appearance Settings > Widgets Builder” ."
+      ],
+      "actions": [],
+      "options_fields": [],
+      "steps": [],
+      "dependencies_troubleshooting": [],
+      "notes": []
+    }
+  ]
+}

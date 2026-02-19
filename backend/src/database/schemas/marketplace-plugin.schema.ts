@@ -35,6 +35,7 @@ export class MarketplacePlugin {
   updatedAt?: Date;
 }
 
-export const MarketplacePluginSchema = SchemaFactory.createForClass(MarketplacePlugin);
+export const MarketplacePluginSchema =
+  SchemaFactory.createForClass(MarketplacePlugin);
 
 MarketplacePluginSchema.index({ pluginId: 1 }, { unique: true });

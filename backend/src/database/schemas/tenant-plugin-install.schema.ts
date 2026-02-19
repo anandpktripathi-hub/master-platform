@@ -27,7 +27,8 @@ export class TenantPluginInstall {
   updatedAt?: Date;
 }
 
-export const TenantPluginInstallSchema = SchemaFactory.createForClass(TenantPluginInstall);
+export const TenantPluginInstallSchema =
+  SchemaFactory.createForClass(TenantPluginInstall);
 
 TenantPluginInstallSchema.index({ tenantId: 1, pluginId: 1 }, { unique: true });
 TenantPluginInstallSchema.index({ tenantId: 1, enabled: 1 });

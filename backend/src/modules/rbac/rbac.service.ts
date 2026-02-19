@@ -412,10 +412,10 @@ export class RbacService {
     permissions: { module: string; action: string; fields?: string[] }[],
     module: string,
     action: string,
-    field?: string
+    field?: string,
   ): boolean {
     const perm = permissions.find(
-      (p) => p.module === module && p.action === action
+      (p) => p.module === module && p.action === action,
     );
     if (!perm) return false;
     if (!field) return true;

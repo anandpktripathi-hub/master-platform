@@ -125,9 +125,15 @@ export class CmsPageService {
    */
   async getPublicPagesForSitemap(
     tenantId: string,
-  ): Promise<Array<{ slug: string; title?: string; createdAt?: Date; updatedAt?: Date }>> {
+  ): Promise<
+    Array<{ slug: string; title?: string; createdAt?: Date; updatedAt?: Date }>
+  > {
     const docs = await this.pageRepo
-      .find({ tenantId, status: PageStatus.PUBLISHED, visibility: PageVisibility.PUBLIC })
+      .find({
+        tenantId,
+        status: PageStatus.PUBLISHED,
+        visibility: PageVisibility.PUBLIC,
+      })
       .select('slug title createdAt updatedAt')
       .sort({ updatedAt: -1 })
       .lean();

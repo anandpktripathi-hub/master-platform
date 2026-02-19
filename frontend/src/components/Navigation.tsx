@@ -1,11 +1,13 @@
 
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useAdminSettings } from "../contexts/AdminSettingsContext";
 import { WorkspaceSwitcher } from "./WorkspaceSwitcher";
 import workspaceService, { WorkspaceDto } from "../services/workspaceService";
 import NotificationBell from "./NotificationBell";
+import api from "../lib/api";
+import { NAV_ITEMS } from "../navigation/navConfig";
 
 interface NavigationProps {
   onLogout?: () => void;
@@ -37,20 +39,7 @@ export default function Navigation({ onLogout }: NavigationProps) {
         // Fail silently; navigation still works with default tenant
       }
       try {
-        const dashboard: any = await fetch(
-          (import.meta as any).env.VITE_API_BASE_URL
-            ? `${(import.meta as any).env.VITE_API_BASE_URL}/api/tenant/dashboard`
-            : "/api/v1/api/tenant/dashboard",
-          {
-            headers: {
-              Authorization: localStorage.getItem("token")
-                ? `Bearer ${localStorage.getItem("token")}`
-                : "",
-              "x-workspace-id": localStorage.getItem("workspaceId") || "",
-            },
-            credentials: "include",
-          }
-        ).then((res) => res.json());
+        const dashboard: any = await api.get("/tenant/dashboard");
 
         const collectIds = (nodes: any[] = [], acc: Set<string>) => {
           for (const n of nodes) {
@@ -88,6 +77,35 @@ export default function Navigation({ onLogout }: NavigationProps) {
     onLogout?.();
   };
 
+  const visibleNavItems = useMemo(() => {
+    const role = user?.role;
+    const hasFeatureList = enabledFeatureIds.size > 0;
+
+    return NAV_ITEMS.filter((item) => {
+      if (item.visibility === 'hide') return false;
+      if (item.allowedRoles && item.allowedRoles.length > 0) {
+        if (!role) return false;
+        if (!item.allowedRoles.includes(role)) return false;
+      }
+
+      if (item.featureId) {
+        // If feature list failed to load, do not hide items.
+        if (!hasFeatureList) return true;
+        return enabledFeatureIds.has(item.featureId);
+      }
+
+      return true;
+    });
+  }, [enabledFeatureIds, user?.role]);
+
+  const linkClassName = ({ isActive }: { isActive: boolean }) =>
+    [
+      "block py-2 px-3 rounded transition",
+      isActive
+        ? "bg-[var(--admin-sidebar-active,#1f2937)] text-white"
+        : "hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white",
+    ].join(" ");
+
   return (
     <>
       {/* Top nav bar */}
@@ -99,7 +117,7 @@ export default function Navigation({ onLogout }: NavigationProps) {
               onClick={() => setSidebarOpen(!sidebarOpen)}
               aria-label="Open sidebar menu"
             >
-              <span className="material-icons" style={{ fontSize: 28 }}>menu</span>
+              <span className="material-icons text-[28px]">menu</span>
             </button>
             <h1 className="text-xl font-bold nav-title">
               {branding?.titleText || basic?.siteTitle || "Smetasc SaaS"}
@@ -134,117 +152,22 @@ export default function Navigation({ onLogout }: NavigationProps) {
       {/* Sidebar */}
       <aside
         className={`fixed z-40 inset-y-0 left-0 w-64 bg-[var(--admin-surface,#111827)] border-r border-[var(--admin-border,#1f2937)] transform transition-transform duration-200 ease-in-out
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block`}
-        style={{ minHeight: '100vh' }}
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block min-h-screen`}
         aria-label="Sidebar navigation"
       >
         <div className="flex flex-col h-full">
           <div className="sidebar-header text-2xl font-bold px-6 py-4">Menu</div>
           <nav className="flex-1 px-4 space-y-2">
-            <Link to="/dashboard" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Dashboard</Link>
-            <Link to="/users" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Users</Link>
-            {enabledFeatureIds.has("billing-dashboard") && (
-              <Link to="/app/billing" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Billing</Link>
-            )}
-            {enabledFeatureIds.has("accounting-dashboard") && (
-              <Link to="/app/accounting" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Accounting</Link>
-            )}
-            {enabledFeatureIds.has("hrm-dashboard") && (
-              <Link to="/app/hrm" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">HRM</Link>
-            )}
-            {enabledFeatureIds.has("projects-dashboard") && (
-              <Link to="/app/projects" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Projects</Link>
-            )}
-            {enabledFeatureIds.has("pos-dashboard") && (
-              <Link to="/app/pos" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">POS &amp; Warehouse</Link>
-            )}
-            <Link to="/app/vcards" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">vCards</Link>
-            <Link to="/app/projects" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Projects</Link>
-            <Link to="/app/domains" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Domains</Link>
-            <Link to="/app/packages" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Packages</Link>
-            <Link to="/app/crm/contacts" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">CRM Contacts</Link>
-            <Link to="/app/crm/companies" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">CRM Companies</Link>
-            <Link to="/app/crm/deals" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">CRM Deals</Link>
-            <Link to="/app/crm/kanban" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">CRM Kanban</Link>
-            <Link to="/app/crm/tasks" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">My CRM Tasks</Link>
-            <Link to="/app/crm/analytics" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">CRM Analytics</Link>
-            <Link to="/app/social/feed" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Activity Feed</Link>
-            <Link to="/app/social/connections" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">My Connections</Link>
-            <Link to="/app/social/requests" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Connection Requests</Link>
-            <Link to="/app/chat" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Team Chat</Link>
-            {enabledFeatureIds.has("notification-center") && (
-              <Link to="/app/notifications" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Notification Center</Link>
-            )}
-            <Link to="/app/affiliate" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Referral Rewards</Link>
-            {enabledFeatureIds.has("cms-analytics") && (
-              <Link to="/app/dashboard/cms-menu" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">CMS Menu</Link>
-            )}
-            <Link to="/app/dashboard/tenant-quota" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Tenant Quota</Link>
-            <Link to="/app/dashboard/audit-logs" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Audit Logs</Link>
-            {user?.role === 'PLATFORM_SUPERADMIN' && (
-              <>
-                <Link
-                  to="/app/admin/overview"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Platform Overview
-                </Link>
-                <Link
-                  to="/app/admin/tenants"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Tenants &amp; Brands
-                </Link>
-                <Link
-                  to="/app/admin/support/tickets"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Support Tickets (Admin)
-                </Link>
-                <Link
-                  to="/app/admin/payments/logs"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Payment Activity
-                </Link>
-                <Link
-                  to="/app/admin/invoices"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Invoices (Admin)
-                </Link>
-                <Link
-                  to="/app/admin/settings/advanced?tab=payment"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Payment Settings
-                </Link>
-                <Link
-                  to="/app/admin/settings/advanced"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  System Settings (Advanced)
-                </Link>
-                <Link
-                  to="/app/admin/domains"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Domains (Admin)
-                </Link>
-                <Link
-                  to="/app/dashboard/custom-domains"
-                  className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition"
-                >
-                  Custom Domains (Admin)
-                </Link>
-              </>
-            )}
-            <Link to="/app/dashboard/package-features" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Package Features</Link>
-            <Link to="/app/hierarchy" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Feature Hierarchy</Link>
-            <Link to="/app/developer" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Developer Portal</Link>
-            <Link to="/app/marketplace" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Marketplace</Link>
-            <Link to="/app/ai-tools" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">AI Tools</Link>
-            <Link to="/app/domains/health" className="block py-2 px-3 rounded hover:bg-[var(--admin-primary,#0ea5e9)] hover:text-white transition">Domain Health</Link>
+            {visibleNavItems.map((item) => (
+              <NavLink
+                key={item.id}
+                to={item.to}
+                className={linkClassName}
+                onClick={() => setSidebarOpen(false)}
+              >
+                {item.label}
+              </NavLink>
+            ))}
           </nav>
         </div>
       </aside>

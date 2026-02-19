@@ -27,11 +27,21 @@ export class HealthController {
   @Get('ready')
   async ready() {
     const health = await this.healthService.checkAll();
-    const isReady = Object.values(health.checks).every((check: any) => check.status === 'up');
-    
+    // Readiness should only depend on core dependencies needed to serve traffic.
+    // Memory pressure is useful diagnostic info, but should not make the service "not ready".
+    const requiredChecks: Array<keyof typeof health.checks> = [
+      'database',
+      'storage',
+    ];
+
+    const isReady = requiredChecks.every(
+      (key) => health.checks?.[key]?.status === 'up',
+    );
+
     return {
       status: isReady ? 'ready' : 'not_ready',
       timestamp: new Date().toISOString(),
+      checks: health.checks,
     };
   }
 }

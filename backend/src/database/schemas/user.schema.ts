@@ -27,6 +27,7 @@ export class User {
   // - staff           -> staff/employee inside tenant (45%)
   // - customer        -> end customer / portal user (8%)
   @Prop({
+    type: String,
     enum: [
       Role.USER,
       Role.ADMIN,

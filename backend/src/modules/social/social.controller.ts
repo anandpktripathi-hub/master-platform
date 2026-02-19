@@ -27,13 +27,20 @@ export class SocialController {
 
   @UseGuards(JwtAuthGuard)
   @Post('connections/request')
-  async sendRequest(@Req() req: AuthRequest, @Body() body: { recipientId?: string }) {
+  async sendRequest(
+    @Req() req: AuthRequest,
+    @Body() body: { recipientId?: string },
+  ) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
     if (!userId || !body.recipientId || !tenantId) {
       throw new Error('User ID, tenantId, and recipientId required');
     }
-    return this.socialService.sendConnectionRequest(String(userId), body.recipientId, String(tenantId));
+    return this.socialService.sendConnectionRequest(
+      String(userId),
+      body.recipientId,
+      String(tenantId),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -42,7 +49,11 @@ export class SocialController {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
     if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
-    return this.socialService.acceptConnectionRequest(String(userId), id, String(tenantId));
+    return this.socialService.acceptConnectionRequest(
+      String(userId),
+      id,
+      String(tenantId),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -51,7 +62,11 @@ export class SocialController {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
     if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
-    return this.socialService.rejectConnectionRequest(String(userId), id, String(tenantId));
+    return this.socialService.rejectConnectionRequest(
+      String(userId),
+      id,
+      String(tenantId),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -60,7 +75,10 @@ export class SocialController {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
     if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
-    return this.socialService.listPendingRequests(String(userId), String(tenantId));
+    return this.socialService.listPendingRequests(
+      String(userId),
+      String(tenantId),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -69,18 +87,34 @@ export class SocialController {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
     if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
-    return this.socialService.listMyConnections(String(userId), String(tenantId));
+    return this.socialService.listMyConnections(
+      String(userId),
+      String(tenantId),
+    );
   }
 
   // ===== Posts =====
 
   @UseGuards(JwtAuthGuard)
   @Post('posts')
-  async createPost(@Req() req: AuthRequest, @Body() body: { content?: string; visibility?: 'PUBLIC' | 'CONNECTIONS_ONLY' | 'PRIVATE' }) {
+  async createPost(
+    @Req() req: AuthRequest,
+    @Body()
+    body: {
+      content?: string;
+      visibility?: 'PUBLIC' | 'CONNECTIONS_ONLY' | 'PRIVATE';
+    },
+  ) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId || !body.content) throw new Error('User ID, tenantId, and content required');
-    return this.socialService.createPost(String(userId), body.content, body.visibility, String(tenantId));
+    if (!userId || !tenantId || !body.content)
+      throw new Error('User ID, tenantId, and content required');
+    return this.socialService.createPost(
+      String(userId),
+      body.content,
+      body.visibility,
+      String(tenantId),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -103,11 +137,21 @@ export class SocialController {
 
   @UseGuards(JwtAuthGuard)
   @Post('posts/:id/comments')
-  async addComment(@Req() req: AuthRequest, @Param('id') id: string, @Body() body: { content?: string }) {
+  async addComment(
+    @Req() req: AuthRequest,
+    @Param('id') id: string,
+    @Body() body: { content?: string },
+  ) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId || !body.content) throw new Error('User ID, tenantId, and content required');
-    return this.socialService.addComment(id, String(userId), body.content, String(tenantId));
+    if (!userId || !tenantId || !body.content)
+      throw new Error('User ID, tenantId, and content required');
+    return this.socialService.addComment(
+      id,
+      String(userId),
+      body.content,
+      String(tenantId),
+    );
   }
 
   @UseGuards(JwtAuthGuard)

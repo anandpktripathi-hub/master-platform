@@ -7,7 +7,7 @@ export type ReferralEventType = 'CLICK' | 'SIGNUP' | 'COMMISSION' | 'PAYOUT';
 
 @Schema({ timestamps: true })
 export class ReferralLedger {
-  @Prop({ type: Types.ObjectId, ref: 'Affiliate', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Affiliate', required: true })
   affiliateId!: Types.ObjectId;
 
   @Prop({ required: true })

@@ -6,19 +6,51 @@ import { GlobalExceptionFilter } from './common/filters/global-exception.filter'
 import helmet from 'helmet';
 import compression from 'compression';
 
+function validateCriticalEnv(): void {
+  if (process.env.NODE_ENV !== 'production') return;
+
+  const missing: string[] = [];
+
+  // Auth
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your-secret-key') {
+    missing.push('JWT_SECRET');
+  }
+
+  // Database
+  if (!process.env.DATABASE_URL) {
+    missing.push('DATABASE_URL');
+  }
+
+  if (missing.length > 0) {
+    throw new Error(`Missing critical environment variables: ${missing.join(', ')}`);
+  }
+}
+
 async function bootstrap() {
   try {
+    validateCriticalEnv();
     const app = await NestFactory.create(AppModule);
+
+    app.enableShutdownHooks();
 
     app.use(helmet());
     app.use(compression());
 
+    const allowedOrigins = (process.env.FRONTEND_URL || '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+
     app.enableCors({
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      origin:
+        allowedOrigins.length > 0
+          ? allowedOrigins
+          : ['http://localhost:5173', 'http://localhost:3000'],
       credentials: true,
     });
 
-    app.setGlobalPrefix(process.env.API_PREFIX || 'api');
+    const apiPrefix = process.env.API_PREFIX || 'api';
+    app.setGlobalPrefix(apiPrefix);
 
     app.useGlobalPipes(
       new ValidationPipe({
@@ -43,17 +75,19 @@ async function bootstrap() {
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/docs', app, document);
 
-    const port = process.env.PORT || 4000;
+    SwaggerModule.setup(`${apiPrefix}/docs`, app, document);
+
+    const httpServer = app.getHttpAdapter().getInstance();
+    httpServer.get(`/${apiPrefix}/docs-json`, (_req: any, res: any) => {
+      res.json(document);
+    });
+
+    const port = Number(process.env.PORT || 3000);
     await app.listen(port);
 
-    console.log(
-      `\n🚀 Master Platform Backend is running on: http://localhost:${port}`,
-    );
-    console.log(
-      `📚 API Documentation available at: http://localhost:${port}/api/docs\n`,
-    );
+    console.log(`\nRoot app is running on: http://localhost:${port}`);
+    console.log(`API Documentation available at: http://localhost:${port}/api/docs\n`);
   } catch (error) {
     console.error('Error starting server:', (error as Error).message);
     process.exit(1);

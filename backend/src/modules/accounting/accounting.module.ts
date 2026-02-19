@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Account, AccountSchema } from '../../database/schemas/account.schema';
-import { Transaction, TransactionSchema } from '../../database/schemas/transaction.schema';
+import {
+  Transaction,
+  TransactionSchema,
+} from '../../database/schemas/transaction.schema';
 import { Invoice, InvoiceSchema } from '../../database/schemas/invoice.schema';
 import { Bill, BillSchema } from '../../database/schemas/bill.schema';
 import { Goal, GoalSchema } from '../../database/schemas/goal.schema';

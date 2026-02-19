@@ -8,7 +8,10 @@ import { DashboardController } from './dashboard.controller';
 import { DashboardService } from './dashboard.service';
 import { RolesGuard } from '../../guards/roles.guard';
 import { AuditLogService } from '../../services/audit-log.service';
-import { AuditLog, AuditLogSchema } from '../../database/schemas/audit-log.schema';
+import {
+  AuditLog,
+  AuditLogSchema,
+} from '../../database/schemas/audit-log.schema';
 import { AnalyticsModule } from '../analytics/analytics.module';
 
 @Module({

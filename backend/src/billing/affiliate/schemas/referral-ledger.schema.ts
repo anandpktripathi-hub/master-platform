@@ -10,7 +10,11 @@ export class ReferralLedger {
   @Prop({ type: Types.ObjectId, ref: 'Affiliate', required: true })
   affiliateId!: Types.ObjectId;
 
-  @Prop({ required: true })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['CLICK', 'SIGNUP', 'COMMISSION', 'PAYOUT'],
+  })
   type!: ReferralEventType;
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: false })
@@ -26,6 +30,7 @@ export class ReferralLedger {
   metadata?: Record<string, unknown>;
 }
 
-export const ReferralLedgerSchema = SchemaFactory.createForClass(ReferralLedger);
+export const ReferralLedgerSchema =
+  SchemaFactory.createForClass(ReferralLedger);
 
 ReferralLedgerSchema.index({ affiliateId: 1, createdAt: -1 });

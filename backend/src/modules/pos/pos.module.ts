@@ -1,12 +1,22 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { WarehouseStock, WarehouseStockSchema } from '../../database/schemas/warehouse-stock.schema';
-import { StockMovement, StockMovementSchema } from '../../database/schemas/stock-movement.schema';
-import { PosOrder, PosOrderSchema } from '../../database/schemas/pos-order.schema';
+import {
+  WarehouseStock,
+  WarehouseStockSchema,
+} from '../../database/schemas/warehouse-stock.schema';
+import {
+  StockMovement,
+  StockMovementSchema,
+} from '../../database/schemas/stock-movement.schema';
+import {
+  PosOrder,
+  PosOrderSchema,
+} from '../../database/schemas/pos-order.schema';
 import { Product, ProductSchema } from '../../database/schemas/product.schema';
 import { PosController } from './pos.controller';
 import { PosService } from './pos.service';
 import { RolesGuard } from '../../guards/roles.guard';
+import { WorkspaceSharedModule } from '../../workspaces/workspace-shared.module';
 
 @Module({
   imports: [
@@ -16,6 +26,7 @@ import { RolesGuard } from '../../guards/roles.guard';
       { name: PosOrder.name, schema: PosOrderSchema },
       { name: Product.name, schema: ProductSchema },
     ]),
+    WorkspaceSharedModule,
   ],
   controllers: [PosController],
   providers: [PosService, RolesGuard],

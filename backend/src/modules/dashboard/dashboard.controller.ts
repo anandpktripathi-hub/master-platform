@@ -124,9 +124,7 @@ export class DashboardController {
     const rows = logs.map((log) => {
       const actor: any = (log as any).actorId;
       const user =
-        typeof actor === 'string'
-          ? actor
-          : actor?.email || actor?.name || '';
+        typeof actor === 'string' ? actor : actor?.email || actor?.name || '';
 
       const createdAt = log.createdAt
         ? new Date(log.createdAt).toISOString()

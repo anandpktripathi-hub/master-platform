@@ -1,9 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import api from '../lib/api';
 
 interface Tenant {
-  domain: string;
+  _id?: string;
+  id?: string;
+  domain?: string;
+  slug?: string;
 }
 
 interface TenantContextValue {
@@ -40,19 +43,38 @@ function TenantProviderComponent({ children }: TenantProviderProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTenants = React.useCallback(async () => {
+  const fetchTenants = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      // Note: TenantContext uses axios directly, not our api instance
-      // This still needs .data access since it doesn't use our interceptor
-      const res = await axios.get<Tenant[]>('/tenants');
-      if (res.data) {
-        setTenants(res.data.map((t) => t.domain));
-        // Load saved tenant from localStorage
-        const savedTenantId = localStorage.getItem('tenantId');
-        const selectedTenant = res.data.find((t) => t.domain === savedTenantId)?.domain || res.data[0]?.domain || '';
-        setTenantId(selectedTenant);
+      // One-time migration: older code used `tenantId`; canonical key is `workspaceId`.
+      const legacyTenantId = localStorage.getItem('tenantId');
+      const existingWorkspaceId = localStorage.getItem('workspaceId');
+      if (!existingWorkspaceId && legacyTenantId) {
+        localStorage.setItem('workspaceId', legacyTenantId);
+        localStorage.removeItem('tenantId');
+      }
+
+      // There is no GET /tenants listing endpoint; use authenticated tenant identity.
+      const res = (await api.get('/tenants/me')) as unknown as Tenant | null;
+      if (!res) {
+        setTenants([]);
+        setTenantId('');
+        return;
+      }
+
+      const resolvedTenantId = String(res._id ?? res.id ?? '');
+      const tenantLabel = String(res.domain ?? res.slug ?? resolvedTenantId);
+
+      setTenants(tenantLabel ? [tenantLabel] : []);
+
+      const savedWorkspaceId = localStorage.getItem('workspaceId');
+      const selected = savedWorkspaceId ? String(savedWorkspaceId) : resolvedTenantId;
+
+      if (selected) {
+        setTenantId(selected);
+        // Keep API header behavior consistent across the app
+        localStorage.setItem('workspaceId', selected);
       }
     } catch {
       setError('Failed to load tenants');
@@ -67,8 +89,8 @@ function TenantProviderComponent({ children }: TenantProviderProps) {
 
   const handleSetTenantId = (id: string) => {
     setTenantId(id);
-    // Save tenant selection to localStorage
-    localStorage.setItem('tenantId', id);
+    // Save selection to canonical key
+    localStorage.setItem('workspaceId', id);
   };
 
   return (

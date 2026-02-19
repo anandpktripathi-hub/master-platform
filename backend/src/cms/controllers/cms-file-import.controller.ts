@@ -7,6 +7,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
@@ -14,9 +15,10 @@ import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import { CmsFileImportService } from '../services/cms-file-import.service';
 import { ImportType } from '../enums/cms.enums';
+import { Tenant } from '../../decorators/tenant.decorator';
 
 @ApiTags('CMS - File Import')
-@Controller('api/cms/import')
+@Controller('cms/import')
 export class CmsFileImportController {
   constructor(private readonly importService: CmsFileImportService) {}
 
@@ -24,11 +26,11 @@ export class CmsFileImportController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @Req() req: any,
+    @Tenant() tenantId: string,
     @UploadedFile() file: any,
     @Body('importType') importType: string,
   ) {
-    let tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
-    if (Array.isArray(tenantId)) tenantId = tenantId[0];
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     // Convert importType string to ImportType enum
     let importTypeEnum: ImportType;
     if (importType === ImportType.ZIP) {
@@ -36,15 +38,15 @@ export class CmsFileImportController {
     } else if (importType === ImportType.CSV) {
       importTypeEnum = ImportType.CSV;
     } else {
-      throw new Error('Invalid importType');
+      throw new BadRequestException('Invalid importType');
     }
     const importRecord = await this.importService.createImport(
       tenantId,
-      req.user && typeof req.user === 'object' && 'id' in req.user
-        ? req.user.id
+      req.user && typeof req.user === 'object' && 'userId' in req.user
+        ? String((req.user as any).userId)
         : 'system',
       file.originalname,
-      `/uploads/${file.filename}`,
+      file.filename ? `/uploads/${file.filename}` : 'memory',
       file.size,
       importTypeEnum,
     );
@@ -59,14 +61,17 @@ export class CmsFileImportController {
   }
 
   @Get('status/:importId')
-  async getStatus(@Req() req: any, @Param('importId') importId: string) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+  async getStatus(
+    @Tenant() tenantId: string,
+    @Param('importId') importId: string,
+  ) {
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.importService.getImportStatus(tenantId, importId);
   }
 
   @Get('history')
-  async getHistory(@Req() req: any) {
-    const tenantId = req.headers['x-tenant-id'] || 'demo-tenant';
+  async getHistory(@Tenant() tenantId: string) {
+    if (!tenantId) throw new BadRequestException('Tenant context missing');
     return this.importService.getImportHistory(tenantId);
   }
 }

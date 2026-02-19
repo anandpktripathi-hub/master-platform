@@ -36,9 +36,13 @@ export class DomainResellerService {
   private readonly provider: 'namecheap' | 'godaddy' | 'resellerclub';
 
   constructor(private readonly configService: ConfigService) {
-    this.provider = (this.configService.get<string>('DOMAIN_RESELLER_PROVIDER') || 'namecheap') as any;
+    this.provider = (this.configService.get<string>(
+      'DOMAIN_RESELLER_PROVIDER',
+    ) || 'namecheap') as any;
 
-    this.logger.log(`DomainResellerService: Using provider '${this.provider}'.`);
+    this.logger.log(
+      `DomainResellerService: Using provider '${this.provider}'.`,
+    );
   }
 
   /**
@@ -115,7 +119,8 @@ export class DomainResellerService {
     const apiKey = this.configService.get<string>('NAMECHEAP_API_KEY');
     const username = this.configService.get<string>('NAMECHEAP_USERNAME');
     const clientIp = this.configService.get<string>('NAMECHEAP_CLIENT_IP');
-    const sandbox = this.configService.get<string>('NAMECHEAP_SANDBOX') === 'true';
+    const sandbox =
+      this.configService.get<string>('NAMECHEAP_SANDBOX') === 'true';
 
     if (!apiUser || !apiKey || !username || !clientIp) {
       this.logger.error('Namecheap API credentials are not configured.');
@@ -143,7 +148,9 @@ export class DomainResellerService {
       const available = xmlData.includes('Available="true"');
       const isPremium = xmlData.includes('IsPremiumName="true"');
 
-      this.logger.log(`Namecheap availability check for ${domain}: available=${available}, premium=${isPremium}`);
+      this.logger.log(
+        `Namecheap availability check for ${domain}: available=${available}, premium=${isPremium}`,
+      );
 
       return {
         available,
@@ -172,7 +179,8 @@ export class DomainResellerService {
     const apiKey = this.configService.get<string>('NAMECHEAP_API_KEY');
     const username = this.configService.get<string>('NAMECHEAP_USERNAME');
     const clientIp = this.configService.get<string>('NAMECHEAP_CLIENT_IP');
-    const sandbox = this.configService.get<string>('NAMECHEAP_SANDBOX') === 'true';
+    const sandbox =
+      this.configService.get<string>('NAMECHEAP_SANDBOX') === 'true';
 
     if (!apiUser || !apiKey || !username || !clientIp) {
       this.logger.error('Namecheap API credentials are not configured.');
@@ -233,14 +241,18 @@ export class DomainResellerService {
       });
 
       const xmlData = response.data as string;
-      const success = xmlData.includes('<CommandResponse Type="namecheap.domains.create">');
+      const success = xmlData.includes(
+        '<CommandResponse Type="namecheap.domains.create">',
+      );
 
       if (success) {
         // Extract order ID from XML (simplified; use real XML parser)
         const orderIdMatch = xmlData.match(/OrderID="(\d+)"/);
         const orderId = orderIdMatch ? orderIdMatch[1] : 'unknown';
 
-        this.logger.log(`Namecheap domain registration successful for ${domain}, OrderID: ${orderId}`);
+        this.logger.log(
+          `Namecheap domain registration successful for ${domain}, OrderID: ${orderId}`,
+        );
         return { success: true, orderId };
       } else {
         this.logger.error(`Namecheap domain registration failed for ${domain}`);
@@ -290,7 +302,9 @@ export class DomainResellerService {
     price?: number;
     currency?: string;
   }> {
-    this.logger.warn(`ResellerClub provider not yet implemented. Domain: ${domain}`);
+    this.logger.warn(
+      `ResellerClub provider not yet implemented. Domain: ${domain}`,
+    );
     // TODO: Implement ResellerClub API call
     return { available: false };
   }
@@ -307,7 +321,9 @@ export class DomainResellerService {
     orderId?: string;
     error?: string;
   }> {
-    this.logger.warn(`ResellerClub provider not yet implemented. Domain: ${domain}`);
+    this.logger.warn(
+      `ResellerClub provider not yet implemented. Domain: ${domain}`,
+    );
     // TODO: Implement ResellerClub domain registration API
     return { success: false, error: 'ResellerClub not implemented' };
   }

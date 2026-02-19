@@ -1,6 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export class ImportZipDto {
-  @IsNotEmpty()
-  tenantId!: string;
+  // Prefer tenant context header; allow explicit tenantId for backwards compatibility
+  @IsOptional()
+  tenantId?: string;
 }

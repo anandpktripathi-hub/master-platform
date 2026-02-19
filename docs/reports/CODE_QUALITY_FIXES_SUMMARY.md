@@ -109,7 +109,7 @@ scripts/
 - `backend/billing-migrate.sh` → `backend/scripts/billing-migrate.sh`
 
 ### Documentation Created:
-- `scripts/README.md` - Complete documentation of all scripts with usage instructions
+- `docs/scripts/README.md` - Complete documentation of all scripts with usage instructions
 
 ### Impact:
 - ✅ All scripts organized by purpose

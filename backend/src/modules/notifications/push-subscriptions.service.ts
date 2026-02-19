@@ -38,7 +38,11 @@ export class PushSubscriptionsService {
       },
     };
 
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true } as const;
+    const options = {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true,
+    } as const;
 
     const doc = await this.subscriptionModel
       .findOneAndUpdate(filter, update, options)

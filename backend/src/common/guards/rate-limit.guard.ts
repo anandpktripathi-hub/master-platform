@@ -20,7 +20,10 @@ class TooManyRequestsException extends HttpException {
 
 @Injectable()
 export class RateLimitGuard implements CanActivate {
-  private readonly hits = new Map<string, { count: number; expiresAt: number }>();
+  private readonly hits = new Map<
+    string,
+    { count: number; expiresAt: number }
+  >();
 
   // Default: 5 attempts per 60 seconds per IP+route
   private readonly config: RateLimitConfig = {
@@ -45,7 +48,9 @@ export class RateLimitGuard implements CanActivate {
     }
 
     if (entry.count >= this.config.max) {
-      throw new TooManyRequestsException('Too many requests. Please try again later.');
+      throw new TooManyRequestsException(
+        'Too many requests. Please try again later.',
+      );
     }
 
     entry.count += 1;

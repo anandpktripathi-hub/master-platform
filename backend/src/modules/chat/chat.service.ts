@@ -1,10 +1,23 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Subject } from 'rxjs';
-import { ChatRoom, ChatRoomDocument } from '../../database/schemas/chat-room.schema';
-import { ChatMessage, ChatMessageDocument } from '../../database/schemas/chat-message.schema';
-import { ChatRoomMember, ChatRoomMemberDocument } from '../../database/schemas/chat-room-member.schema';
+import {
+  ChatRoom,
+  ChatRoomDocument,
+} from '../../database/schemas/chat-room.schema';
+import {
+  ChatMessage,
+  ChatMessageDocument,
+} from '../../database/schemas/chat-message.schema';
+import {
+  ChatRoomMember,
+  ChatRoomMemberDocument,
+} from '../../database/schemas/chat-room-member.schema';
 import { User, UserDocument } from '../../database/schemas/user.schema';
 import { NotificationsService } from '../notifications/notifications.service';
 import { AuthService } from '../auth/auth.service';
@@ -24,9 +37,14 @@ export class ChatService {
     private readonly authService: AuthService,
   ) {}
 
-  private tenantStreams = new Map<string, Subject<{ type: string; payload: any }>>();
+  private tenantStreams = new Map<
+    string,
+    Subject<{ type: string; payload: any }>
+  >();
 
-  getTenantEventStream(tenantId: string): Subject<{ type: string; payload: any }> {
+  getTenantEventStream(
+    tenantId: string,
+  ): Subject<{ type: string; payload: any }> {
     let stream = this.tenantStreams.get(tenantId);
     if (!stream) {
       stream = new Subject<{ type: string; payload: any }>();
@@ -57,7 +75,11 @@ export class ChatService {
     return [created.toObject()];
   }
 
-  async createRoom(tenantId: string, createdByUserId: string, payload: { name: string; description?: string }) {
+  async createRoom(
+    tenantId: string,
+    createdByUserId: string,
+    payload: { name: string; description?: string },
+  ) {
     const tenantObjectId = new Types.ObjectId(tenantId);
     const userObjectId = new Types.ObjectId(createdByUserId);
 
@@ -70,16 +92,27 @@ export class ChatService {
       isPrivate: (payload as any).isPrivate === true,
     });
 
-    await this.ensureMember(tenantId, room._id.toString(), createdByUserId, 'admin');
+    await this.ensureMember(
+      tenantId,
+      room._id.toString(),
+      createdByUserId,
+      'admin',
+    );
 
     return room.toObject();
   }
 
-  async getRoomForTenant(tenantId: string, roomId: string): Promise<ChatRoomDocument> {
+  async getRoomForTenant(
+    tenantId: string,
+    roomId: string,
+  ): Promise<ChatRoomDocument> {
     const tenantObjectId = new Types.ObjectId(tenantId);
     const roomObjectId = new Types.ObjectId(roomId);
 
-    const room = await this.roomModel.findOne({ _id: roomObjectId, tenantId: tenantObjectId });
+    const room = await this.roomModel.findOne({
+      _id: roomObjectId,
+      tenantId: tenantObjectId,
+    });
     if (!room) {
       throw new NotFoundException('Chat room not found');
     }
@@ -135,8 +168,14 @@ export class ChatService {
     return members;
   }
 
-  async listMessages(tenantId: string, roomId: string, opts?: { before?: string; limit?: number }) {
-    throw new Error('listMessages requires user context; use listMessagesForUser');
+  async listMessages(
+    tenantId: string,
+    roomId: string,
+    opts?: { before?: string; limit?: number },
+  ) {
+    throw new Error(
+      'listMessages requires user context; use listMessagesForUser',
+    );
   }
 
   async listMessagesForUser(
@@ -146,13 +185,15 @@ export class ChatService {
     opts?: { before?: string; limit?: number },
   ) {
     const room = await this.getRoomForTenant(tenantId, roomId);
-    const tenantObjectId = room.tenantId as Types.ObjectId;
-    const roomObjectId = room._id as Types.ObjectId;
+    const tenantObjectId = room.tenantId;
+    const roomObjectId = room._id;
 
     if (room.isPrivate) {
       const canSee = await this.canUserSeeRoom(tenantId, roomId, userId);
       if (!canSee) {
-        throw new ForbiddenException('You are not a member of this private room');
+        throw new ForbiddenException(
+          'You are not a member of this private room',
+        );
       }
     }
 
@@ -168,7 +209,8 @@ export class ChatService {
       }
     }
 
-    const limit = opts?.limit && opts.limit > 0 ? Math.min(opts.limit, 200) : 50;
+    const limit =
+      opts?.limit && opts.limit > 0 ? Math.min(opts.limit, 200) : 50;
 
     const docs = await this.messageModel
       .find(query)
@@ -180,10 +222,15 @@ export class ChatService {
     return docs.reverse();
   }
 
-  async postMessage(tenantId: string, roomId: string, senderId: string, content: string) {
+  async postMessage(
+    tenantId: string,
+    roomId: string,
+    senderId: string,
+    content: string,
+  ) {
     const room = await this.getRoomForTenant(tenantId, roomId);
-    const tenantObjectId = room.tenantId as Types.ObjectId;
-    const roomObjectId = room._id as Types.ObjectId;
+    const tenantObjectId = room.tenantId;
+    const roomObjectId = room._id;
     const senderObjectId = new Types.ObjectId(senderId);
 
     const trimmed = content.trim();
@@ -192,7 +239,9 @@ export class ChatService {
     }
 
     if (room.isArchived) {
-      throw new ForbiddenException('This room is archived and cannot accept new messages');
+      throw new ForbiddenException(
+        'This room is archived and cannot accept new messages',
+      );
     }
 
     await this.ensureMember(tenantId, roomId, senderId, 'member');
@@ -215,12 +264,19 @@ export class ChatService {
       },
     });
 
-    void this.handleMentions(tenantIdStr, roomId, senderId, trimmed).catch(() => undefined);
+    void this.handleMentions(tenantIdStr, roomId, senderId, trimmed).catch(
+      () => undefined,
+    );
 
     return plain;
   }
 
-  async handleMentions(tenantId: string, roomId: string, senderId: string, content: string) {
+  async handleMentions(
+    tenantId: string,
+    roomId: string,
+    senderId: string,
+    content: string,
+  ) {
     const mentionMatches = content.match(/@([a-zA-Z0-9_\.\-]+)/g);
     if (!mentionMatches || mentionMatches.length === 0) return;
 
@@ -244,7 +300,8 @@ export class ChatService {
 
     const room = await this.getRoomForTenant(tenantId, roomId);
 
-    const snippet = content.length > 140 ? `${content.slice(0, 137)}...` : content;
+    const snippet =
+      content.length > 140 ? `${content.slice(0, 137)}...` : content;
     const linkUrl = `/app/chat?room=${room._id.toString()}`;
 
     await Promise.all(
@@ -303,7 +360,7 @@ export class ChatService {
     }
 
     const tenantObjectId = new Types.ObjectId(tenantId);
-    const roomObjectId = room._id as Types.ObjectId;
+    const roomObjectId = room._id;
     const userObjectId = new Types.ObjectId(userId);
 
     const member = await this.memberModel
@@ -316,7 +373,12 @@ export class ChatService {
     return !!member;
   }
 
-  async verifyAccessToken(token: string): Promise<{ sub?: string; email?: string; role?: string; tenantId?: string }> {
+  async verifyAccessToken(token: string): Promise<{
+    sub?: string;
+    email?: string;
+    role?: string;
+    tenantId?: string;
+  }> {
     return this.authService.verifyAccessToken(token);
   }
 }

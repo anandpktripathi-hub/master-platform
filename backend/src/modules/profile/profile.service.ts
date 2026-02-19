@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../../database/schemas/user.schema';
@@ -138,7 +142,7 @@ export class ProfileService {
       let handle = baseHandle || `user${user._id}`;
       let suffix = 1;
       // Ensure unique handle
-      // eslint-disable-next-line no-constant-condition
+
       while (await this.publicProfileModel.exists({ handle })) {
         handle = `${baseHandle || 'user'}${suffix++}`;
       }
@@ -220,12 +224,12 @@ export class ProfileService {
     // Recalculate completeness: simple heuristic
     const isComplete = Boolean(
       updated.headline &&
-        updated.bio &&
-        updated.avatarUrl &&
-        updated.experience &&
-        updated.experience.length > 0 &&
-        updated.skills &&
-        updated.skills.length > 0,
+      updated.bio &&
+      updated.avatarUrl &&
+      updated.experience &&
+      updated.experience.length > 0 &&
+      updated.skills &&
+      updated.skills.length > 0,
     );
 
     if (updated.isComplete !== isComplete) {

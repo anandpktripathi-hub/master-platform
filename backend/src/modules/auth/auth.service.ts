@@ -39,7 +39,12 @@ export class AuthService {
     }
 
     const isMatch = await bcrypt.compare(pass, user.password);
-    console.log('[VALIDATE USER] Password compare for email:', email, 'isMatch:', isMatch);
+    console.log(
+      '[VALIDATE USER] Password compare for email:',
+      email,
+      'isMatch:',
+      isMatch,
+    );
     if (!isMatch) {
       console.error('[VALIDATE USER] Incorrect password for email:', email);
       throw new UnauthorizedException('Incorrect password');
@@ -65,7 +70,6 @@ export class AuthService {
     tenantId?: string;
     password?: string;
   }) {
-
     // If password is provided, validate user
     if (user.password) {
       // This is a direct login attempt
@@ -75,7 +79,8 @@ export class AuthService {
         // Fallback: if email matches platform admin, set PLATFORM_SUPER_ADMIN
         const platformAdminEmails = ['admin@example.com', 'anand@gmail.com'];
         if (platformAdminEmails.includes(validatedUser.email)) {
-          validatedUser.role = require('../modules/users/role.types').Role.PLATFORM_SUPER_ADMIN;
+          validatedUser.role =
+            require('../modules/users/role.types').Role.PLATFORM_SUPER_ADMIN;
         }
       }
       user = validatedUser as any; // Explicitly cast to any to avoid type error
@@ -86,14 +91,27 @@ export class AuthService {
     }
     // Ensure tenantId is a string (if present)
     let tenantIdStr: string | undefined = undefined;
-    if (user.tenantId && typeof user.tenantId === 'string' && user.tenantId.trim() !== '') {
+    if (
+      user.tenantId &&
+      typeof user.tenantId === 'string' &&
+      user.tenantId.trim() !== ''
+    ) {
       tenantIdStr = user.tenantId;
       console.log('[LOGIN DEBUG] tenantId is a valid string:', tenantIdStr);
-    } else if (user.tenantId && typeof user.tenantId === 'object' && (user.tenantId as any).toString) {
+    } else if (
+      user.tenantId &&
+      typeof user.tenantId === 'object' &&
+      (user.tenantId as any).toString
+    ) {
       tenantIdStr = (user.tenantId as any).toString();
       console.log('[LOGIN DEBUG] tenantId converted from object:', tenantIdStr);
     } else {
-      console.log('[LOGIN DEBUG] tenantId is missing or invalid:', user.tenantId, 'typeof:', typeof user.tenantId);
+      console.log(
+        '[LOGIN DEBUG] tenantId is missing or invalid:',
+        user.tenantId,
+        'typeof:',
+        typeof user.tenantId,
+      );
     }
 
     // Enhanced Debug log for user object
@@ -110,7 +128,10 @@ export class AuthService {
       const allUsers = await this.userModel.find({ email: user.email }).lean();
       console.log('[LOGIN DEBUG] All users with this email:', allUsers);
     } catch (err) {
-      console.log('[LOGIN DEBUG] Error fetching all users with this email:', err);
+      console.log(
+        '[LOGIN DEBUG] Error fetching all users with this email:',
+        err,
+      );
     }
     // Always allow login for platform admin emails and roles
     const platformAdminEmails = ['admin@example.com', 'anand@gmail.com'];
@@ -120,10 +141,22 @@ export class AuthService {
       user.role === 'platform_admin' ||
       user.role === 'PLATFORM_ADMIN_LEGACY';
     if (platformAdminEmails.includes(user.email) || isPlatformAdmin) {
-      console.log('[LOGIN DEBUG] Bypassing tenant check for platform admin:', user.email);
+      console.log(
+        '[LOGIN DEBUG] Bypassing tenant check for platform admin:',
+        user.email,
+      );
     } else {
       if (!tenantIdStr || tenantIdStr.trim() === '') {
-        console.log('[LOGIN DEBUG] Tenant not found for user:', user.email, 'Role:', user.role, 'tenantIdStr:', tenantIdStr, 'original tenantId:', user.tenantId);
+        console.log(
+          '[LOGIN DEBUG] Tenant not found for user:',
+          user.email,
+          'Role:',
+          user.role,
+          'tenantIdStr:',
+          tenantIdStr,
+          'original tenantId:',
+          user.tenantId,
+        );
         throw new UnauthorizedException('Tenant not found');
       } else {
         console.log('[LOGIN DEBUG] TenantId present, proceeding:', tenantIdStr);
@@ -304,7 +337,9 @@ export class AuthService {
     );
 
     // Send email with verification link
-    const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify-email?token=${token}`;
+    const frontendBaseUrl =
+      process.env.FRONTEND_URL || 'http://localhost:5173';
+    const verificationUrl = `${frontendBaseUrl}/verify-email?token=${token}`;
 
     try {
       await this.emailService.sendEmail({
@@ -349,7 +384,9 @@ export class AuthService {
     );
 
     if (!result.valid) {
-      throw new BadRequestException(result.reason || 'Invalid verification token');
+      throw new BadRequestException(
+        result.reason || 'Invalid verification token',
+      );
     }
 
     // Update user's email verified status
@@ -382,7 +419,9 @@ export class AuthService {
     ); // 2 hours
 
     // Send password reset email
-    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/reset-password?token=${token}`;
+    const frontendBaseUrl =
+      process.env.FRONTEND_URL || 'http://localhost:5173';
+    const resetUrl = `${frontendBaseUrl}/reset-password?token=${token}`;
 
     try {
       await this.emailService.sendEmail({
@@ -447,7 +486,8 @@ export class AuthService {
     });
 
     return {
-      message: 'Password reset successfully! You can now log in with your new password.',
+      message:
+        'Password reset successfully! You can now log in with your new password.',
     };
   }
 
@@ -476,8 +516,10 @@ export class AuthService {
       // Create new user from OAuth profile
       user = await this.userModel.create({
         email: oauthProfile.email,
-        firstName: oauthProfile.firstName || oauthProfile.displayName?.split(' ')[0],
-        lastName: oauthProfile.lastName || oauthProfile.displayName?.split(' ')[1],
+        firstName:
+          oauthProfile.firstName || oauthProfile.displayName?.split(' ')[0],
+        lastName:
+          oauthProfile.lastName || oauthProfile.displayName?.split(' ')[1],
         role: 'TENANT_OWNER', // Default role for OAuth users
         emailVerified: true, // Trust OAuth provider verification
         oauth: {
@@ -516,6 +558,6 @@ export class AuthService {
     role?: string;
     tenantId?: string;
   }> {
-    return this.jwtService.verify(token) as any;
+    return this.jwtService.verify(token);
   }
 }

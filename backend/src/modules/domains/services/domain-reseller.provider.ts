@@ -56,7 +56,9 @@ export class StubDomainResellerProvider implements DomainResellerProvider {
     };
   }
 
-  async purchase(request: DomainPurchaseRequest): Promise<DomainPurchaseResult> {
+  async purchase(
+    request: DomainPurchaseRequest,
+  ): Promise<DomainPurchaseResult> {
     this.logger.log(
       `Stub purchase for domain ${request.domain} by tenant ${request.tenantId}`,
     );
@@ -104,7 +106,9 @@ export class CloudflareDomainResellerProvider implements DomainResellerProvider 
     };
   }
 
-  async purchase(request: DomainPurchaseRequest): Promise<DomainPurchaseResult> {
+  async purchase(
+    request: DomainPurchaseRequest,
+  ): Promise<DomainPurchaseResult> {
     // Full domain registration via Cloudflare Registrar is intentionally
     // not automated here; operators should complete purchase in their
     // Cloudflare account UI and then attach DNS/SSL.

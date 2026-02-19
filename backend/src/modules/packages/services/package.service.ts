@@ -46,7 +46,7 @@ export class UpdatePackageDto {
   featureSet?: Partial<FeatureSet>;
   limits?: Partial<PackageLimits>;
   order?: number;
-   expiryWarningDays?: number;
+  expiryWarningDays?: number;
 }
 
 export class AssignPackageDto {
@@ -68,11 +68,11 @@ export class PackageService {
     private auditLogService: AuditLogService,
     // Payment services removed to break circular dependency
 
-  // Setter injection for payment services
+    // Setter injection for payment services
 
-  // Example usage: pass payment services as parameters where needed
-  // update methods like below:
-  // async someMethod(..., paymentGatewayService: PaymentGatewayService, paymentLogService: PaymentLogService) { ... }
+    // Example usage: pass payment services as parameters where needed
+    // update methods like below:
+    // async someMethod(..., paymentGatewayService: PaymentGatewayService, paymentLogService: PaymentLogService) { ... }
   ) {}
 
   /**
@@ -303,6 +303,8 @@ export class PackageService {
     packageId: string,
     options: {
       startTrial?: boolean;
+      /** When true, bypass online payment gateway processing (used for manual/offline approvals). */
+      skipPayment?: boolean;
       userId?: string;
       paymentToken?: string;
       gatewayName?: string;
@@ -326,11 +328,12 @@ export class PackageService {
       throw new BadRequestException('Package is not active');
     }
 
-    // Integrate payment gateway (simulate payment for website creation/assignment)
-    // Only charge if not trial
-    if (!options.startTrial) {
+    // Integrate payment gateway (online payment) unless trial or explicitly skipped
+    if (!options.startTrial && !options.skipPayment) {
       if (!paymentGatewayService || !paymentLogService) {
-        throw new BadRequestException('Payment services are required for payment processing');
+        throw new BadRequestException(
+          'Payment services are required for payment processing',
+        );
       }
 
       const paymentResult = await paymentGatewayService.processPayment({
@@ -380,19 +383,11 @@ export class PackageService {
       });
     }
 
-    // Check if tenant already has a package
-    const existing = await this.tenantPackageModel.findOne({
-      tenantId: new Types.ObjectId(tenantId),
-    });
-
-    if (existing) {
-      // If expired, allow re-assignment; otherwise block
-      if (existing.status !== 'expired') {
-        throw new ConflictException(
-          'Tenant already has an active package assignment',
-        );
-      }
-    }
+    // Check if tenant already has a package (unique by tenantId). For upgrades/downgrades,
+    // update in-place to avoid unique-index collisions and to support plan changes.
+    const existing = await this.tenantPackageModel
+      .findOne({ tenantId: new Types.ObjectId(tenantId) })
+      .exec();
 
     // Calculate dates
     const now = new Date();
@@ -434,20 +429,51 @@ export class PackageService {
       pages: 0,
     };
 
-    const tenantPackage = new this.tenantPackageModel({
-      tenantId: new Types.ObjectId(tenantId),
-      packageId: new Types.ObjectId(packageId),
-      status: options.startTrial && pkg.trialDays > 0 ? 'trial' : 'active',
-      startedAt,
-      trialEndsAt,
-      expiresAt,
-      usageCounters,
-      assignedBy: options.userId
-        ? new Types.ObjectId(options.userId)
-        : undefined,
-    });
+    const statusValue = options.startTrial && pkg.trialDays > 0 ? 'trial' : 'active';
 
-    const saved = await tenantPackage.save();
+    let saved: TenantPackageDocument;
+    if (existing) {
+      existing.packageId = new Types.ObjectId(packageId) as any;
+      existing.status = statusValue;
+      existing.startedAt = startedAt;
+
+      if (trialEndsAt) {
+        existing.trialEndsAt = trialEndsAt as any;
+      } else {
+        (existing as any).trialEndsAt = undefined;
+      }
+
+      if (expiresAt) {
+        existing.expiresAt = expiresAt as any;
+      } else {
+        (existing as any).expiresAt = undefined;
+      }
+
+      existing.usageCounters = usageCounters as any;
+      existing.overrides = {} as any;
+      existing.expiryWarningSent = false as any;
+      if (options.userId) {
+        existing.assignedBy = new Types.ObjectId(options.userId) as any;
+      }
+
+      saved = await existing.save();
+    } else {
+      const tenantPackage = new this.tenantPackageModel({
+        tenantId: new Types.ObjectId(tenantId),
+        packageId: new Types.ObjectId(packageId),
+        status: statusValue,
+        startedAt,
+        trialEndsAt,
+        expiresAt,
+        usageCounters,
+        assignedBy: options.userId
+          ? new Types.ObjectId(options.userId)
+          : undefined,
+        expiryWarningSent: false,
+      });
+
+      saved = await tenantPackage.save();
+    }
 
     // Update tenant's planKey
     await this.tenantModel.updateOne(
@@ -467,7 +493,7 @@ export class PackageService {
     });
 
     this.logger.log(`Assigned package '${pkg.name}' to tenant ${tenantId}`);
-    return saved;
+    return saved as unknown as TenantPackage;
   }
 
   /**
@@ -501,7 +527,6 @@ export class PackageService {
       return false;
     }
     return true;
-
   }
 
   /**
@@ -550,7 +575,7 @@ export class PackageService {
       if (!tenantIdValue) continue;
 
       const email = await tenantsService.getTenantBillingEmail(tenantIdValue);
-      const pkg = tenantPackage.packageId as any as Package;
+      const pkg = tenantPackage.packageId as Package;
 
       if (email) {
         await billingNotifications
@@ -594,7 +619,7 @@ export class PackageService {
 
     const maxOverride =
       doc && doc.length > 0 && typeof doc[0].expiryWarningDays === 'number'
-        ? (doc[0].expiryWarningDays as number)
+        ? doc[0].expiryWarningDays
         : 0;
 
     if (maxOverride > globalDefaultDays) {
@@ -623,11 +648,7 @@ export class PackageService {
               totalTenantCount: { $sum: 1 },
               activeTenantCount: {
                 $sum: {
-                  $cond: [
-                    { $in: ['$status', ['trial', 'active']] },
-                    1,
-                    0,
-                  ],
+                  $cond: [{ $in: ['$status', ['trial', 'active']] }, 1, 0],
                 },
               },
             },
@@ -636,8 +657,11 @@ export class PackageService {
         .exec(),
     ]);
 
-    const statsByPackageId = new Map<string, { activeTenantCount: number; totalTenantCount: number }>();
-    for (const row of stats as any[]) {
+    const statsByPackageId = new Map<
+      string,
+      { activeTenantCount: number; totalTenantCount: number }
+    >();
+    for (const row of stats) {
       const id = row._id ? String(row._id) : '';
       statsByPackageId.set(id, {
         activeTenantCount: row.activeTenantCount || 0,
@@ -690,16 +714,17 @@ export class PackageService {
     for (const tenantPackage of candidates as any[]) {
       if (!tenantPackage.expiresAt) continue;
 
-      const tenantIdValue =
-        (tenantPackage.tenantId && tenantPackage.tenantId.toString
+      const tenantIdValue = (
+        tenantPackage.tenantId && tenantPackage.tenantId.toString
           ? tenantPackage.tenantId.toString()
-          : undefined) as string | undefined;
+          : undefined
+      ) as string | undefined;
       if (!tenantIdValue) continue;
 
       const email = await tenantsService.getTenantBillingEmail(tenantIdValue);
       if (!email) continue;
 
-      const pkg = tenantPackage.packageId as any as Package;
+      const pkg = tenantPackage.packageId as Package;
 
       const effectiveDaysBeforeExpiry = (() => {
         const override = (pkg as any).expiryWarningDays as number | undefined;

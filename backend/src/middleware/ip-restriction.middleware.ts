@@ -48,8 +48,11 @@ export class IpRestrictionMiddleware implements NestMiddleware {
       });
     } catch (err) {
       // Fail-open on settings lookup errors to avoid total outage.
-      // eslint-disable-next-line no-console
-      console.error('[IpRestrictionMiddleware] Error while enforcing IP restriction:', err);
+
+      console.error(
+        '[IpRestrictionMiddleware] Error while enforcing IP restriction:',
+        err,
+      );
       return next();
     }
   }

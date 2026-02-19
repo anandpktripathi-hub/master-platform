@@ -4,12 +4,12 @@ import { Controller, Get } from '@nestjs/common';
 export class CmsMenuController {
   @Get()
   async getMenu() {
-      // TODO: Replace with real DB logic
-      return {
-        menuItems: [
-          { id: 1, name: 'Main Menu', items: ['Home', 'About', 'Contact'] },
-          { id: 2, name: 'Footer Menu', items: ['Privacy', 'Terms'] },
-        ],
-      };
+    // TODO: Replace with real DB logic
+    return {
+      menuItems: [
+        { id: 1, name: 'Main Menu', items: ['Home', 'About', 'Contact'] },
+        { id: 2, name: 'Footer Menu', items: ['Privacy', 'Terms'] },
+      ],
+    };
   }
 }

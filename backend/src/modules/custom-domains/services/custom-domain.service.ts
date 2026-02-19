@@ -320,8 +320,8 @@ export class CustomDomainService {
 
     this.logger.log(
       `SSL issuance initiated for ${customDomain.domain}. ` +
-      `In production, trigger external ACME client (certbot/acme.sh) or use node-acme-client library. ` +
-      `After cert issuance, mark sslStatus='issued' via SslAutomationService.resyncStatuses().`
+        `In production, trigger external ACME client (certbot/acme.sh) or use node-acme-client library. ` +
+        `After cert issuance, mark sslStatus='issued' via SslAutomationService.resyncStatuses().`,
     );
 
     // TODO (Production): Spawn or enqueue a job here to call certbot or node-acme-client.
@@ -762,7 +762,11 @@ export class CustomDomainService {
         pending: 0,
         expired: 0,
         expiringSoon: 0,
-        expiringList: [] as Array<{ domain: string; expiresAt: Date; daysRemaining: number }>,
+        expiringList: [] as Array<{
+          domain: string;
+          expiresAt: Date;
+          daysRemaining: number;
+        }>,
       },
       primary: domains.find((d) => d.isPrimary)?.domain || null,
     };
@@ -781,7 +785,10 @@ export class CustomDomainService {
           if (msRemaining <= 0) {
             summary.ssl.expired += 1;
           } else if (msRemaining <= warningWindowMs) {
-            const daysRemaining = Math.max(1, Math.round(msRemaining / (1000 * 60 * 60 * 24)));
+            const daysRemaining = Math.max(
+              1,
+              Math.round(msRemaining / (1000 * 60 * 60 * 24)),
+            );
             summary.ssl.expiringSoon += 1;
             summary.ssl.expiringList.push({
               domain: d.domain,

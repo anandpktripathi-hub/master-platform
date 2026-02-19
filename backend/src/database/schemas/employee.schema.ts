@@ -20,7 +20,7 @@ export class Employee {
   @Prop()
   department?: string;
 
-  @Prop({ default: 'active', enum: ['active', 'inactive'] })
+  @Prop({ type: String, default: 'active', enum: ['active', 'inactive'] })
   status!: 'active' | 'inactive';
 
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })

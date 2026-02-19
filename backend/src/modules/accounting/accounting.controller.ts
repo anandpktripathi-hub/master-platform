@@ -38,7 +38,11 @@ export class AccountingController {
 
   @Put('accounts/:id')
   @Roles('tenant_admin')
-  updateAccount(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateAccount(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.accountingService.updateAccount(tenantId, id, body);
   }
 
@@ -76,7 +80,11 @@ export class AccountingController {
 
   @Put('invoices/:id')
   @Roles('tenant_admin')
-  updateInvoice(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateInvoice(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.accountingService.updateInvoice(tenantId, id, body);
   }
 
@@ -101,7 +109,11 @@ export class AccountingController {
 
   @Put('bills/:id')
   @Roles('tenant_admin')
-  updateBill(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateBill(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.accountingService.updateBill(tenantId, id, body);
   }
 
@@ -126,7 +138,11 @@ export class AccountingController {
 
   @Put('goals/:id')
   @Roles('tenant_admin')
-  updateGoal(@Tenant() tenantId: string, @Param('id') id: string, @Body() body: any) {
+  updateGoal(
+    @Tenant() tenantId: string,
+    @Param('id') id: string,
+    @Body() body: any,
+  ) {
     return this.accountingService.updateGoal(tenantId, id, body);
   }
 
@@ -156,10 +172,7 @@ export class AccountingController {
 
   @Get('reports/balance-sheet')
   @Roles('tenant_admin')
-  getBalanceSheet(
-    @Tenant() tenantId: string,
-    @Query('asOf') asOf?: string,
-  ) {
+  getBalanceSheet(@Tenant() tenantId: string, @Query('asOf') asOf?: string) {
     return this.accountingService.getBalanceSheet(tenantId, asOf);
   }
 
@@ -172,7 +185,11 @@ export class AccountingController {
     @Query('from') from?: string,
     @Query('to') to?: string,
   ) {
-    const report = await this.accountingService.getProfitAndLoss(tenantId, from, to);
+    const report = await this.accountingService.getProfitAndLoss(
+      tenantId,
+      from,
+      to,
+    );
 
     const header = ['Month', 'Income', 'Expense', 'Net'];
     const rows = report.byMonth.map((m) => [

@@ -72,11 +72,7 @@ export class TenantsService {
         }
       }
 
-      const adminRoles = [
-        Role.OWNER,
-        Role.ADMIN,
-        Role.TENANT_ADMIN_LEGACY,
-      ];
+      const adminRoles = [Role.OWNER, Role.ADMIN, Role.TENANT_ADMIN_LEGACY];
 
       const adminUser = await this.userModel
         .findOne({
@@ -126,6 +122,63 @@ export class TenantsService {
       isActive: true,
     });
     return tenant.save();
+  }
+
+  private normalizeHost(hostRaw: string): string {
+    const host = String(hostRaw || '')
+      .trim()
+      .toLowerCase();
+    // strip port if present
+    return host.includes(':') ? host.split(':')[0] : host;
+  }
+
+  async resolveTenantById(tenantId: string): Promise<TenantDocument | null> {
+    if (!tenantId) return null;
+    try {
+      if (!Types.ObjectId.isValid(tenantId)) return null;
+      return await this.tenantModel.findById(tenantId).lean<TenantDocument>();
+    } catch (error) {
+      this.logger.warn(`Failed to resolve tenant by id tenantId=${tenantId}`);
+      return null;
+    }
+  }
+
+  async resolveTenantByHost(hostRaw: string): Promise<TenantDocument | null> {
+    const host = this.normalizeHost(hostRaw);
+    if (!host) return null;
+
+    try {
+      // 1) Exact domain match
+      const byDomain = await this.tenantModel
+        .findOne({ domain: host, isActive: true })
+        .lean<TenantDocument>();
+      if (byDomain) return byDomain;
+
+      // 2) Custom domains array
+      const byCustom = await this.tenantModel
+        .findOne({ customDomains: host, isActive: true })
+        .lean<TenantDocument>();
+      if (byCustom) return byCustom;
+
+      // 3) Subdomain slug match for `${slug}.${PLATFORM_PRIMARY_DOMAIN}`
+      const primary = process.env.PLATFORM_PRIMARY_DOMAIN
+        ? this.normalizeHost(process.env.PLATFORM_PRIMARY_DOMAIN)
+        : '';
+      if (primary && host.endsWith(`.${primary}`)) {
+        const slug = host.slice(0, -1 * (primary.length + 1));
+        if (slug) {
+          const bySlug = await this.tenantModel
+            .findOne({ slug, isActive: true })
+            .lean<TenantDocument>();
+          if (bySlug) return bySlug;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      this.logger.warn(`Failed to resolve tenant by host host=${host}`);
+      return null;
+    }
   }
 
   async getCurrentTenant(tenantId: string) {

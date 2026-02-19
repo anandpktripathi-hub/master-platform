@@ -25,9 +25,8 @@ export class WebhookDispatcherService {
   ): Promise<void> {
     try {
       // Fetch webhook settings for this tenant
-      const webhookSettings = await this.settingsService.getWebhookSettings(
-        tenantId,
-      );
+      const webhookSettings =
+        await this.settingsService.getWebhookSettings(tenantId);
 
       if (!webhookSettings?.hooks) {
         this.logger.debug(

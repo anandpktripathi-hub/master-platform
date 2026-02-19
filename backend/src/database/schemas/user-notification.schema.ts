@@ -27,6 +27,7 @@ export class UserNotification {
   read!: boolean;
 }
 
-export const UserNotificationSchema = SchemaFactory.createForClass(UserNotification);
+export const UserNotificationSchema =
+  SchemaFactory.createForClass(UserNotification);
 UserNotificationSchema.index({ tenantId: 1, userId: 1, createdAt: -1 });
 UserNotificationSchema.index({ tenantId: 1, userId: 1, read: 1 });

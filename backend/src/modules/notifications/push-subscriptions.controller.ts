@@ -3,7 +3,10 @@ import type { Request } from 'express';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import { PushSubscriptionsService, SavePushSubscriptionInput } from './push-subscriptions.service';
+import {
+  PushSubscriptionsService,
+  SavePushSubscriptionInput,
+} from './push-subscriptions.service';
 
 interface AuthRequest extends Request {
   user?: {
@@ -61,7 +64,10 @@ export class PushSubscriptionsController {
       throw new Error('Endpoint is required');
     }
 
-    await this.pushSubscriptions.removeByEndpoint(String(tenantId), body.endpoint);
+    await this.pushSubscriptions.removeByEndpoint(
+      String(tenantId),
+      body.endpoint,
+    );
 
     return { success: true };
   }

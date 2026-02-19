@@ -28,7 +28,12 @@ export class Invoice {
   @Prop({ type: Date, required: true })
   dueDate!: Date;
 
-  @Prop({ required: true, enum: ['draft', 'sent', 'paid', 'overdue', 'cancelled'], default: 'draft' })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['draft', 'sent', 'paid', 'overdue', 'cancelled'],
+    default: 'draft',
+  })
   status!: InvoiceStatus;
 
   @Prop()

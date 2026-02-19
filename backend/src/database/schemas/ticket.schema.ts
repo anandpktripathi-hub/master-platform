@@ -30,13 +30,16 @@ export class Ticket {
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   assignedToUserId?: Types.ObjectId;
 
-  @Prop({ type: [
-    {
-      authorId: { type: Types.ObjectId, ref: 'User' },
-      message: { type: String, required: true },
-      createdAt: { type: Date, default: Date.now },
-    },
-  ], default: [] })
+  @Prop({
+    type: [
+      {
+        authorId: { type: Types.ObjectId, ref: 'User' },
+        message: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+    default: [],
+  })
   internalNotes?: Array<{
     authorId?: Types.ObjectId;
     message: string;

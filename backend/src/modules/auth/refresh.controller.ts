@@ -4,7 +4,10 @@ import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class RefreshController {
-  constructor(private readonly authService: AuthService, private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Post('refresh')
   @HttpCode(200)
@@ -15,7 +18,9 @@ export class RefreshController {
       return { error: 'No refresh token provided' };
     }
     try {
-      const payload = this.jwtService.verify(refreshToken, { ignoreExpiration: false });
+      const payload = this.jwtService.verify(refreshToken, {
+        ignoreExpiration: false,
+      });
       // Optionally check if token is blacklisted, etc.
       // Issue new access token
       const newAccessToken = this.jwtService.sign({

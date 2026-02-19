@@ -13,7 +13,7 @@ export class Transaction {
   @Prop({ required: true })
   amount!: number;
 
-  @Prop({ required: true, enum: ['debit', 'credit'] })
+  @Prop({ type: String, required: true, enum: ['debit', 'credit'] })
   type!: TransactionType;
 
   @Prop({ type: Date, required: true })
