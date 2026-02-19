@@ -1,19 +1,32 @@
-<<<<<<< HEAD
-node_modules
-=======
-
+# Dependencies
 node_modules/
+
+# Build outputs
 dist/
+build/
+
+# Environment files (keep examples tracked)
 .env
+.env.*
+!.env.example
+!.env.production.example
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Data / runtime
 *.db
 logs/
 uploads/
 .cache/
 coverage/
+
+# OS / editor
 .DS_Store
 .vscode/
->>>>>>> 2315ac5caf027343377c666ab039ccd829c866f7
-frontend/frontend-full-scan.txt
-frontend/tailwindcss-windows-x64.exe
+
+# Large generated artifacts
 frontend/frontend-full-scan.txt
 frontend/tailwindcss-windows-x64.exe

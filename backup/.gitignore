@@ -1,0 +1,6 @@
+# Backup artifacts (avoid accidental commits)
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
