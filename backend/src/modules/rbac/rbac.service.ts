@@ -40,6 +40,13 @@ export class RbacService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   // ============= PERMISSION OPERATIONS =============
 
   async getAllPermissions(): Promise<PermissionDto[]> {
@@ -72,9 +79,10 @@ export class RbacService {
   // ============= ROLE OPERATIONS =============
 
   async createRole(tenantId: string, dto: CreateRoleDto): Promise<RoleDto> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const existing = await this.roleModel.findOne({
       name: dto.name,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
     if (existing) {
       throw new BadRequestException(
@@ -83,7 +91,9 @@ export class RbacService {
     }
 
     // Validate permissions exist
-    const permissionIds = dto.permissionIds.map((id) => new Types.ObjectId(id));
+    const permissionIds = dto.permissionIds.map((id) =>
+      this.toObjectId(id, 'permissionIds'),
+    );
     const permissions = await this.permissionModel
       .find({ _id: { $in: permissionIds } })
       .lean()
@@ -95,7 +105,7 @@ export class RbacService {
     const role = await this.roleModel.create({
       name: dto.name,
       description: dto.description,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
       permissions: permissionIds,
       isSystem: false,
     });
@@ -108,9 +118,12 @@ export class RbacService {
     roleId: string,
     dto: UpdateRoleDto,
   ): Promise<RoleDto> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roleObjectId = this.toObjectId(roleId, 'roleId');
+
     const role = await this.roleModel.findOne({
-      _id: new Types.ObjectId(roleId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: roleObjectId,
+      tenantId: tenantObjectId,
     });
     if (!role) {
       throw new NotFoundException('Role not found');
@@ -122,9 +135,9 @@ export class RbacService {
 
     if (dto.name) {
       const existing = await this.roleModel.findOne({
-        _id: { $ne: new Types.ObjectId(roleId) },
+        _id: { $ne: roleObjectId },
         name: dto.name,
-        tenantId: new Types.ObjectId(tenantId),
+        tenantId: tenantObjectId,
       });
       if (existing) {
         throw new BadRequestException(
@@ -140,7 +153,7 @@ export class RbacService {
 
     if (dto.permissionIds) {
       const permissionIds = dto.permissionIds.map(
-        (id) => new Types.ObjectId(id),
+        (id) => this.toObjectId(id, 'permissionIds'),
       );
       const permissions = await this.permissionModel
         .find({ _id: { $in: permissionIds } })
@@ -157,8 +170,9 @@ export class RbacService {
   }
 
   async getRolesByTenant(tenantId: string): Promise<RoleDto[]> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const roles = await this.roleModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .populate('permissions')
       .lean()
       .exec();
@@ -166,10 +180,12 @@ export class RbacService {
   }
 
   async getRoleById(tenantId: string, roleId: string): Promise<RoleDto> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roleObjectId = this.toObjectId(roleId, 'roleId');
     const role = await this.roleModel
       .findOne({
-        _id: new Types.ObjectId(roleId),
-        tenantId: new Types.ObjectId(tenantId),
+        _id: roleObjectId,
+        tenantId: tenantObjectId,
       })
       .populate('permissions')
       .lean()
@@ -181,9 +197,11 @@ export class RbacService {
   }
 
   async deleteRole(tenantId: string, roleId: string): Promise<void> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roleObjectId = this.toObjectId(roleId, 'roleId');
     const role = await this.roleModel.findOne({
-      _id: new Types.ObjectId(roleId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: roleObjectId,
+      tenantId: tenantObjectId,
     });
     if (!role) {
       throw new NotFoundException('Role not found');
@@ -195,8 +213,8 @@ export class RbacService {
 
     // Check if any users have this role
     const usersWithRole = await this.userTenantModel.countDocuments({
-      roleId: new Types.ObjectId(roleId),
-      tenantId: new Types.ObjectId(tenantId),
+      roleId: roleObjectId,
+      tenantId: tenantObjectId,
     });
     if (usersWithRole > 0) {
       throw new BadRequestException(
@@ -204,7 +222,7 @@ export class RbacService {
       );
     }
 
-    await this.roleModel.deleteOne({ _id: new Types.ObjectId(roleId) });
+    await this.roleModel.deleteOne({ _id: roleObjectId });
   }
 
   // ============= USER TENANT OPERATIONS =============
@@ -213,10 +231,12 @@ export class RbacService {
     tenantId: string,
     dto: CreateUserDto,
   ): Promise<UserTenantDto> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roleObjectId = this.toObjectId(dto.roleId, 'roleId');
     // Validate role exists in tenant
     const role = await this.roleModel.findOne({
-      _id: new Types.ObjectId(dto.roleId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: roleObjectId,
+      tenantId: tenantObjectId,
     });
     if (!role) {
       throw new BadRequestException('Role not found in this tenant');
@@ -239,7 +259,7 @@ export class RbacService {
     // Create user-tenant relationship
     const existing = await this.userTenantModel.findOne({
       userId: user._id,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
     if (existing) {
       throw new BadRequestException('User already exists in this tenant');
@@ -247,8 +267,8 @@ export class RbacService {
 
     const userTenant = await this.userTenantModel.create({
       userId: user._id,
-      tenantId: new Types.ObjectId(tenantId),
-      roleId: new Types.ObjectId(dto.roleId),
+      tenantId: tenantObjectId,
+      roleId: roleObjectId,
       isLoginEnabled: dto.isLoginEnabled !== false,
     });
 
@@ -264,9 +284,10 @@ export class RbacService {
     total: number;
   }> {
     const skip = (page - 1) * limit;
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const [userTenants, total] = await Promise.all([
       this.userTenantModel
-        .find({ tenantId: new Types.ObjectId(tenantId) })
+        .find({ tenantId: tenantObjectId })
         .populate('userId')
         .populate('roleId')
         .skip(skip)
@@ -274,7 +295,7 @@ export class RbacService {
         .lean()
         .exec(),
       this.userTenantModel
-        .countDocuments({ tenantId: new Types.ObjectId(tenantId) })
+        .countDocuments({ tenantId: tenantObjectId })
         .exec(),
     ]);
 
@@ -292,23 +313,26 @@ export class RbacService {
     userTenantId: string,
     dto: UpdateUserDto,
   ): Promise<UserTenantDto> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userTenantObjectId = this.toObjectId(userTenantId, 'userTenantId');
     const userTenant = await this.userTenantModel.findOne({
-      _id: new Types.ObjectId(userTenantId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: userTenantObjectId,
+      tenantId: tenantObjectId,
     });
     if (!userTenant) {
       throw new NotFoundException('User not found in this tenant');
     }
 
     if (dto.roleId) {
+      const roleObjectId = this.toObjectId(dto.roleId, 'roleId');
       const role = await this.roleModel.findOne({
-        _id: new Types.ObjectId(dto.roleId),
-        tenantId: new Types.ObjectId(tenantId),
+        _id: roleObjectId,
+        tenantId: tenantObjectId,
       });
       if (!role) {
         throw new BadRequestException('Role not found in this tenant');
       }
-      userTenant.roleId = new Types.ObjectId(dto.roleId);
+      userTenant.roleId = roleObjectId;
     }
 
     if (typeof dto.isLoginEnabled === 'boolean') {
@@ -338,16 +362,18 @@ export class RbacService {
     tenantId: string,
     userTenantId: string,
   ): Promise<void> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userTenantObjectId = this.toObjectId(userTenantId, 'userTenantId');
     const userTenant = await this.userTenantModel.findOne({
-      _id: new Types.ObjectId(userTenantId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: userTenantObjectId,
+      tenantId: tenantObjectId,
     });
     if (!userTenant) {
       throw new NotFoundException('User not found in this tenant');
     }
 
     await this.userTenantModel.deleteOne({
-      _id: new Types.ObjectId(userTenantId),
+      _id: userTenantObjectId,
     });
   }
 
@@ -356,9 +382,11 @@ export class RbacService {
     userTenantId: string,
     dto: ResetPasswordDto,
   ): Promise<void> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userTenantObjectId = this.toObjectId(userTenantId, 'userTenantId');
     const userTenant = await this.userTenantModel.findOne({
-      _id: new Types.ObjectId(userTenantId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: userTenantObjectId,
+      tenantId: tenantObjectId,
     });
     if (!userTenant) {
       throw new NotFoundException('User not found in this tenant');
@@ -376,9 +404,11 @@ export class RbacService {
     userTenantId: string,
     enable: boolean,
   ): Promise<UserTenantDto> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userTenantObjectId = this.toObjectId(userTenantId, 'userTenantId');
     const userTenant = await this.userTenantModel.findOne({
-      _id: new Types.ObjectId(userTenantId),
-      tenantId: new Types.ObjectId(tenantId),
+      _id: userTenantObjectId,
+      tenantId: tenantObjectId,
     });
     if (!userTenant) {
       throw new NotFoundException('User not found in this tenant');

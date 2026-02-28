@@ -1,0 +1,47 @@
+
+
+    Hive: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT
+
+
+Name                           Property                                        
+----                           --------                                        
+CurrentVersion                 SystemRoot                : C:\WINDOWS          
+                               BaseBuildRevisionNumber   : 1                   
+                               BuildBranch               : ge_release          
+                               BuildGUID                 :                     
+                               ffffffff-ffff-ffff-ffff-ffffffffffff            
+                               BuildLab                  :                     
+                               26100.ge_release.240331-1435                    
+                               BuildLabEx                :                     
+                               26100.1.amd64fre.ge_release.240331-1435         
+                               CompositionEditionID      : Core                
+                               CurrentBuild              : 26200               
+                               CurrentBuildNumber        : 26200               
+                               CurrentMajorVersionNumber : 10                  
+                               CurrentMinorVersionNumber : 0                   
+                               CurrentType               : Multiprocessor Free 
+                               CurrentVersion            : 6.3                 
+                               DisplayVersion            : 25H2                
+                               EditionID                 : CoreSingleLanguage  
+                               EditionSubManufacturer    :                     
+                               EditionSubstring          :                     
+                               EditionSubVersion         :                     
+                               InstallationType          : Client              
+                               InstallDate               : 1759479367          
+                               LCUVer                    : 10.0.26100.7840     
+                               ProductName               : Windows 10 Home     
+                               Single Language                                 
+                               ReleaseId                 : 2009                
+                               SoftwareType              : System              
+                               UBR                       : 7840                
+                               PathName                  : C:\Windows          
+                               PendingInstall            : 0                   
+                               ProductId                 :                     
+                               00356-24750-24250-AAOEM                         
+                               DigitalProductId          : {164, 0, 0, 0...}   
+                               DigitalProductId4         : {248, 4, 0, 0...}   
+                               RegisteredOwner           :                     
+                               <EMAIL>                    
+                               InstallTime               : 134039529676472792  
+
+

@@ -1,0 +1,9 @@
+Get-WindowsOptionalFeature : The requested operation requires elevation.
+At line:1 char:4
++ &{ Get-WindowsOptionalFeature -Online | ConvertTo-Json }
++    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Get-WindowsOptionalFeature],  
+   COMException
+    + FullyQualifiedErrorId : Microsoft.Dism.Commands.GetWindowsOptionalFeatur 
+   eCommand
+ 

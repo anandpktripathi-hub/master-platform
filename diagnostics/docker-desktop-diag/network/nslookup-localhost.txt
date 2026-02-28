@@ -1,0 +1,7 @@
+Server:  reliance.reliance
+Address:  2405:201:8002:181c::c0a8:1d01
+
+Name:    localhost
+Addresses:  ::1
+	  127.0.0.1
+

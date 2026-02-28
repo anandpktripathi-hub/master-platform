@@ -1,5 +1,6 @@
 import {
   Body,
+  BadRequestException,
   Controller,
   Get,
   Param,
@@ -10,6 +11,12 @@ import {
 } from '@nestjs/common';
 import { SocialService } from './social.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  AddCommentDto,
+  CreatePostDto,
+  SendConnectionRequestDto,
+} from './dto/social.dto';
 
 interface AuthRequest extends Request {
   user?: {
@@ -18,7 +25,8 @@ interface AuthRequest extends Request {
     tenantId?: string;
   };
 }
-
+@ApiTags('Social')
+@ApiBearerAuth('bearer')
 @Controller('social')
 export class SocialController {
   constructor(private readonly socialService: SocialService) {}
@@ -29,12 +37,12 @@ export class SocialController {
   @Post('connections/request')
   async sendRequest(
     @Req() req: AuthRequest,
-    @Body() body: { recipientId?: string },
+    @Body() body: SendConnectionRequestDto,
   ) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !body.recipientId || !tenantId) {
-      throw new Error('User ID, tenantId, and recipientId required');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
     }
     return this.socialService.sendConnectionRequest(
       String(userId),
@@ -48,7 +56,9 @@ export class SocialController {
   async acceptRequest(@Req() req: AuthRequest, @Param('id') id: string) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.acceptConnectionRequest(
       String(userId),
       id,
@@ -61,7 +71,9 @@ export class SocialController {
   async rejectRequest(@Req() req: AuthRequest, @Param('id') id: string) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.rejectConnectionRequest(
       String(userId),
       id,
@@ -74,7 +86,9 @@ export class SocialController {
   async getPendingRequests(@Req() req: AuthRequest) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.listPendingRequests(
       String(userId),
       String(tenantId),
@@ -86,7 +100,9 @@ export class SocialController {
   async getMyConnections(@Req() req: AuthRequest) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.listMyConnections(
       String(userId),
       String(tenantId),
@@ -97,18 +113,12 @@ export class SocialController {
 
   @UseGuards(JwtAuthGuard)
   @Post('posts')
-  async createPost(
-    @Req() req: AuthRequest,
-    @Body()
-    body: {
-      content?: string;
-      visibility?: 'PUBLIC' | 'CONNECTIONS_ONLY' | 'PRIVATE';
-    },
-  ) {
+  async createPost(@Req() req: AuthRequest, @Body() body: CreatePostDto) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId || !body.content)
-      throw new Error('User ID, tenantId, and content required');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.createPost(
       String(userId),
       body.content,
@@ -122,7 +132,9 @@ export class SocialController {
   async getFeed(@Req() req: AuthRequest) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.listFeedPosts(String(userId), String(tenantId));
   }
 
@@ -131,7 +143,9 @@ export class SocialController {
   async toggleLike(@Req() req: AuthRequest, @Param('id') id: string) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId) throw new Error('User ID or tenantId not found');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.toggleLike(id, String(userId), String(tenantId));
   }
 
@@ -140,12 +154,13 @@ export class SocialController {
   async addComment(
     @Req() req: AuthRequest,
     @Param('id') id: string,
-    @Body() body: { content?: string },
+    @Body() body: AddCommentDto,
   ) {
     const userId = req.user?.sub || req.user?._id;
     const tenantId = req.user?.tenantId;
-    if (!userId || !tenantId || !body.content)
-      throw new Error('User ID, tenantId, and content required');
+    if (!userId || !tenantId) {
+      throw new BadRequestException('User ID or tenantId not found');
+    }
     return this.socialService.addComment(
       id,
       String(userId),
@@ -158,7 +173,8 @@ export class SocialController {
   @Get('posts/:id/comments')
   async getComments(@Req() req: AuthRequest, @Param('id') id: string) {
     const tenantId = req.user?.tenantId;
-    if (!tenantId) throw new Error('tenantId not found');
+    if (!tenantId) throw new BadRequestException('tenantId not found');
     return this.socialService.listComments(id, String(tenantId));
   }
 }
+

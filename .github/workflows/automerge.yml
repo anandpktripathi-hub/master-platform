@@ -15,9 +15,57 @@ jobs:
         with:
           script: |
             const pr = context.payload.pull_request;
+
+             // Only merge if all checks for the PR head SHA are green.
+             // This avoids accidentally merging broken code if branch protections are not configured.
+             const owner = context.repo.owner;
+             const repo = context.repo.repo;
+             const ref = pr.head.sha;
+
+             const checkRunsResp = await github.rest.checks.listForRef({
+               owner,
+               repo,
+               ref,
+               per_page: 100,
+             });
+
+             const checkRuns = (checkRunsResp.data && checkRunsResp.data.check_runs) || [];
+             if (!checkRuns.length) {
+               core.setFailed('No check runs found for PR head SHA; refusing to automerge.');
+               return;
+             }
+
+             const bad = [];
+             const pending = [];
+
+             for (const run of checkRuns) {
+               const status = run.status;
+               const conclusion = run.conclusion;
+
+               if (status !== 'completed') {
+                 pending.push(`${run.name} (${status})`);
+                 continue;
+               }
+
+               // Accept: success, neutral, skipped.
+               if (!['success', 'neutral', 'skipped'].includes(conclusion)) {
+                 bad.push(`${run.name} (${conclusion || 'unknown'})`);
+               }
+             }
+
+             if (pending.length) {
+               core.setFailed(`Checks still running: ${pending.join(', ')}`);
+               return;
+             }
+
+             if (bad.length) {
+               core.setFailed(`Checks not successful: ${bad.join(', ')}`);
+               return;
+             }
+
             await github.rest.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+               owner,
+               repo,
               pull_number: pr.number,
               merge_method: 'squash'
             });

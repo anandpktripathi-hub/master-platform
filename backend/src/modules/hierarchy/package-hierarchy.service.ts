@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { PackageHierarchyAssignment } from '../../common/schemas/package-hierarchy.schema';
@@ -10,29 +10,56 @@ export class PackageHierarchyService {
     private readonly assignmentModel: Model<PackageHierarchyAssignment>,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   async assignNodesToPackage(
     packageId: string,
     nodeIds: string[],
   ): Promise<PackageHierarchyAssignment> {
-    return this.assignmentModel.findOneAndUpdate(
-      { packageId },
-      {
-        packageId,
-        hierarchyNodes: nodeIds.map((id) => new Types.ObjectId(id)),
-      },
-      { upsert: true, new: true },
-    );
+    const trimmedPackageId = String(packageId || '').trim();
+    if (!trimmedPackageId) {
+      throw new BadRequestException('packageId is required');
+    }
+
+    return this.assignmentModel
+      .findOneAndUpdate(
+        { packageId: trimmedPackageId },
+        {
+          packageId: trimmedPackageId,
+          hierarchyNodes: nodeIds.map((id) => this.toObjectId(id, 'nodeIds')),
+        },
+        { upsert: true, new: true },
+      )
+      .exec();
   }
 
   async getNodesForPackage(
     packageId: string,
   ): Promise<PackageHierarchyAssignment | null> {
+    const trimmedPackageId = String(packageId || '').trim();
+    if (!trimmedPackageId) {
+      throw new BadRequestException('packageId is required');
+    }
+
     return this.assignmentModel
-      .findOne({ packageId })
-      .populate('hierarchyNodes');
+      .findOne({ packageId: trimmedPackageId })
+      .populate('hierarchyNodes')
+      .exec();
   }
 
   async removeAssignment(packageId: string): Promise<void> {
-    await this.assignmentModel.deleteOne({ packageId });
+    const trimmedPackageId = String(packageId || '').trim();
+    if (!trimmedPackageId) {
+      throw new BadRequestException('packageId is required');
+    }
+
+    await this.assignmentModel
+      .deleteOne({ packageId: trimmedPackageId })
+      .exec();
   }
 }

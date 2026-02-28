@@ -31,6 +31,16 @@ export function entriesToPaymentDto(
       publicKey: cfg.publicKey ?? '',
       secretKey: cfg.secretKey ?? '',
       webhookSecret: cfg.webhookSecret ?? '',
+      supportedCurrencies: Array.isArray(cfg.supportedCurrencies)
+        ? (cfg.supportedCurrencies as unknown[]).filter(
+            (v): v is string => typeof v === 'string',
+          )
+        : undefined,
+      baseCurrency: typeof cfg.baseCurrency === 'string' ? cfg.baseCurrency : undefined,
+      modules:
+        cfg.modules && typeof cfg.modules === 'object' && !Array.isArray(cfg.modules)
+          ? (cfg.modules as Record<string, boolean>)
+          : undefined,
     };
   }
 

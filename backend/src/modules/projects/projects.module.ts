@@ -10,6 +10,7 @@ import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 import { RolesGuard } from '../../guards/roles.guard';
 import { WorkspaceSharedModule } from '../../workspaces/workspace-shared.module';
+import { TenantGuard } from '../../common/guards/tenant.guard';
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { WorkspaceSharedModule } from '../../workspaces/workspace-shared.module'
     WorkspaceSharedModule,
   ],
   controllers: [ProjectsController],
-  providers: [ProjectsService, RolesGuard],
+  providers: [ProjectsService, RolesGuard, TenantGuard],
 })
 export class ProjectsModule {}

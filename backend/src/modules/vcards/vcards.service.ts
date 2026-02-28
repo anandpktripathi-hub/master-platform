@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { VCard, VCardDocument } from '../../database/schemas/vcard.schema';
@@ -9,13 +9,21 @@ export class VcardsService {
     @InjectModel(VCard.name) private readonly vcardModel: Model<VCardDocument>,
   ) {}
 
-  private toObjectId(id: string): Types.ObjectId {
+  private static normalizeUpsertPayload(payload: unknown): Record<string, unknown> {
+    if (!payload || typeof payload !== 'object') return {};
+    return payload as Record<string, unknown>;
+  }
+
+  private toObjectId(id: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
     return new Types.ObjectId(id);
   }
 
   async listForTenant(tenantId: string): Promise<VCard[]> {
     return this.vcardModel
-      .find({ tenantId: this.toObjectId(tenantId) })
+      .find({ tenantId: this.toObjectId(tenantId, 'tenantId') })
       .sort({ createdAt: -1 })
       .lean()
       .exec();
@@ -23,11 +31,18 @@ export class VcardsService {
 
   async createForTenant(
     tenantId: string,
-    payload: Partial<VCard>,
+    payload: unknown,
   ): Promise<VCard> {
+    const docPayload: any = {
+      ...VcardsService.normalizeUpsertPayload(payload),
+    };
+
+    if (docPayload.userId) {
+      docPayload.userId = this.toObjectId(String(docPayload.userId), 'userId');
+    }
     const doc = new this.vcardModel({
-      ...payload,
-      tenantId: this.toObjectId(tenantId),
+      ...docPayload,
+      tenantId: this.toObjectId(tenantId, 'tenantId'),
     });
     return doc.save();
   }
@@ -35,12 +50,21 @@ export class VcardsService {
   async updateForTenant(
     tenantId: string,
     id: string,
-    payload: Partial<VCard>,
+    payload: unknown,
   ): Promise<VCard> {
+    const updatePayload: any = {
+      ...VcardsService.normalizeUpsertPayload(payload),
+    };
+    if (updatePayload.userId) {
+      updatePayload.userId = this.toObjectId(String(updatePayload.userId), 'userId');
+    }
     const updated = await this.vcardModel
       .findOneAndUpdate(
-        { _id: this.toObjectId(id), tenantId: this.toObjectId(tenantId) },
-        { $set: payload },
+        {
+          _id: this.toObjectId(id, 'vcardId'),
+          tenantId: this.toObjectId(tenantId, 'tenantId'),
+        },
+        { $set: updatePayload },
         { new: true },
       )
       .lean()
@@ -54,8 +78,8 @@ export class VcardsService {
   async deleteForTenant(tenantId: string, id: string): Promise<void> {
     const res = await this.vcardModel
       .deleteOne({
-        _id: this.toObjectId(id),
-        tenantId: this.toObjectId(tenantId),
+        _id: this.toObjectId(id, 'vcardId'),
+        tenantId: this.toObjectId(tenantId, 'tenantId'),
       })
       .exec();
     if (res.deletedCount === 0) {
@@ -65,7 +89,7 @@ export class VcardsService {
 
   async getPublicVcard(id: string): Promise<VCard> {
     const vcard = await this.vcardModel
-      .findById(this.toObjectId(id))
+      .findById(this.toObjectId(id, 'vcardId'))
       .lean()
       .exec();
     if (!vcard) {
@@ -74,3 +98,4 @@ export class VcardsService {
     return vcard as unknown as VCard;
   }
 }
+

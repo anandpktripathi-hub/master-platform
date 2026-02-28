@@ -1,0 +1,54 @@
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:42:45.283872700Z][Docker Desktop Updater-217644 (218372).exe.installer] starting, console mode: true
+[2026-02-16T12:42:45.288864000Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245765287649700\\Docker Desktop Installer.exe"
+[2026-02-16T12:42:45.346762700Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245765345068900\\DockerDesktop.d4w"
+[2026-02-16T12:42:45.742902400Z][Docker Desktop Updater-217644 (218372).exe.installer] waiting for installer to finish
+[2026-02-16T12:42:45.742902400Z][Docker Desktop Updater-217644 (218372).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245765287649700\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245765345068900\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-16T12:42:52.593151800Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245765345068900
+[2026-02-16T12:42:52.602961900Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245765287649700
+[2026-02-16T12:42:52.603480400Z][Docker Desktop Updater-217644 (218372).exe.installer][E] installer exited with status 4294967291
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:43:05.206473100Z][Docker Desktop Updater-217644 (218372).exe.installer] starting, console mode: true
+[2026-02-16T12:43:05.210196800Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245785209574100\\Docker Desktop Installer.exe"
+[2026-02-16T12:43:05.270458500Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245785268881600\\DockerDesktop.d4w"
+[2026-02-16T12:43:05.698276000Z][Docker Desktop Updater-217644 (218372).exe.installer] waiting for installer to finish
+[2026-02-16T12:43:05.698784100Z][Docker Desktop Updater-217644 (218372).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245785209574100\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245785268881600\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-16T12:43:16.407167900Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245785268881600
+[2026-02-16T12:43:16.415097500Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245785209574100
+[2026-02-16T12:43:16.415773600Z][Docker Desktop Updater-217644 (218372).exe.installer][E] installer exited with status 4294967291
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:43:23.989701000Z][Docker Desktop Updater-217644 (218372).exe.installer] starting, console mode: true
+[2026-02-16T12:43:23.994656600Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245803994147300\\Docker Desktop Installer.exe"
+[2026-02-16T12:43:24.067475900Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245804066349700\\DockerDesktop.d4w"
+[2026-02-16T12:43:24.581347000Z][Docker Desktop Updater-217644 (218372).exe.installer] waiting for installer to finish
+[2026-02-16T12:43:24.581347000Z][Docker Desktop Updater-217644 (218372).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245803994147300\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245804066349700\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-16T12:43:37.569145300Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245804066349700
+[2026-02-16T12:43:37.575460300Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245803994147300
+[2026-02-16T12:43:37.576079800Z][Docker Desktop Updater-217644 (218372).exe.installer][E] installer exited with status 1
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:44:39.888498900Z][Docker Desktop Updater-217644 (218372).exe.installer] starting, console mode: true
+[2026-02-16T12:44:39.895902700Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245879894356200\\Docker Desktop Installer.exe"
+[2026-02-16T12:44:39.957386800Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245879956518900\\DockerDesktop.d4w"
+[2026-02-16T12:44:40.455567500Z][Docker Desktop Updater-217644 (218372).exe.installer] waiting for installer to finish
+[2026-02-16T12:44:40.455567500Z][Docker Desktop Updater-217644 (218372).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245879894356200\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245879956518900\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-16T12:44:52.783294100Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245879956518900
+[2026-02-16T12:44:52.789968300Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245879894356200
+[2026-02-16T12:44:52.789968300Z][Docker Desktop Updater-217644 (218372).exe.installer][E] installer exited with status 1
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:44:59.132691200Z][Docker Desktop Updater-217644 (218372).exe.installer] starting, console mode: true
+[2026-02-16T12:44:59.136748200Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245899136748200\\Docker Desktop Installer.exe"
+[2026-02-16T12:44:59.192875900Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245899191794400\\DockerDesktop.d4w"
+[2026-02-16T12:44:59.541106800Z][Docker Desktop Updater-217644 (218372).exe.installer] waiting for installer to finish
+[2026-02-16T12:44:59.541106800Z][Docker Desktop Updater-217644 (218372).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245899136748200\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245899191794400\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-16T12:45:11.965301000Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245899191794400
+[2026-02-16T12:45:11.975138900Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245899136748200
+[2026-02-16T12:45:11.975138900Z][Docker Desktop Updater-217644 (218372).exe.installer][E] installer exited with status 1
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:46:01.595201200Z][Docker Desktop Updater-217644 (218372).exe.installer] starting, console mode: true
+[2026-02-16T12:46:01.602291100Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245961600319900\\Docker Desktop Installer.exe"
+[2026-02-16T12:46:01.667444600Z][Docker Desktop Updater-217644 (218372).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245961666686500\\DockerDesktop.d4w"
+[2026-02-16T12:46:02.082550600Z][Docker Desktop Updater-217644 (218372).exe.installer] waiting for installer to finish
+[2026-02-16T12:46:02.082550600Z][Docker Desktop Updater-217644 (218372).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771245961600319900\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245961666686500\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-16T12:53:28.990960000Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245961666686500
+[2026-02-16T12:53:28.995981100Z][Docker Desktop Updater-217644 (218372).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771245961600319900
+[2026-02-16T12:53:28.995981100Z][Docker Desktop Updater-217644 (218372).exe.installer][E] installer exited with status 1

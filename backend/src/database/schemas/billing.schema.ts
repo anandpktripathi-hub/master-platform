@@ -22,3 +22,7 @@ export class Billing {
 }
 
 export const BillingSchema = SchemaFactory.createForClass(Billing);
+
+BillingSchema.index({ tenantId: 1, createdAt: -1 });
+BillingSchema.index({ tenantId: 1, status: 1, createdAt: -1 });
+BillingSchema.index({ status: 1, createdAt: -1 });

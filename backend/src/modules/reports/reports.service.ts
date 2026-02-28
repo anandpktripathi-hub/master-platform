@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -10,29 +10,10 @@ import {
   PosOrderDocument,
 } from '../../database/schemas/pos-order.schema';
 import { CmsAnalyticsService } from '../../cms/services/cms-analytics.service';
-
-export interface TenantFinancialReport {
-  currency: string | null;
-  totals: {
-    totalInvoices: number;
-    totalAmount: number;
-    paidAmount: number;
-    overdueAmount: number;
-  };
-  byStatus: Record<
-    string,
-    {
-      count: number;
-      totalAmount: number;
-    }
-  >;
-}
-
-export interface TenantCommerceReport {
-  totalOrders: number;
-  totalSales: number;
-  byStatus: Record<string, number>;
-}
+import type {
+  TenantCommerceReport,
+  TenantFinancialReport,
+} from './dto/reports.dto';
 
 @Injectable()
 export class ReportsService {
@@ -44,10 +25,17 @@ export class ReportsService {
     private readonly cmsAnalytics: CmsAnalyticsService,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   async getTenantFinancialReport(
     tenantId: string,
   ): Promise<TenantFinancialReport> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
 
     const agg = await this.invoiceModel
       .aggregate([
@@ -111,7 +99,7 @@ export class ReportsService {
   async getTenantCommerceReport(
     tenantId: string,
   ): Promise<TenantCommerceReport> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
 
     const [totals, byStatusAgg] = await Promise.all([
       this.posOrderModel
@@ -165,8 +153,10 @@ export class ReportsService {
   }
 
   async getTenantTrafficReport(tenantId: string) {
+    this.toObjectId(tenantId, 'tenantId');
     // Delegate to existing CMS analytics service for rich visitor/device stats.
     // Frontend can use this payload to render GA-style charts.
     return this.cmsAnalytics.getTenantAnalytics(tenantId, 30);
   }
 }
+

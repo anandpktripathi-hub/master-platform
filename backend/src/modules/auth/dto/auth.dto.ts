@@ -6,6 +6,12 @@ export class SendVerificationEmailDto {
   email!: string;
 }
 
+export class RefreshTokenDto {
+  @IsString()
+  @IsNotEmpty()
+  refreshToken!: string;
+}
+
 export class VerifyEmailDto {
   @IsString()
   @IsNotEmpty()
@@ -52,4 +58,27 @@ export class RegisterDto {
   @IsNotEmpty()
   @MinLength(8)
   password!: string;
+}
+
+export class SimpleRegisterDto {
+  @IsString()
+  @IsNotEmpty()
+  firstName!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  lastName!: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(8)
+  password!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  tenantName!: string;
 }

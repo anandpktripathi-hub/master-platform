@@ -1,4 +1,10 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -42,6 +48,8 @@ export interface BillingRevenueAnalyticsResponse {
   byCurrency: BillingRevenueByCurrencyBucket[];
 }
 
+@ApiTags('Billing - Analytics')
+@ApiBearerAuth()
 @Controller('billing/analytics')
 @UseGuards(JwtAuthGuard, RoleGuard)
 export class RevenueController {
@@ -60,6 +68,9 @@ export class RevenueController {
    */
   @Get('revenue')
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Revenue analytics (platform super admin only)' })
+  @ApiResponse({ status: 200, description: 'Revenue analytics returned' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   async getRevenue(): Promise<BillingRevenueAnalyticsResponse> {
     const now = new Date();
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);

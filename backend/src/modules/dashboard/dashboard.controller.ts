@@ -7,7 +7,6 @@
   Delete,
   Param,
   UseGuards,
-  Req,
   BadRequestException,
   Query,
   Res,
@@ -20,11 +19,14 @@ import { Tenant } from '../../decorators/tenant.decorator';
 import { AuditLogService } from '../../services/audit-log.service';
 import { AnalyticsService } from '../analytics/analytics.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { RoleGuard } from '../../guards/role.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { Response } from 'express';
-
+import { CreateDashboardDto, UpdateDashboardDto } from './dto/dashboard.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Dashboard')
+@ApiBearerAuth('bearer')
 @Controller('dashboards')
-@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class DashboardController {
   constructor(
     private readonly dashboardService: DashboardService,
@@ -38,6 +40,7 @@ export class DashboardController {
    * tenant admins can see who changed what.
    */
   @Get('audit/logs')
+  @UseGuards(WorkspaceGuard)
   async getAuditLogs(
     @Tenant() tenantId: string,
     @Query('limit') limit?: string,
@@ -80,6 +83,7 @@ export class DashboardController {
    * as the standard audit logs endpoint.
    */
   @Get('audit/logs/export')
+  @UseGuards(WorkspaceGuard)
   async exportAuditLogs(
     @Tenant() tenantId: string,
     @Query('sortBy') sortBy: string | undefined,
@@ -173,43 +177,49 @@ export class DashboardController {
    * /dashboards/admin/saas-overview for frontend dashboards.
    */
   @Get('admin/saas-overview')
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles('PLATFORM_SUPERADMIN')
+  @Roles('PLATFORM_SUPER_ADMIN', 'PLATFORM_SUPERADMIN')
   async getSaasOverview(): Promise<any> {
     return this.analyticsService.getSaasOverview();
   }
 
   @Get()
+  @UseGuards(WorkspaceGuard)
   findAll(@Tenant() tenantId: string) {
     return this.dashboardService.findAll(tenantId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Req() req: any) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) throw new BadRequestException('Tenant ID is required');
+  @UseGuards(WorkspaceGuard)
+  findOne(@Param('id') id: string, @Tenant() tenantId: string) {
+    if (!tenantId) {
+      throw new BadRequestException('Tenant ID is required');
+    }
+
     return this.dashboardService.findOne(id, tenantId);
   }
 
   @Post()
+  @UseGuards(WorkspaceGuard)
   @Roles('admin')
-  create(@Body() createDashboardDto: Dashboard, @Tenant() tenantId: string) {
+  create(@Body() createDashboardDto: CreateDashboardDto, @Tenant() tenantId: string) {
     return this.dashboardService.create(createDashboardDto, tenantId);
   }
 
   @Put(':id')
+  @UseGuards(WorkspaceGuard)
   @Roles('admin')
   update(
     @Param('id') id: string,
-    @Body() updateDashboardDto: Dashboard,
+    @Body() updateDashboardDto: UpdateDashboardDto,
     @Tenant() tenantId: string,
   ) {
     return this.dashboardService.update(id, updateDashboardDto, tenantId);
   }
 
   @Delete(':id')
+  @UseGuards(WorkspaceGuard)
   @Roles('admin')
-  remove(@Param('id') id: string) {
-    return this.dashboardService.remove(id);
+  remove(@Param('id') id: string, @Tenant() tenantId: string) {
+    return this.dashboardService.remove(id, tenantId);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, ServiceUnavailableException } from '@nestjs/common';
 import Stripe from 'stripe';
 import { SettingsService } from '../../modules/settings/settings.service';
 import { entriesToPaymentDto } from '../../modules/settings/mappers/payment-settings-mappers';
@@ -35,7 +35,9 @@ export class StripeService {
 
   private requireStripe(): Stripe {
     if (!this.stripe) {
-      throw new Error('Stripe is not configured (missing STRIPE_SECRET_KEY)');
+      throw new ServiceUnavailableException(
+        'Stripe is not configured (missing STRIPE_SECRET_KEY)',
+      );
     }
     return this.stripe;
   }

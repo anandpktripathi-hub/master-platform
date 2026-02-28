@@ -1,0 +1,189 @@
+2026-02-20T03:50:31.815Z info 	[STARTUP] Launched with: {
+  params: { 'analytics-enabled': true, reason: 'open-tray', name: 'dashboard' },
+  pid: 22408,
+  ppid: 11600,
+  NODE_ENV: 'production',
+  E2E: false,
+  E2E_CONTEXT: undefined,
+  PINATA_LOGS_ADDITIONAL_PATH: undefined,
+  DEVHOME: undefined,
+  isPackaged: true,
+  appVersion: '4.60.1'
+}
+2026-02-20T03:50:32.570Z info 	[STARTUP] Checking backend is running
+2026-02-20T03:50:33.249Z info 	[SSE] Connecting to backend:/registry/state
+2026-02-20T03:50:33.262Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T03:50:33.268Z info 	[SSE] Connecting to backend:/notify/messagebox/events
+2026-02-20T03:50:33.272Z info 	[SSE] Connecting to backend:/notify/notifications
+2026-02-20T03:50:33.275Z info 	[THEME] Electron nativeTheme: light
+2026-02-20T03:50:33.277Z info 	[THEME] Fetching Windows theme from registry
+2026-02-20T03:50:33.434Z info 	[SSE] Connecting to backend:/wasm/events
+2026-02-20T03:50:33.436Z info 	[SSE] Connecting to backend:/features/events
+2026-02-20T03:50:33.437Z info 	[SSE] Connecting to backend:/update/events
+2026-02-20T03:50:33.439Z info 	[SSE] Connecting to backend:/mutagen/file-shares/stream
+2026-02-20T03:50:33.440Z info 	[SSE] Connecting to backend:/license/events
+2026-02-20T03:50:33.441Z info 	[SSE] Connecting to backend:/registry/state
+2026-02-20T03:50:33.442Z info 	[SSE] Connecting to backend:/versions/events
+2026-02-20T03:50:33.443Z info 	[SSE] Connecting to backend:/engine/events
+2026-02-20T03:50:33.444Z info 	[SSE] Connecting to backend:/install/events
+2026-02-20T03:50:33.445Z info 	[SSE] Connecting to backend:/kubernetes/events
+2026-02-20T03:50:33.446Z info 	[SSE] Connecting to backend:/pause/events
+2026-02-20T03:50:33.447Z info 	[SSE] Connecting to backend:/clicontext/events
+2026-02-20T03:50:33.896Z info 	application has just finished initializing
+2026-02-20T03:50:33.901Z info 	[WEB-CONTENT] Registering app://
+2026-02-20T03:50:33.953Z info 	[TRAY] Creating tray menu
+2026-02-20T03:50:35.048Z info 	[WINDOW] Open app://dd/dashboard { windowOptions: { minHeight: 600, minWidth: 940 } }
+2026-02-20T03:50:35.427Z error 	[THEME] Theme fetch is slow; emitting failed action
+2026-02-20T03:50:35.539Z info 	Host config environment is prod
+2026-02-20T03:50:35.547Z info 	[BUGSNAG] Setting analytics enabled: true
+2026-02-20T03:50:35.558Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T03:50:35.829Z info 	[TRAY] Determined initial tray icon
+2026-02-20T03:50:36.453Z info 	[WEB-CONTENT] Serving page HTML (67 feature flags)
+2026-02-20T03:50:36.467Z info 	[CAGENT] Spawning process: {
+  path: 'C:\\Program Files\\Docker\\Docker\\resources\\bin\\cagent.exe',
+  args: [
+    'api',
+    '--listen',
+    'npipe://\\\\.\\pipe\\dockerCagent',
+    '--models-gateway',
+    'https://ai-backend-service.docker.com/proxy?origin=desktop&desktopVersion=4.60.1',
+    '--pull-interval',
+    '15',
+    'docker/gordon:v3'
+  ],
+  cwd: 'C:\\Users\\[REDACTED]\\AppData\\Local\\Docker\\cagent',
+  socketPath: '\\\\.\\pipe\\dockerCagent'
+}
+2026-02-20T03:50:36.601Z info 	[CAGENT] Waiting for service to be ready...
+2026-02-20T03:50:36.613Z error 	[HTTP] GET /api/ping: No response from server (connect ENOENT \\.\pipe\dockerCagent)
+2026-02-20T03:50:37.143Z error 	[HTTP] GET /api/ping: No response from server (connect ENOENT \\.\pipe\dockerCagent)
+2026-02-20T03:50:37.649Z error 	[HTTP] GET /api/ping: No response from server (connect ENOENT \\.\pipe\dockerCagent)
+2026-02-20T03:50:38.167Z error 	[HTTP] GET /api/ping: No response from server (connect ENOENT \\.\pipe\dockerCagent)
+2026-02-20T03:50:38.682Z error 	[HTTP] GET /api/ping: No response from server (connect ENOENT \\.\pipe\dockerCagent)
+2026-02-20T03:50:39.195Z info 	[THEME] Got Windows theme from registry: light
+2026-02-20T03:50:39.211Z error 	[HTTP] GET /api/ping: No response from server (connect ENOENT \\.\pipe\dockerCagent)
+2026-02-20T03:50:39.392Z info 	[IPC] redux.subscribeToUpstreamActions$: Started streaming ([{}])
+2026-02-20T03:50:39.393Z info 	[REDUX] Added store replica 1
+2026-02-20T03:50:39.399Z info 	[SSE] Connecting to backend:/stats
+2026-02-20T03:50:39.416Z info 	[IPC] extensions.extensionsBackendEvents: Started streaming ([{}])
+2026-02-20T03:50:39.417Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T03:50:39.419Z info 	[IPC] terminal.getTerminals: Started streaming ([{}])
+2026-02-20T03:50:41.434Z info 	[IPC] window.windowIsMaximized: Started streaming ([{}])
+2026-02-20T03:50:41.442Z info 	[IPC] window.windowIsFullscreen: Started streaming ([{}])
+2026-02-20T03:50:41.455Z info 	[IPC] volumes.listScheduledVolumeBackups: Started streaming ([{}])
+2026-02-20T03:50:41.456Z info 	[SSE] Connecting to backend:/volume/backup
+2026-02-20T03:50:41.475Z info 	[HTTPS-INTERCEPT] Redirecting https://extensions.docker-desktop/marketplace to dd://extensions/marketplace
+2026-02-20T03:50:41.481Z info 	[HTTPS-INTERCEPT] Redirecting https://hub.docker-desktop/v2/users/anandpktripathi/ to dd://hub/v2/users/anandpktripathi/
+2026-02-20T03:50:41.481Z info 	[HTTPS-INTERCEPT] Redirecting https://hub.docker-desktop/v2/user/orgs?page_size=100 to dd://hub/v2/user/orgs?page_size=100
+2026-02-20T03:50:42.840Z info 	[CAGENT] Service ready after 8 attempts
+2026-02-20T03:50:42.841Z info 	[CAGENT] Service started successfully
+2026-02-20T03:50:46.314Z info 	[HTTPS-INTERCEPT] Redirecting https://extensions.docker-desktop/marketplace to dd://extensions/marketplace
+2026-02-20T03:50:47.203Z info 	[HTTPS-INTERCEPT] Redirecting https://extensions.docker-desktop/marketplace to dd://extensions/marketplace
+2026-02-20T03:50:47.892Z info 	[HTTPS-INTERCEPT] Redirecting https://extensions.docker-desktop/marketplace to dd://extensions/marketplace
+2026-02-20T03:51:16.857Z info 	[INDEX] listening for new images
+2026-02-20T03:51:16.863Z info 	[ENGINE] Connecting[0] to /events ({"event":["load","pull","tag","import"]})
+2026-02-20T03:51:16.925Z info 	[ENGINE] Connecting[1] to /events ({"type":["image"]})
+2026-02-20T03:51:16.942Z info 	[ENGINE] Connecting[2] to /events ({"type":["network"]})
+2026-02-20T03:51:16.959Z info 	[ENGINE] Connecting[3] to /events ({"type":["container"]})
+2026-02-20T03:51:16.965Z info 	[ENGINE] Connecting[4] to /events ({"type":["container"]})
+2026-02-20T03:51:17.280Z info 	[INDEX] ignoring image; background indexing disabled
+2026-02-20T03:51:23.460Z info 	[IPC] dockerDf
+2026-02-20T03:51:25.862Z info 	[IPC] dockerStreamEvents, since: 1771559483
+2026-02-20T03:51:25.863Z info 	[ENGINE] Connecting[5] to /events
+2026-02-20T03:51:25.865Z info 	[IPC] engine.dockerStreamEvents: Started streaming ([{"sinceUnixTimestamp":1771559483}])
+2026-02-20T03:51:32.571Z info 	[IPC] systemResources.openStatsStream: Started streaming ([{}])
+2026-02-20T03:51:33.917Z info 	[HTTPS-INTERCEPT] Redirecting https://extensions.docker-desktop/marketplace to dd://extensions/marketplace
+2026-02-20T03:51:33.923Z info 	[IPC] dockerListContainers: {"all":true}
+2026-02-20T03:51:34.875Z info 	[IPC] containers.openEnhancedContainerLogsStream: Started streaming ([{"appId":"smetasc-saas-multi-tenancy-app","workingDir":"c:\\Users\\[REDACTED]\\Desktop\\smetasc-saas-multi-tenancy-app"}])
+2026-02-20T04:35:21.572Z info 	[ENGINE] Disconnected[1] from /events
+2026-02-20T04:35:21.591Z info 	[ENGINE] Disconnected[2] from /events
+2026-02-20T04:35:21.593Z info 	[ENGINE] Disconnected[3] from /events
+2026-02-20T04:35:21.594Z info 	[ENGINE] Disconnected[4] from /events
+2026-02-20T04:35:21.649Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:21.654Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:21.658Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:21.777Z error 	[IPC] engine.dockerStreamEvents: Errored after 2635908ms, emitted 246 times, error: Object [Error] {
+  name: 'Error',
+  message: 'aborted',
+  stack: 'Error: aborted\n' +
+    '    at Socket.socketCloseListener (node:_http_client:478:19)\n' +
+    '    at Socket.emit (node:events:531:35)\n' +
+    '    at Pipe.<anonymous> (node:net:346:12)',
+  code: 'ECONNRESET'
+}
+2026-02-20T04:35:21.799Z info 	[ENGINE] Disconnected[5] from /events
+2026-02-20T04:35:21.895Z error 	[INDEX] failed listen to events, will retry. Error: aborted
+2026-02-20T04:35:21.895Z info 	[ENGINE] Disconnected[0] from /events
+2026-02-20T04:35:22.490Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:22.491Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:22.495Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:22.497Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:22.498Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:22.502Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:22.992Z error 	[HTTP] GET /events: No response from server (connect ENOENT \\.\pipe\dockerDesktopEngine)
+2026-02-20T04:35:22.996Z error 	[INDEX] failed listen to events, will retry. Error: connect ENOENT \\.\pipe\dockerDesktopEngine
+2026-02-20T04:35:22.998Z info 	[ENGINE] Disconnected[0] from /events
+2026-02-20T04:35:23.511Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:23.512Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:23.512Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:23.513Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:23.514Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:23.514Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:25.594Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:25.595Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:25.597Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:25.604Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:25.605Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:25.617Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:26.006Z error 	[HTTP] GET /events: No response from server (connect ENOENT \\.\pipe\dockerDesktopEngine)
+2026-02-20T04:35:26.007Z error 	[INDEX] failed listen to events, will retry. Error: connect ENOENT \\.\pipe\dockerDesktopEngine
+2026-02-20T04:35:26.008Z info 	[ENGINE] Disconnected[0] from /events
+2026-02-20T04:35:29.736Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:29.737Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:29.738Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:29.741Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:29.742Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:29.743Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:35.022Z error 	[HTTP] GET /events: No response from server (connect ENOENT \\.\pipe\dockerDesktopEngine)
+2026-02-20T04:35:35.022Z error 	[INDEX] failed listen to events, will retry. Error: connect ENOENT \\.\pipe\dockerDesktopEngine
+2026-02-20T04:35:35.023Z info 	[ENGINE] Disconnected[0] from /events
+2026-02-20T04:35:37.750Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:37.752Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:37.754Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:37.756Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:37.757Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:37.758Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:50.692Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:50.693Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:50.694Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:35:50.753Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:50.754Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:35:50.755Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:00.760Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:00.761Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:00.762Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:00.764Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:00.765Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:00.766Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:02.082Z error 	[HTTP] GET /events: No response from server (connect ENOENT \\.\pipe\dockerDesktopEngine)
+2026-02-20T04:36:02.082Z error 	[INDEX] failed listen to events, will retry. Error: connect ENOENT \\.\pipe\dockerDesktopEngine
+2026-02-20T04:36:02.083Z info 	[ENGINE] Disconnected[0] from /events
+2026-02-20T04:36:10.812Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:10.813Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:10.814Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:10.815Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:10.816Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:10.816Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:20.832Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:20.834Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:20.835Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:20.837Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:20.839Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:20.840Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:30.868Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:30.868Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:30.869Z info 	[SSE] Connecting to extensionsManager:/events
+2026-02-20T04:36:30.871Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:30.872Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:30.873Z info 	[SSE] Disconnecting from extensionsManager:/events
+2026-02-20T04:36:37.412Z error 	[ELECTRON] child-process-gone: {"type":"Utility","reason":"killed","exitCode":1,"serviceName":"network.mojom.NetworkService","name":"Network Service"}

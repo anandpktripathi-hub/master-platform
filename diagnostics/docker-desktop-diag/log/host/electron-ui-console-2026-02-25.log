@@ -1,0 +1,2 @@
+2026-02-25T02:54:13.109Z error 	stream loop volume-stream exited: Error: [IPC engine.dockerStreamEvents] aborted (app://dd/main.rend.js:157)
+2026-02-25T04:17:53.072Z error 	Error: connect ENOENT \\.\pipe\dockerExtensionManagerAPI (app://dd/main.rend.js:157)

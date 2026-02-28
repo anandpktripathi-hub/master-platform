@@ -1,6 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { UnifiedRegistrationService } from './unified-registration.service';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Unified Registration')
 @Controller('auth/unified-register')
 export class UnifiedRegistrationController {
   constructor(

@@ -27,10 +27,29 @@ export class ProfileService {
     private readonly publicProfileModel: Model<PublicUserProfileDocument>,
   ) {}
 
+  private normalizeHandle(value: string): string {
+    const normalized = (value || '').trim().toLowerCase();
+    if (normalized.length < 3 || normalized.length > 30) {
+      throw new BadRequestException('Handle is invalid');
+    }
+    if (!/^[a-z0-9._-]+$/.test(normalized)) {
+      throw new BadRequestException('Handle is invalid');
+    }
+    return normalized;
+  }
+
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   /**
    * Get user personal profile
    */
   async getUserProfile(userId: string) {
+    this.toObjectId(userId, 'userId');
     const user = await this.userModel
       .findById(userId)
       .select('-password')
@@ -45,6 +64,7 @@ export class ProfileService {
    * Update user personal profile
    */
   async updateUserProfile(userId: string, dto: UpdateProfileDto) {
+    this.toObjectId(userId, 'userId');
     const updates: Partial<UserDocument> = {};
 
     if (dto.firstName !== undefined) updates.firstName = dto.firstName;
@@ -87,6 +107,7 @@ export class ProfileService {
    * Get tenant/company profile
    */
   async getTenantProfile(tenantId: string) {
+    this.toObjectId(tenantId, 'tenantId');
     const tenant = await this.tenantModel.findById(tenantId).lean();
     if (!tenant) {
       throw new NotFoundException('Tenant not found');
@@ -98,6 +119,7 @@ export class ProfileService {
    * Update tenant/company profile
    */
   async updateTenantProfile(tenantId: string, dto: UpdateTenantProfileDto) {
+    this.toObjectId(tenantId, 'tenantId');
     const updates: Partial<TenantDocument> = {};
 
     if (dto.companyName !== undefined) {
@@ -124,7 +146,7 @@ export class ProfileService {
   }
 
   async getOrCreatePublicProfile(userId: string) {
-    const objectId = new Types.ObjectId(userId);
+    const objectId = this.toObjectId(userId, 'userId');
     let profile = await this.publicProfileModel
       .findOne({ userId: objectId })
       .lean();
@@ -165,27 +187,28 @@ export class ProfileService {
   }
 
   async isHandleAvailable(handle: string, currentUserId?: string) {
-    const normalized = handle.toLowerCase();
+    const normalized = this.normalizeHandle(handle);
     const query: Record<string, unknown> = { handle: normalized };
     if (currentUserId) {
-      query.userId = { $ne: new Types.ObjectId(currentUserId) };
+      query.userId = { $ne: this.toObjectId(currentUserId, 'currentUserId') };
     }
     const existing = await this.publicProfileModel.findOne(query).lean();
     return !existing;
   }
 
   async updatePublicProfile(userId: string, dto: UpdatePublicProfileDto) {
-    const objectId = new Types.ObjectId(userId);
+    const objectId = this.toObjectId(userId, 'userId');
     const profile = await this.getOrCreatePublicProfile(userId);
 
     const updates: Partial<PublicUserProfileDocument> = {};
 
     if (dto.handle && dto.handle !== profile.handle) {
-      const available = await this.isHandleAvailable(dto.handle, userId);
+      const normalizedHandle = this.normalizeHandle(dto.handle);
+      const available = await this.isHandleAvailable(normalizedHandle, userId);
       if (!available) {
         throw new BadRequestException('Handle is already taken');
       }
-      updates.handle = dto.handle.toLowerCase();
+      updates.handle = normalizedHandle;
     }
 
     if (dto.headline !== undefined) updates.headline = dto.headline;

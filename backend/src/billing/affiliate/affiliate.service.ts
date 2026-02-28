@@ -165,6 +165,16 @@ export class AffiliateService {
     return { success: true, amountPaid: amount };
   }
 
+  async payoutForUser(userId: string) {
+    const userObjectId = new Types.ObjectId(userId);
+    const affiliate = await this.affiliateModel.findOne({ userId: userObjectId });
+    if (!affiliate) {
+      throw new NotFoundException('Affiliate not found');
+    }
+
+    return this.payout(affiliate._id.toString());
+  }
+
   async getAffiliateForUser(userId: string) {
     const userObjectId = new Types.ObjectId(userId);
     const affiliate = await this.affiliateModel

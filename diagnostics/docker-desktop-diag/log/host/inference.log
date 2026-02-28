@@ -1,0 +1,1030 @@
+-------------------------------------------------------------------------------->8
+[2025-11-30T05:10:41.704924500Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2025-11-30T05:10:41.782786600Z][inference] Running on system with 16068 MB RAM
+[2025-11-30T05:10:41.808184100Z][inference.model-manager] Successfully initialized store
+[2025-11-30T05:10:41.809674200Z][inference] 2 backends available
+[2025-11-30T05:10:57.145827600Z][inference] Reconciling service state on initialization
+[2025-11-30T05:10:57.146359100Z][inference] Reconciling service state on settings change
+[2025-11-30T05:10:57.146964300Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2025-11-30T05:10:58.845512400Z][inference.inference-llama.cpp] failed to ensure latest llama.cpp: bundled llama.cpp version is up to date, no need to update
+[2025-11-30T05:10:59.366522300Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=false
+[2025-11-30T05:10:59.366522300Z][inference][W] Backend installation failed for vllm: not implemented
+[2025-11-30T05:11:06.666441900Z][inference.model-manager] Listing available models
+[2025-11-30T05:11:06.666441900Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:11:06.686300500Z][inference.model-manager] Listing available models
+[2025-11-30T05:11:06.686300500Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:11:09.508189000Z][inference.model-manager] Listing available models
+[2025-11-30T05:11:09.511026100Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:11:26.722496300Z][inference.model-manager] Listing available models
+[2025-11-30T05:11:26.732180300Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:12:36.503146500Z][inference.model-manager] Listing available models
+[2025-11-30T05:12:36.505819600Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:13:22.397708000Z][inference.model-manager] Listing available models
+[2025-11-30T05:13:22.397708000Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:14:03.445235600Z][inference.model-manager] Listing available models
+[2025-11-30T05:14:03.445843100Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:15:06.780927400Z][inference.model-manager] Listing available models
+[2025-11-30T05:15:06.781516600Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:15:14.428487700Z][inference.model-manager] Listing available models
+[2025-11-30T05:15:14.429071200Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T05:15:21.760639300Z][inference.model-manager] Listing available models
+[2025-11-30T05:15:21.761155000Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T06:06:34.705676800Z][inference.model-manager] Listing available models
+[2025-11-30T06:06:34.708658900Z][inference.model-manager] Successfully listed models, count: 0
+[2025-11-30T06:52:05.776703600Z][inference.model-manager] Listing available models
+[2025-11-30T06:52:05.777862800Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-08T08:35:33.992010900Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-08T08:35:33.999240500Z][inference] Running on system with 16068 MB RAM
+[2026-01-08T08:35:33.999805800Z][inference.model-manager] Successfully initialized store
+[2026-01-08T08:35:33.999805800Z][inference] 2 backends available
+[2026-01-08T08:35:37.886617600Z][inference] Reconciling service state on initialization
+[2026-01-08T08:35:37.887242300Z][inference] Reconciling service state on settings change
+[2026-01-08T08:35:37.887242300Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-08T08:35:38.169032900Z][inference.inference-llama.cpp][W] failed to read current llama.cpp version: open <HOME>\.docker\bin\inference\.llamacpp_version: The system cannot find the path specified.
+[2026-01-08T08:35:38.169688700Z][inference.inference-llama.cpp][W] proceeding to update llama.cpp binary
+[2026-01-08T08:35:38.170334600Z][inference.inference-llama.cpp] Extracting image "registry-1.docker.io/docker/docker-model-backend-llamacpp@sha256:fb231f97cf07611065835c3ee234656cf99f4969d5e3e05ca99dde6110cce39d" to "C:\\Users\\annes\\AppData\\Local\\Temp\\llamacpp-install3121234468"
+[2026-01-08T08:35:59.430096600Z][inference.inference-llama.cpp] successfully updated llama.cpp binary
+[2026-01-08T08:36:07.304567000Z][inference.inference-llama.cpp] running llama.cpp latest-cpu (sha256:fb231f97cf07611065835c3ee234656cf99f4969d5e3e05ca99dde6110cce39d) version: 34ce48d
+[2026-01-08T08:36:07.319460100Z][inference.model-manager] Listing available models
+[2026-01-08T08:36:07.321735700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:36:07.334726100Z][inference.model-manager] Listing available models
+[2026-01-08T08:36:07.335774400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:36:08.722066100Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-08T08:36:08.722426200Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-08T08:37:59.498291200Z][inference.model-manager] Listing available models
+[2026-01-08T08:37:59.498867900Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-08T08:40:24.984578800Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-08T08:40:25.013931200Z][inference] Running on system with 16068 MB RAM
+[2026-01-08T08:40:25.015743800Z][inference.model-manager] Successfully initialized store
+[2026-01-08T08:40:25.016307000Z][inference] 2 backends available
+[2026-01-08T08:40:37.656419000Z][inference] Reconciling service state on initialization
+[2026-01-08T08:40:37.657082100Z][inference] Reconciling service state on settings change
+[2026-01-08T08:40:37.660372900Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-08T08:40:37.955770100Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-08T08:40:38.946865200Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-08T08:40:38.949473000Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-08T08:40:46.720540100Z][inference.model-manager] Listing available models
+[2026-01-08T08:40:46.723535100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:40:47.100756000Z][inference.model-manager] Listing available models
+[2026-01-08T08:40:47.104057300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:42:32.401383000Z][inference.model-manager] Listing available models
+[2026-01-08T08:42:32.402025300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:42:48.995071600Z][inference.model-manager] Listing available models
+[2026-01-08T08:42:48.995705300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:45:51.409219500Z][inference.model-manager] Listing available models
+[2026-01-08T08:45:51.409800200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:45:56.434135100Z][inference.model-manager] Listing available models
+[2026-01-08T08:45:56.434702000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:46:13.424900600Z][inference.model-manager] Listing available models
+[2026-01-08T08:46:13.425494600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:48:23.293012200Z][inference.model-manager] Listing available models
+[2026-01-08T08:48:23.295251800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:48:25.826103100Z][inference.model-manager] Listing available models
+[2026-01-08T08:48:25.832340500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T08:57:03.657804200Z][inference.model-manager] Listing available models
+[2026-01-08T08:57:03.664055900Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-08T10:00:07.952382800Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-08T10:00:07.975595200Z][inference] Running on system with 16068 MB RAM
+[2026-01-08T10:00:07.977040200Z][inference.model-manager] Successfully initialized store
+[2026-01-08T10:00:07.980290300Z][inference] 2 backends available
+[2026-01-08T10:00:11.765287300Z][inference] Reconciling service state on initialization
+[2026-01-08T10:00:11.765287300Z][inference] Reconciling service state on settings change
+[2026-01-08T10:00:11.767539100Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-08T10:00:12.098246100Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-08T10:00:12.897135200Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-08T10:00:12.897135200Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-08T10:00:13.872733300Z][inference.model-manager] Listing available models
+[2026-01-08T10:00:13.873943300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:00:13.993512000Z][inference.model-manager] Listing available models
+[2026-01-08T10:00:13.993512000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:00:15.178296500Z][inference.model-manager] Listing available models
+[2026-01-08T10:00:15.178296500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:26:05.991117000Z][inference.model-manager] Listing available models
+[2026-01-08T10:26:05.992912200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:35:21.932444000Z][inference.model-manager] Listing available models
+[2026-01-08T10:35:22.006328500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:35:32.397350600Z][inference.model-manager] Listing available models
+[2026-01-08T10:35:32.413733600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:41:40.432479200Z][inference.model-manager] Listing available models
+[2026-01-08T10:41:40.766308200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-08T10:54:18.734806400Z][inference.model-manager] Listing available models
+[2026-01-08T10:54:18.737101400Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-11T13:47:54.848248900Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-11T13:47:54.854899600Z][inference] Running on system with 16068 MB RAM
+[2026-01-11T13:47:54.855418200Z][inference.model-manager] Successfully initialized store
+[2026-01-11T13:47:54.857036500Z][inference] 2 backends available
+[2026-01-11T13:47:58.151937300Z][inference] Reconciling service state on initialization
+[2026-01-11T13:47:58.151937300Z][inference] Reconciling service state on settings change
+[2026-01-11T13:47:58.153499800Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-11T13:47:58.493711500Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-11T13:47:59.522206500Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-11T13:47:59.522206500Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-11T13:47:59.740374400Z][inference.model-manager] Listing available models
+[2026-01-11T13:47:59.742259100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-11T13:47:59.780287500Z][inference.model-manager] Listing available models
+[2026-01-11T13:47:59.782050200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-11T13:48:01.240625500Z][inference.model-manager] Listing available models
+[2026-01-11T13:48:01.241367900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-11T13:48:30.510171400Z][inference.model-manager] Listing available models
+[2026-01-11T13:48:30.527225700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-11T13:48:52.764046400Z][inference.model-manager] Listing available models
+[2026-01-11T13:48:52.764046400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-11T13:52:14.763030500Z][inference.model-manager] Listing available models
+[2026-01-11T13:52:14.764633400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-11T13:59:47.698371000Z][inference.model-manager] Listing available models
+[2026-01-11T13:59:47.703378500Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-12T03:37:06.944992600Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-12T03:37:06.958392500Z][inference] Running on system with 16068 MB RAM
+[2026-01-12T03:37:06.959518900Z][inference.model-manager] Successfully initialized store
+[2026-01-12T03:37:06.961804800Z][inference] 2 backends available
+[2026-01-12T03:37:14.899626800Z][inference] Reconciling service state on initialization
+[2026-01-12T03:37:14.900212200Z][inference] Reconciling service state on settings change
+[2026-01-12T03:37:14.900864500Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-12T03:37:14.903581500Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-12T03:37:15.194563200Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-12T03:37:16.755323100Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-12T03:37:21.798826100Z][inference.model-manager] Listing available models
+[2026-01-12T03:37:21.801317100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T03:37:21.965309500Z][inference.model-manager] Listing available models
+[2026-01-12T03:37:21.965309500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T03:37:26.022680900Z][inference.model-manager] Listing available models
+[2026-01-12T03:37:26.024546200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T03:39:14.517267600Z][inference.model-manager] Listing available models
+[2026-01-12T03:39:14.518856700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T03:43:59.805992300Z][inference.model-manager] Listing available models
+[2026-01-12T03:43:59.806793500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T03:44:20.958983100Z][inference.model-manager] Listing available models
+[2026-01-12T03:44:20.958983100Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-12T04:55:40.347476700Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-12T04:55:40.362785200Z][inference] Running on system with 16068 MB RAM
+[2026-01-12T04:55:40.363855400Z][inference.model-manager] Successfully initialized store
+[2026-01-12T04:55:40.365602200Z][inference] 2 backends available
+[2026-01-12T04:55:42.842182400Z][inference] Reconciling service state on initialization
+[2026-01-12T04:55:42.842182400Z][inference] Reconciling service state on settings change
+[2026-01-12T04:55:42.843409200Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-12T04:55:43.126982900Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-12T04:55:43.668847100Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-12T04:55:43.668847100Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-12T04:55:44.166204100Z][inference.model-manager] Listing available models
+[2026-01-12T04:55:44.167283000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T04:55:44.212754900Z][inference.model-manager] Listing available models
+[2026-01-12T04:55:44.213312500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-12T04:55:45.490487100Z][inference.model-manager] Listing available models
+[2026-01-12T04:55:45.490487100Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-16T03:04:58.034966900Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-01-16T03:04:58.064041200Z][inference] Running on system with 16068 MB RAM
+[2026-01-16T03:04:58.066607900Z][inference.model-manager] Successfully initialized store
+[2026-01-16T03:04:58.067173500Z][inference] 2 backends available
+[2026-01-16T03:05:07.280237800Z][inference] Reconciling service state on initialization
+[2026-01-16T03:05:07.280807700Z][inference] Reconciling service state on settings change
+[2026-01-16T03:05:07.280807700Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-16T03:05:07.281411200Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-16T03:05:07.667599100Z][inference.inference-llama.cpp] current llama.cpp version is outdated: sha256:fb231f97cf07611065835c3ee234656cf99f4969d5e3e05ca99dde6110cce39d vs sha256:7b3fe28c3d26cd34d337738192367410abc7e10bef6420785418296479c9236a, proceeding to update it
+[2026-01-16T03:05:07.669405800Z][inference.inference-llama.cpp] Extracting image "registry-1.docker.io/docker/docker-model-backend-llamacpp@sha256:7b3fe28c3d26cd34d337738192367410abc7e10bef6420785418296479c9236a" to "C:\\Users\\annes\\AppData\\Local\\Temp\\llamacpp-install3247893297"
+[2026-01-16T03:05:13.396860500Z][inference.model-manager] Listing available models
+[2026-01-16T03:05:13.398072500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:05:13.538499400Z][inference.model-manager] Listing available models
+[2026-01-16T03:05:13.538499400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:05:16.798549600Z][inference.model-manager] Listing available models
+[2026-01-16T03:05:16.801084600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:05:26.148255700Z][inference.inference-llama.cpp] successfully updated llama.cpp binary
+[2026-01-16T03:05:31.223216400Z][inference.inference-llama.cpp] running llama.cpp latest-cpu (sha256:7b3fe28c3d26cd34d337738192367410abc7e10bef6420785418296479c9236a) version: 34ce48d
+[2026-01-16T03:05:32.158194600Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-16T03:10:34.275373300Z][inference.model-manager] Listing available models
+[2026-01-16T03:10:34.276005600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:15:47.094206100Z][inference.model-manager] Listing available models
+[2026-01-16T03:15:47.095524500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:17:48.506748400Z][inference.model-manager] Listing available models
+[2026-01-16T03:17:48.509401400Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-16T03:33:16.396157400Z][inference.model-manager] Successfully initialized store
+[2026-01-16T03:33:16.398156200Z][inference] 2 backends available
+[2026-01-16T03:33:22.415263600Z][inference] Reconciling service state on initialization
+[2026-01-16T03:33:22.415972900Z][inference] Reconciling service state on settings change
+[2026-01-16T03:33:22.416891400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-16T03:33:22.705975200Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-16T03:33:23.929334700Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-16T03:33:23.929334700Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-16T03:33:33.767192300Z][inference.model-manager] Listing available models
+[2026-01-16T03:33:33.769974500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:33:34.113973900Z][inference.model-manager] Listing available models
+[2026-01-16T03:33:34.114590700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:33:37.553793900Z][inference.model-manager] Listing available models
+[2026-01-16T03:33:37.553793900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:34:09.959580300Z][inference.model-manager] Listing available models
+[2026-01-16T03:34:09.960200200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:38:38.795839700Z][inference.model-manager] Listing available models
+[2026-01-16T03:38:38.800952400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:47:48.387548400Z][inference.model-manager] Listing available models
+[2026-01-16T03:47:48.388130000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:49:14.728904400Z][inference.model-manager] Listing available models
+[2026-01-16T03:49:14.729468600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:50:20.704876200Z][inference.model-manager] Listing available models
+[2026-01-16T03:50:20.705475900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:50:28.983653900Z][inference.model-manager] Listing available models
+[2026-01-16T03:50:28.985543700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:52:25.124580100Z][inference.model-manager] Listing available models
+[2026-01-16T03:52:25.125152800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:53:00.639047400Z][inference.model-manager] Listing available models
+[2026-01-16T03:53:00.639047400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T03:53:47.164709100Z][inference.model-manager] Listing available models
+[2026-01-16T03:53:47.165219100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-16T04:01:11.299825200Z][inference.model-manager] Listing available models
+[2026-01-16T04:01:11.302982300Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-19T02:45:16.391041800Z][inference.model-manager] Successfully initialized store
+[2026-01-19T02:45:16.394588800Z][inference] 2 backends available
+[2026-01-19T02:45:21.389739000Z][inference] Reconciling service state on initialization
+[2026-01-19T02:45:21.389739000Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-19T02:45:21.390309300Z][inference] Reconciling service state on settings change
+[2026-01-19T02:45:21.724615100Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-19T02:45:22.491376100Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-19T02:45:22.492376600Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-19T02:45:23.441371500Z][inference.model-manager] Listing available models
+[2026-01-19T02:45:23.442050000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T02:45:23.522612300Z][inference.model-manager] Listing available models
+[2026-01-19T02:45:23.523714100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T02:45:25.264454100Z][inference.model-manager] Listing available models
+[2026-01-19T02:45:25.265101900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T02:46:33.527760900Z][inference.model-manager] Listing available models
+[2026-01-19T02:46:33.528760000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T02:47:05.034918400Z][inference.model-manager] Listing available models
+[2026-01-19T02:47:05.035617200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T02:47:05.192325700Z][inference.model-manager] Listing available models
+[2026-01-19T02:47:05.192952600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T02:47:30.605427600Z][inference.model-manager] Listing available models
+[2026-01-19T02:47:30.605997900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-19T03:38:14.430921700Z][inference.model-manager] Listing available models
+[2026-01-19T03:38:14.447005400Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-27T09:37:18.963987600Z][inference.model-manager] Successfully initialized store
+[2026-01-27T09:37:18.968544400Z][inference] 2 backends available
+[2026-01-27T09:37:25.932199100Z][inference] Reconciling service state on initialization
+[2026-01-27T09:37:25.932199100Z][inference] Reconciling service state on settings change
+[2026-01-27T09:37:25.932862400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-27T09:37:26.274989600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-01-27T09:37:27.211507400Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-27T09:37:27.211507400Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-27T09:37:33.377919300Z][inference.model-manager] Listing available models
+[2026-01-27T09:37:33.379096200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-27T09:37:33.650332100Z][inference.model-manager] Listing available models
+[2026-01-27T09:37:33.650942300Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-01-31T09:22:45.009199500Z][inference.model-manager] Successfully initialized store
+[2026-01-31T09:22:45.015157400Z][inference] 2 backends available
+[2026-01-31T09:22:51.323556200Z][inference] Reconciling service state on initialization
+[2026-01-31T09:22:51.324175800Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-01-31T09:22:51.324772300Z][inference] Reconciling service state on settings change
+[2026-01-31T09:22:51.326033900Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-01-31T09:22:51.651016600Z][inference.inference-llama.cpp] current llama.cpp version is outdated: sha256:7b3fe28c3d26cd34d337738192367410abc7e10bef6420785418296479c9236a vs sha256:507138a8eba070ea65e250955c984f7b2a2ac5f7c276cf0b856e9fc9f80cab0e, proceeding to update it
+[2026-01-31T09:22:51.651016600Z][inference.inference-llama.cpp] Extracting image "registry-1.docker.io/docker/docker-model-backend-llamacpp@sha256:507138a8eba070ea65e250955c984f7b2a2ac5f7c276cf0b856e9fc9f80cab0e" to "C:\\Users\\annes\\AppData\\Local\\Temp\\llamacpp-install1785025783"
+[2026-01-31T09:23:15.323660700Z][inference.inference-llama.cpp] successfully updated llama.cpp binary
+[2026-01-31T09:23:38.012926500Z][inference.inference-llama.cpp] running llama.cpp latest-cpu (sha256:507138a8eba070ea65e250955c984f7b2a2ac5f7c276cf0b856e9fc9f80cab0e) version: 091a46c
+[2026-01-31T09:23:38.804100600Z][inference.model-manager] Listing available models
+[2026-01-31T09:23:38.872105600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-31T09:23:38.885802600Z][inference.model-manager] Listing available models
+[2026-01-31T09:23:38.886462900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-31T09:23:39.376960100Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-01-31T09:24:22.456021100Z][inference.model-manager] Listing available models
+[2026-01-31T09:24:22.456529000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-31T09:24:35.544681300Z][inference.model-manager] Listing available models
+[2026-01-31T09:24:35.545383700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-31T09:24:54.517258500Z][inference.model-manager] Listing available models
+[2026-01-31T09:24:54.517801800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-01-31T09:36:13.195082800Z][inference.model-manager] Listing available models
+[2026-01-31T09:36:13.198772900Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T03:59:39.487135900Z][inference.model-manager] Successfully initialized store
+[2026-02-02T03:59:39.496639400Z][inference] 2 backends available
+[2026-02-02T03:59:48.970483800Z][inference] Reconciling service state on initialization
+[2026-02-02T03:59:48.971092400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T03:59:48.972312100Z][inference] Reconciling service state on settings change
+[2026-02-02T03:59:49.262405600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T03:59:50.781414800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T03:59:50.783417100Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T03:59:58.142964900Z][inference.model-manager] Listing available models
+[2026-02-02T03:59:58.180403100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:00:02.059588800Z][inference.model-manager] Listing available models
+[2026-02-02T04:00:02.060463300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:00:21.548602900Z][inference.model-manager] Listing available models
+[2026-02-02T04:00:21.550130100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:30:08.031341500Z][inference.model-manager] Listing available models
+[2026-02-02T04:30:08.046048700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:30:20.751765300Z][inference.model-manager] Listing available models
+[2026-02-02T04:30:20.752309700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:30:25.899641400Z][inference.model-manager] Listing available models
+[2026-02-02T04:30:25.899641400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:30:59.143367400Z][inference.model-manager] Listing available models
+[2026-02-02T04:30:59.143996100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:31:44.655417700Z][inference.model-manager] Listing available models
+[2026-02-02T04:31:44.655417700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T04:55:33.615127900Z][inference.model-manager] Listing available models
+[2026-02-02T04:55:33.624148200Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T07:29:23.914929100Z][inference.model-manager] Successfully initialized store
+[2026-02-02T07:29:23.921547000Z][inference] 2 backends available
+[2026-02-02T07:29:42.522945700Z][inference] Reconciling service state on initialization
+[2026-02-02T07:29:42.523522600Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T07:29:42.524879600Z][inference] Reconciling service state on settings change
+[2026-02-02T07:29:42.827820000Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T07:29:44.923252900Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T07:29:44.923770500Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T07:29:50.100292900Z][inference.model-manager] Listing available models
+[2026-02-02T07:29:50.110475500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:29:54.408578700Z][inference.model-manager] Listing available models
+[2026-02-02T07:29:54.410574900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:30:33.228714400Z][inference.model-manager] Listing available models
+[2026-02-02T07:30:33.244610700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:33:24.422320100Z][inference.model-manager] Listing available models
+[2026-02-02T07:33:24.422925000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:33:46.684379000Z][inference.model-manager] Listing available models
+[2026-02-02T07:33:46.688027700Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T07:48:03.645743100Z][inference][W] Could not read VRAM size: exit status 0xffffffff
+[2026-02-02T07:48:03.710448900Z][inference] Running on system with 16068 MB RAM
+[2026-02-02T07:48:03.711792700Z][inference.model-manager] Successfully initialized store
+[2026-02-02T07:48:03.712879800Z][inference] 2 backends available
+[2026-02-02T07:48:23.356059300Z][inference] Reconciling service state on initialization
+[2026-02-02T07:48:23.356844200Z][inference] Reconciling service state on settings change
+[2026-02-02T07:48:23.356844200Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T07:48:23.357489400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T07:48:23.671897400Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T07:48:25.128468000Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T07:48:36.910698700Z][inference.model-manager] Listing available models
+[2026-02-02T07:48:36.913288600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:48:37.480399500Z][inference.model-manager] Listing available models
+[2026-02-02T07:48:37.485377700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:48:41.262610000Z][inference.model-manager] Listing available models
+[2026-02-02T07:48:41.272389600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:48:51.046165700Z][inference.model-manager] Listing available models
+[2026-02-02T07:48:51.054463000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:49:07.401401800Z][inference.model-manager] Listing available models
+[2026-02-02T07:49:07.409674400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:49:40.572315600Z][inference.model-manager] Listing available models
+[2026-02-02T07:49:40.575608500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:51:27.331400500Z][inference.model-manager] Listing available models
+[2026-02-02T07:51:27.331910400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:51:39.950564400Z][inference.model-manager] Listing available models
+[2026-02-02T07:51:39.952254300Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T07:54:53.959196500Z][inference.model-manager] Successfully initialized store
+[2026-02-02T07:54:53.960318100Z][inference] 2 backends available
+[2026-02-02T07:55:00.495682400Z][inference] Reconciling service state on initialization
+[2026-02-02T07:55:00.495682400Z][inference] Reconciling service state on settings change
+[2026-02-02T07:55:00.496291700Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T07:55:00.786721800Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T07:55:01.544103800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T07:55:01.544103800Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T07:55:12.456643100Z][inference.model-manager] Listing available models
+[2026-02-02T07:55:12.457913500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:55:12.843687100Z][inference.model-manager] Listing available models
+[2026-02-02T07:55:12.845581600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:55:20.614504700Z][inference.model-manager] Listing available models
+[2026-02-02T07:55:20.617690700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:56:00.284955700Z][inference.model-manager] Listing available models
+[2026-02-02T07:56:00.285666700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T07:57:12.335693600Z][inference.model-manager] Listing available models
+[2026-02-02T07:57:12.336407700Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T09:55:35.161729500Z][inference.model-manager] Successfully initialized store
+[2026-02-02T09:55:35.166166300Z][inference] 2 backends available
+[2026-02-02T09:55:45.413778200Z][inference] Reconciling service state on initialization
+[2026-02-02T09:55:45.414535300Z][inference] Reconciling service state on settings change
+[2026-02-02T09:55:45.415017500Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T09:55:45.750261600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T09:55:47.325635000Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T09:55:47.325635000Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T09:55:59.498154600Z][inference.model-manager] Listing available models
+[2026-02-02T09:55:59.499954200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:55:59.867124200Z][inference.model-manager] Listing available models
+[2026-02-02T09:55:59.867961200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:56:04.082763400Z][inference.model-manager] Listing available models
+[2026-02-02T09:56:04.083352700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:56:50.979677200Z][inference.model-manager] Listing available models
+[2026-02-02T09:56:50.983241400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:57:17.534944000Z][inference.model-manager] Listing available models
+[2026-02-02T09:57:17.542113000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:57:42.113727000Z][inference.model-manager] Listing available models
+[2026-02-02T09:57:42.115201500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:57:53.304140200Z][inference.model-manager] Listing available models
+[2026-02-02T09:57:53.304924000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:58:40.756882500Z][inference.model-manager] Listing available models
+[2026-02-02T09:58:40.757400100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:58:51.618539500Z][inference.model-manager] Listing available models
+[2026-02-02T09:58:51.622387200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T09:59:22.816613500Z][inference.model-manager] Listing available models
+[2026-02-02T09:59:22.819130700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:01:28.754668300Z][inference.model-manager] Listing available models
+[2026-02-02T10:01:28.758798000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:02:31.462798200Z][inference.model-manager] Listing available models
+[2026-02-02T10:02:31.464834600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:02:59.793208400Z][inference.model-manager] Listing available models
+[2026-02-02T10:02:59.794301100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:03:17.217079800Z][inference.model-manager] Listing available models
+[2026-02-02T10:03:17.219587200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:03:21.381354900Z][inference.model-manager] Listing available models
+[2026-02-02T10:03:21.383084500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:03:26.032567900Z][inference.model-manager] Listing available models
+[2026-02-02T10:03:26.034560800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T10:03:40.916583600Z][inference.model-manager] Listing available models
+[2026-02-02T10:03:40.916583600Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T11:21:56.821204200Z][inference.model-manager] Successfully initialized store
+[2026-02-02T11:21:56.829257900Z][inference] 2 backends available
+[2026-02-02T11:22:07.166285400Z][inference] Reconciling service state on initialization
+[2026-02-02T11:22:07.170384600Z][inference] Reconciling service state on settings change
+[2026-02-02T11:22:07.170960400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T11:22:07.503240600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T11:22:08.850785900Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T11:22:08.850785900Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T11:22:25.014907700Z][inference.model-manager] Listing available models
+[2026-02-02T11:22:25.016114900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:22:25.434062200Z][inference.model-manager] Listing available models
+[2026-02-02T11:22:25.434062200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:22:29.229363100Z][inference.model-manager] Listing available models
+[2026-02-02T11:22:29.232426200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:22:55.115345700Z][inference.model-manager] Listing available models
+[2026-02-02T11:22:55.115705500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:23:47.367248500Z][inference.model-manager] Listing available models
+[2026-02-02T11:23:47.368547600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:24:04.059515000Z][inference.model-manager] Listing available models
+[2026-02-02T11:24:04.062675500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:24:30.502531200Z][inference.model-manager] Listing available models
+[2026-02-02T11:24:30.503618300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:26:11.499102300Z][inference.model-manager] Listing available models
+[2026-02-02T11:26:11.506545700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:26:54.007582000Z][inference.model-manager] Listing available models
+[2026-02-02T11:26:54.009554600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:27:19.050953700Z][inference.model-manager] Listing available models
+[2026-02-02T11:27:19.051999100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:31:31.971370900Z][inference.model-manager] Listing available models
+[2026-02-02T11:31:31.972544700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:33:45.050633000Z][inference.model-manager] Listing available models
+[2026-02-02T11:33:45.101511300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:33:47.896669900Z][inference.model-manager] Listing available models
+[2026-02-02T11:33:47.897932600Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T11:42:15.949675100Z][inference.model-manager] Successfully initialized store
+[2026-02-02T11:42:15.954091600Z][inference] 2 backends available
+[2026-02-02T11:42:19.015809400Z][inference] Reconciling service state on initialization
+[2026-02-02T11:42:19.016419100Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T11:42:19.017013700Z][inference] Reconciling service state on settings change
+[2026-02-02T11:42:19.318787800Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T11:42:19.960714400Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T11:42:19.961376000Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T11:42:22.088714000Z][inference.model-manager] Listing available models
+[2026-02-02T11:42:22.089268500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:42:22.244816000Z][inference.model-manager] Listing available models
+[2026-02-02T11:42:22.244816000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:42:24.320030800Z][inference.model-manager] Listing available models
+[2026-02-02T11:42:24.320699700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:45:06.542924600Z][inference.model-manager] Listing available models
+[2026-02-02T11:45:06.542924600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:45:41.583632700Z][inference.model-manager] Listing available models
+[2026-02-02T11:45:41.584214100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:47:31.552952000Z][inference.model-manager] Listing available models
+[2026-02-02T11:47:31.553998900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:48:00.911651300Z][inference.model-manager] Listing available models
+[2026-02-02T11:48:00.913445100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:48:18.854788900Z][inference.model-manager] Listing available models
+[2026-02-02T11:48:18.856731000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:48:58.110982300Z][inference.model-manager] Listing available models
+[2026-02-02T11:48:58.111603000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:52:36.466334600Z][inference.model-manager] Listing available models
+[2026-02-02T11:52:36.468211200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T11:55:52.829635100Z][inference.model-manager] Listing available models
+[2026-02-02T11:55:53.245177000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:06:21.564048000Z][inference.model-manager] Listing available models
+[2026-02-02T12:06:21.564592600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:08:06.284464800Z][inference.model-manager] Listing available models
+[2026-02-02T12:08:06.285117100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:10:51.430602900Z][inference.model-manager] Listing available models
+[2026-02-02T12:10:51.431151800Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:23:37.300265700Z][inference.model-manager] Successfully initialized store
+[2026-02-02T12:23:37.307692400Z][inference] 2 backends available
+[2026-02-02T12:23:52.373034500Z][inference] Reconciling service state on initialization
+[2026-02-02T12:23:52.376442800Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T12:23:52.376850400Z][inference] Reconciling service state on settings change
+[2026-02-02T12:23:52.678703900Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T12:23:54.632284800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T12:23:54.634146100Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T12:24:35.947485500Z][inference.model-manager] Listing available models
+[2026-02-02T12:24:35.950635700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:24:36.264193600Z][inference.model-manager] Listing available models
+[2026-02-02T12:24:36.264849300Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:36:49.800041900Z][inference.model-manager] Successfully initialized store
+[2026-02-02T12:36:49.805494400Z][inference] 2 backends available
+[2026-02-02T12:36:53.894862000Z][inference] Reconciling service state on initialization
+[2026-02-02T12:36:53.894862000Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T12:36:53.896033100Z][inference] Reconciling service state on settings change
+[2026-02-02T12:36:54.209682600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T12:36:54.941617600Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T12:36:54.942151200Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T12:36:57.853961200Z][inference.model-manager] Listing available models
+[2026-02-02T12:36:57.855225000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:36:58.161249900Z][inference.model-manager] Listing available models
+[2026-02-02T12:36:58.161844700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:37:00.511777000Z][inference.model-manager] Listing available models
+[2026-02-02T12:37:00.511777000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:37:53.575841400Z][inference.model-manager] Listing available models
+[2026-02-02T12:37:53.576466200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:37:56.562126100Z][inference.model-manager] Listing available models
+[2026-02-02T12:37:56.567463700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:38:58.581030400Z][inference.model-manager] Listing available models
+[2026-02-02T12:38:58.582063900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:39:32.306707100Z][inference.model-manager] Listing available models
+[2026-02-02T12:39:32.307373100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:39:32.591029500Z][inference.model-manager] Listing available models
+[2026-02-02T12:39:32.591695600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:39:48.093281700Z][inference.model-manager] Listing available models
+[2026-02-02T12:39:48.093281700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:39:57.895368800Z][inference.model-manager] Listing available models
+[2026-02-02T12:39:57.897033000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:42:37.850932100Z][inference.model-manager] Listing available models
+[2026-02-02T12:42:37.852068900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:44:18.087552100Z][inference.model-manager] Listing available models
+[2026-02-02T12:44:18.090388200Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:53:47.685225000Z][inference.model-manager] Successfully initialized store
+[2026-02-02T12:53:47.686894100Z][inference] 2 backends available
+[2026-02-02T12:53:54.598820300Z][inference] Reconciling service state on initialization
+[2026-02-02T12:53:54.599355700Z][inference] Reconciling service state on settings change
+[2026-02-02T12:53:54.607459200Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T12:53:54.929781800Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T12:53:55.394429400Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T12:53:55.394429400Z][inference][W] Backend installation failed for vllm: not implemented
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:59:15.120489100Z][inference.model-manager] Successfully initialized store
+[2026-02-02T12:59:15.126197200Z][inference] 2 backends available
+[2026-02-02T12:59:18.030713700Z][inference] Reconciling service state on initialization
+[2026-02-02T12:59:18.031284800Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T12:59:18.031911800Z][inference] Reconciling service state on settings change
+[2026-02-02T12:59:18.301725000Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T12:59:18.956691800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T12:59:18.957300000Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T12:59:20.953488900Z][inference.model-manager] Listing available models
+[2026-02-02T12:59:20.954148800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:59:21.145238500Z][inference.model-manager] Listing available models
+[2026-02-02T12:59:21.145821700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T12:59:23.829909300Z][inference.model-manager] Listing available models
+[2026-02-02T12:59:23.830469100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T13:00:45.701834400Z][inference.model-manager] Listing available models
+[2026-02-02T13:00:45.702279000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T13:01:11.105019000Z][inference.model-manager] Listing available models
+[2026-02-02T13:01:11.105627400Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-02T13:05:10.923461600Z][inference.model-manager] Successfully initialized store
+[2026-02-02T13:05:10.926432600Z][inference] 2 backends available
+[2026-02-02T13:05:22.632003100Z][inference] Reconciling service state on initialization
+[2026-02-02T13:05:22.633199900Z][inference] Reconciling service state on settings change
+[2026-02-02T13:05:22.633790900Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-02T13:05:22.636222200Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-02T13:05:23.003836600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-02T13:05:24.031669800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-02T13:05:35.046971500Z][inference.model-manager] Listing available models
+[2026-02-02T13:05:35.049617300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T13:05:35.514507600Z][inference.model-manager] Listing available models
+[2026-02-02T13:05:35.518597800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T13:05:42.014982500Z][inference.model-manager] Listing available models
+[2026-02-02T13:05:42.015612600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T13:07:16.183544100Z][inference.model-manager] Listing available models
+[2026-02-02T13:07:16.283586600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-02T13:33:45.584782700Z][inference.model-manager] Listing available models
+[2026-02-02T13:33:45.585538500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-03T08:38:01.984176100Z][inference.model-manager] Listing available models
+[2026-02-03T08:38:01.990991600Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-12T03:47:09.909212300Z][inference.model-manager] Successfully initialized store
+[2026-02-12T03:47:09.912898600Z][inference] 2 backends available
+[2026-02-12T03:47:25.503531000Z][inference] Reconciling service state on initialization
+[2026-02-12T03:47:25.504758100Z][inference] Reconciling service state on settings change
+[2026-02-12T03:47:25.506998900Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-12T03:47:25.923132400Z][inference.inference-llama.cpp] current llama.cpp version is outdated: sha256:507138a8eba070ea65e250955c984f7b2a2ac5f7c276cf0b856e9fc9f80cab0e vs sha256:75a04de6d5059eef6b7c52a70f502b61d9cce8debfd44e16fdab908a58447f57, proceeding to update it
+[2026-02-12T03:47:25.929605100Z][inference.inference-llama.cpp] Extracting image "registry-1.docker.io/docker/docker-model-backend-llamacpp@sha256:75a04de6d5059eef6b7c52a70f502b61d9cce8debfd44e16fdab908a58447f57" to "C:\\Users\\annes\\AppData\\Local\\Temp\\llamacpp-install2168580764"
+[2026-02-12T03:47:44.151579000Z][inference.inference-llama.cpp] successfully updated llama.cpp binary
+[2026-02-12T03:47:54.961593800Z][inference.inference-llama.cpp] running llama.cpp latest-cpu (sha256:75a04de6d5059eef6b7c52a70f502b61d9cce8debfd44e16fdab908a58447f57) version: c55bce4
+[2026-02-12T03:47:54.978185000Z][inference.model-manager] Listing available models
+[2026-02-12T03:47:54.988389400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-12T03:47:55.015409500Z][inference.model-manager] Listing available models
+[2026-02-12T03:47:55.017267700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-12T03:47:56.854613400Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-12T03:47:56.855497800Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-12T03:51:41.737318800Z][inference.model-manager] Listing available models
+[2026-02-12T03:51:41.738630600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-12T04:06:36.121725200Z][inference.model-manager] Listing available models
+[2026-02-12T04:06:36.125116900Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-13T04:35:22.254265500Z][inference.model-manager] Successfully initialized store
+[2026-02-13T04:35:22.260786200Z][inference] 2 backends available
+[2026-02-13T04:35:27.121575200Z][inference] Reconciling service state on initialization
+[2026-02-13T04:35:27.122180200Z][inference] Reconciling service state on settings change
+[2026-02-13T04:35:27.122180200Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-13T04:35:27.122180200Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-13T04:35:27.406766500Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-13T04:35:28.041848800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-13T04:35:29.149629900Z][inference.model-manager] Listing available models
+[2026-02-13T04:35:29.149629900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:35:29.254313800Z][inference.model-manager] Listing available models
+[2026-02-13T04:35:29.254313800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:35:30.426054100Z][inference.model-manager] Listing available models
+[2026-02-13T04:35:30.426054100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:35:47.687629200Z][inference.model-manager] Listing available models
+[2026-02-13T04:35:47.689473900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:36:02.049534700Z][inference.model-manager] Listing available models
+[2026-02-13T04:36:02.050544600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:36:09.956407100Z][inference.model-manager] Listing available models
+[2026-02-13T04:36:09.958667600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:40:05.936154800Z][inference.model-manager] Listing available models
+[2026-02-13T04:40:05.941596000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T04:42:10.718697900Z][inference.model-manager] Listing available models
+[2026-02-13T04:42:10.719269200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T05:27:37.747057400Z][inference.model-manager] Listing available models
+[2026-02-13T05:27:37.809469700Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-13T12:42:10.045121600Z][inference.model-manager] Successfully initialized store
+[2026-02-13T12:42:10.055770600Z][inference] 2 backends available
+[2026-02-13T12:42:20.368217500Z][inference] Reconciling service state on initialization
+[2026-02-13T12:42:20.368962800Z][inference] Reconciling service state on settings change
+[2026-02-13T12:42:20.369519700Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-13T12:42:20.650354300Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-13T12:42:22.955706300Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-13T12:42:22.956091300Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-13T12:42:25.832071000Z][inference.model-manager] Listing available models
+[2026-02-13T12:42:25.833894200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T12:42:26.180525200Z][inference.model-manager] Listing available models
+[2026-02-13T12:42:26.181041300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T12:42:28.768714300Z][inference.model-manager] Listing available models
+[2026-02-13T12:42:28.769261400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T13:28:24.801380700Z][inference.model-manager] Listing available models
+[2026-02-13T13:28:24.805537400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T13:44:01.655498300Z][inference.model-manager] Listing available models
+[2026-02-13T13:44:01.658664100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T13:44:35.071129500Z][inference.model-manager] Listing available models
+[2026-02-13T13:44:35.071129500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-13T15:02:32.628786200Z][inference.model-manager] Listing available models
+[2026-02-13T15:02:32.630069400Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:39:42.472049100Z][inference.model-manager] Successfully initialized store
+[2026-02-16T12:39:42.477591000Z][inference] 2 backends available
+[2026-02-16T12:39:51.211807000Z][inference] Reconciling service state on initialization
+[2026-02-16T12:39:51.211807000Z][inference] Reconciling service state on settings change
+[2026-02-16T12:39:51.212900300Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-16T12:39:51.501773100Z][inference.inference-llama.cpp] current llama.cpp version is outdated: sha256:75a04de6d5059eef6b7c52a70f502b61d9cce8debfd44e16fdab908a58447f57 vs sha256:3b01a668345f8533f3a8b90da08567a2e5b65de86bb9b4bcbc8c393349435b81, proceeding to update it
+[2026-02-16T12:39:51.503492100Z][inference.inference-llama.cpp] Extracting image "registry-1.docker.io/docker/docker-model-backend-llamacpp@sha256:3b01a668345f8533f3a8b90da08567a2e5b65de86bb9b4bcbc8c393349435b81" to "C:\\Users\\annes\\AppData\\Local\\Temp\\llamacpp-install1284109566"
+[2026-02-16T12:39:56.573048800Z][inference.model-manager] Listing available models
+[2026-02-16T12:39:56.574219100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:39:56.675159700Z][inference.model-manager] Listing available models
+[2026-02-16T12:39:56.675760800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:40:13.868474300Z][inference.model-manager] Listing available models
+[2026-02-16T12:40:13.881200100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:40:14.287348500Z][inference.inference-llama.cpp] successfully updated llama.cpp binary
+[2026-02-16T12:40:31.474447100Z][inference.inference-llama.cpp] running llama.cpp latest-cpu (sha256:3b01a668345f8533f3a8b90da08567a2e5b65de86bb9b4bcbc8c393349435b81) version: c55bce4
+[2026-02-16T12:40:34.256335800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-16T12:40:34.257012600Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-16T12:41:06.124950500Z][inference.model-manager] Listing available models
+[2026-02-16T12:41:06.126856000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:42:37.090179500Z][inference.model-manager] Listing available models
+[2026-02-16T12:42:37.090730300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:43:02.808233600Z][inference.model-manager] Listing available models
+[2026-02-16T12:43:02.808233600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:43:15.980256300Z][inference.model-manager] Listing available models
+[2026-02-16T12:43:15.980823000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:43:31.457739700Z][inference.model-manager] Listing available models
+[2026-02-16T12:43:31.458208800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:44:34.348709600Z][inference.model-manager] Listing available models
+[2026-02-16T12:44:34.349218000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:44:37.861913300Z][inference.model-manager] Listing available models
+[2026-02-16T12:44:37.862498400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:44:46.687965200Z][inference.model-manager] Listing available models
+[2026-02-16T12:44:46.688477300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:45:07.806607400Z][inference.model-manager] Listing available models
+[2026-02-16T12:45:07.807230100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:45:16.968294700Z][inference.model-manager] Listing available models
+[2026-02-16T12:45:16.968865100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:45:59.288822600Z][inference.model-manager] Listing available models
+[2026-02-16T12:45:59.289369000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T12:46:07.836360500Z][inference.model-manager] Listing available models
+[2026-02-16T12:46:07.836906200Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-16T13:31:02.695562700Z][inference.model-manager] Successfully initialized store
+[2026-02-16T13:31:02.696825000Z][inference] 2 backends available
+[2026-02-16T13:31:05.106957400Z][inference] Reconciling service state on initialization
+[2026-02-16T13:31:05.107508500Z][inference] Reconciling service state on settings change
+[2026-02-16T13:31:05.107508500Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-16T13:31:05.384893100Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-16T13:31:06.250728800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-16T13:31:06.250728800Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-16T13:31:10.481778700Z][inference.model-manager] Listing available models
+[2026-02-16T13:31:10.482995100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:31:10.549001000Z][inference.model-manager] Listing available models
+[2026-02-16T13:31:10.549001000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:31:15.229502400Z][inference.model-manager] Listing available models
+[2026-02-16T13:31:15.229502400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:36:47.369604400Z][inference.model-manager] Listing available models
+[2026-02-16T13:36:47.370215300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:38:51.042218400Z][inference.model-manager] Listing available models
+[2026-02-16T13:38:51.057873000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:39:58.354500000Z][inference.model-manager] Listing available models
+[2026-02-16T13:39:58.378855100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:42:32.043610400Z][inference.model-manager] Listing available models
+[2026-02-16T13:42:32.093202600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:42:52.892072700Z][inference.model-manager] Listing available models
+[2026-02-16T13:42:52.914207600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:48:16.821886100Z][inference.model-manager] Listing available models
+[2026-02-16T13:48:16.829997700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:48:58.979319000Z][inference.model-manager] Listing available models
+[2026-02-16T13:48:58.981391700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T13:49:42.759266300Z][inference.model-manager] Listing available models
+[2026-02-16T13:49:42.793667700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T14:10:15.336775100Z][inference.model-manager] Listing available models
+[2026-02-16T14:10:15.337901400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T14:11:02.975255100Z][inference.model-manager] Listing available models
+[2026-02-16T14:11:02.976398100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T14:30:14.675246700Z][inference.model-manager] Listing available models
+[2026-02-16T14:30:14.775483700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T15:53:29.339827300Z][inference.model-manager] Listing available models
+[2026-02-16T15:53:29.346369500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T16:57:13.733866500Z][inference.model-manager] Listing available models
+[2026-02-16T16:57:13.741461000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T17:04:40.281304000Z][inference.model-manager] Listing available models
+[2026-02-16T17:04:40.282271000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T17:16:45.244151600Z][inference.model-manager] Listing available models
+[2026-02-16T17:16:45.246577700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T17:16:58.353249700Z][inference.model-manager] Listing available models
+[2026-02-16T17:16:58.353878000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T17:20:07.020065300Z][inference.model-manager] Listing available models
+[2026-02-16T17:20:07.020612500Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-16T18:03:34.867673400Z][inference.model-manager] Successfully initialized store
+[2026-02-16T18:03:34.877418400Z][inference] 2 backends available
+[2026-02-16T18:04:03.048284200Z][inference] Reconciling service state on initialization
+[2026-02-16T18:04:03.048902800Z][inference] Reconciling service state on settings change
+[2026-02-16T18:04:03.051318000Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-16T18:04:03.346102300Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-16T18:04:05.038177800Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-16T18:04:05.038177800Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-16T18:04:11.539003400Z][inference.model-manager] Listing available models
+[2026-02-16T18:04:11.540653500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T18:04:11.741409400Z][inference.model-manager] Listing available models
+[2026-02-16T18:04:11.742006500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T18:04:14.533315100Z][inference.model-manager] Listing available models
+[2026-02-16T18:04:14.533834700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T18:05:12.460164200Z][inference.model-manager] Listing available models
+[2026-02-16T18:05:12.474644200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T18:07:32.651805200Z][inference.model-manager] Listing available models
+[2026-02-16T18:07:32.654262300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T18:11:08.505733700Z][inference.model-manager] Listing available models
+[2026-02-16T18:11:08.507666200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T18:14:28.831191500Z][inference.model-manager] Listing available models
+[2026-02-16T18:14:28.831710900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-16T19:00:11.408210800Z][inference.model-manager] Listing available models
+[2026-02-16T19:00:11.412193000Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-17T02:59:09.565658700Z][inference.model-manager] Successfully initialized store
+[2026-02-17T02:59:09.571852800Z][inference] 2 backends available
+[2026-02-17T02:59:13.514837600Z][inference] Reconciling service state on initialization
+[2026-02-17T02:59:13.515368800Z][inference] Reconciling service state on settings change
+[2026-02-17T02:59:13.515368800Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-17T02:59:13.796092900Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-17T02:59:14.637492500Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-17T02:59:14.637492500Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-17T02:59:15.966148200Z][inference.model-manager] Listing available models
+[2026-02-17T02:59:15.966520800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T02:59:16.047285200Z][inference.model-manager] Listing available models
+[2026-02-17T02:59:16.047285200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T02:59:17.420004000Z][inference.model-manager] Listing available models
+[2026-02-17T02:59:17.420313700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T02:59:56.582080300Z][inference.model-manager] Listing available models
+[2026-02-17T02:59:56.584162000Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-17T09:13:46.540698200Z][inference.model-manager] Successfully initialized store
+[2026-02-17T09:13:46.544704500Z][inference] 2 backends available
+[2026-02-17T09:13:51.353780800Z][inference] Reconciling service state on initialization
+[2026-02-17T09:13:51.354979500Z][inference] Reconciling service state on settings change
+[2026-02-17T09:13:51.356836500Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-17T09:13:51.360479600Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-17T09:13:51.674464600Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-17T09:13:53.202747600Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-17T09:13:58.426306100Z][inference.model-manager] Listing available models
+[2026-02-17T09:13:58.429104100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:13:58.786473300Z][inference.model-manager] Listing available models
+[2026-02-17T09:13:58.787097200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:14:01.254799800Z][inference.model-manager] Listing available models
+[2026-02-17T09:14:01.254799800Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-17T09:26:35.819829600Z][inference.model-manager] Successfully initialized store
+[2026-02-17T09:26:35.822423400Z][inference] 2 backends available
+[2026-02-17T09:26:48.424475900Z][inference] Reconciling service state on initialization
+[2026-02-17T09:26:48.424475900Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-17T09:26:48.425111600Z][inference] Reconciling service state on settings change
+[2026-02-17T09:26:48.713858700Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-17T09:26:49.671758900Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-17T09:26:49.671758900Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-17T09:26:51.262796700Z][inference.model-manager] Listing available models
+[2026-02-17T09:26:51.267115100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:26:51.501271600Z][inference.model-manager] Listing available models
+[2026-02-17T09:26:51.501837600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:26:53.615241400Z][inference.model-manager] Listing available models
+[2026-02-17T09:26:53.616457100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:28:39.763687400Z][inference.model-manager] Listing available models
+[2026-02-17T09:28:39.764384000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:29:59.086202600Z][inference.model-manager] Listing available models
+[2026-02-17T09:29:59.086202600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T09:38:46.975577500Z][inference.model-manager] Listing available models
+[2026-02-17T09:38:46.978121400Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-17T10:40:31.311034900Z][inference.model-manager] Successfully initialized store
+[2026-02-17T10:40:31.312116700Z][inference] 2 backends available
+[2026-02-17T10:40:33.395739400Z][inference] Reconciling service state on initialization
+[2026-02-17T10:40:33.396327600Z][inference] Reconciling service state on settings change
+[2026-02-17T10:40:33.396327600Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-17T10:40:33.677498400Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-17T10:40:34.601960700Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-17T10:40:34.601960700Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-17T10:40:36.191793600Z][inference.model-manager] Listing available models
+[2026-02-17T10:40:36.192854300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T10:40:36.253762100Z][inference.model-manager] Listing available models
+[2026-02-17T10:40:36.254319200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T10:40:37.348105000Z][inference.model-manager] Listing available models
+[2026-02-17T10:40:37.348105000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T10:41:24.703663500Z][inference.model-manager] Listing available models
+[2026-02-17T10:41:24.711920800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-17T11:09:28.482682000Z][inference.model-manager] Listing available models
+[2026-02-17T11:09:28.489267800Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-19T01:47:04.952056000Z][inference.model-manager] Successfully initialized store
+[2026-02-19T01:47:04.959261000Z][inference] 2 backends available
+[2026-02-19T01:47:17.878004400Z][inference] Reconciling service state on initialization
+[2026-02-19T01:47:17.878794800Z][inference] Reconciling service state on settings change
+[2026-02-19T01:47:17.878794800Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-19T01:47:18.193159900Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-19T01:47:19.881820900Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-19T01:47:19.882822300Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-19T01:47:36.913835800Z][inference.model-manager] Listing available models
+[2026-02-19T01:47:36.915223100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T01:47:37.402198600Z][inference.model-manager] Listing available models
+[2026-02-19T01:47:37.402965000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T01:47:42.400245000Z][inference.model-manager] Listing available models
+[2026-02-19T01:47:42.426226500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T01:48:24.117202600Z][inference.model-manager] Listing available models
+[2026-02-19T01:48:24.133660900Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-19T02:13:09.164443300Z][inference.model-manager] Successfully initialized store
+[2026-02-19T02:13:09.168069200Z][inference] 2 backends available
+[2026-02-19T02:13:12.838628300Z][inference] Reconciling service state on initialization
+[2026-02-19T02:13:12.839347100Z][inference] Reconciling service state on settings change
+[2026-02-19T02:13:12.839347100Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-19T02:13:13.130238100Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-19T02:13:15.078566700Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-19T02:13:15.078566700Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-19T02:13:17.904361200Z][inference.model-manager] Listing available models
+[2026-02-19T02:13:17.906942600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T02:13:18.154398300Z][inference.model-manager] Listing available models
+[2026-02-19T02:13:18.155041400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T02:13:19.983063200Z][inference.model-manager] Listing available models
+[2026-02-19T02:13:19.983063200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T02:24:33.580080900Z][inference.model-manager] Listing available models
+[2026-02-19T02:24:33.589280700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T02:28:22.246229100Z][inference.model-manager] Listing available models
+[2026-02-19T02:28:22.246812900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T03:50:52.200270200Z][inference.model-manager] Listing available models
+[2026-02-19T03:50:52.206213900Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-19T04:12:11.862602800Z][inference.model-manager] Successfully initialized store
+[2026-02-19T04:12:11.866575400Z][inference] 2 backends available
+-------------------------------------------------------------------------------->8
+[2026-02-19T04:31:50.897328000Z][inference.model-manager] Successfully initialized store
+[2026-02-19T04:31:50.898951600Z][inference] 2 backends available
+[2026-02-19T04:52:15.976238800Z][inference][E] unable to determine if GPU is available: Exception occurred. (Call cancelled )
+[2026-02-19T04:52:15.977482700Z][inference] Reconciling service state on initialization
+[2026-02-19T04:52:15.977808300Z][inference] Reconciling service state on settings change
+[2026-02-19T04:52:15.977808300Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-19T04:52:16.454166000Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-19T04:52:16.929917900Z][inference.model-manager] Listing available models
+[2026-02-19T04:52:16.930432400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T04:52:16.938722000Z][inference.model-manager] Listing available models
+[2026-02-19T04:52:16.938722000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T04:52:17.081933000Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-19T04:52:17.081933000Z][inference][W] Backend installation failed for vllm: not implemented
+-------------------------------------------------------------------------------->8
+[2026-02-19T05:57:58.716211500Z][inference.model-manager] Successfully initialized store
+[2026-02-19T05:57:58.718593800Z][inference] 2 backends available
+[2026-02-19T06:20:47.604152300Z][inference][E] unable to determine if GPU is available: Exception occurred. (Call cancelled )
+[2026-02-19T06:20:47.607282300Z][inference] Reconciling service state on initialization
+[2026-02-19T06:20:47.608467800Z][inference] Reconciling service state on settings change
+[2026-02-19T06:20:47.609065900Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-19T06:20:47.639234400Z][inference.inference-llama.cpp] failed to ensure latest llama.cpp: Get "https://hub.docker.com/v2/namespaces/docker/repositories/docker-model-backend-llamacpp/tags/latest-cpu": dialing hub.docker.com:443 host via direct connection because Docker Desktop has no HTTPS proxy: connecting to hub.docker.com:443: dial tcp: lookup hub.docker.com: no such host
+[2026-02-19T06:20:47.641216600Z][inference.model-manager] Listing available models
+[2026-02-19T06:20:47.644860100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T06:20:47.659542600Z][inference.model-manager] Listing available models
+[2026-02-19T06:20:47.660126900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T06:20:48.334011900Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=false
+[2026-02-19T06:20:48.334011900Z][inference][W] Backend installation failed for vllm: not implemented
+-------------------------------------------------------------------------------->8
+[2026-02-19T09:10:05.627386300Z][inference.model-manager] Successfully initialized store
+[2026-02-19T09:10:05.630948000Z][inference] 2 backends available
+[2026-02-19T09:10:35.466424200Z][inference] Reconciling service state on initialization
+[2026-02-19T09:10:35.467467300Z][inference] Reconciling service state on settings change
+[2026-02-19T09:10:35.468566800Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-19T09:10:35.780893700Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-19T09:10:36.980104300Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-19T09:10:36.980860800Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-19T09:10:45.934859400Z][inference.model-manager] Listing available models
+[2026-02-19T09:10:45.939786600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T09:10:46.357416200Z][inference.model-manager] Listing available models
+[2026-02-19T09:10:46.361248700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T09:10:53.344417300Z][inference.model-manager] Listing available models
+[2026-02-19T09:10:53.358321200Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T09:11:40.633393500Z][inference.model-manager] Listing available models
+[2026-02-19T09:11:40.665564300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T11:40:49.000600400Z][inference.model-manager] Listing available models
+[2026-02-19T11:40:49.025571100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T11:46:34.109784400Z][inference.model-manager] Listing available models
+[2026-02-19T11:46:34.157422500Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T11:47:23.774632200Z][inference.model-manager] Listing available models
+[2026-02-19T11:47:23.775253800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-19T12:04:37.522710500Z][inference.model-manager] Listing available models
+[2026-02-19T12:04:37.526393100Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-20T03:50:20.832923600Z][inference.model-manager] Successfully initialized store
+[2026-02-20T03:50:20.882172500Z][inference] 2 backends available
+[2026-02-20T03:50:27.929950400Z][inference] Reconciling service state on initialization
+[2026-02-20T03:50:27.931224600Z][inference] Reconciling service state on settings change
+[2026-02-20T03:50:27.931224600Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-20T03:50:27.932486500Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-20T03:50:28.240406100Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-20T03:50:30.189791100Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-20T03:50:35.616199500Z][inference.model-manager] Listing available models
+[2026-02-20T03:50:35.618551100Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-20T03:50:36.277800400Z][inference.model-manager] Listing available models
+[2026-02-20T03:50:36.277800400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-20T03:50:39.290270300Z][inference.model-manager] Listing available models
+[2026-02-20T03:50:39.294460900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-20T03:51:32.089244400Z][inference.model-manager] Listing available models
+[2026-02-20T03:51:32.098000600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-20T03:52:02.505292400Z][inference.model-manager] Listing available models
+[2026-02-20T03:52:02.509956700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-20T03:53:11.274579300Z][inference.model-manager] Listing available models
+[2026-02-20T03:53:11.277151800Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-25T02:23:18.479344700Z][inference.model-manager] Successfully initialized store
+[2026-02-25T02:23:18.481458700Z][inference] 2 backends available
+[2026-02-25T02:23:29.192415400Z][inference] Reconciling service state on initialization
+[2026-02-25T02:23:29.193624400Z][inference] Reconciling service state on settings change
+[2026-02-25T02:23:29.193624400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-25T02:23:29.519547000Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-25T02:23:31.587277300Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-25T02:23:31.587277300Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-25T02:23:43.920707400Z][inference.model-manager] Listing available models
+[2026-02-25T02:23:43.922781300Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:23:44.092280700Z][inference.model-manager] Listing available models
+[2026-02-25T02:23:44.092280700Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:23:52.267481900Z][inference.model-manager] Listing available models
+[2026-02-25T02:23:52.268980000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:25:12.392545600Z][inference.model-manager] Listing available models
+[2026-02-25T02:25:12.402501900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:26:11.706873600Z][inference.model-manager] Listing available models
+[2026-02-25T02:26:11.807956000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:28:23.744196900Z][inference.model-manager] Listing available models
+[2026-02-25T02:28:23.935223900Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:34:02.874378100Z][inference.model-manager] Listing available models
+[2026-02-25T02:34:02.890659300Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-25T02:47:27.780896600Z][inference.model-manager] Successfully initialized store
+[2026-02-25T02:47:27.800042400Z][inference] 2 backends available
+[2026-02-25T02:47:37.805144900Z][inference] Reconciling service state on initialization
+[2026-02-25T02:47:37.805817400Z][inference] Reconciling service state on settings change
+[2026-02-25T02:47:37.805817400Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-25T02:47:38.097110200Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-25T02:47:38.801587000Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-25T02:47:38.801587000Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-25T02:47:41.956982100Z][inference.model-manager] Listing available models
+[2026-02-25T02:47:41.958243600Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:47:42.170433400Z][inference.model-manager] Listing available models
+[2026-02-25T02:47:42.173100000Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T02:47:46.067642100Z][inference.model-manager] Listing available models
+[2026-02-25T02:47:46.068280300Z][inference.model-manager] Successfully listed models, count: 0
+-------------------------------------------------------------------------------->8
+[2026-02-25T03:46:35.852223300Z][inference.model-manager] Successfully initialized store
+[2026-02-25T03:46:35.860075500Z][inference] 2 backends available
+[2026-02-25T03:46:53.212286200Z][inference] Reconciling service state on initialization
+[2026-02-25T03:46:53.212945100Z][inference] Reconciling service state on settings change
+[2026-02-25T03:46:53.212945100Z][inference][W] Backend installation failed for vllm: not implemented
+[2026-02-25T03:46:53.213555300Z][inference.inference-llama.cpp] downloadLatestLlamaCpp: latest, cpu, C:\Program Files\Docker\Docker\resources\model-runner\bin, <HOME>\.docker\bin\inference\com.docker.llama-server.exe
+[2026-02-25T03:46:53.510514000Z][inference.inference-llama.cpp] current llama.cpp version is already up to date
+[2026-02-25T03:46:54.457078200Z][inference.inference-llama.cpp] installed llama-server with gpuSupport=true
+[2026-02-25T03:46:57.986918200Z][inference.model-manager] Listing available models
+[2026-02-25T03:46:57.990553800Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T03:46:58.289489800Z][inference.model-manager] Listing available models
+[2026-02-25T03:46:58.290156400Z][inference.model-manager] Successfully listed models, count: 0
+[2026-02-25T03:47:00.768030600Z][inference.model-manager] Listing available models
+[2026-02-25T03:47:00.769277100Z][inference.model-manager] Successfully listed models, count: 0

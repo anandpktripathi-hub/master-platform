@@ -6,6 +6,15 @@ export function setupSwagger(app: INestApplication) {
     .setTitle('Smetasc SaaS Backend')
     .setDescription('API documentation for Smetasc SaaS Backend')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'bearer',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
 

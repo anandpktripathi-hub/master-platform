@@ -1,0 +1,7 @@
+PID   USER     TIME  COMMAND
+    1 root      0:00 {init(docker-des} /init
+    4 root      0:00 {init} plan9 --control-socket 6 --log-level 4 --server-fd 7 --pipe-fd 9 --log-truncate
+   10 root      0:00 {SessionLeader} /init
+   11 root      0:00 {Relay(12)} /init
+   13 root      0:00 {Relay(14)} /init
+   14 root      0:00 ps uax

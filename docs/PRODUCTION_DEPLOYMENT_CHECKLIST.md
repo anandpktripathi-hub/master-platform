@@ -228,6 +228,25 @@ AWS_S3_BUCKET=your-saas-production-uploads
 
 ## 🧪 Testing Checklist
 
+### Local Smoke Test (Pre-Deploy)
+
+Run these from the repository root on the target build machine (or a matching environment). These steps are designed to be Windows-safe and reduce the chance of `EMFILE` by batching Jest test execution.
+
+```bash
+# 1) Full verification (backend typecheck + build + batched tests; frontend build + unit tests)
+npm run verify:batched
+
+# 2) Production env sanity checks (fails fast on missing critical env)
+npm run preflight:prod
+
+# 3) Optional: bring up dev dependencies locally
+docker compose up -d mongodb redis
+
+# 4) Optional: production-like local run
+npm run backend:prod
+npm run frontend:prod
+```
+
 ### Payment Flow Testing
 
 **Stripe Test Cards (use these in test mode):**

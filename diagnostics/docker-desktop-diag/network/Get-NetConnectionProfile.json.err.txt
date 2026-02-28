@@ -1,0 +1,10 @@
+Select-Object : Missing an argument for parameter 'Property'. Specify a 
+parameter of type 'System.Object[]' and try again.
+At line:1 char:96
++ ... ectionProfile | Select-Object -ExcludeProperty Cim* -Property | Conve ...
++                                                         ~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Select-Object], ParameterB 
+   indingException
+    + FullyQualifiedErrorId : MissingArgument,Microsoft.PowerShell.Commands.Se 
+   lectObjectCommand
+ 

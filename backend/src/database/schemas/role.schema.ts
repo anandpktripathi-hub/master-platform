@@ -30,4 +30,10 @@ export class Role {
 export const RoleSchema = SchemaFactory.createForClass(Role);
 
 // Index for finding tenant-specific roles
-RoleSchema.index({ tenantId: 1, name: 1 }, { unique: false });
+RoleSchema.index(
+  { tenantId: 1, name: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { tenantId: { $type: 'objectId' } },
+  },
+);

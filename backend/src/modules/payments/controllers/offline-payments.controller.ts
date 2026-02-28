@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -15,7 +16,14 @@ import { Roles } from '../../../decorators/roles.decorator';
 import { Tenant } from '../../../decorators/tenant.decorator';
 import { RateLimitGuard } from '../../../common/guards/rate-limit.guard';
 import { JwtAuthGuard } from '../../../guards/jwt-auth.guard';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  CreateOfflinePaymentRequestDto,
+  ListOfflinePaymentsQueryDto,
+  UpdateOfflinePaymentStatusDto,
+} from '../dto/payments.dto';
+@ApiTags('Offline Payments')
+@ApiBearerAuth('bearer')
 @Controller('offline-payments')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class OfflinePaymentsController {
@@ -26,16 +34,10 @@ export class OfflinePaymentsController {
   async createForTenant(
     @Tenant() tenantId: string,
     @Req() req: any,
-    @Body()
-    body: {
-      amount: number;
-      currency: string;
-      method: string;
-      description?: string;
-      proofUrl?: string;
-      metadata?: Record<string, unknown>;
-    },
+    @Body() body: CreateOfflinePaymentRequestDto,
   ) {
+    if (!tenantId) throw new BadRequestException('Tenant ID not found');
+
     const userId =
       req?.user?.id || req?.user?._id || req?.user?.userId || tenantId;
 
@@ -58,9 +60,9 @@ export class OfflinePaymentsController {
 
   @Get()
   @Roles('PLATFORM_SUPER_ADMIN')
-  async listAll(@Query('tenantId') tenantId?: string) {
-    if (tenantId) {
-      return this.offlinePayments.listForTenant(tenantId);
+  async listAll(@Query() query: ListOfflinePaymentsQueryDto) {
+    if (query.tenantId) {
+      return this.offlinePayments.listForTenant(query.tenantId);
     }
     return this.offlinePayments.listAll();
   }
@@ -69,7 +71,7 @@ export class OfflinePaymentsController {
   @Roles('PLATFORM_SUPER_ADMIN')
   async updateStatus(
     @Param('id') id: string,
-    @Body() body: { status: 'pending' | 'approved' | 'rejected' },
+    @Body() body: UpdateOfflinePaymentStatusDto,
   ) {
     return this.offlinePayments.updateStatus(id, body.status);
   }

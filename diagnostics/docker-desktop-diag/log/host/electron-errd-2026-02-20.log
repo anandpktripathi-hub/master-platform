@@ -1,0 +1,13 @@
+2026-02-20T04:36:08.908Z info 	[WEB-CONTENT] Registering app://
+2026-02-20T04:36:09.832Z info 	[WINDOW] Open app://dd/error-dialog {
+  windowOptions: {
+    minimizable: false,
+    maximizable: false,
+    resizable: false,
+    alwaysOnTop: true,
+    width: 600,
+    height: 500,
+    trafficLightPosition: { x: 10, y: 12 }
+  }
+}
+2026-02-20T04:36:13.725Z info 	[WEB-CONTENT] Serving page HTML (0 feature flags)

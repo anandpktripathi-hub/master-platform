@@ -9,7 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { FeatureRegistryService } from './featureRegistry.service';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('FeatureRegistry')
 @Controller('features')
 export class FeatureRegistryController {
   constructor(

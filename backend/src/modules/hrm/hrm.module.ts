@@ -24,6 +24,7 @@ import { HrmController } from './hrm.controller';
 import { HrmService } from './hrm.service';
 import { RolesGuard } from '../../guards/roles.guard';
 import { WorkspaceModule } from '../../workspaces/workspace.module';
+import { TenantGuard } from '../../common/guards/tenant.guard';
 
 @Module({
   imports: [
@@ -37,6 +38,6 @@ import { WorkspaceModule } from '../../workspaces/workspace.module';
     WorkspaceModule,
   ],
   controllers: [HrmController],
-  providers: [HrmService, RolesGuard],
+  providers: [HrmService, RolesGuard, TenantGuard],
 })
 export class HrmModule {}

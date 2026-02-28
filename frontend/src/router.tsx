@@ -20,6 +20,7 @@ import AccountingDashboard from "./pages/AccountingDashboard";
 import AdminThemesPage from "./pages/admin/AdminThemesPage";
 import AdminInvoicesPage from "./pages/admin/AdminInvoicesPage";
 import AdminBillingAnalyticsPage from "./pages/admin/AdminBillingAnalyticsPage";
+import AdminAuditLogViewer from "./pages/admin/AuditLogViewer";
 import TenantThemeSelectorPage from "./pages/tenant/TenantThemeSelectorPage";
 import TenantThemeCustomizerPage from "./pages/tenant/TenantThemeCustomizerPage";
 import Login from "./pages/Login";
@@ -43,6 +44,8 @@ import PaymentLogsPage from "./pages/admin/PaymentLogsPage";
 import TenantsPage from "./pages/admin/Tenants";
 import AdminDomainsPage from "./pages/admin/AdminDomainsPage";
 import AdminNavigationMapPage from "./pages/admin/AdminNavigationMapPage";
+import AdminPanel from "./pages/admin";
+import PlanManager from "./pages/admin/PlanManager";
 import CrmContactsPage from "./pages/CrmContactsPage";
 import CrmDealsPage from "./pages/CrmDealsPage";
 import CrmMyTasksPage from "./pages/CrmMyTasksPage";
@@ -117,6 +120,9 @@ export const router = createBrowserRouter([
       { path: "admin/tenants", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><TenantsPage /></RequireRole></ProtectedRoute> },
       { path: "admin/domains", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminDomainsPage /></RequireRole></ProtectedRoute> },
       { path: "admin/navigation-map", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminNavigationMapPage /></RequireRole></ProtectedRoute> },
+      { path: "admin/panel", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminPanel /></RequireRole></ProtectedRoute> },
+      { path: "admin/plans", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><PlanManager /></RequireRole></ProtectedRoute> },
+      { path: "admin/audit-log-viewer", element: <ProtectedRoute><RequireRole allowedRoles={["PLATFORM_SUPERADMIN"]}><AdminAuditLogViewer /></RequireRole></ProtectedRoute> },
       { path: "crm/contacts", element: <ProtectedRoute><CrmContactsPage /></ProtectedRoute> },
       { path: "crm/deals", element: <ProtectedRoute><CrmDealsPage /></ProtectedRoute> },
       { path: "crm/tasks", element: <ProtectedRoute><CrmMyTasksPage /></ProtectedRoute> },

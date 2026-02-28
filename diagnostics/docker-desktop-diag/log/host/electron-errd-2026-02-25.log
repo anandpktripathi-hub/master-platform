@@ -1,0 +1,14 @@
+2026-02-25T02:39:21.362Z info 	[WEB-CONTENT] Registering app://
+2026-02-25T02:39:21.554Z info 	[WINDOW] Open app://dd/error-dialog {
+  windowOptions: {
+    minimizable: false,
+    maximizable: false,
+    resizable: false,
+    alwaysOnTop: true,
+    width: 600,
+    height: 500,
+    trafficLightPosition: { x: 10, y: 12 }
+  }
+}
+2026-02-25T02:39:22.515Z info 	[WEB-CONTENT] Serving page HTML (0 feature flags)
+2026-02-25T02:42:42.650Z info 	before closing windows, childPids to kill:  []

@@ -27,6 +27,12 @@ import {
 } from '../../common/schemas/billing-hierarchy.schema';
 import { BillingHierarchyService } from './billing-hierarchy.service';
 import { BillingHierarchyController } from './billing-hierarchy.controller';
+import {
+  UserHierarchyAssignment,
+  UserHierarchyAssignmentSchema,
+} from '../../common/schemas/user-hierarchy.schema';
+import { UserHierarchyService } from './user-hierarchy.service';
+import { UserHierarchyController } from './user-hierarchy.controller';
 
 @Module({
   imports: [
@@ -48,6 +54,10 @@ import { BillingHierarchyController } from './billing-hierarchy.controller';
         name: BillingHierarchyAssignment.name,
         schema: BillingHierarchyAssignmentSchema,
       },
+      {
+        name: UserHierarchyAssignment.name,
+        schema: UserHierarchyAssignmentSchema,
+      },
     ]),
   ],
   providers: [
@@ -56,6 +66,7 @@ import { BillingHierarchyController } from './billing-hierarchy.controller';
     DomainHierarchyService,
     PackageHierarchyService,
     BillingHierarchyService,
+    UserHierarchyService,
   ],
   controllers: [
     HierarchyController,
@@ -63,6 +74,7 @@ import { BillingHierarchyController } from './billing-hierarchy.controller';
     DomainHierarchyController,
     PackageHierarchyController,
     BillingHierarchyController,
+    UserHierarchyController,
   ],
   exports: [
     HierarchyService,
@@ -70,6 +82,7 @@ import { BillingHierarchyController } from './billing-hierarchy.controller';
     DomainHierarchyService,
     PackageHierarchyService,
     BillingHierarchyService,
+    UserHierarchyService,
   ],
 })
 export class HierarchyModule {}

@@ -1,0 +1,545 @@
+[2026-02-25T05:17:17.797459000Z][com.docker.diagnose.exe] Triggering Linux sysrq and log flushes via a unix socket: \\.\pipe\dockerDiagnosticd
+[2026-02-25T05:17:17.809140800Z][com.docker.diagnose.exe][W] /flush failed: Post "http://unix/flush": open \\.\pipe\dockerDiagnosticd: The system cannot find the file specified.
+[2026-02-25T05:17:19.298835200Z][com.docker.diagnose.exe] Start gathering list of 138 elements
+[2026-02-25T05:17:19.300966800Z][com.docker.diagnose.exe] Gathering ProxyAPIGatherer
+[2026-02-25T05:17:19.300966800Z][com.docker.diagnose.exe] Gathering VirtualizationAPIGatherer
+[2026-02-25T05:17:19.300966800Z][com.docker.diagnose.exe] Gathering system
+[2026-02-25T05:17:19.300966800Z][com.docker.diagnose.exe] Gathering BackendGatherer
+[2026-02-25T05:17:19.331505800Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-CimInstance Win32_OperatingSystem | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json }]
+[2026-02-25T05:17:19.509085200Z][com.docker.diagnose.exe] Gathering BackendGatherer took 205.3061ms
+[2026-02-25T05:17:19.523064100Z][com.docker.diagnose.exe] Gathering ProcessGatherer
+[2026-02-25T05:17:19.688976000Z][com.docker.diagnose.exe] Gathering ProcessGatherer took 163.3609ms
+[2026-02-25T05:17:19.688976000Z][com.docker.diagnose.exe] Gathering typeperf \Process(*)\% Processor Time -sc 5 -y (timeout 0s)
+[2026-02-25T05:17:19.719038100Z][com.docker.diagnose.exe] Executing: [typeperf \Process(*)\% Processor Time -sc 5 -y]
+[2026-02-25T05:17:20.314481300Z][com.docker.diagnose.exe] Gathering VirtualizationAPIGatherer took 1.0120956s
+[2026-02-25T05:17:20.316727700Z][com.docker.diagnose.exe] Gathering tasklist /V (timeout 0s)
+[2026-02-25T05:17:20.317058400Z][com.docker.diagnose.exe] Gathering ProxyAPIGatherer took 1.0160852s
+[2026-02-25T05:17:20.321961600Z][com.docker.diagnose.exe] Gathering Get-Process | Select-Object StartTime,Handles,Name,NPM,PM,SI,VM,WS | ConvertTo-Json -Depth 1 (timeout 1m30s)
+[2026-02-25T05:17:20.328100600Z][com.docker.diagnose.exe] Executing: [tasklist /V]
+[2026-02-25T05:17:20.350341600Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-Process | Select-Object StartTime,Handles,Name,NPM,PM,SI,VM,WS | ConvertTo-Json -Depth 1 }]
+[2026-02-25T05:17:23.265273600Z][com.docker.diagnose.exe] Gathering Get-Process | Select-Object StartTime,Handles,Name,NPM,PM,SI,VM,WS | ConvertTo-Json -Depth 1 (timeout 1m30s) took 2.935831s
+[2026-02-25T05:17:23.265845500Z][com.docker.diagnose.exe] Gathering Get-Service | ConvertTo-Json -Depth 1 (timeout 0s)
+[2026-02-25T05:17:23.307144200Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-Service | ConvertTo-Json -Depth 1 }]
+[2026-02-25T05:17:23.905901800Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-CimInstance Win32_ComputerSystem | Select-Object -ExcludeProperty Cim*, OemLogoBitMap -Property *| ConvertTo-Json }]
+[2026-02-25T05:17:25.874442000Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-CimInstance Win32_Processor | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-json }]
+[2026-02-25T05:17:26.698191000Z][com.docker.diagnose.exe] Gathering Get-Service | ConvertTo-Json -Depth 1 (timeout 0s) took 3.4312518s
+[2026-02-25T05:17:26.700703600Z][com.docker.diagnose.exe] Gathering Get-WindowsOptionalFeature -Online | ConvertTo-Json (timeout 45s)
+[2026-02-25T05:17:26.712914500Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-WindowsOptionalFeature -Online | ConvertTo-Json }]
+[2026-02-25T05:17:27.056389700Z][com.docker.diagnose.exe] Gathering typeperf \Process(*)\% Processor Time -sc 5 -y (timeout 0s) took 7.3647359s
+[2026-02-25T05:17:27.057816200Z][com.docker.diagnose.exe] Gathering Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:27.070091000Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | ConvertTo-Json }]
+[2026-02-25T05:17:28.555497500Z][com.docker.diagnose.exe] Gathering Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | ConvertTo-Json (timeout 0s) took 1.494662s
+[2026-02-25T05:17:28.556751100Z][com.docker.diagnose.exe] Gathering Get-Hotfix | Select-Object -Property PSComputerName,Description,HotFixID,InstalledBy,@{Name='InstalledOn'; Expression={$_.InstalledOn.DateTime}} | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:28.563093700Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-Hotfix | Select-Object -Property PSComputerName,Description,HotFixID,InstalledBy,@{Name='InstalledOn'; Expression={$_.InstalledOn.DateTime}} | ConvertTo-Json }]
+[2026-02-25T05:17:29.130323000Z][com.docker.diagnose.exe] Gathering Get-WindowsOptionalFeature -Online | ConvertTo-Json (timeout 45s) took 2.4296041s
+[2026-02-25T05:17:29.131072800Z][com.docker.diagnose.exe] Gathering driverquery /FO CSV (timeout 30s)
+[2026-02-25T05:17:29.137153800Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ driverquery /FO CSV }]
+[2026-02-25T05:17:30.581227300Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-CimInstance Win32_BaseBoard | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json }]
+[2026-02-25T05:17:32.093914800Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-Item 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion' }]
+[2026-02-25T05:17:33.331059700Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-MpComputerStatus }]
+[2026-02-25T05:17:35.242483300Z][com.docker.diagnose.exe] Gathering driverquery /FO CSV (timeout 30s) took 6.110987s
+[2026-02-25T05:17:35.244031100Z][com.docker.diagnose.exe] Gathering Get-CimInstance win32_logicaldisk (timeout 0s)
+[2026-02-25T05:17:35.269663000Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-CimInstance win32_logicaldisk }]
+[2026-02-25T05:17:35.338400000Z][com.docker.diagnose.exe][W] tasklist /V (timeout 0s) -> context deadline exceeded
+[2026-02-25T05:17:35.344911900Z][com.docker.diagnose.exe] Gathering tasklist /V (timeout 0s) took 15.0277588s
+[2026-02-25T05:17:35.344911900Z][com.docker.diagnose.exe] Gathering Get-EventLog -LogName Application -Source DockerService | ConvertTo-Csv (timeout 45s)
+[2026-02-25T05:17:35.355874500Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-EventLog -LogName Application -Source DockerService | ConvertTo-Csv }]
+[2026-02-25T05:17:37.072818100Z][com.docker.diagnose.exe] Gathering Get-CimInstance win32_logicaldisk (timeout 0s) took 1.8276894s
+[2026-02-25T05:17:37.073493600Z][com.docker.diagnose.exe] Gathering C:\Windows\System32\winevt\Logs\System.evtx
+[2026-02-25T05:17:37.074834100Z][com.docker.diagnose.exe] Gathering: C:\Windows\System32\winevt\Logs\System.evtx
+[2026-02-25T05:17:37.075514500Z][com.docker.diagnose.exe][W] C:\Windows\System32\winevt\Logs\System.evtxopen C:\Windows\System32\winevt\Logs\System.evtx: Access is denied.
+[2026-02-25T05:17:37.076570200Z][com.docker.diagnose.exe] Gathering C:\Windows\System32\winevt\Logs\System.evtx took 1.7361ms
+[2026-02-25T05:17:37.077999100Z][com.docker.diagnose.exe] Gathering (Get-ItemProperty 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion' -Name UBR).UBR (timeout 0s)
+[2026-02-25T05:17:37.084492900Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ (Get-ItemProperty 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion' -Name UBR).UBR }]
+[2026-02-25T05:17:38.396330700Z][com.docker.diagnose.exe] Gathering (Get-ItemProperty 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion' -Name UBR).UBR (timeout 0s) took 1.3179843s
+[2026-02-25T05:17:38.398328400Z][com.docker.diagnose.exe] Gathering bcdedit /enum (timeout 0s)
+[2026-02-25T05:17:38.416914600Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ bcdedit /enum }]
+[2026-02-25T05:17:39.262143600Z][com.docker.diagnose.exe] Gathering Get-Hotfix | Select-Object -Property PSComputerName,Description,HotFixID,InstalledBy,@{Name='InstalledOn'; Expression={$_.InstalledOn.DateTime}} | ConvertTo-Json (timeout 0s) took 10.7040447s
+[2026-02-25T05:17:39.264281400Z][com.docker.diagnose.exe] Gathering Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control -Name SystemStartOptions (timeout 0s)
+[2026-02-25T05:17:39.270620200Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control -Name SystemStartOptions }]
+[2026-02-25T05:17:39.413386500Z][com.docker.diagnose.exe] Gathering bcdedit /enum (timeout 0s) took 1.0053591s
+[2026-02-25T05:17:39.416846800Z][com.docker.diagnose.exe] Gathering Get-ChildItem \\.\pipe\ (timeout 0s)
+[2026-02-25T05:17:39.433007700Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-ChildItem \\.\pipe\ }]
+[2026-02-25T05:17:40.372488900Z][com.docker.diagnose.exe] Gathering Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control -Name SystemStartOptions (timeout 0s) took 1.1075335s
+[2026-02-25T05:17:40.373771500Z][com.docker.diagnose.exe] Gathering WinEvent
+[2026-02-25T05:17:40.396961200Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ $lst = (Get-Date).AddHours(-24); $lns = "Microsoft-Windows-Hyper-V*"; $ps = "Microsoft-Windows-Hyper-V-*"; $ll = 8,7,6,5,4,3,2,1,0; Get-WinEvent -FilterHashtable @{Logname=$lns; StartTime=$lst; Level=$ll; ProviderName=$ps} -ErrorAction Ignore |  ConvertTo-Csv }]
+[2026-02-25T05:17:40.447917000Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ $PSVersionTable }]
+[2026-02-25T05:17:41.360134800Z][com.docker.diagnose.exe] Gathering system took 22.0568956s
+[2026-02-25T05:17:41.360894900Z][com.docker.diagnose.exe] Gathering ipconfig /allcompartments /all (timeout 0s)
+[2026-02-25T05:17:41.388047400Z][com.docker.diagnose.exe] Executing: [ipconfig /allcompartments /all]
+[2026-02-25T05:17:41.567603400Z][com.docker.diagnose.exe] Gathering ipconfig /allcompartments /all (timeout 0s) took 205.3432ms
+[2026-02-25T05:17:41.568353500Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetIPAddress | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:41.575200900Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetTCPIP; Get-NetIPAddress | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json }]
+[2026-02-25T05:17:45.921365700Z][com.docker.diagnose.exe] Gathering WinEvent took 5.5468899s
+[2026-02-25T05:17:45.922057200Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetIPInterface | FL * (timeout 0s)
+[2026-02-25T05:17:45.928381100Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetTCPIP; Get-NetIPInterface | FL * }]
+[2026-02-25T05:17:48.546348800Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetIPAddress | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json (timeout 0s) took 6.9768502s
+[2026-02-25T05:17:48.548010900Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetIPInterface | Select-Object -ExcludeProperty Cim* -Property *| ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:48.568122200Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetTCPIP; Get-NetIPInterface | Select-Object -ExcludeProperty Cim* -Property *| ConvertTo-Json }]
+[2026-02-25T05:17:53.986039000Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetIPInterface | FL * (timeout 0s) took 8.0633289s
+[2026-02-25T05:17:53.987279000Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNat | FL * (timeout 0s)
+[2026-02-25T05:17:54.000342300Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetNat; Get-NetNat | FL * }]
+[2026-02-25T05:17:54.328755100Z][com.docker.diagnose.exe] Gathering Get-ChildItem \\.\pipe\ (timeout 0s) took 14.9107798s
+[2026-02-25T05:17:54.329751000Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNat | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:54.340955300Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetNat; Get-NetNat | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json }]
+[2026-02-25T05:17:56.430047600Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetIPInterface | Select-Object -ExcludeProperty Cim* -Property *| ConvertTo-Json (timeout 0s) took 7.8813263s
+[2026-02-25T05:17:56.430739600Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNatStaticMapping | FL * (timeout 0s)
+[2026-02-25T05:17:56.437783700Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetNat; Get-NetNatStaticMapping | FL * }]
+[2026-02-25T05:17:56.709699500Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNat | FL * (timeout 0s) took 2.7217769s
+[2026-02-25T05:17:56.711629300Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNatStaticMapping | Select-Object -ExcludeProperty Cim* -Property *| ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:56.718385100Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetNat; Get-NetNatStaticMapping | Select-Object -ExcludeProperty Cim* -Property *| ConvertTo-Json }]
+[2026-02-25T05:17:57.015827500Z][com.docker.diagnose.exe] Gathering Get-EventLog -LogName Application -Source DockerService | ConvertTo-Csv (timeout 45s) took 21.6681512s
+[2026-02-25T05:17:57.016440500Z][com.docker.diagnose.exe] Gathering Import-Module NetConnection; Get-NetConnectionProfile | FL * (timeout 0s)
+[2026-02-25T05:17:57.025631900Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetConnection; Get-NetConnectionProfile | FL * }]
+[2026-02-25T05:17:57.090289600Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNat | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json (timeout 0s) took 2.7605212s
+[2026-02-25T05:17:57.092073800Z][com.docker.diagnose.exe] Gathering Import-Module NetConnection; Get-NetConnectionProfile | Select-Object -ExcludeProperty Cim* -Property | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:57.109842700Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetConnection; Get-NetConnectionProfile | Select-Object -ExcludeProperty Cim* -Property | ConvertTo-Json }]
+[2026-02-25T05:17:59.217594300Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNatStaticMapping | FL * (timeout 0s) took 2.7862329s
+[2026-02-25T05:17:59.219062000Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetRoute | FL * (timeout 0s)
+[2026-02-25T05:17:59.234344200Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetTCPIP; Get-NetRoute | FL * }]
+[2026-02-25T05:17:59.370554900Z][com.docker.diagnose.exe] Gathering Import-Module NetConnection; Get-NetConnectionProfile | FL * (timeout 0s) took 2.352794s
+[2026-02-25T05:17:59.371760500Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetRoute | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:17:59.387013600Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module NetTCPIP; Get-NetRoute | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json }]
+[2026-02-25T05:17:59.484542100Z][com.docker.diagnose.exe] Gathering Import-Module NetConnection; Get-NetConnectionProfile | Select-Object -ExcludeProperty Cim* -Property | ConvertTo-Json (timeout 0s) took 2.3915968s
+[2026-02-25T05:17:59.485891100Z][com.docker.diagnose.exe] Gathering C:\WINDOWS\System32\drivers\etc\hosts
+[2026-02-25T05:17:59.486961200Z][com.docker.diagnose.exe] Gathering: C:\WINDOWS\System32\drivers\etc\hosts
+[2026-02-25T05:17:59.490156900Z][com.docker.diagnose.exe] Gathering C:\WINDOWS\System32\drivers\etc\hosts took 3.9326ms
+[2026-02-25T05:17:59.490586400Z][com.docker.diagnose.exe] Gathering nslookup localhost (timeout 0s)
+[2026-02-25T05:17:59.505460500Z][com.docker.diagnose.exe] Executing: [nslookup localhost]
+[2026-02-25T05:17:59.674584800Z][com.docker.diagnose.exe] Gathering nslookup localhost (timeout 0s) took 183.51ms
+[2026-02-25T05:17:59.674584800Z][com.docker.diagnose.exe] Gathering nslookup www.google.com (timeout 0s)
+[2026-02-25T05:17:59.677712000Z][com.docker.diagnose.exe] Gathering Import-Module NetNat; Get-NetNatStaticMapping | Select-Object -ExcludeProperty Cim* -Property *| ConvertTo-Json (timeout 0s) took 2.9653934s
+[2026-02-25T05:17:59.679058700Z][com.docker.diagnose.exe] Gathering Get-CimInstance Win32_networkadapterconfiguration | ? { $_.DefaultIPGateway } | fl * (timeout 0s)
+[2026-02-25T05:17:59.680356100Z][com.docker.diagnose.exe] Executing: [nslookup www.google.com]
+[2026-02-25T05:17:59.694994000Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-CimInstance Win32_networkadapterconfiguration | ? { $_.DefaultIPGateway } | fl * }]
+[2026-02-25T05:17:59.829240600Z][com.docker.diagnose.exe] Gathering nslookup www.google.com (timeout 0s) took 153.2298ms
+[2026-02-25T05:17:59.831284300Z][com.docker.diagnose.exe] Gathering Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' (timeout 0s)
+[2026-02-25T05:17:59.840737400Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' }]
+[2026-02-25T05:18:00.943089600Z][com.docker.diagnose.exe] Gathering Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' (timeout 0s) took 1.1110657s
+[2026-02-25T05:18:00.943792700Z][com.docker.diagnose.exe] Gathering netstat -rs (timeout 0s)
+[2026-02-25T05:18:00.953113600Z][com.docker.diagnose.exe] Executing: [netstat -rs]
+[2026-02-25T05:18:01.562136400Z][com.docker.diagnose.exe] Gathering netstat -rs (timeout 0s) took 617.6754ms
+[2026-02-25T05:18:01.563018300Z][com.docker.diagnose.exe] Gathering netstat -ano (timeout 0s)
+[2026-02-25T05:18:01.573212800Z][com.docker.diagnose.exe] Executing: [netstat -ano]
+[2026-02-25T05:18:01.705367500Z][com.docker.diagnose.exe] Gathering netstat -ano (timeout 0s) took 141.2336ms
+[2026-02-25T05:18:01.706726800Z][com.docker.diagnose.exe] Gathering netsh interface ipv4 show excludedportrange protocol=tcp (timeout 0s)
+[2026-02-25T05:18:01.716759600Z][com.docker.diagnose.exe] Executing: [netsh interface ipv4 show excludedportrange protocol=tcp]
+[2026-02-25T05:18:02.054734500Z][com.docker.diagnose.exe] Gathering netsh interface ipv4 show excludedportrange protocol=tcp (timeout 0s) took 347.3015ms
+[2026-02-25T05:18:02.056128400Z][com.docker.diagnose.exe] Gathering Import-Module Hyper-V; Get-VMSwitch -ComputerName . | FL * (timeout 1m0s)
+[2026-02-25T05:18:02.074243200Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module Hyper-V; Get-VMSwitch -ComputerName . | FL * }]
+[2026-02-25T05:18:02.428489800Z][com.docker.diagnose.exe] Gathering Get-CimInstance Win32_networkadapterconfiguration | ? { $_.DefaultIPGateway } | fl * (timeout 0s) took 2.7481164s
+[2026-02-25T05:18:02.429139300Z][com.docker.diagnose.exe] Gathering Import-Module Hyper-V; Get-VMSwitch -ComputerName . | ConvertTo-Json -Depth 2 (timeout 1m0s)
+[2026-02-25T05:18:02.434078100Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Import-Module Hyper-V; Get-VMSwitch -ComputerName . | ConvertTo-Json -Depth 2 }]
+[2026-02-25T05:18:03.973988300Z][com.docker.diagnose.exe] Gathering Import-Module Hyper-V; Get-VMSwitch -ComputerName . | FL * (timeout 1m0s) took 1.9170843s
+[2026-02-25T05:18:03.975321600Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/version
+[2026-02-25T05:18:03.975321600Z][com.docker.diagnose.exe] HTTP GET: localhost /v1.44/version
+[2026-02-25T05:18:03.975944200Z][com.docker.diagnose.exe][W] Get "http://localhost/v1.44/version": open \\.\pipe\dockerDesktopEngine: The system cannot find the file specified.
+[2026-02-25T05:18:03.977225200Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/version took 1.9036ms
+[2026-02-25T05:18:03.977921700Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/info
+[2026-02-25T05:18:03.978539300Z][com.docker.diagnose.exe] HTTP GET: localhost /v1.44/info
+[2026-02-25T05:18:03.979213300Z][com.docker.diagnose.exe][W] Get "http://localhost/v1.44/info": open \\.\pipe\dockerDesktopEngine: The system cannot find the file specified.
+[2026-02-25T05:18:03.979846800Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/info took 1.3075ms
+[2026-02-25T05:18:03.979846800Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/containers/json?all=1
+[2026-02-25T05:18:03.980508600Z][com.docker.diagnose.exe] HTTP GET: localhost /v1.44/containers/json?all=1
+[2026-02-25T05:18:03.981761100Z][com.docker.diagnose.exe][W] Get "http://localhost/v1.44/containers/json?all=1": open \\.\pipe\dockerDesktopEngine: The system cannot find the file specified.
+[2026-02-25T05:18:03.982369100Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/containers/json?all=1 took 1.8605ms
+[2026-02-25T05:18:03.982973500Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/nodes
+[2026-02-25T05:18:03.983640800Z][com.docker.diagnose.exe] HTTP GET: localhost /v1.44/nodes
+[2026-02-25T05:18:03.984252800Z][com.docker.diagnose.exe][W] Get "http://localhost/v1.44/nodes": open \\.\pipe\dockerDesktopEngine: The system cannot find the file specified.
+[2026-02-25T05:18:03.985488400Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/nodes took 1.8475ms
+[2026-02-25T05:18:03.986719900Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/services
+[2026-02-25T05:18:03.987541300Z][com.docker.diagnose.exe] HTTP GET: localhost /v1.44/services
+[2026-02-25T05:18:03.988885000Z][com.docker.diagnose.exe][W] Get "http://localhost/v1.44/services": open \\.\pipe\dockerDesktopEngine: The system cannot find the file specified.
+[2026-02-25T05:18:03.989603500Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/services took 2.0622ms
+[2026-02-25T05:18:03.990281700Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/networks
+[2026-02-25T05:18:03.991658500Z][com.docker.diagnose.exe] HTTP GET: localhost /v1.44/networks
+[2026-02-25T05:18:03.992367300Z][com.docker.diagnose.exe][W] Get "http://localhost/v1.44/networks": open \\.\pipe\dockerDesktopEngine: The system cannot find the file specified.
+[2026-02-25T05:18:03.999841600Z][com.docker.diagnose.exe] Gathering HTTP GET localhost /v1.44/networks took 8.1831ms
+[2026-02-25T05:18:04.000428900Z][com.docker.diagnose.exe] Gathering Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\Containers' | Select-Object -ExcludeProperty PS* | ConvertTo-Json (timeout 0s)
+[2026-02-25T05:18:04.005681600Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\Containers' | Select-Object -ExcludeProperty PS* | ConvertTo-Json }]
+[2026-02-25T05:18:04.475903400Z][com.docker.diagnose.exe] Gathering Import-Module Hyper-V; Get-VMSwitch -ComputerName . | ConvertTo-Json -Depth 2 (timeout 1m0s) took 2.0460007s
+[2026-02-25T05:18:04.479946200Z][com.docker.diagnose.exe] Gathering Get-ChildItem HKLM:\SYSTEM\CurrentControlSet\Services\hns -Recurse (timeout 0s)
+[2026-02-25T05:18:04.488278100Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-ChildItem HKLM:\SYSTEM\CurrentControlSet\Services\hns -Recurse }]
+[2026-02-25T05:18:05.739041300Z][com.docker.diagnose.exe] Gathering Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\Containers' | Select-Object -ExcludeProperty PS* | ConvertTo-Json (timeout 0s) took 1.7372331s
+[2026-02-25T05:18:05.740298600Z][com.docker.diagnose.exe] Gathering hcsdiag list (timeout 0s)
+[2026-02-25T05:18:05.759708300Z][com.docker.diagnose.exe] Executing: [hcsdiag list]
+[2026-02-25T05:18:05.913584400Z][com.docker.diagnose.exe][W] [hcsdiag list] exit status 0x8037011b
+[2026-02-25T05:18:05.915370000Z][com.docker.diagnose.exe] Gathering hcsdiag list (timeout 0s) took 174.2091ms
+[2026-02-25T05:18:05.916747000Z][com.docker.diagnose.exe] Gathering hnsdiag list all (timeout 0s)
+[2026-02-25T05:18:05.924411800Z][com.docker.diagnose.exe] Executing: [hnsdiag list all]
+[2026-02-25T05:18:06.036102000Z][com.docker.diagnose.exe][W] [hnsdiag list all] exit status 0x80070005
+[2026-02-25T05:18:06.039902000Z][com.docker.diagnose.exe] Gathering hnsdiag list all (timeout 0s) took 122.431ms
+[2026-02-25T05:18:06.041440600Z][com.docker.diagnose.exe] Gathering C:\Windows\System32\winevt\Logs\Microsoft-Windows-Host-Network-Service-Admin.evtx
+[2026-02-25T05:18:06.042744700Z][com.docker.diagnose.exe] Gathering: C:\Windows\System32\winevt\Logs\Microsoft-Windows-Host-Network-Service-Admin.evtx
+[2026-02-25T05:18:06.044173400Z][com.docker.diagnose.exe][W] C:\Windows\System32\winevt\Logs\Microsoft-Windows-Host-Network-Service-Admin.evtxopen C:\Windows\System32\winevt\Logs\Microsoft-Windows-Host-Network-Service-Admin.evtx: Access is denied.
+[2026-02-25T05:18:06.045528600Z][com.docker.diagnose.exe] Gathering C:\Windows\System32\winevt\Logs\Microsoft-Windows-Host-Network-Service-Admin.evtx took 3.4472ms
+[2026-02-25T05:18:06.046186400Z][com.docker.diagnose.exe] Gathering WinEvent
+[2026-02-25T05:18:06.068047400Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ $lst = (Get-Date).AddHours(-24); $lns = "Microsoft-Windows-Containers-Wcifs/Operational","Microsoft-Windows-Containers-Wcnfs/Operational","Microsoft-Windows-Hyper-V*","Application"; $ps = "Docker*","Microsoft-Windows-Hyper-V-*"; $ll = 8,7,6,5,4,3,2,1,0; Get-WinEvent -FilterHashtable @{Logname=$lns; StartTime=$lst; Level=$ll; ProviderName=$ps} -ErrorAction Ignore |  ConvertTo-Csv }]
+[2026-02-25T05:18:06.647105400Z][com.docker.diagnose.exe] Gathering Get-ChildItem HKLM:\SYSTEM\CurrentControlSet\Services\hns -Recurse (timeout 0s) took 2.1663457s
+[2026-02-25T05:18:06.648318200Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\windows-daemon.json
+[2026-02-25T05:18:06.650110700Z][com.docker.diagnose.exe] Gathering: <HOME>\.docker\windows-daemon.json
+[2026-02-25T05:18:06.653807700Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\windows-daemon.json took 5.4894ms
+[2026-02-25T05:18:06.655053400Z][com.docker.diagnose.exe] Gathering C:\ProgramData\Microsoft\Windows\HNS\HNS.data
+[2026-02-25T05:18:06.655672200Z][com.docker.diagnose.exe][W] C:\ProgramData\Microsoft\Windows\HNS\HNS.data not included
+[2026-02-25T05:18:06.656313300Z][com.docker.diagnose.exe] Gathering C:\ProgramData\Microsoft\Windows\HNS\HNS.data took 1.2599ms
+[2026-02-25T05:18:06.656994100Z][com.docker.diagnose.exe] Gathering docker context ls (timeout 5s)
+[2026-02-25T05:18:06.663428300Z][com.docker.diagnose.exe] Executing: [docker context ls]
+[2026-02-25T05:18:06.975400100Z][com.docker.diagnose.exe] Gathering docker context ls (timeout 5s) took 317.7519ms
+[2026-02-25T05:18:06.976858900Z][com.docker.diagnose.exe] Gathering docker context inspect default (timeout 5s)
+[2026-02-25T05:18:07.006041700Z][com.docker.diagnose.exe] Executing: [docker context inspect default]
+[2026-02-25T05:18:07.260055500Z][com.docker.diagnose.exe] Gathering docker context inspect default (timeout 5s) took 282.56ms
+[2026-02-25T05:18:07.260698900Z][com.docker.diagnose.exe] Gathering docker context inspect desktop-linux (timeout 5s)
+[2026-02-25T05:18:07.273335100Z][com.docker.diagnose.exe] Executing: [docker context inspect desktop-linux]
+[2026-02-25T05:18:07.589354500Z][com.docker.diagnose.exe] Gathering docker context inspect desktop-linux (timeout 5s) took 327.9996ms
+[2026-02-25T05:18:07.591003500Z][com.docker.diagnose.exe] Gathering docker context inspect desktop-windows (timeout 5s)
+[2026-02-25T05:18:07.627920200Z][com.docker.diagnose.exe] Executing: [docker context inspect desktop-windows]
+[2026-02-25T05:18:07.907123900Z][com.docker.diagnose.exe][W] [docker context inspect desktop-windows] exit status 1
+[2026-02-25T05:18:07.912194700Z][com.docker.diagnose.exe] Gathering docker context inspect desktop-windows (timeout 5s) took 320.4787ms
+[2026-02-25T05:18:07.914912200Z][com.docker.diagnose.exe] Gathering docker info (timeout 5s)
+[2026-02-25T05:18:07.929465300Z][com.docker.diagnose.exe] Executing: [docker info]
+[2026-02-25T05:18:07.945818300Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetRoute | Select-Object -ExcludeProperty Cim* -Property * | ConvertTo-Json (timeout 0s) took 8.5735197s
+[2026-02-25T05:18:07.950120800Z][com.docker.diagnose.exe] Gathering {
+  "id": "93D78BBD-B731-4261-AE13-0FB92E3A6252",
+  "date": "2026-02-25 05:17:18.8048962 +0000 UTC"
+}
+[2026-02-25T05:18:08.079444900Z][com.docker.diagnose.exe] Gathering Import-Module NetTCPIP; Get-NetRoute | FL * (timeout 0s) took 8.8596223s
+[2026-02-25T05:18:08.080164900Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe pods
+[2026-02-25T05:18:08.081928500Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.082907800Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe pods took 1.277ms
+[2026-02-25T05:18:08.083554200Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe daemonset
+[2026-02-25T05:18:08.084843500Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.086010600Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe daemonset took 1.7753ms
+[2026-02-25T05:18:08.087066900Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe replicaset
+[2026-02-25T05:18:08.087797900Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.088479200Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe replicaset took 681.3µs
+[2026-02-25T05:18:08.090231500Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe deployments
+[2026-02-25T05:18:08.091468100Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.092146300Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace docker describe deployments took 1.2893ms
+[2026-02-25T05:18:08.093494900Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe pods
+[2026-02-25T05:18:08.094581600Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.095224700Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe pods took 1.0909ms
+[2026-02-25T05:18:08.095862300Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe daemonset
+[2026-02-25T05:18:08.097803000Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.098468200Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe daemonset took 1.2493ms
+[2026-02-25T05:18:08.099791100Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe replicaset
+[2026-02-25T05:18:08.102372000Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.103024000Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe replicaset took 1.8552ms
+[2026-02-25T05:18:08.103655100Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe deployments
+[2026-02-25T05:18:08.105471500Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:08.106102800Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace kube-system describe deployments took 1.8193ms
+[2026-02-25T05:18:08.106755100Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\log\vm/**
+[2026-02-25T05:18:08.107383300Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Local\Docker\log\vm
+[2026-02-25T05:18:08.111839200Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\vm\init.log
+[2026-02-25T05:18:08.123624000Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.0
+[2026-02-25T05:18:08.138887700Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.1
+[2026-02-25T05:18:08.170523500Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.2
+[2026-02-25T05:18:08.506719100Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.3
+[2026-02-25T05:18:08.659139500Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.4
+[2026-02-25T05:18:08.731696900Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.5
+[2026-02-25T05:18:08.777390000Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.6
+[2026-02-25T05:18:08.850109200Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.7
+[2026-02-25T05:18:08.880170100Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\vm\init.log.8
+[2026-02-25T05:18:10.309883800Z][com.docker.diagnose.exe][W] [docker info] exit status 1
+[2026-02-25T05:18:10.325684300Z][com.docker.diagnose.exe] Gathering docker info (timeout 5s) took 2.410167s
+[2026-02-25T05:18:10.326309800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\log\host/**
+[2026-02-25T05:18:10.327628100Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Local\Docker\log\host
+[2026-02-25T05:18:10.397615900Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Installer.exe.log
+[2026-02-25T05:18:10.410368800Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Updater-211793 (213807).exe.log
+[2026-02-25T05:18:10.503863500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Updater-211793 (216728).exe.log
+[2026-02-25T05:18:10.508469100Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Updater-213807 (214940).exe.log
+[2026-02-25T05:18:10.512983400Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Updater-214940 (216728).exe.log
+[2026-02-25T05:18:10.521263900Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Updater-216728 (217644).exe.log
+[2026-02-25T05:18:10.531121300Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop Updater-217644 (218372).exe.log
+[2026-02-25T05:18:10.545993100Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop.exe.log
+[2026-02-25T05:18:10.563798100Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop.exe.stderr.log
+[2026-02-25T05:18:10.586294800Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker Desktop.exe.stdout.log
+[2026-02-25T05:18:10.603839700Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\Docker%20Desktop%20Installer.exe.log
+[2026-02-25T05:18:10.610728400Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log
+[2026-02-25T05:18:10.625688500Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.0
+[2026-02-25T05:18:10.639531900Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.1
+[2026-02-25T05:18:10.662339300Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.2
+[2026-02-25T05:18:10.677192800Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.3
+[2026-02-25T05:18:10.683932300Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.4
+[2026-02-25T05:18:10.702679100Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.5
+[2026-02-25T05:18:10.719340000Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.6
+[2026-02-25T05:18:10.735446800Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.7
+[2026-02-25T05:18:10.763172200Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\com.docker.backend.exe.log.8
+[2026-02-25T05:18:11.330984000Z][com.docker.diagnose.exe] Gathering {
+  "id": "93D78BBD-B731-4261-AE13-0FB92E3A6252",
+  "date": "2026-02-25 05:17:18.8048962 +0000 UTC"
+}
+ took 3.3793825s
+[2026-02-25T05:18:11.331638100Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\backend.error.json
+[2026-02-25T05:18:11.332288900Z][com.docker.diagnose.exe][W] <HOME>\AppData\Local\Docker\backend.error.json not included
+[2026-02-25T05:18:11.332983800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\backend.error.json took 694.9µs
+[2026-02-25T05:18:11.333636300Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\installer.error.json
+[2026-02-25T05:18:11.335256900Z][com.docker.diagnose.exe][W] <HOME>\AppData\Local\Docker\installer.error.json not included
+[2026-02-25T05:18:11.335954400Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\installer.error.json took 1.1109ms
+[2026-02-25T05:18:11.336632000Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\hypervisor.error.json
+[2026-02-25T05:18:11.337245800Z][com.docker.diagnose.exe][W] <HOME>\AppData\Local\Docker\hypervisor.error.json not included
+[2026-02-25T05:18:11.337919700Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\hypervisor.error.json took 673.9µs
+[2026-02-25T05:18:11.338520900Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\features-overrides.json
+[2026-02-25T05:18:11.339240500Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\features-overrides.json
+[2026-02-25T05:18:11.340604300Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\features-overrides.json took 1.3638ms
+[2026-02-25T05:18:11.341293800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\unleash-repo-schema-v1-Docker Desktop.json
+[2026-02-25T05:18:11.342021700Z][com.docker.diagnose.exe][W] <HOME>\AppData\Roaming\Docker\unleash-repo-schema-v1-Docker Desktop.json not included
+[2026-02-25T05:18:11.342608800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\unleash-repo-schema-v1-Docker Desktop.json took 1.315ms
+[2026-02-25T05:18:11.344036700Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\registry.json
+[2026-02-25T05:18:11.348682500Z][com.docker.diagnose.exe][W] C:\ProgramData\DockerDesktop\registry.json not included
+[2026-02-25T05:18:11.351040000Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\registry.json took 6.3137ms
+[2026-02-25T05:18:11.351753500Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\access.json
+[2026-02-25T05:18:11.352411900Z][com.docker.diagnose.exe][W] C:\ProgramData\DockerDesktop\access.json not included
+[2026-02-25T05:18:11.353121700Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\access.json took 709.8µs
+[2026-02-25T05:18:11.353805400Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\admin-settings.json
+[2026-02-25T05:18:11.354475600Z][com.docker.diagnose.exe][W] C:\ProgramData\DockerDesktop\admin-settings.json not included
+[2026-02-25T05:18:11.355703200Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\admin-settings.json took 1.2276ms
+[2026-02-25T05:18:11.357155100Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\install-settings.json
+[2026-02-25T05:18:11.357934100Z][com.docker.diagnose.exe][W] C:\ProgramData\DockerDesktop\install-settings.json not included
+[2026-02-25T05:18:11.358611000Z][com.docker.diagnose.exe] Gathering C:\ProgramData\DockerDesktop\install-settings.json took 676.9µs
+[2026-02-25T05:18:11.360011000Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\registry-access-management-state.json
+[2026-02-25T05:18:11.360659700Z][com.docker.diagnose.exe][W] <HOME>\AppData\Roaming\Docker\registry-access-management-state.json not included
+[2026-02-25T05:18:11.362024800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\registry-access-management-state.json took 1.3651ms
+[2026-02-25T05:18:11.362658800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\auth-token-family-creation-time.txt
+[2026-02-25T05:18:11.363997800Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\auth-token-family-creation-time.txt
+[2026-02-25T05:18:11.366423200Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\auth-token-family-creation-time.txt took 3.0602ms
+[2026-02-25T05:18:11.367069400Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  version 
+[2026-02-25T05:18:11.368058300Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.368561100Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  version  took 808.6µs
+[2026-02-25T05:18:11.368980400Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  config get-contexts
+[2026-02-25T05:18:11.370223100Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.370892600Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  config get-contexts took 1.2621ms
+[2026-02-25T05:18:11.372141800Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  config current-context
+[2026-02-25T05:18:11.373434300Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.373434300Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  config current-context took 651.6µs
+[2026-02-25T05:18:11.374742200Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  get nodes
+[2026-02-25T05:18:11.376057100Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.376688300Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  get nodes took 1.3037ms
+[2026-02-25T05:18:11.377282300Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  get namespaces
+[2026-02-25T05:18:11.378246800Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.379214400Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  get namespaces took 1.5226ms
+[2026-02-25T05:18:11.379864200Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe nodes
+[2026-02-25T05:18:11.381419800Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.381419800Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe nodes took 805.3µs
+[2026-02-25T05:18:11.382442200Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe pods
+[2026-02-25T05:18:11.383662500Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.384251000Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe pods took 1.1702ms
+[2026-02-25T05:18:11.384920000Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  cluster-info dump
+[2026-02-25T05:18:11.386201400Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.386913500Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  cluster-info dump took 1.3396ms
+[2026-02-25T05:18:11.386913500Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe services
+[2026-02-25T05:18:11.388317700Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.389026500Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe services took 1.4618ms
+[2026-02-25T05:18:11.390177700Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe storageclass,pv,pvc
+[2026-02-25T05:18:11.392135600Z][com.docker.diagnose.exe] kubernetes is disabled
+[2026-02-25T05:18:11.392763700Z][com.docker.diagnose.exe] Gathering kubectl --context docker-desktop --namespace  describe storageclass,pv,pvc took 1.3133ms
+[2026-02-25T05:18:11.393893500Z][com.docker.diagnose.exe] Gathering docker logs -t -n10000 kind-registry-mirror (timeout 10s)
+[2026-02-25T05:18:11.414097400Z][com.docker.diagnose.exe] Executing: [docker logs -t -n10000 kind-registry-mirror]
+[2026-02-25T05:18:11.677074300Z][com.docker.diagnose.exe][W] [docker logs -t -n10000 kind-registry-mirror] exit status 1
+[2026-02-25T05:18:11.678975000Z][com.docker.diagnose.exe] Gathering docker logs -t -n10000 kind-registry-mirror (timeout 10s) took 284.3594ms
+[2026-02-25T05:18:11.679573100Z][com.docker.diagnose.exe] Gathering docker logs -t -n10000 desktop-control-plane (timeout 10s)
+[2026-02-25T05:18:11.708423400Z][com.docker.diagnose.exe] Executing: [docker logs -t -n10000 desktop-control-plane]
+[2026-02-25T05:18:12.005542900Z][com.docker.diagnose.exe][W] [docker logs -t -n10000 desktop-control-plane] exit status 1
+[2026-02-25T05:18:12.008054600Z][com.docker.diagnose.exe] Gathering docker logs -t -n10000 desktop-control-plane (timeout 10s) took 327.8302ms
+[2026-02-25T05:18:12.008773800Z][com.docker.diagnose.exe] Gathering docker ps -a -flabel=io.kubernetes.pod.namespace=kube-system (timeout 0s)
+[2026-02-25T05:18:12.016320200Z][com.docker.diagnose.exe] Executing: [docker ps -a -flabel=io.kubernetes.pod.namespace=kube-system]
+[2026-02-25T05:18:12.281411900Z][com.docker.diagnose.exe][W] [docker ps -a -flabel=io.kubernetes.pod.namespace=kube-system] exit status 1
+[2026-02-25T05:18:12.284525800Z][com.docker.diagnose.exe] Gathering docker ps -a -flabel=io.kubernetes.pod.namespace=kube-system (timeout 0s) took 275.11ms
+[2026-02-25T05:18:12.285723200Z][com.docker.diagnose.exe] Gathering appLogs
+[2026-02-25T05:18:12.292081000Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-cli-log-admin.10.txt
+[2026-02-25T05:18:12.304648600Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-cli-log-admin.11.txt
+[2026-02-25T05:18:12.313683200Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-cli-log-admin.7.txt
+[2026-02-25T05:18:12.323467500Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-cli-log-admin.8.txt
+[2026-02-25T05:18:12.332329500Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-cli-log-admin.9.txt
+[2026-02-25T05:18:12.342350200Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-cli-log-admin.txt
+[2026-02-25T05:18:12.355386000Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-log-admin.10.txt
+[2026-02-25T05:18:12.384891400Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-log-admin.6.txt
+[2026-02-25T05:18:12.538540300Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-log-admin.7.txt
+[2026-02-25T05:18:12.550961600Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-log-admin.8.txt
+[2026-02-25T05:18:12.578175200Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-log-admin.9.txt
+[2026-02-25T05:18:12.605203400Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\install-log-admin.txt
+[2026-02-25T05:18:12.632345100Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\service.0.txt
+[2026-02-25T05:18:12.646640000Z][com.docker.diagnose.exe] Gathering: C:\ProgramData\DockerDesktop\service.txt
+[2026-02-25T05:18:12.671586200Z][com.docker.diagnose.exe] Gathering appLogs took 385.8605ms
+[2026-02-25T05:18:12.672257900Z][com.docker.diagnose.exe] Gathering appACLs
+[2026-02-25T05:18:13.631850600Z][com.docker.diagnose.exe] Gathering WinEvent took 7.5841948s
+[2026-02-25T05:18:13.631850600Z][com.docker.diagnose.exe] Gathering pipeSDDLs
+[2026-02-25T05:18:13.648914700Z][com.docker.diagnose.exe] Gathering pipeSDDLs took 14.9982ms
+[2026-02-25T05:18:13.649441900Z][com.docker.diagnose.exe] Gathering Get-EventLog -LogName Application -Source docker | ConvertTo-Csv (timeout 45s)
+[2026-02-25T05:18:13.656392800Z][com.docker.diagnose.exe] Executing: [powershell -NoProfile -Command &{ Get-EventLog -LogName Application -Source docker | ConvertTo-Csv }]
+[2026-02-25T05:18:14.315831100Z][com.docker.diagnose.exe] Gathering appACLs took 1.642877s
+[2026-02-25T05:18:14.323783800Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker/**
+[2026-02-25T05:18:14.331894600Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker
+[2026-02-25T05:18:14.335706400Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\.trackid
+[2026-02-25T05:18:14.340145800Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\analyticsmonitor.dat
+[2026-02-25T05:18:14.347896100Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\auth-token-family-creation-time.txt
+[2026-02-25T05:18:14.350352000Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\features-overrides.json
+[2026-02-25T05:18:14.352456400Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\locked-directories
+[2026-02-25T05:18:14.355882600Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\login-info.json
+[2026-02-25T05:18:14.363101900Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\marlin.dat
+[2026-02-25T05:18:14.376094600Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\reports.log
+[2026-02-25T05:18:14.381234900Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\settings-store.json
+[2026-02-25T05:18:14.386458700Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\unleash-v2-docker-desktop.json
+[2026-02-25T05:18:14.441471900Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\wc.dat
+[2026-02-25T05:18:14.460750900Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker/** took 136.3223ms
+[2026-02-25T05:18:14.462271500Z][com.docker.diagnose.exe] Gathering ls <HOME>\.docker <HOME>\AppData\Roaming\Docker C:\Program Files\Docker\Docker <HOME>\AppData\Local\Docker C:\ProgramData\DockerDesktop C:\Program Files\Docker\cli-plugins
+[2026-02-25T05:18:18.203473000Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\log\vm/** took 10.0960261s
+[2026-02-25T05:18:18.205011400Z][com.docker.diagnose.exe] Gathering Redacted <HOME>\.docker\config.json
+[2026-02-25T05:18:18.206491400Z][com.docker.diagnose.exe] Gathering: <HOME>\.docker\config.json
+[2026-02-25T05:18:18.210536500Z][com.docker.diagnose.exe] Gathering Redacted <HOME>\.docker\config.json took 5.525ms
+[2026-02-25T05:18:18.211542700Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\daemon.json
+[2026-02-25T05:18:18.212547600Z][com.docker.diagnose.exe] Gathering: <HOME>\.docker\daemon.json
+[2026-02-25T05:18:18.214533400Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\daemon.json took 2.9907ms
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\settings-store.json
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering: <HOME>\AppData\Roaming\Docker\settings-store.json
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Roaming\Docker\settings-store.json took 0s
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\canary.json
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe][W] <HOME>\.docker\canary.json not included
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\canary.json took 0s
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\features.json
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe][W] <HOME>\.docker\features.json not included
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering <HOME>\.docker\features.json took 0s
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe] Gathering C:\ProgramData\Docker\panic.log
+[2026-02-25T05:18:18.215878100Z][com.docker.diagnose.exe][W] C:\ProgramData\Docker\panic.log not included
+[2026-02-25T05:18:18.226642500Z][com.docker.diagnose.exe] Gathering C:\ProgramData\Docker\panic.log took 10.7643ms
+[2026-02-25T05:18:18.226642500Z][com.docker.diagnose.exe] Gathering <HOME>\.wslconfig
+[2026-02-25T05:18:18.226642500Z][com.docker.diagnose.exe][W] <HOME>\.wslconfig not included
+[2026-02-25T05:18:18.226642500Z][com.docker.diagnose.exe] Gathering <HOME>\.wslconfig took 0s
+[2026-02-25T05:18:18.226642500Z][com.docker.diagnose.exe] Gathering mutagenGatherer
+[2026-02-25T05:18:19.843652300Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\com.docker.build.log
+[2026-02-25T05:18:19.850209700Z][com.docker.diagnose.exe] Gathering mutagenGatherer took 1.623557s
+[2026-02-25T05:18:19.850209700Z][com.docker.diagnose.exe] Gathering wsl.exe --version (timeout 0s)
+[2026-02-25T05:18:19.867249400Z][com.docker.diagnose.exe] Executing: [wsl.exe --version]
+[2026-02-25T05:18:20.104409400Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\com.docker.diagnose.exe.log
+[2026-02-25T05:18:20.149412100Z][com.docker.diagnose.exe] Gathering wsl.exe --version (timeout 0s) took 297.7315ms
+[2026-02-25T05:18:20.150956600Z][com.docker.diagnose.exe] Gathering wsl.exe -l -v (timeout 0s)
+[2026-02-25T05:18:20.155841600Z][com.docker.diagnose.exe] Executing: [wsl.exe -l -v]
+[2026-02-25T05:18:20.389081900Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\docker-debug-plugin.log
+[2026-02-25T05:18:20.403903500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\docker-desktop.exe.log
+[2026-02-25T05:18:20.415654000Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\docker-desktop.exe.log.0
+[2026-02-25T05:18:20.423471200Z][com.docker.diagnose.exe] Gathering wsl.exe -l -v (timeout 0s) took 272.5129ms
+[2026-02-25T05:18:20.424203500Z][com.docker.diagnose.exe] Gathering wsl.exe --system dmesg (timeout 0s)
+[2026-02-25T05:18:20.425251100Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\docker-desktop.exe.log.1
+[2026-02-25T05:18:20.433651200Z][com.docker.diagnose.exe] Executing: [wsl.exe --system dmesg]
+[2026-02-25T05:18:22.374317900Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\docker-sandbox.log
+[2026-02-25T05:18:22.439135700Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-16.log
+[2026-02-25T05:18:22.566113500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-17.1.log
+[2026-02-25T05:18:29.366372000Z][com.docker.diagnose.exe] Gathering ls <HOME>\.docker <HOME>\AppData\Roaming\Docker C:\Program Files\Docker\Docker <HOME>\AppData\Local\Docker C:\ProgramData\DockerDesktop C:\Program Files\Docker\cli-plugins took 14.902132s
+[2026-02-25T05:18:29.369724200Z][com.docker.diagnose.exe] Gathering wsl.exe --system ps uax (timeout 0s)
+[2026-02-25T05:18:29.416707400Z][com.docker.diagnose.exe] Executing: [wsl.exe --system ps uax]
+[2026-02-25T05:18:33.855470100Z][com.docker.diagnose.exe] Gathering wsl.exe --system ps uax (timeout 0s) took 4.4836478s
+[2026-02-25T05:18:33.855470100Z][com.docker.diagnose.exe] Gathering wsl.exe --system free (timeout 0s)
+[2026-02-25T05:18:33.881232200Z][com.docker.diagnose.exe] Executing: [wsl.exe --system free]
+[2026-02-25T05:18:33.973707000Z][com.docker.diagnose.exe] Gathering wsl.exe --system dmesg (timeout 0s) took 13.5467786s
+[2026-02-25T05:18:33.979678000Z][com.docker.diagnose.exe] Gathering wsl.exe --system netstat -ntlp (timeout 0s)
+[2026-02-25T05:18:34.003154000Z][com.docker.diagnose.exe] Executing: [wsl.exe --system netstat -ntlp]
+[2026-02-25T05:18:35.370445200Z][com.docker.diagnose.exe] Gathering wsl.exe --system free (timeout 0s) took 1.5134227s
+[2026-02-25T05:18:35.375857300Z][com.docker.diagnose.exe] Gathering wsl.exe --system lsof (timeout 0s)
+[2026-02-25T05:18:35.385537600Z][com.docker.diagnose.exe] Executing: [wsl.exe --system lsof]
+[2026-02-25T05:18:36.212233500Z][com.docker.diagnose.exe][W] [wsl.exe --system netstat -ntlp] exit status 127
+[2026-02-25T05:18:36.229216200Z][com.docker.diagnose.exe] Gathering wsl.exe --system netstat -ntlp (timeout 0s) took 2.2461518s
+[2026-02-25T05:18:36.230712000Z][com.docker.diagnose.exe] Gathering wsl.exe --system cat /proc/cgroups (timeout 0s)
+[2026-02-25T05:18:36.306045500Z][com.docker.diagnose.exe] Executing: [wsl.exe --system cat /proc/cgroups]
+[2026-02-25T05:18:36.812980000Z][com.docker.diagnose.exe][W] [wsl.exe --system lsof] exit status 127
+[2026-02-25T05:18:36.824022000Z][com.docker.diagnose.exe] Gathering wsl.exe --system lsof (timeout 0s) took 1.4477629s
+[2026-02-25T05:18:36.824476200Z][com.docker.diagnose.exe] Gathering wsl.exe --system mount (timeout 0s)
+[2026-02-25T05:18:36.851275700Z][com.docker.diagnose.exe] Executing: [wsl.exe --system mount]
+[2026-02-25T05:18:37.668124500Z][com.docker.diagnose.exe] Gathering wsl.exe --system cat /proc/cgroups (timeout 0s) took 1.4343202s
+[2026-02-25T05:18:37.671184600Z][com.docker.diagnose.exe] Gathering wsl.exe --system cat /etc/wsl.conf (timeout 0s)
+[2026-02-25T05:18:37.704765700Z][com.docker.diagnose.exe] Executing: [wsl.exe --system cat /etc/wsl.conf]
+[2026-02-25T05:18:38.152850200Z][com.docker.diagnose.exe] Gathering wsl.exe --system mount (timeout 0s) took 1.3262799s
+[2026-02-25T05:18:38.155862000Z][com.docker.diagnose.exe] Gathering wsl.exe --system ls -lR /sys/fs/cgroup (timeout 0s)
+[2026-02-25T05:18:38.169101800Z][com.docker.diagnose.exe] Executing: [wsl.exe --system ls -lR /sys/fs/cgroup]
+[2026-02-25T05:18:38.872876100Z][com.docker.diagnose.exe] Gathering wsl.exe --system cat /etc/wsl.conf (timeout 0s) took 1.1993166s
+[2026-02-25T05:18:38.878767100Z][com.docker.diagnose.exe] Gathering wsl.exe --system bash -c for dev in /sys/block/sd*; do echo -n "\${dev} "; cat \${dev}/device/wwid ; done (timeout 0s)
+[2026-02-25T05:18:38.896808000Z][com.docker.diagnose.exe] Executing: [wsl.exe --system bash -c for dev in /sys/block/sd*; do echo -n "\${dev} "; cat \${dev}/device/wwid ; done]
+[2026-02-25T05:18:39.329661000Z][com.docker.diagnose.exe] Gathering wsl.exe --system ls -lR /sys/fs/cgroup (timeout 0s) took 1.1713269s
+[2026-02-25T05:18:39.330729200Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e cat /root/.docker/desktop/log/host/wsl-bootstrap.log (timeout 5s)
+[2026-02-25T05:18:39.350158600Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e cat /root/.docker/desktop/log/host/wsl-bootstrap.log]
+[2026-02-25T05:18:39.968930100Z][com.docker.diagnose.exe] Gathering wsl.exe --system bash -c for dev in /sys/block/sd*; do echo -n "\${dev} "; cat \${dev}/device/wwid ; done (timeout 0s) took 1.0872397s
+[2026-02-25T05:18:40.001036200Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e dmesg (timeout 5s)
+[2026-02-25T05:18:40.051789900Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e dmesg]
+[2026-02-25T05:18:41.153702000Z][com.docker.diagnose.exe][W] [wsl.exe -d docker-desktop -e cat /root/.docker/desktop/log/host/wsl-bootstrap.log] exit status 1
+[2026-02-25T05:18:41.156743700Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e cat /root/.docker/desktop/log/host/wsl-bootstrap.log (timeout 5s) took 1.8249643s
+[2026-02-25T05:18:41.157271300Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e ps uax (timeout 5s)
+[2026-02-25T05:18:41.180140400Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e ps uax]
+[2026-02-25T05:18:41.980786500Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e dmesg (timeout 5s) took 1.9617222s
+[2026-02-25T05:18:41.980786500Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e free (timeout 5s)
+[2026-02-25T05:18:42.002057700Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e free]
+[2026-02-25T05:18:42.361876000Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e ps uax (timeout 5s) took 1.1968445s
+[2026-02-25T05:18:42.367589000Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e netstat -ntlp (timeout 5s)
+[2026-02-25T05:18:42.444164000Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e netstat -ntlp]
+[2026-02-25T05:18:43.194958400Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e free (timeout 5s) took 1.2115643s
+[2026-02-25T05:18:43.196485500Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e lsof (timeout 5s)
+[2026-02-25T05:18:43.231634400Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e lsof]
+[2026-02-25T05:18:43.799546700Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e netstat -ntlp (timeout 5s) took 1.4310776s
+[2026-02-25T05:18:43.801858700Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e cat /proc/cgroups (timeout 5s)
+[2026-02-25T05:18:43.845931300Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e cat /proc/cgroups]
+[2026-02-25T05:18:44.381637400Z][com.docker.diagnose.exe] Gathering Get-EventLog -LogName Application -Source docker | ConvertTo-Csv (timeout 45s) took 30.7320018s
+[2026-02-25T05:18:44.382049600Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e mount (timeout 5s)
+[2026-02-25T05:18:44.400125200Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e mount]
+[2026-02-25T05:18:44.517658000Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e lsof (timeout 5s) took 1.3200742s
+[2026-02-25T05:18:44.519031400Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e cat /etc/wsl.conf (timeout 5s)
+[2026-02-25T05:18:44.560969600Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e cat /etc/wsl.conf]
+[2026-02-25T05:18:45.009774500Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e cat /proc/cgroups (timeout 5s) took 1.2046491s
+[2026-02-25T05:18:45.012738700Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e ls -lR /sys/fs/cgroup (timeout 5s)
+[2026-02-25T05:18:45.032760600Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e ls -lR /sys/fs/cgroup]
+[2026-02-25T05:18:45.438228700Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e mount (timeout 5s) took 1.0547938s
+[2026-02-25T05:18:45.438625600Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e uname -a (timeout 5s)
+[2026-02-25T05:18:45.466219400Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e uname -a]
+[2026-02-25T05:18:45.564239100Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e cat /etc/wsl.conf (timeout 5s) took 1.0295793s
+[2026-02-25T05:18:45.565327300Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e docker info (timeout 5s)
+[2026-02-25T05:18:45.580924800Z][com.docker.diagnose.exe] Executing: [wsl.exe -d docker-desktop -e docker info]
+[2026-02-25T05:18:46.156997900Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e ls -lR /sys/fs/cgroup (timeout 5s) took 1.1432575s
+[2026-02-25T05:18:46.163008700Z][com.docker.diagnose.exe] Gathering cloud (External)
+[2026-02-25T05:18:46.967478200Z][com.docker.diagnose.exe][W] [wsl.exe -d docker-desktop -e docker info] exit status 1
+[2026-02-25T05:18:47.264841700Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-17.2.log
+[2026-02-25T05:18:47.266204400Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e uname -a (timeout 5s) took 1.8275673s
+[2026-02-25T05:18:47.267556300Z][com.docker.diagnose.exe] Gathering ProfileGatherer
+[2026-02-25T05:18:47.270700300Z][com.docker.diagnose.exe] Gathering wsl.exe -d docker-desktop -e docker info (timeout 5s) took 1.7030122s
+[2026-02-25T05:18:47.279336600Z][com.docker.diagnose.exe] Gathering \\.\pipe\dockerDiagnosticd
+[2026-02-25T05:18:47.280895400Z][com.docker.diagnose.exe] Getting Linux Diagnostics via a unix socket: \\.\pipe\dockerDiagnosticd
+[2026-02-25T05:18:47.283867200Z][com.docker.diagnose.exe] Gathering ProfileGatherer took 14.7172ms
+[2026-02-25T05:18:47.284404200Z][com.docker.diagnose.exe][W] /diagnostics failed: Get "http://unix/diagnostics?timeout=30": open \\.\pipe\dockerDiagnosticd: The system cannot find the file specified.
+[2026-02-25T05:18:47.287293800Z][com.docker.diagnose.exe] Gathering \\.\pipe\dockerDiagnosticd took 6.3983ms
+[2026-02-25T05:18:48.134431400Z][com.docker.diagnose.exe][W] <HOME>\.docker\cloud\error.log not included
+[2026-02-25T05:18:48.136615600Z][com.docker.diagnose.exe][W] <HOME>\.docker\cloud\state.json not included
+[2026-02-25T05:18:48.144404400Z][com.docker.diagnose.exe] Gathering: <HOME>\.docker\cloud\logs
+[2026-02-25T05:18:48.146342800Z][com.docker.diagnose.exe] Gathering: <HOME>\.docker\cloud\logs\diagnostic.json
+[2026-02-25T05:18:48.150522900Z][com.docker.diagnose.exe] Gathering cloud (External) took 1.9855294s
+[2026-02-25T05:18:59.660381200Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-17.3.log
+[2026-02-25T05:19:00.887093900Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-17.log
+[2026-02-25T05:19:08.257261500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-19.log
+[2026-02-25T05:19:08.433738700Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-20.log
+[2026-02-25T05:19:08.443468200Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-25.1.log
+[2026-02-25T05:19:08.623203300Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-2026-02-25.log
+[2026-02-25T05:19:15.913030700Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-audit-log.json
+[2026-02-25T05:19:15.915992800Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-errd-2026-02-20.log
+[2026-02-25T05:19:15.919621300Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-errd-2026-02-25.log
+[2026-02-25T05:19:15.922129100Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-errd-audit-log.json
+[2026-02-25T05:19:15.924442700Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-ui-console-2026-02-16.log
+[2026-02-25T05:19:15.927381400Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-ui-console-2026-02-17.log
+[2026-02-25T05:19:16.218281400Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-ui-console-2026-02-19.log
+[2026-02-25T05:19:16.220551500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-ui-console-2026-02-20.log
+[2026-02-25T05:19:16.220551500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-ui-console-2026-02-25.log
+[2026-02-25T05:19:16.220551500Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\electron-ui-console-audit-log.json
+[2026-02-25T05:19:16.233752300Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\httpproxy.log
+[2026-02-25T05:19:16.243129200Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\httpproxy.log.0
+[2026-02-25T05:19:16.251313900Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\httpproxy.log.1
+[2026-02-25T05:19:16.260381900Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\httpproxy.log.2
+[2026-02-25T05:19:16.269265700Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\httpproxy.log.3
+[2026-02-25T05:19:16.274630000Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\httpproxy.log.4
+[2026-02-25T05:19:16.287703400Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\httpproxy.log.5
+[2026-02-25T05:19:18.738344100Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\inference.log
+[2026-02-25T05:19:18.783109800Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\ipc.stacks.log
+[2026-02-25T05:19:19.238024900Z][com.docker.diagnose.exe] gathering: <HOME>\AppData\Local\Docker\log\host\monitor.log
+[2026-02-25T05:19:19.245582700Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.0
+[2026-02-25T05:19:19.251465500Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.1
+[2026-02-25T05:19:19.259977600Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.2
+[2026-02-25T05:19:19.268094400Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.3
+[2026-02-25T05:19:19.275144600Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.4
+[2026-02-25T05:19:19.285714900Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.5
+[2026-02-25T05:19:19.295159800Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.6
+[2026-02-25T05:19:19.301676200Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.7
+[2026-02-25T05:19:19.322726800Z][com.docker.diagnose.exe] gathering rotated: <HOME>\AppData\Local\Docker\log\host\monitor.log.8
+[2026-02-25T05:19:24.718577700Z][com.docker.diagnose.exe] Gathering <HOME>\AppData\Local\Docker\log\host/** took 1m14.3904809s
+[2026-02-25T05:19:24.720592900Z][com.docker.diagnose.exe] All 138 gatherers finished in 2m5.4209675s

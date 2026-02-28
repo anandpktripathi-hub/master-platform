@@ -1,0 +1,1419 @@
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              3 InitShutdown                 
+------        01-01-1601  05:30 AM              4 lsass                        
+------        01-01-1601  05:30 AM              3 ntsvcs                       
+
+
+    Directory: \\.\pipe\Winsock2
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-468-0                      
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-5b0-0                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              3 epmapper                     
+
+
+    Directory: \\.\pipe\Winsock2
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-2a0-0                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 {641B073C-E4A8-4FC1-82CE-CEE5
+                                                  79CD0BE6}                    
+
+
+    Directory: \\.\pipe\Winsock2
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-5e4-0                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              3 LSM_API_service              
+------        01-01-1601  05:30 AM              3 atsvc                        
+
+
+    Directory: \\.\pipe\Winsock2
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-478-0                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              3 eventlog                     
+
+
+    Directory: \\.\pipe\Winsock2
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-b9c-0                      
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-ed8-0                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              4 wkssvc                       
+------        01-01-1601  05:30 AM              3 trkwks                       
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-4132       
+
+
+    Directory: \\.\pipe\ProtectedPrefix\LocalService
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 ProtectedPrefix\LocalService\
+                                                  FTHPIPE                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              2 {6B9DEB85-FAB6-424D-8513-9D58
+                                                  CD4F7137}                    
+------        01-01-1601  05:30 AM              4 {59E8B38A-2A62-4CCD-9359-C19A
+                                                  50BC495A}                    
+------        01-01-1601  05:30 AM              4 srvsvc                       
+------        01-01-1601  05:30 AM              3 {87B9EEC3-988E-4905-909D-71D7
+                                                  4C4206A0}                    
+------        01-01-1601  05:30 AM              1 {790C689D-CC8C-4CF0-932B-F7D6
+                                                  B6B2D799}                    
+------        01-01-1601  05:30 AM              1 {18837DD8-C4DF-4E48-8CB6-3DD8
+                                                  E59C2DD5}                    
+------        01-01-1601  05:30 AM              1 {0F3FC252-DD0E-4649-AD83-3DB4
+                                                  17E035A5}                    
+------        01-01-1601  05:30 AM              1 {7BFFFA35-4BD4-4A81-B3EB-504F
+                                                  30EC217C}                    
+------        01-01-1601  05:30 AM              2 {E0FE63CC-C146-4693-916C-CB0E
+                                                  78FFFA9E}                    
+------        01-01-1601  05:30 AM              1 {0640811F-0D0E-4671-B651-880D
+                                                  BD44CF58}                    
+------        01-01-1601  05:30 AM              1 {E62731B4-5C3C-441C-B33E-680E
+                                                  AEEA3649}                    
+------        01-01-1601  05:30 AM              3 {098033D6-48A7-4AE0-A782-7083
+                                                  903304EC}                    
+------        01-01-1601  05:30 AM             14 23771888-7c70-436c-a9db-a78da
+                                                  a1f914a                      
+------        01-01-1601  05:30 AM              2 2921b83a-2161-43f1-8fb1-3af40
+                                                  5ffa5de                      
+------        01-01-1601  05:30 AM             14 e5d10cc6-a31e-40b7-a107-8e085
+                                                  dca3d19_UA_0                 
+------        01-01-1601  05:30 AM              2 e5d10cc6-a31e-40b7-a107-8e085
+                                                  dca3d19_UE_UA_0              
+------        01-01-1601  05:30 AM              1 WiFiNetworkManagerTask       
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-8196       
+------        01-01-1601  05:30 AM              1 {9CB28634-DAC4-474B-8DD8-0A25
+                                                  0F565106}                    
+------        01-01-1601  05:30 AM              1 {50A4B7F9-EB29-41F4-82FE-CDFE
+                                                  3E6CB880}                    
+------        01-01-1601  05:30 AM              1 {52277410-C5BB-4B4F-89D1-99FF
+                                                  CDF5F834}                    
+
+
+    Directory: \\.\pipe\Winsock2
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Winsock2\CatalogChangeListene
+                                                  r-44c-0                      
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 shared-pm2-svc-log           
+------        01-01-1601  05:30 AM              1 Intel.GraphicsSoftware.Pipe.A
+                                                  dmin                         
+------        01-01-1601  05:30 AM              2 pm2_igs-out                  
+------        01-01-1601  05:30 AM              2 pm2_igs-in                   
+
+
+    Directory: \\.\pipe\PIPE_EVENTROOT
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 PIPE_EVENTROOT\CIMV2SCM      
+                                                  EVENT PROVIDER               
+
+
+    Directory: \\.\pipe\Sessions\1\AppContainerNamedObjects\S-1-15-2-283421221-
+    3183566570-1718213290-751554359-3541592344-2312209569-3374928651
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11316.11260.65904142
+                                                  1361635409                   
+------        01-01-1601  05:30 AM              2 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\crashpad_11056_MQJGUCKIHR
+                                                  KFNTTO                       
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12564.15571120
+                                                  142537079170                 
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12564.21678794
+                                                  50721976201                  
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12564.10321270
+                                                  05947593115                  
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12564.10125928
+                                                  234236804315                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              4 MsFteWds                     
+
+
+    Directory: \\.\pipe\Sessions\1\AppContainerNamedObjects\S-1-15-2-283421221-
+    3183566570-1718213290-751554359-3541592344-2312209569-3374928651
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12428.82096586
+                                                  06061526827                  
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.12872.12876.59635938
+                                                  69836136983                  
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12428.14066680
+                                                  878679079842                 
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12428.61072882
+                                                  41814395085                  
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12428.15290414
+                                                  730508391600                 
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12428.43001760
+                                                  5961030422                   
+------        01-01-1601  05:30 AM              1 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-283421221-318
+                                                  3566570-1718213290-751554359-
+                                                  3541592344-2312209569-3374928
+                                                  651\mojo.11056.12428.28393816
+                                                  11750065149                  
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-12324      
+------        01-01-1601  05:30 AM              1 WidgetsCommandPipe           
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.11520.14952.135856
+                                                  65035292740076               
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              2 crashpad_1696_FLHTLLAXFRAYVRY
+                                                  S                            
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.8528.66067326
+                                                  34192396178                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.8528.93131216
+                                                  81139061019                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.8528.68040960
+                                                  93782159141                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.8528.16348081
+                                                  306979212547                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.9032.10216980
+                                                  729738544864                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.9032.10273587
+                                                  204465244599                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.9032.13413095
+                                                  003655857886                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.12236.2172.1768051
+                                                  657883573279                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.9032.62834032
+                                                  85465095214                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.9032.18116059
+                                                  095616646455                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1696.9032.88780498
+                                                  10612275365                  
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-15620      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-15692      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-15752      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-15840      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-16032      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-15948      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-16088      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-16276      
+------        01-01-1601  05:30 AM              3 45bd6892-af9d-43d1-bddb-abdc6
+                                                  2de5521_UA_0                 
+------        01-01-1601  05:30 AM              2 45bd6892-af9d-43d1-bddb-abdc6
+                                                  2de5521_UE_UA_0              
+------        01-01-1601  05:30 AM              6 d89d86a7-4c38-4256-aa40-42c7d
+                                                  8aaffeb_UA_0                 
+------        01-01-1601  05:30 AM              1 6d89d729-c42a-45e3-920b-84808
+                                                  91dc182_UA_0                 
+------        01-01-1601  05:30 AM              2 6d89d729-c42a-45e3-920b-84808
+                                                  91dc182_UE_UA_0              
+------        01-01-1601  05:30 AM              6 e651db2f-1d81-49fd-bdd1-de9a3
+                                                  e198cd1_UA_0                 
+------        01-01-1601  05:30 AM              1 14e74b3e-c7bf-4d48-ade2-da41d
+                                                  6c338eb_UA_0                 
+------        01-01-1601  05:30 AM              4 3dc055d1-fb0e-4f35-8543-2afd8
+                                                  db9d160_UA_0                 
+------        01-01-1601  05:30 AM              5 050829f9-7197-43ff-9cea-177dd
+                                                  682143b_UA_0                 
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-18176      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-18168      
+------        01-01-1601  05:30 AM              1 050829f9-7197-43ff-9cea-177dd
+                                                  682143b_UE_UA_0              
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-19020      
+------        01-01-1601  05:30 AM              1 e651db2f-1d81-49fd-bdd1-de9a3
+                                                  e198cd1_UE_UA_0              
+------        01-01-1601  05:30 AM             24 feee1d9e-235c-4722-a8f6-b622b
+                                                  187d01d                      
+------        01-01-1601  05:30 AM             24 7c082ed9-d0a9-4288-ab1c-5da22
+                                                  3dd8388                      
+------        01-01-1601  05:30 AM              2 ad8a71dd-fbab-4ad3-bffb-93a82
+                                                  21223b4_UA_0                 
+------        01-01-1601  05:30 AM              1 ad8a71dd-fbab-4ad3-bffb-93a82
+                                                  21223b4_UE_UA_0              
+------        01-01-1601  05:30 AM              1 3b16ca98-a71d-401d-907e-a48d7
+                                                  a5bd319_UA_0                 
+------        01-01-1601  05:30 AM              1 827d5fed-4299-4ff0-859b-fb624
+                                                  a41180e_UE_UA_1              
+------        01-01-1601  05:30 AM              1 FB3DB102-A6CA-40E6-BC58-AF9B2
+                                                  72DA080.DellRemediation      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-9360       
+------        01-01-1601  05:30 AM              4 W32TIME_ALT                  
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-8352       
+------        01-01-1601  05:30 AM              1 B9929B70B3AD0D6A54526E388BAE4
+                                                  E95297A60F0D1D861D4D407CBE6BB
+                                                  4B26B1                       
+------        01-01-1601  05:30 AM              1 SACCommunicationPipe         
+------        01-01-1601  05:30 AM              1 01a3cdfe-8914-45a1-9da7-afb32
+                                                  896dee7_UA_0                 
+------        01-01-1601  05:30 AM              1 01a3cdfe-8914-45a1-9da7-afb32
+                                                  896dee7_UE_UA_0              
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-13400      
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13400.3560.3395610
+                                                  648834433002                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              2 crashpad_8960_WLXBQDKJPHCKAAL
+                                                  R                            
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.13712.9660657
+                                                  27987351409                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.13712.1576756
+                                                  6612634136376                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.13712.1001289
+                                                  3842023435520                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.13712.1786642
+                                                  8500139706452                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.3268.12543680
+                                                  714306130900                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.3268.18438097
+                                                  703331495257                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.3268.13335280
+                                                  648735943312                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.6004.15172.9684296
+                                                  762649352805                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.3268.11277948
+                                                  181176942874                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-14164      
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.14164.8836.7633964
+                                                  984921810607                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              2 crashpad_4440_UYZATSBMOOKSCOS
+                                                  S                            
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.15708.1435637
+                                                  4912011248727                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.15708.1019680
+                                                  776594962558                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.15708.1330485
+                                                  1291372492940                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.15708.1833154
+                                                  0193166321216                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.8560.18117834
+                                                  067250561476                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.8560.11959378
+                                                  320611534348                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.8560.52490770
+                                                  74898252574                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19844.19848.382432
+                                                  3205057530700                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.8560.81660798
+                                                  89539819690                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.8560.13007180
+                                                  892883372938                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.4440.8560.82910528
+                                                  25693341102                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8960.3268.18147236
+                                                  504864009241                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              3 60389b31-53db-420d-b5dd-976da
+                                                  5a31d12_UA_0                 
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-14916      
+------        01-01-1601  05:30 AM              1 dotnet-diagnostic-18068      
+------        01-01-1601  05:30 AM              2 51f2b113-6c3e-4a6a-81ac-fc482
+                                                  5d69e56_UA_0                 
+------        01-01-1601  05:30 AM              1 51f2b113-6c3e-4a6a-81ac-fc482
+                                                  5d69e56_UE_UA_0              
+
+
+    Directory: \\.\pipe\Sessions\1\AppContainerNamedObjects\S-1-15-2-557819504-
+    3144503769-3460048582-2468406004-2969798954-3397036932-4166026031
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              2 Sessions\1\AppContainerNamedO
+                                                  bjects\S-1-15-2-557819504-314
+                                                  4503769-3460048582-2468406004
+                                                  -2969798954-3397036932-416602
+                                                  6031\crashpad_14112_HTWBUTTNV
+                                                  RJXCRUQ                      
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8776.15788.6996696
+                                                  292540036890                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 {2A3E58D6-FB35-4D65-A9EB-29C2
+                                                  5D856011}                    
+------        01-01-1601  05:30 AM              1 {A12D30BF-6DC4-4357-AFBC-20A1
+                                                  23CB6DA4}                    
+------        01-01-1601  05:30 AM              1 {1E8FD2BA-537A-4FEE-A681-F004
+                                                  2A1CEEA1}                    
+------        01-01-1601  05:30 AM              3 tapsrv                       
+------        01-01-1601  05:30 AM              3 ROUTER                       
+------        01-01-1601  05:30 AM              1 {D4690B5D-FB6F-40F3-8270-AAD6
+                                                  7471546D}                    
+------        01-01-1601  05:30 AM              1 {958756AF-7A81-44D7-B07A-D506
+                                                  5DD9D25C}                    
+------        01-01-1601  05:30 AM              2 crashpad_13684_QSVZWHNXNTLTIK
+                                                  WK                           
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.148507
+                                                  85213507130497               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.190931
+                                                  704408252737                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              4 8893900d-1.109.5-main-sock   
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.573018
+                                                  8589160292990                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.182334
+                                                  53255906784362               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.587410
+                                                  4148964149746                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.157103
+                                                  76221838173653               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.113889
+                                                  66379509017741               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.401699
+                                                  5844785249172                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.663327
+                                                  1769807799826                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.148990
+                                                  24134114564090               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.318417
+                                                  821826873246                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.910507
+                                                  4210931898310                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.135811
+                                                  00787059188226               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.850808
+                                                  811394113511                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 conpty-8703333.79963246-in   
+------        01-01-1601  05:30 AM              1 conpty-8703333.79963246-out  
+------        01-01-1601  05:30 AM              5 conpty-8703333.79963246-out-w
+                                                  orker                        
+------        01-01-1601  05:30 AM              1 PSHost.134163789809439710.324
+                                                  60.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-7319056.149297222-in  
+------        01-01-1601  05:30 AM              1 conpty-7319056.149297222-out 
+------        01-01-1601  05:30 AM              5 conpty-7319056.149297222-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134163790692866317.273
+                                                  6.DefaultAppDomain.powershell
+------        01-01-1601  05:30 AM              1 conpty-1130893.355720558-in  
+------        01-01-1601  05:30 AM              1 conpty-1130893.355720558-out 
+------        01-01-1601  05:30 AM              5 conpty-1130893.355720558-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134163833162732986.299
+                                                  2.DefaultAppDomain.powershell
+------        01-01-1601  05:30 AM             24 8dc70661-448e-4b34-982b-4d4a4
+                                                  c5641b1                      
+------        01-01-1601  05:30 AM              1 conpty-2928595.7990688006-in 
+------        01-01-1601  05:30 AM              1 conpty-2928595.7990688006-out
+------        01-01-1601  05:30 AM              1 conpty-1987918.7321541102-in 
+------        01-01-1601  05:30 AM              1 conpty-1987918.7321541102-out
+------        01-01-1601  05:30 AM              1 conpty-4255974.390236365-in  
+------        01-01-1601  05:30 AM              1 conpty-4255974.390236365-out 
+------        01-01-1601  05:30 AM              5 conpty-4255974.390236365-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134164196463207305.325
+                                                  08.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-8574202.73145353-in   
+------        01-01-1601  05:30 AM              1 conpty-8574202.73145353-out  
+------        01-01-1601  05:30 AM              5 conpty-8574202.73145353-out-w
+                                                  orker                        
+------        01-01-1601  05:30 AM              1 PSHost.134164597602981560.301
+                                                  48.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-5503619.23924722-in   
+------        01-01-1601  05:30 AM              1 conpty-5503619.23924722-out  
+------        01-01-1601  05:30 AM              5 conpty-5503619.23924722-out-w
+                                                  orker                        
+------        01-01-1601  05:30 AM              1 PSHost.134164599860817099.252
+                                                  32.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-2537151.6840857565-in 
+------        01-01-1601  05:30 AM              1 conpty-2537151.6840857565-out
+------        01-01-1601  05:30 AM              5 conpty-2537151.6840857565-out
+                                                  -worker                      
+------        01-01-1601  05:30 AM              1 PSHost.134164600423602076.102
+                                                  00.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-1077309.6583552521-in 
+------        01-01-1601  05:30 AM              1 conpty-1077309.6583552521-out
+------        01-01-1601  05:30 AM              5 conpty-1077309.6583552521-out
+                                                  -worker                      
+------        01-01-1601  05:30 AM              1 PSHost.134164600961515926.258
+                                                  8.DefaultAppDomain.powershell
+------        01-01-1601  05:30 AM              1 conpty-2786492.319132816-in  
+------        01-01-1601  05:30 AM              1 conpty-2786492.319132816-out 
+------        01-01-1601  05:30 AM              2 crashpad_1224_XBUJGQZGNIAYGBJ
+                                                  P                            
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1224.32628.7263451
+                                                  889610010248                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1224.32628.7771302
+                                                  317309600992                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1224.32628.1385433
+                                                  974628007908                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.external_task_mana
+                                                  ger_v2_1224                  
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 conpty-4180473.525166939-in  
+------        01-01-1601  05:30 AM              1 conpty-4180473.525166939-out 
+------        01-01-1601  05:30 AM              1 conpty-8949761.135983838-in  
+------        01-01-1601  05:30 AM              1 conpty-8949761.135983838-out 
+------        01-01-1601  05:30 AM              5 conpty-8949761.135983838-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134164639090786716.268
+                                                  44.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-2098229.8053913983-in 
+------        01-01-1601  05:30 AM              1 conpty-2098229.8053913983-out
+------        01-01-1601  05:30 AM              5 conpty-2098229.8053913983-out
+                                                  -worker                      
+------        01-01-1601  05:30 AM              1 PSHost.134164640442798415.268
+                                                  52.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-3864689.7034069984-in 
+------        01-01-1601  05:30 AM              1 conpty-3864689.7034069984-out
+------        01-01-1601  05:30 AM              5 conpty-3864689.7034069984-out
+                                                  -worker                      
+------        01-01-1601  05:30 AM              1 PSHost.134164640863413275.321
+                                                  44.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              2 dockerDesktopBuildServer     
+------        01-01-1601  05:30 AM              2 docker_sandboxes_sandboxd    
+------        01-01-1601  05:30 AM              1 mojo.31748.25244.125468761136
+                                                  13327887                     
+------        01-01-1601  05:30 AM              1 mojo.31748.25244.892590450622
+                                                  9141589                      
+------        01-01-1601  05:30 AM              1 mojo.31748.25244.106066358078
+                                                  66717792                     
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\8-31748                   
+------        01-01-1601  05:30 AM              1 uv\9-31748                   
+------        01-01-1601  05:30 AM              1 uv\10-31748                  
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 mojo.31748.30052.205747968493
+                                                  6094704                      
+------        01-01-1601  05:30 AM              3 dockerCagent                 
+------        01-01-1601  05:30 AM              6 dockerBackendV2              
+------        01-01-1601  05:30 AM              1 conpty-5701498.104332911-in  
+------        01-01-1601  05:30 AM              1 conpty-5701498.104332911-out 
+------        01-01-1601  05:30 AM              5 conpty-5701498.104332911-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134164670023935863.115
+                                                  28.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-1868307.0180832618-in 
+------        01-01-1601  05:30 AM              1 conpty-1868307.0180832618-out
+------        01-01-1601  05:30 AM              5 conpty-1868307.0180832618-out
+                                                  -worker                      
+------        01-01-1601  05:30 AM              1 PSHost.134164678378946540.304
+                                                  28.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 conpty-1382034.6502123626-in 
+------        01-01-1601  05:30 AM              1 conpty-1382034.6502123626-out
+------        01-01-1601  05:30 AM              5 conpty-1382034.6502123626-out
+                                                  -worker                      
+------        01-01-1601  05:30 AM              1 PSHost.134164683185477465.224
+                                                  60.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              2 crashpad_19056_UXQHXWOAJNWUON
+                                                  KF                           
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.166751
+                                                  39796969477430               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.116542
+                                                  75215489983415               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.163705
+                                                  31864128253028               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.178280
+                                                  75160954564294               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.138832
+                                                  09982929775060               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.725444
+                                                  2353134894724                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.788538
+                                                  2479900255766                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.1564.25516.1245884
+                                                  1756426485017                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.448158
+                                                  6951301183856                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.160416
+                                                  72362710401517               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.844657
+                                                  7888646301568                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.670002
+                                                  5418541694170                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.664286
+                                                  1508890369326                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.151102
+                                                  15048722639621               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.30768.31544.447939
+                                                  5335691455408                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.780871
+                                                  358991963682                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.930521
+                                                  4763975358801                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.134409
+                                                  13119952848016               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.166377
+                                                  28502369590310               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.33168.11228.333414
+                                                  2678226939533                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.114786
+                                                  66724764078792               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.106119
+                                                  54325078986545               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.883606
+                                                  079973985209                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.281267
+                                                  9131191949168                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.147294
+                                                  0594159654620                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.148745
+                                                  13420606875325               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.29576.18336.331600
+                                                  4200656757857                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.22632.34204.108480
+                                                  43852136828594               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.130498
+                                                  68383167323347               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13872.24664.445651
+                                                  5531283994042                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.103061
+                                                  60753235673749               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.761360
+                                                  302763393477                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.477077
+                                                  3280295447350                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.435493
+                                                  809042343014                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.707593
+                                                  5272180179752                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.524616
+                                                  6261896417361                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.307400
+                                                  5297770657926                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.32324.28480.138686
+                                                  34644455292460               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.166385
+                                                  2942632564824                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.133313
+                                                  99072505700299               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.134375
+                                                  05482319003876               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.247035
+                                                  7037901875942                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.799900
+                                                  5803097724845                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.153773
+                                                  39002783448709               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.373499
+                                                  6582715219931                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.503167
+                                                  311178148065                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.168513
+                                                  73656256511156               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.911387
+                                                  900925818665                 
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\19-28212                  
+------        01-01-1601  05:30 AM              1 uv\20-28212                  
+------        01-01-1601  05:30 AM              1 uv\21-28212                  
+------        01-01-1601  05:30 AM              1 uv\22-28212                  
+------        01-01-1601  05:30 AM              1 uv\23-28212                  
+------        01-01-1601  05:30 AM              1 uv\24-28212                  
+------        01-01-1601  05:30 AM              1 uv\25-28212                  
+------        01-01-1601  05:30 AM              1 uv\26-28212                  
+------        01-01-1601  05:30 AM              1 uv\27-28212                  
+------        01-01-1601  05:30 AM              1 uv\28-28212                  
+------        01-01-1601  05:30 AM              1 uv\29-28212                  
+------        01-01-1601  05:30 AM              1 uv\30-28212                  
+------        01-01-1601  05:30 AM              1 uv\31-28212                  
+------        01-01-1601  05:30 AM              1 uv\32-28212                  
+------        01-01-1601  05:30 AM              1 uv\33-28212                  
+------        01-01-1601  05:30 AM              1 uv\34-28212                  
+------        01-01-1601  05:30 AM              1 uv\35-28212                  
+------        01-01-1601  05:30 AM              1 uv\36-28212                  
+------        01-01-1601  05:30 AM              1 uv\37-28212                  
+------        01-01-1601  05:30 AM              1 uv\38-28212                  
+------        01-01-1601  05:30 AM              1 uv\39-28212                  
+------        01-01-1601  05:30 AM              1 uv\40-28212                  
+------        01-01-1601  05:30 AM              1 uv\41-28212                  
+------        01-01-1601  05:30 AM              1 uv\42-28212                  
+------        01-01-1601  05:30 AM              1 uv\43-28212                  
+------        01-01-1601  05:30 AM              1 uv\44-28212                  
+------        01-01-1601  05:30 AM              1 uv\45-28212                  
+------        01-01-1601  05:30 AM              1 uv\46-28212                  
+------        01-01-1601  05:30 AM              1 uv\51-28212                  
+------        01-01-1601  05:30 AM              1 uv\52-28212                  
+------        01-01-1601  05:30 AM              1 uv\53-28212                  
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.969140
+                                                  2066702158614                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.263670
+                                                  3830630922333                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.642459
+                                                  5041367492725                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.140142
+                                                  62696481906686               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.32872.642939
+                                                  5174122591556                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.962409
+                                                  41641722883                  
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.13684.28960.155518
+                                                  00767059727018               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.107409
+                                                  09295489849059               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.155391
+                                                  44960374102128               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.12072.4876.8176577
+                                                  932509921090                 
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 conpty-154702.4822100207-in  
+------        01-01-1601  05:30 AM              1 conpty-154702.4822100207-out 
+------        01-01-1601  05:30 AM              5 conpty-154702.4822100207-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134164691659748800.255
+                                                  40.DefaultAppDomain.powershel
+                                                  l                            
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\60-28212                  
+------        01-01-1601  05:30 AM              1 uv\61-28212                  
+------        01-01-1601  05:30 AM              1 uv\62-28212                  
+------        01-01-1601  05:30 AM              1 uv\63-28212                  
+------        01-01-1601  05:30 AM              1 uv\64-28212                  
+------        01-01-1601  05:30 AM              1 uv\65-28212                  
+------        01-01-1601  05:30 AM              1 uv\66-28212                  
+------        01-01-1601  05:30 AM              1 uv\67-28212                  
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              4 vscode-git-53dc5a7f41-sock   
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\2-28212                   
+------        01-01-1601  05:30 AM              1 uv\3-28212                   
+------        01-01-1601  05:30 AM              1 uv\4-28212                   
+------        01-01-1601  05:30 AM              1 uv\5-28212                   
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              4 mcp-ce6e7370-9149-4c3a-acc8-e
+                                                  6e27ccc0a5a.sock             
+------        01-01-1601  05:30 AM              1 conpty-7598803.308557095-in  
+------        01-01-1601  05:30 AM              1 conpty-7598803.308557095-out 
+------        01-01-1601  05:30 AM              5 conpty-7598803.308557095-out-
+                                                  worker                       
+------        01-01-1601  05:30 AM              1 PSHost.134164692125276879.281
+                                                  08.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              4 ssh-askpass-b6a4890a-778b-47b
+                                                  1-b81d-87bb87536ff7-sock     
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\16-28212                  
+------        01-01-1601  05:30 AM              1 uv\17-28212                  
+------        01-01-1601  05:30 AM              1 uv\18-28212                  
+------        01-01-1601  05:30 AM              1 uv\47-28212                  
+------        01-01-1601  05:30 AM              1 uv\48-28212                  
+------        01-01-1601  05:30 AM              1 uv\49-28212                  
+------        01-01-1601  05:30 AM              1 uv\50-28212                  
+------        01-01-1601  05:30 AM              1 uv\54-28212                  
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 conpty-8693468.71971597-in   
+------        01-01-1601  05:30 AM              1 conpty-8693468.71971597-out  
+------        01-01-1601  05:30 AM              5 conpty-8693468.71971597-out-w
+                                                  orker                        
+------        01-01-1601  05:30 AM              1 PSHost.134164692474956852.279
+                                                  04.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 PSES_o4lqul2f.dhc            
+------        01-01-1601  05:30 AM              1 PSES_hmn0yp23.pf4            
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\18446744073709551615-28212
+------        01-01-1601  05:30 AM              1 uv\0-28212                   
+------        01-01-1601  05:30 AM              1 uv\1-28212                   
+------        01-01-1601  05:30 AM              1 uv\6-28212                   
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.713357
+                                                  3144573821506                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.669082
+                                                  2157751895002                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.103849
+                                                  37734130348229               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.9872.19060.4010298
+                                                  529784601769                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.124428
+                                                  40387759740269               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.118623
+                                                  3500495934234                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.145342
+                                                  0204205187720                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.178417
+                                                  51554578785891               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.111609
+                                                  5670893001500                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.156114
+                                                  70290283676158               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.142117
+                                                  19834144316860               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.25160.34244.147282
+                                                  30013129705723               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.780430
+                                                  9964590439071                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.735600
+                                                  793897846490                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.513004
+                                                  6087837939969                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.33332.31424.151141
+                                                  56586107988350               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.127982
+                                                  02782514616470               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.158800
+                                                  07729930336999               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.182081
+                                                  93301626201132               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.379060
+                                                  7917126365468                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.128496
+                                                  36057556642048               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.27144.21820.119055
+                                                  0983271577029                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.101840
+                                                  90919063489805               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.644060
+                                                  3128234343288                
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\7-28212                   
+------        01-01-1601  05:30 AM              1 uv\55-28212                  
+------        01-01-1601  05:30 AM              1 uv\56-28212                  
+------        01-01-1601  05:30 AM              1 uv\57-28212                  
+
+
+    Directory: \\.\pipe\LOCAL
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.112056
+                                                  99513220616663               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.168284
+                                                  59255611233860               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.160854
+                                                  01631453911939               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.17796.3004.1309296
+                                                  6564928540752                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.799553
+                                                  9096362209354                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.144279
+                                                  89838339367696               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.895676
+                                                  9192455566293                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.741589
+                                                  1699929131771                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.130539
+                                                  97803602299363               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.150583
+                                                  37835538327934               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.143312
+                                                  42142119479103               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.975137
+                                                  106522192702                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.117074
+                                                  69311220979100               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.157425
+                                                  00182321253475               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.29400.22112.139043
+                                                  44052733794092               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.118005
+                                                  97104067006915               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.329138
+                                                  8185413632781                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.512228
+                                                  6148235817077                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.103194
+                                                  4779899990886                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.169848
+                                                  1921638453945                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.981320
+                                                  3158996016796                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.21136.30376.119620
+                                                  35728519589196               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.440371
+                                                  1949624475860                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.172181
+                                                  2424675732776                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.177902
+                                                  98977320558281               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.315561
+                                                  6294108955183                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.120540
+                                                  89282206045074               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.170372
+                                                  95166520737593               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.8396.13328.1406442
+                                                  3511960876871                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.159368
+                                                  23918050698499               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.166057
+                                                  44755426007486               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.284912
+                                                  4650181454464                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.123021
+                                                  49736832673689               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.441759
+                                                  8084268615779                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.33552.24892.179847
+                                                  64520996760050               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.736376
+                                                  5262105017681                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.111620
+                                                  71919041704971               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.178324
+                                                  88039224455085               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.501305
+                                                  7179303017798                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.516994
+                                                  6737311867869                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.154943
+                                                  00723885107642               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.32336.27196.205177
+                                                  9463463491449                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.370685
+                                                  8701846994658                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.134558
+                                                  10641488817493               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.928117
+                                                  8265429093419                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.155267
+                                                  89310457553449               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.18060.17872.786395
+                                                  3837689537865                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.116207
+                                                  89196037222405               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.123109
+                                                  03272402256418               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.150934
+                                                  64198475762426               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.21628.27632.142736
+                                                  6233842396272                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.100540
+                                                  42499943225879               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.138274
+                                                  46510623388446               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.161178
+                                                  7931848895886                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.209621
+                                                  7645373463492                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.533893
+                                                  8326478822642                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.168916
+                                                  95336357597208               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.152510
+                                                  0633590677015                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.711788
+                                                  8072820565283                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.17504.33136.254856
+                                                  0523986600545                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.258885
+                                                  0577543532800                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.143218
+                                                  7759817483565                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.941195
+                                                  9841368578723                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.139442
+                                                  91881232815837               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.201491
+                                                  5213175475563                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.117338
+                                                  5743371194007                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.786175
+                                                  1955660581515                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.29740.6644.1535926
+                                                  7293100017720                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.502290
+                                                  0871943163084                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.172529
+                                                  80778938602513               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.521099
+                                                  313878253671                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.667486
+                                                  8949055941886                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.951043
+                                                  5021250048698                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.142670
+                                                  0081276869733                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.419494
+                                                  2689047827067                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.650806
+                                                  0518948800865                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.178039
+                                                  24244042570108               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.20812.17352.142380
+                                                  81457849113184               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.155927
+                                                  06972112874491               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.100302
+                                                  2919277354920                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.146373
+                                                  09675434277293               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19640.22056.163553
+                                                  02838720013578               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.125646
+                                                  50239426786402               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.100513
+                                                  58953009709384               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.348418
+                                                  2099962793560                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.163593
+                                                  2756932013918                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.746389
+                                                  9544447912413                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.26180.3420.1751876
+                                                  6607134580797                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.314496
+                                                  9109706811955                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.125919
+                                                  91923249721119               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.179551
+                                                  66661771521888               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.187570
+                                                  0807390245980                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.176427
+                                                  7724889728473                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.149739
+                                                  08375636187291               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.33076.24260.115730
+                                                  18757281738482               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.378544
+                                                  9070089828224                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.170042
+                                                  53140936866153               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.443283
+                                                  2318314132937                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.149800
+                                                  81676103402037               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.629267
+                                                  3172558500058                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.144131
+                                                  97794322618996               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.703697
+                                                  2228336623109                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.125715
+                                                  37841745699771               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.23356.19808.240268
+                                                  1803338237966                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.643558
+                                                  2519264984551                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.123076
+                                                  66645150585178               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.605757
+                                                  1431420547885                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.24224.23328.130119
+                                                  64478000034608               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.272748
+                                                  0504917502648                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.197547
+                                                  7044782640458                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.140390
+                                                  39069745983029               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19468.343498
+                                                  5594621295729                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.174789
+                                                  72129159482306               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.10352.33708.977777
+                                                  6341037391287                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.519044
+                                                  8271251252295                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.513297
+                                                  7432842458321                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.979745
+                                                  4798446917866                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.448073
+                                                  3502007482962                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.126817
+                                                  7514384345006                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.130179
+                                                  16799272295318               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.295914
+                                                  695331978825                 
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.453672
+                                                  5185632959924                
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.116503
+                                                  40668760771805               
+------        01-01-1601  05:30 AM              1 LOCAL\mojo.19056.19108.919189
+                                                  5905315638012                
+
+
+    Directory: \\.\pipe\uv
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 uv\8-28212                   
+------        01-01-1601  05:30 AM              1 uv\9-28212                   
+------        01-01-1601  05:30 AM              1 uv\10-28212                  
+------        01-01-1601  05:30 AM              1 uv\11-28212                  
+------        01-01-1601  05:30 AM              1 uv\58-28212                  
+------        01-01-1601  05:30 AM              1 uv\59-28212                  
+------        01-01-1601  05:30 AM              1 uv\68-28212                  
+------        01-01-1601  05:30 AM              1 uv\70-28212                  
+------        01-01-1601  05:30 AM              1 uv\18446744073709551615-22288
+
+
+    Directory: \\.\pipe
+
+
+Mode                 LastWriteTime         Length Name                         
+----                 -------------         ------ ----                         
+------        01-01-1601  05:30 AM              1 PSHost.134164702553649505.294
+                                                  72.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 PSHost.134164702594386589.339
+                                                  48.DefaultAppDomain.powershel
+                                                  l                            
+------        01-01-1601  05:30 AM              1 PSHost.134164702685731761.275
+                                                  52.DefaultAppDomain.powershel
+                                                  l                            
+
+

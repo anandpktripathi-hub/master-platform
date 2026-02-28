@@ -12,13 +12,23 @@
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { TenantRegisterDto } from './dto/tenant-register.dto';
-import { LoginDto } from './dto/login.dto';
+import {
+  LoginDto,
+  RequestPasswordResetDto,
+  ResetPasswordDto,
+  SendVerificationEmailDto,
+  SimpleRegisterDto,
+  VerifyEmailDto,
+} from './dto/auth.dto';
 import logger from '../../config/logger.config';
 import { RateLimitGuard } from '../../common/guards/rate-limit.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
-
+import { Public } from '../../common/decorators/public.decorator';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Auth')
 @Controller('auth')
+@Public()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -43,19 +53,8 @@ export class AuthController {
 
   // Optional stub for register to avoid TS error (can customize later)
   @Post('register')
-  register(
-    @Body()
-    body: {
-      id?: string;
-      _id?: unknown;
-      userId?: string;
-      email: string;
-      role: string;
-      tenantId?: string;
-    },
-  ) {
-    // For now just return a token for the created user payload
-    return this.authService.login(body);
+  async register(@Body() dto: SimpleRegisterDto) {
+    return this.authService.registerSimple(dto);
   }
 
   /**
@@ -74,8 +73,8 @@ export class AuthController {
   @Post('send-verification-email')
   @HttpCode(200)
   @UseGuards(RateLimitGuard)
-  async sendVerificationEmail(@Body() body: { email: string }) {
-    return this.authService.sendVerificationEmail(body.email);
+  async sendVerificationEmail(@Body() dto: SendVerificationEmailDto) {
+    return this.authService.sendVerificationEmail(dto.email);
   }
 
   /**
@@ -84,8 +83,8 @@ export class AuthController {
   @Post('verify-email')
   @HttpCode(200)
   @UseGuards(RateLimitGuard)
-  async verifyEmail(@Body() body: { token: string }) {
-    return this.authService.verifyEmail(body.token);
+  async verifyEmail(@Body() dto: VerifyEmailDto) {
+    return this.authService.verifyEmail(dto.token);
   }
 
   /**
@@ -105,8 +104,8 @@ export class AuthController {
   @Post('request-password-reset')
   @HttpCode(200)
   @UseGuards(RateLimitGuard)
-  async requestPasswordReset(@Body() body: { email: string }) {
-    return this.authService.requestPasswordReset(body.email);
+  async requestPasswordReset(@Body() dto: RequestPasswordResetDto) {
+    return this.authService.requestPasswordReset(dto.email);
   }
 
   /**
@@ -115,8 +114,8 @@ export class AuthController {
   @Post('reset-password')
   @HttpCode(200)
   @UseGuards(RateLimitGuard)
-  async resetPassword(@Body() body: { token: string; newPassword: string }) {
-    return this.authService.resetPassword(body.token, body.newPassword);
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto.token, dto.newPassword);
   }
 
   /**

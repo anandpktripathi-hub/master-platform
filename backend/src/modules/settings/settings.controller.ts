@@ -178,11 +178,13 @@ import {
   entriesToWebhookDto,
   webhookDtoToEntries,
 } from './mappers/webhook-settings-mappers';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   entriesToIpRestrictionDto,
   ipRestrictionDtoToEntries,
 } from './mappers/ip-restriction-settings-mappers';
-
+@ApiTags('Settings')
+@ApiBearerAuth('bearer')
 @Controller()
 export class SettingsController {
   constructor(

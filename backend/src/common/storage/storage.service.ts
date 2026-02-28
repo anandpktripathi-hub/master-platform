@@ -1,18 +1,26 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  InternalServerErrorException,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   S3Client,
   PutObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
+import axios from 'axios';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { randomUUID } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 
 export interface UploadResult {
   url: string;
   key: string;
   provider: 'local' | 's3' | 'cloudinary';
+  contentType?: string;
+  size?: number;
 }
 
 /**
@@ -52,27 +60,18 @@ export class StorageService {
       this.s3Bucket = this.configService.get<string>('AWS_S3_BUCKET');
       this.s3Region =
         this.configService.get<string>('AWS_REGION') || 'us-east-1';
+      const explicitBaseUrl = this.configService.get<string>(
+        'STORAGE_S3_BASE_URL',
+      );
+      this.s3BaseUrl =
+        explicitBaseUrl ||
+        (this.s3Bucket
+          ? `https://${this.s3Bucket}.s3.${this.s3Region}.amazonaws.com`
+          : undefined);
 
-      if (!this.s3Bucket) {
-        this.logger.error(
-          'StorageService: S3 mode enabled but AWS_S3_BUCKET is not configured.',
-        );
-      } else {
-        this.s3Client = new S3Client({
-          region: this.s3Region,
-        });
-
-        const explicitBaseUrl = this.configService.get<string>(
-          'STORAGE_S3_BASE_URL',
-        );
-        this.s3BaseUrl =
-          explicitBaseUrl ||
-          `https://${this.s3Bucket}.s3.${this.s3Region}.amazonaws.com`;
-
-        this.logger.log(
-          `StorageService: S3 mode. Bucket=${this.s3Bucket}, Region=${this.s3Region}`,
-        );
-      }
+      this.logger.log(
+        `StorageService: S3 mode. Bucket=${this.s3Bucket || 'not-set'}, Region=${this.s3Region}`,
+      );
     } else if (this.provider === 'cloudinary') {
       this.logger.log(
         'StorageService: Cloudinary mode. Ensure Cloudinary credentials are set.',
@@ -103,6 +102,51 @@ export class StorageService {
     }
   }
 
+  private getTimeoutMs(): number {
+    const raw = this.configService.get<string>('STORAGE_TIMEOUT_MS');
+    const parsed = raw ? Number(raw) : NaN;
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 15000;
+  }
+
+  private failNotConfigured(provider: string): never {
+    throw new ServiceUnavailableException(
+      `Storage provider not configured (${provider})`,
+    );
+  }
+
+  private mapProviderError(err: unknown, operation: string): never {
+    if (axios.isAxiosError(err)) {
+      if (
+        err.code === 'ECONNABORTED' ||
+        (typeof err.message === 'string' &&
+          err.message.toLowerCase().includes('timeout'))
+      ) {
+        throw new ServiceUnavailableException(
+          `Storage provider timeout during ${operation}`,
+        );
+      }
+      if (err.response) {
+        throw new InternalServerErrorException(
+          `Storage provider error during ${operation}`,
+        );
+      }
+      throw new ServiceUnavailableException(
+        `Storage provider unavailable during ${operation}`,
+      );
+    }
+
+    if (err && typeof err === 'object') {
+      const anyErr = err as any;
+      if (anyErr.name === 'AbortError') {
+        throw new ServiceUnavailableException(
+          `Storage provider timeout during ${operation}`,
+        );
+      }
+    }
+
+    throw new InternalServerErrorException(`Storage ${operation} failed`);
+  }
+
   private async uploadToLocal(
     buffer: Buffer,
     originalName: string,
@@ -120,7 +164,19 @@ export class StorageService {
       url,
       key: `${folder}/${filename}`,
       provider: 'local',
+      contentType: undefined,
+      size: buffer.length,
     };
+  }
+
+  private getOrCreateS3Client(): S3Client {
+    if (!this.s3Bucket || !this.s3Region) {
+      this.failNotConfigured('s3');
+    }
+    if (!this.s3Client) {
+      this.s3Client = new S3Client({ region: this.s3Region });
+    }
+    return this.s3Client;
   }
 
   private async uploadToS3(
@@ -129,31 +185,116 @@ export class StorageService {
     mimeType: string,
     folder: string,
   ): Promise<UploadResult> {
-    if (!this.s3Client || !this.s3Bucket || !this.s3BaseUrl) {
-      throw new Error(
-        'S3 client not configured. Check AWS_S3_BUCKET and AWS credentials.',
-      );
+    const client = this.getOrCreateS3Client();
+    if (!this.s3Bucket || !this.s3BaseUrl) {
+      this.failNotConfigured('s3');
     }
 
     const ext = path.extname(originalName);
     const key = `${folder}/${randomUUID()}${ext}`;
 
-    await this.s3Client.send(
-      new PutObjectCommand({
-        Bucket: this.s3Bucket,
-        Key: key,
-        Body: buffer,
-        ContentType: mimeType,
-        ACL: 'public-read',
-      }),
-    );
+    const timeoutMs = this.getTimeoutMs();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      await client.send(
+        new PutObjectCommand({
+          Bucket: this.s3Bucket,
+          Key: key,
+          Body: buffer,
+          ContentType: mimeType,
+          ACL: 'public-read',
+        }),
+        { abortSignal: controller.signal },
+      );
+    } catch (err) {
+      this.mapProviderError(err, 'upload');
+    } finally {
+      clearTimeout(timeout);
+    }
 
     const url = `${this.s3BaseUrl}/${key}`;
     return {
       url,
       key,
       provider: 's3',
+      contentType: mimeType,
+      size: buffer.length,
     };
+  }
+
+  private getCloudinaryConfig(): {
+    cloudName: string;
+    apiKey: string;
+    apiSecret: string;
+  } {
+    const cloudName = this.configService.get<string>('CLOUDINARY_CLOUD_NAME');
+    const apiKey = this.configService.get<string>('CLOUDINARY_API_KEY');
+    const apiSecret = this.configService.get<string>('CLOUDINARY_API_SECRET');
+    if (!cloudName || !apiKey || !apiSecret) {
+      this.failNotConfigured('cloudinary');
+    }
+    return { cloudName, apiKey, apiSecret };
+  }
+
+  private cloudinarySignature(
+    params: Record<string, string | number>,
+    apiSecret: string,
+  ): string {
+    const entries = Object.entries(params)
+      .filter(([, v]) => v !== undefined && v !== null && v !== '')
+      .map(([k, v]) => [k, String(v)] as const)
+      .sort(([a], [b]) => a.localeCompare(b));
+    const toSign = entries.map(([k, v]) => `${k}=${v}`).join('&');
+    return createHash('sha1').update(`${toSign}${apiSecret}`).digest('hex');
+  }
+
+  private buildMultipartBody(
+    boundary: string,
+    fields: Record<string, string>,
+    file:
+      | {
+          fieldName: string;
+          filename?: string;
+          contentType?: string;
+          data: Buffer | string;
+        }
+      | undefined,
+  ): Buffer {
+    const chunks: Buffer[] = [];
+    const crlf = '\r\n';
+    const push = (value: string | Buffer) => {
+      chunks.push(typeof value === 'string' ? Buffer.from(value) : value);
+    };
+
+    for (const [name, value] of Object.entries(fields)) {
+      push(`--${boundary}${crlf}`);
+      push(`Content-Disposition: form-data; name="${name}"${crlf}${crlf}`);
+      push(`${value}${crlf}`);
+    }
+
+    if (file) {
+      push(`--${boundary}${crlf}`);
+      const filenamePart = file.filename
+        ? `; filename="${file.filename}"`
+        : '';
+      push(
+        `Content-Disposition: form-data; name="${file.fieldName}"${filenamePart}${crlf}`,
+      );
+      if (file.contentType) {
+        push(`Content-Type: ${file.contentType}${crlf}`);
+      }
+      push(crlf);
+      if (typeof file.data === 'string') {
+        push(file.data);
+      } else {
+        push(file.data);
+      }
+      push(crlf);
+    }
+
+    push(`--${boundary}--${crlf}`);
+    return Buffer.concat(chunks);
   }
 
   private async uploadToCloudinary(
@@ -162,30 +303,69 @@ export class StorageService {
     mimeType: string,
     folder: string,
   ): Promise<UploadResult> {
-    // Placeholder for Cloudinary SDK
-    // TODO: Install cloudinary package, implement upload_stream
-    const cloudName = this.configService.get<string>('CLOUDINARY_CLOUD_NAME');
-    const apiKey = this.configService.get<string>('CLOUDINARY_API_KEY');
+    const { cloudName, apiKey, apiSecret } = this.getCloudinaryConfig();
 
-    if (!cloudName || !apiKey) {
-      throw new Error(
-        'CLOUDINARY_CLOUD_NAME or CLOUDINARY_API_KEY not configured.',
-      );
-    }
-
-    const publicId = `${folder}/${randomUUID()}`;
-
-    this.logger.warn(
-      `Cloudinary upload placeholder: Would upload to cloud ${cloudName} with public_id ${publicId}. Install cloudinary and implement upload_stream.`,
+    const timestamp = Math.floor(Date.now() / 1000);
+    const publicId = randomUUID();
+    const signature = this.cloudinarySignature(
+      { folder, public_id: publicId, timestamp },
+      apiSecret,
     );
 
-    // Stubbed result; replace with real Cloudinary call
-    const url = `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}`;
-    return {
-      url,
-      key: publicId,
-      provider: 'cloudinary',
-    };
+    const boundary = `----StorageServiceBoundary${randomUUID()}`;
+    const timeoutMs = this.getTimeoutMs();
+
+    const maybeUrl = buffer as unknown as string;
+    const isUrl = typeof maybeUrl === 'string' && /^https?:\/\//i.test(maybeUrl);
+
+    const body = this.buildMultipartBody(
+      boundary,
+      {
+        api_key: apiKey,
+        timestamp: String(timestamp),
+        signature,
+        folder,
+        public_id: publicId,
+      },
+      {
+        fieldName: 'file',
+        filename: isUrl ? undefined : originalName,
+        contentType: isUrl ? undefined : mimeType,
+        data: isUrl ? maybeUrl : buffer,
+      },
+    );
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+        body,
+        {
+          headers: {
+            'Content-Type': `multipart/form-data; boundary=${boundary}`,
+          },
+          timeout: timeoutMs,
+          maxBodyLength: 25 * 1024 * 1024,
+          maxContentLength: 25 * 1024 * 1024,
+          validateStatus: (status) => status >= 200 && status < 300,
+        },
+      );
+
+      const data = res.data as any;
+      const url = (data?.secure_url || data?.url) as string | undefined;
+      const key = (data?.public_id || `${folder}/${publicId}`) as string;
+      if (!url) {
+        throw new InternalServerErrorException('Storage upload failed');
+      }
+      return {
+        url,
+        key,
+        provider: 'cloudinary',
+        contentType: mimeType,
+        size: typeof data?.bytes === 'number' ? data.bytes : buffer.length,
+      };
+    } catch (err) {
+      this.mapProviderError(err, 'upload');
+    }
   }
 
   /**
@@ -194,28 +374,55 @@ export class StorageService {
   async deleteFile(key: string): Promise<void> {
     switch (this.provider) {
       case 's3':
-        if (!this.s3Client || !this.s3Bucket) {
-          this.logger.error(
-            'S3 delete requested but S3 client is not configured.',
-          );
-          return;
+        if (!this.s3Bucket) {
+          this.failNotConfigured('s3');
         }
         try {
-          await this.s3Client.send(
-            new DeleteObjectCommand({
-              Bucket: this.s3Bucket,
-              Key: key,
-            }),
-          );
-          this.logger.log(`S3 object deleted: ${key}`);
+          const client = this.getOrCreateS3Client();
+          const timeoutMs = this.getTimeoutMs();
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), timeoutMs);
+          try {
+            await client.send(
+              new DeleteObjectCommand({
+                Bucket: this.s3Bucket,
+                Key: key,
+              }),
+              { abortSignal: controller.signal },
+            );
+          } finally {
+            clearTimeout(timeout);
+          }
         } catch (err) {
-          this.logger.warn(`Failed to delete S3 object ${key}: ${err}`);
+          this.logger.warn(`Failed to delete S3 object ${key}`);
         }
         break;
       case 'cloudinary':
-        this.logger.warn(
-          `Cloudinary delete placeholder: Would delete ${key}. Implement cloudinary.uploader.destroy.`,
-        );
+        try {
+          const { cloudName, apiKey, apiSecret } = this.getCloudinaryConfig();
+          const timestamp = Math.floor(Date.now() / 1000);
+          const signature = this.cloudinarySignature(
+            { public_id: key, timestamp },
+            apiSecret,
+          );
+          const body = new URLSearchParams({
+            public_id: key,
+            api_key: apiKey,
+            timestamp: String(timestamp),
+            signature,
+          }).toString();
+          await axios.post(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`,
+            body,
+            {
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              timeout: this.getTimeoutMs(),
+              validateStatus: (status) => status >= 200 && status < 300,
+            },
+          );
+        } catch (err) {
+          this.logger.warn(`Failed to delete Cloudinary asset ${key}`);
+        }
         break;
       default:
         const filePath = path.join(this.localBasePath, key);

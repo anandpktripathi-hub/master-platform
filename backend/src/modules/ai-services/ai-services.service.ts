@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  ServiceUnavailableException,
+} from '@nestjs/common';
+import axios, { AxiosError } from 'axios';
 
 export interface AiCompletionRequest {
   prompt: string;
@@ -16,6 +21,27 @@ export interface AiCompletionResponse {
   };
 }
 
+type OpenAiChatCompletionResponse = {
+  id?: string;
+  model?: string;
+  choices?: Array<{
+    message?: { role?: string; content?: string | null };
+    text?: string | null;
+  }>;
+  usage?: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    total_tokens?: number;
+  };
+};
+
+type OpenAiChatCompletionRequest = {
+  model: string;
+  messages: Array<{ role: 'user' | 'system'; content: string }>;
+  max_tokens: number;
+  temperature: number;
+};
+
 /**
  * AI Services integration for OpenAI and similar providers.
  *
@@ -25,13 +51,186 @@ export interface AiCompletionResponse {
  * - Support ticket sentiment analysis and auto-responses
  * - Analytics insights and natural-language reporting
  *
- * The implementation below validates configuration and returns a
- * simulated response when OpenAI is "enabled" in settings. To go live,
- * replace the simulation with actual OpenAI SDK calls using the
- * configured API key from the tenant's settings or environment.
+ * The implementation below calls an OpenAI-compatible provider at request
+ * time. If the provider is not configured, it fails at call time rather than
+ * breaking application startup.
  */
 @Injectable()
 export class AiServicesService {
+  private getTimeoutMs(): number {
+    const raw = process.env.AI_TIMEOUT_MS ?? process.env.OPENAI_TIMEOUT_MS;
+    const parsed = raw ? Number(raw) : NaN;
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 30000;
+  }
+
+  private getMaxRetries(): number {
+    const parsed = Number(process.env.AI_MAX_RETRIES ?? '2');
+    return Number.isFinite(parsed) && parsed >= 0 ? Math.min(parsed, 5) : 2;
+  }
+
+  private getMaxPromptChars(): number {
+    const parsed = Number(process.env.AI_MAX_PROMPT_CHARS ?? '12000');
+    return Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 50000) : 12000;
+  }
+
+  private getMaxTokensCeiling(): number {
+    const parsed = Number(process.env.AI_MAX_TOKENS ?? process.env.OPENAI_MAX_TOKENS ?? '800');
+    return Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 4096) : 800;
+  }
+
+  private getOpenAiConfig(): {
+    apiKey?: string;
+    baseUrl: string;
+    model: string;
+    timeoutMs: number;
+  } {
+    const apiKey = process.env.OPENAI_API_KEY;
+    const baseUrlRaw = (process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1').trim();
+    const baseUrl = (baseUrlRaw || 'https://api.openai.com/v1').replace(/\/$/, '');
+    const modelRaw = (process.env.OPENAI_MODEL || 'gpt-4o-mini').trim();
+    const model = modelRaw || 'gpt-4o-mini';
+
+    return { apiKey, baseUrl, model, timeoutMs: this.getTimeoutMs() };
+  }
+
+  private async sleep(ms: number): Promise<void> {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  private shouldRetry(error: unknown): boolean {
+    if (!axios.isAxiosError(error)) return false;
+    const status = error.response?.status;
+    if (status === 429) return true;
+    if (typeof status === 'number' && status >= 500) return true;
+    // network errors / timeouts
+    return !error.response;
+  }
+
+  private mapAiProviderError(error: unknown, operation: string): never {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      if (status === 401 || status === 403) {
+        throw new ServiceUnavailableException('AI provider is not configured');
+      }
+      if (status === 429) {
+        throw new ServiceUnavailableException('AI provider rate limited');
+      }
+      if (typeof status === 'number' && status >= 400 && status < 500) {
+        throw new ServiceUnavailableException(`AI provider rejected the request during ${operation}`);
+      }
+      if (typeof status === 'number' && status >= 500) {
+        throw new ServiceUnavailableException('AI provider unavailable');
+      }
+
+      const code = (error as AxiosError).code;
+      if (code === 'ECONNABORTED') {
+        throw new ServiceUnavailableException('AI provider timeout');
+      }
+      throw new ServiceUnavailableException('AI provider unavailable');
+    }
+
+    throw new ServiceUnavailableException('AI provider unavailable');
+  }
+
+  private async postOpenAiWithRetry<TResponse>(params: {
+    url: string;
+    apiKey: string;
+    payload: unknown;
+    timeoutMs: number;
+  }): Promise<TResponse> {
+    const maxRetries = this.getMaxRetries();
+    let attempt = 0;
+    while (true) {
+      try {
+        const res = await axios.post<TResponse>(params.url, params.payload, {
+          timeout: params.timeoutMs,
+          headers: {
+            Authorization: `Bearer ${params.apiKey}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        return res.data;
+      } catch (error) {
+        if (attempt >= maxRetries || !this.shouldRetry(error)) {
+          throw error;
+        }
+        const baseDelay = 500 * Math.pow(2, attempt);
+        const jitter = Math.floor(Math.random() * 200);
+        await this.sleep(baseDelay + jitter);
+        attempt += 1;
+      }
+    }
+  }
+
+  private async callOpenAiChatCompletion(params: {
+    prompt: string;
+    maxTokens: number;
+    temperature: number;
+  }): Promise<AiCompletionResponse> {
+    const config = this.getOpenAiConfig();
+    if (!config.apiKey) {
+      throw new ServiceUnavailableException('AI provider is not configured');
+    }
+
+    const prompt = params.prompt?.toString() ?? '';
+    if (!prompt.trim()) {
+      throw new BadRequestException('Prompt is required');
+    }
+
+    if (prompt.length > this.getMaxPromptChars()) {
+      throw new BadRequestException('Prompt too large');
+    }
+
+    const maxTokens = Math.min(
+      Math.max(1, Math.floor(params.maxTokens || 1)),
+      this.getMaxTokensCeiling(),
+    );
+    const temperature =
+      typeof params.temperature === 'number' && Number.isFinite(params.temperature)
+        ? Math.min(Math.max(params.temperature, 0), 2)
+        : 0.7;
+
+    try {
+      const payload: OpenAiChatCompletionRequest = {
+        model: config.model,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: maxTokens,
+        temperature,
+      };
+
+      const data = await this.postOpenAiWithRetry<OpenAiChatCompletionResponse>({
+        url: `${config.baseUrl}/chat/completions`,
+        apiKey: config.apiKey,
+        payload,
+        timeoutMs: config.timeoutMs,
+      });
+
+      const model = data?.model || config.model;
+      const choice0 = data?.choices?.[0];
+      const text =
+        (choice0?.message?.content ?? choice0?.text ?? '')?.toString() || '';
+      const usage = data?.usage;
+
+      if (!text.trim()) {
+        throw new ServiceUnavailableException('AI provider returned empty output');
+      }
+
+      return {
+        text,
+        model,
+        usage: {
+          promptTokens: usage?.prompt_tokens ?? 0,
+          completionTokens: usage?.completion_tokens ?? 0,
+          totalTokens:
+            usage?.total_tokens ??
+            (usage?.prompt_tokens ?? 0) + (usage?.completion_tokens ?? 0),
+        },
+      };
+    } catch (error) {
+      this.mapAiProviderError(error, 'completion');
+    }
+  }
+
   /**
    * Generate text completion using AI (e.g., OpenAI GPT).
    *
@@ -52,48 +251,15 @@ export class AiServicesService {
       throw new BadRequestException('Prompt is required');
     }
 
-    // Default values are kept here for future real integrations.
+    // Default values are kept here for real integrations.
     const maxTokens = request.maxTokens || 500;
     const temperature = request.temperature ?? 0.7;
 
-    // TODO: Replace this simulation with actual OpenAI SDK integration.
-    //
-    // Example real integration:
-    //
-    // import OpenAI from 'openai';
-    // const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    // const completion = await openai.chat.completions.create({
-    //   model: 'gpt-4',
-    //   messages: [{ role: 'user', content: request.prompt }],
-    //   max_tokens: maxTokens,
-    //   temperature,
-    // });
-    // return {
-    //   text: completion.choices[0].message.content,
-    //   model: completion.model,
-    //   usage: {
-    //     promptTokens: completion.usage.prompt_tokens,
-    //     completionTokens: completion.usage.completion_tokens,
-    //     totalTokens: completion.usage.total_tokens,
-    //   },
-    // };
-
-    // Simulated response for development and testing:
-    const simulatedText = `AI-generated response (maxTokens=${maxTokens}, temperature=${temperature}) for: "${request.prompt.substring(
-      0,
-      50,
-    )}..."`;
-
-    return Promise.resolve({
-      text: simulatedText,
-      model: 'gpt-4-simulated',
-      usage: {
-        promptTokens: Math.ceil(request.prompt.length / 4),
-        completionTokens: Math.ceil(simulatedText.length / 4),
-        totalTokens: Math.ceil(
-          (request.prompt.length + simulatedText.length) / 4,
-        ),
-      },
+    // v1: always use a real provider. If not configured, fail at call time.
+    return this.callOpenAiChatCompletion({
+      prompt: request.prompt,
+      maxTokens,
+      temperature,
     });
   }
 
@@ -111,22 +277,27 @@ export class AiServicesService {
       throw new BadRequestException('Text is required');
     }
 
-    // TODO: Replace with actual sentiment analysis API call.
-    //
-    // Example:
-    // const response = await openai.completions.create({
-    //   model: 'text-davinci-003',
-    //   prompt: `Classify the sentiment of this text as positive, neutral, or negative:\n\n"${text}"\n\nSentiment:`,
-    //   max_tokens: 10,
-    // });
-    // const sentiment = response.choices[0].text.trim().toLowerCase();
-    // return { sentiment, confidence: 0.85 };
-
-    // Simulated response:
-    return Promise.resolve({
-      sentiment: 'neutral',
-      confidence: 0.75,
+    const completion = await this.callOpenAiChatCompletion({
+      prompt:
+        'Classify the sentiment of the following text as exactly one of: positive, neutral, negative.\n\n' +
+        `Text: "${text}"\n\n` +
+        'Sentiment:',
+      maxTokens: 10,
+      temperature: 0,
     });
+
+    const sentimentRaw = completion.text.trim().toLowerCase();
+    const sentiment =
+      sentimentRaw.includes('positive')
+        ? 'positive'
+        : sentimentRaw.includes('negative')
+          ? 'negative'
+          : 'neutral';
+
+    return {
+      sentiment,
+      confidence: sentimentRaw === sentiment ? 0.9 : 0.6,
+    };
   }
 
   /**
@@ -141,13 +312,29 @@ export class AiServicesService {
       throw new BadRequestException('Topic and content type are required');
     }
 
-    // TODO: Replace with actual API call to generate structured suggestions.
+    const completion = await this.callOpenAiChatCompletion({
+      prompt:
+        `Generate 3 ${contentType} suggestions for the topic "${topic}". ` +
+        'Return ONLY a valid JSON array of strings.',
+      maxTokens: 250,
+      temperature: 0.7,
+    });
 
-    // Simulated response:
-    return Promise.resolve([
-      `${contentType} suggestion 1 for "${topic}"`,
-      `${contentType} suggestion 2 for "${topic}"`,
-      `${contentType} suggestion 3 for "${topic}"`,
-    ]);
+    const raw = completion.text.trim();
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.every((v) => typeof v === 'string')) {
+        return parsed.slice(0, 3);
+      }
+    } catch {
+      // fall through
+    }
+
+    // Fallback: split into lines/bullets
+    const lines = raw
+      .split(/\r?\n/)
+      .map((l) => l.replace(/^[-*\d.\s]+/, '').trim())
+      .filter(Boolean);
+    return lines.slice(0, 3);
   }
 }

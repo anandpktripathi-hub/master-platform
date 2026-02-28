@@ -1,12 +1,24 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Post,
+  Req,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import type { Request } from 'express';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
+import { Tenant } from '../../decorators/tenant.decorator';
+import { PushSubscriptionsService } from './push-subscriptions.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
-  PushSubscriptionsService,
-  SavePushSubscriptionInput,
-} from './push-subscriptions.service';
+  SubscribePushSubscriptionDto,
+  UnsubscribePushSubscriptionDto,
+} from './dto/push-subscription.dto';
 
 interface AuthRequest extends Request {
   user?: {
@@ -15,9 +27,10 @@ interface AuthRequest extends Request {
     tenantId?: string;
   };
 }
-
+@ApiTags('Push Subscriptions')
+@ApiBearerAuth('bearer')
 @Controller('notifications/push-subscriptions')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
 @Roles(
   'tenant_admin',
   'staff',
@@ -32,13 +45,14 @@ export class PushSubscriptionsController {
   @Post('subscribe')
   async subscribe(
     @Req() req: AuthRequest,
-    @Body() body: SavePushSubscriptionInput,
+    @Tenant() tenantIdFromDecorator: string,
+    @Body() body: SubscribePushSubscriptionDto,
   ) {
-    const tenantId = req.user?.tenantId;
+    const tenantId = tenantIdFromDecorator || req.user?.tenantId;
     const userId = req.user?.sub || req.user?._id;
 
     if (!tenantId || !userId) {
-      throw new Error('Tenant or user ID not found');
+      throw new UnauthorizedException('Tenant or user ID not found');
     }
 
     const subscription = await this.pushSubscriptions.saveOrUpdateForUser(
@@ -53,20 +67,22 @@ export class PushSubscriptionsController {
   @Post('unsubscribe')
   async unsubscribe(
     @Req() req: AuthRequest,
-    @Body() body: { endpoint: string },
+    @Tenant() tenantIdFromDecorator: string,
+    @Body() body: UnsubscribePushSubscriptionDto,
   ) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) {
-      throw new Error('Tenant ID not found');
+    const tenantId = tenantIdFromDecorator || req.user?.tenantId;
+    const userId = req.user?.sub || req.user?._id;
+
+    if (!tenantId || !userId) {
+      throw new UnauthorizedException('Tenant or user ID not found');
     }
 
-    if (!body?.endpoint) {
-      throw new Error('Endpoint is required');
-    }
+    if (!body?.endpoint) throw new BadRequestException('Endpoint is required');
 
     await this.pushSubscriptions.removeByEndpoint(
       String(tenantId),
       body.endpoint,
+      String(userId),
     );
 
     return { success: true };

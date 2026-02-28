@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import axios from 'axios';
 import { aiApi } from '../../lib/api';
 import { useApiErrorToast } from '../../providers/QueryProvider';
+import api from '../../api/client';
+import { useTenantContext } from '../../contexts/TenantContext';
 
 import { SECTION_LIBRARY, SectionLibraryItemType } from './SectionsLibrary';
 import HeroSection from './sections/HeroSection';
@@ -108,13 +109,21 @@ const PageBuilder: React.FC = () => {
   const [showMenuBuilder, setShowMenuBuilder] = useState(false);
   const [wysiwygValue, setWysiwygValue] = useState('');
   const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
-  const tenantId = 'demo-tenant'; // TODO: get from auth/session
+  const { tenantId } = useTenantContext();
   const [zOrder, setZOrder] = useState<string[]>([]);
   const [aiTopic, setAiTopic] = useState('');
   const [aiPageType, setAiPageType] = useState('landing page');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiIdeas, setAiIdeas] = useState<string[]>([]);
   const { showErrorToast, showSuccessToast } = useApiErrorToast();
+
+  const requireTenantContext = (): boolean => {
+    if (!tenantId) {
+      showErrorToast(new Error('Workspace/tenant context missing'));
+      return false;
+    }
+    return true;
+  };
 
   const handleDrop = (type: string, column: number) => {
     const id = `${type}-${Date.now()}`;
@@ -150,16 +159,17 @@ const PageBuilder: React.FC = () => {
 
   // Drag reorder handler for layers panel
   const handleReorder = (from: number, to: number) => {
-    setZOrder(prev => {
+    setZOrder((prev) => {
       const arr = [...prev];
       const [removed] = arr.splice(from, 1);
       arr.splice(to, 0, removed);
+
+      setSections((prevSections) =>
+        prevSections.map((s) => ({ ...s, zIndex: arr.indexOf(s.id) })),
+      );
+
       return arr;
     });
-    setSections(prev => prev.map(s => {
-      const newZ = zOrder.indexOf(s.id);
-      return { ...s, zIndex: newZ };
-    }));
   };
 
   // Z-Index controls
@@ -180,6 +190,11 @@ const PageBuilder: React.FC = () => {
 
   // Save designJson to backend
   const savePage = async () => {
+    if (!requireTenantContext()) return;
+    if (!slug?.trim()) {
+      showErrorToast(new Error('Slug is required'));
+      return;
+    }
     setSaving(true);
     try {
       const designJson = {
@@ -187,7 +202,10 @@ const PageBuilder: React.FC = () => {
         columns: Array.from({ length: columns }, (_, i) => ({ id: `col-${i+1}`, width: `${100/columns}%` })),
         layers: zOrder,
       };
-      await axios.post(`/api/cms/pages`, { slug, designJson });
+      await api.post(`/cms/pages`, { slug, designJson });
+      showSuccessToast('Page saved');
+    } catch (error: any) {
+      showErrorToast(error);
     } finally {
       setSaving(false);
     }
@@ -195,27 +213,55 @@ const PageBuilder: React.FC = () => {
 
   // Load page from backend
   const loadPage = async () => {
-    const res = await axios.get(`/api/cms/pages/${slug}`);
-    const { designJson } = res.data;
-    setSections(designJson.sections || []);
-    setColumns(designJson.columns?.length || 2);
-    setZOrder(designJson.layers || []);
+    if (!requireTenantContext()) return;
+    if (!slug?.trim()) {
+      showErrorToast(new Error('Slug is required'));
+      return;
+    }
+    try {
+      const res = (await api.get(`/cms/pages/${slug}`)) as any;
+      const designJson = res?.designJson;
+      if (!designJson || typeof designJson !== 'object') {
+        showErrorToast(new Error('No design data found for this page'));
+        return;
+      }
+      setSections(designJson.sections || []);
+      setColumns(designJson.columns?.length || 2);
+      setZOrder(designJson.layers || []);
+      showSuccessToast('Page loaded');
+    } catch (error: any) {
+      showErrorToast(error);
+    }
+  };
+
+  const deletePage = async (_pageId: string) => {
+    showErrorToast(new Error('Delete page is not implemented in PageBuilder'));
   };
 
   // Auto-save every 30s
   useEffect(() => {
     if (autoSaveTimer.current) clearInterval(autoSaveTimer.current);
+
+    // Avoid spamming toasts when tenant context is missing.
+    if (!tenantId || !slug?.trim()) {
+      return;
+    }
+
     autoSaveTimer.current = setInterval(() => {
-      savePage();
+      if (!saving) void savePage();
     }, 30000);
     return () => autoSaveTimer.current && clearInterval(autoSaveTimer.current);
     // eslint-disable-next-line
-  }, [sections, columns, zOrder, slug]);
+  }, [sections, columns, zOrder, slug, tenantId, saving]);
 
   // Version history UI (fetch on mount)
   useEffect(() => {
-    axios.get(`/api/cms/pages/${slug}/versions`).then(res => setVersions(res.data || []));
-  }, [slug]);
+    if (!tenantId) return;
+    api
+      .get(`/cms/pages/${slug}/versions`)
+      .then((res: any) => setVersions(res || []))
+      .catch(showErrorToast);
+  }, [slug, tenantId, showErrorToast]);
 
   const handleGenerateAiIdeas = async () => {
     if (!aiTopic.trim()) return;
@@ -253,9 +299,28 @@ const PageBuilder: React.FC = () => {
         </div>
         {/* Save Page */}
         <div className="save-section">
-          <input placeholder="Page Title" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} />
-          <input placeholder="Slug" value={formData.slug} onChange={(e) => setFormData({...formData, slug: e.target.value})} />
-          <button onClick={async () => { await savePage({ title: formData.title, slug: formData.slug, status: 'DRAFT' as any, visibility: 'PUBLIC' as any, content: [{ type: 'html', content: canvasRef.current?.innerHTML || '<p>Empty canvas</p>' }] }); }} className="btn-save" > 💾 Save Page </button>
+          <input
+            placeholder="Page Title"
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            disabled={saving}
+          />
+          <input
+            placeholder="Slug"
+            value={slug}
+            onChange={(e) => {
+              setSlug(e.target.value);
+              setFormData({ ...formData, slug: e.target.value });
+            }}
+            disabled={saving}
+          />
+          <button
+            onClick={() => void savePage()}
+            className="btn-save"
+            disabled={saving || !slug.trim() || !tenantId}
+          >
+            💾 Save Page
+          </button>
         </div>
         {/* File Import */}
         <div className="import-section">

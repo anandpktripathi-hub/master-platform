@@ -1,0 +1,69 @@
+
+Windows IP Configuration
+
+
+==============================================================================
+Network Information for Compartment 1 (ACTIVE)
+==============================================================================
+   Host Name . . . . . . . . . . . . : <HOST>
+   Primary Dns Suffix  . . . . . . . : 
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+
+Wireless LAN adapter Local Area Connection* 1:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter
+   Physical Address. . . . . . . . . : 5A-CD-C9-37-14-8F
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter Local Area Connection* 2:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #2
+   Physical Address. . . . . . . . . : 5E-CD-C9-37-14-8F
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter Wi-Fi:
+
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Realtek 8821CE Wireless LAN 802.11ac PCI-E NIC
+   Physical Address. . . . . . . . . : 58-CD-C9-37-14-8F
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : 2405:201:8002:181c:a167:1269:8fbc:2a0(Preferred) 
+   Temporary IPv6 Address. . . . . . : 2405:201:8002:181c:85d4:fafc:f041:2d0b(Preferred) 
+   Link-local IPv6 Address . . . . . : fe80::a09b:f320:b18f:b514%14(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 192.168.29.150(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : 23 February 2026 07:20:23 PM
+   Lease Expires . . . . . . . . . . : 26 February 2026 12:09:55 AM
+   Default Gateway . . . . . . . . . : fe80::f6ca:e7ff:fea8:f526%14
+                                       192.168.29.1
+   DHCP Server . . . . . . . . . . . : 192.168.29.1
+   DHCPv6 IAID . . . . . . . . . . . : 173592009
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2F-C7-99-C1-58-CD-C9-37-14-8F
+   DNS Servers . . . . . . . . . . . : 2405:201:8002:181c::c0a8:1d01
+                                       192.168.29.1
+                                       2405:201:8002:181c::c0a8:1d01
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Ethernet adapter vEthernet (WSL (Hyper-V firewall)):
+
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Hyper-V Virtual Ethernet Adapter
+   Physical Address. . . . . . . . . : 00-15-5D-8B-AF-76
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::9392:c24c:8058:a400%40(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 172.20.208.1(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.240.0
+   Default Gateway . . . . . . . . . : 
+   DHCPv6 IAID . . . . . . . . . . . : 671094109
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2F-C7-99-C1-58-CD-C9-37-14-8F
+   NetBIOS over Tcpip. . . . . . . . : Enabled

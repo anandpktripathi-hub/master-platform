@@ -8,7 +8,7 @@ import {
 import { Request } from 'express';
 import { StripeService } from './stripe.service';
 import { IncomingWebhookEventsService } from '../../common/webhooks/incoming-webhook-events.service';
-import crypto from 'crypto';
+import { createHash } from 'crypto';
 
 @Controller('billing/stripe/webhook')
 export class StripeWebhookHandler {
@@ -51,7 +51,7 @@ export class StripeWebhookHandler {
       throw new BadRequestException('Invalid Stripe signature');
     }
 
-    const payloadHash = crypto.createHash('sha256').update(rawBody).digest('hex');
+    const payloadHash = createHash('sha256').update(rawBody).digest('hex');
 
     const slot = await this.incomingEvents.acquireProcessingSlot({
       provider: 'stripe',

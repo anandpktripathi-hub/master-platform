@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------->8
+[2025-11-30T05:00:06.159515600Z][Docker Desktop Installer.exe.installer][W] attachi[2025-11-30T05:00:06.160051200Z][Docker Desktop Installer.exe.installer][W] attachi[2025-11-30T05:00:06.163423300Z][Docker Desktop Installer.exe.installer][W] attaching to parent console: The handle is invalid.
+[2025-11-30T05:00:06.170041700Z][Docker Desktop Installer.exe.installer] starting, console mode: false
+[2025-11-30T05:00:06.171118100Z][Docker Desktop I[2025-11-30T05:00:06.212804000Z][Docker Desktop Installer.exe.installer] extracting[2025-11-30T05:00:06.223013700Z][Docker Desktop Installer.exe.installer] extracting[2025-11-30T05:00:06.223520400Z][Docker Des[2025-11-30T05:01:13.529557400Z][Docker Desktop Installer.exe.installer] waiting for installer to finish
+[2025-11-30T05:01:13.529557400Z][Docker Desktop Installer.exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1764478806166768300\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1764478806212804000\DockerDesktop.d4w]
+[2025-11-30T05:04:11.294790800Z][Docker Desktop Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1764478806212804000
+[2025-11-30T05:04:11.295903100Z][Docker Desktop Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1764478806166768300
+[2025-11-30T05:04:11.295903100Z][Docker Desktop Installer.exe.installer][E] installer exited with status 4294967291
+\Temp\DockerDesktopInstallers\1764478806170041700
+[2025-11-30T05:04:10.333426900Z][Docker Desktop Installer.exe.installer][E] installer exited with status 4294967291
+-------------------------------------------------------------------------------->8
+[2025-11-30T05:04:25.339701400Z][Docker Desktop Installer.exe.installer][W] attaching to parent console: The handle is invalid.
+[2025-11-30T05:04:25.342280400Z][Docker Desktop Installer.exe.installer] starting, console mode: false
+[2025-11-30T05:04:25.342875600Z][Docker Desktop Installer.exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1764479065342280400\\Docker Desktop Installer.exe"
+[2025-11-30T05:04:25.376605800Z][Docker Desktop Installer.exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1764479065375605600\\DockerDesktop.d4w"
+[2025-11-30T05:04:27.153914200Z][Docker Desktop Installer.exe.installer] waiting for installer to finish
+[2025-11-30T05:04:27.153914200Z][Docker Desktop Installer.exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1764479065342280400\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1764479065375605600\DockerDesktop.d4w]
+[2025-11-30T05:07:36.676189300Z][Docker Desktop Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1764479065375605600
+[2025-11-30T05:07:36.680012800Z][Docker Desktop Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1764479065342280400
+[2025-11-30T05:07:36.680012800Z][Docker Desktop Installer.exe.installer][E] installer exited with status 1073807364
+-------------------------------------------------------------------------------->8
+[2026-02-02T07:40:26.195284000Z][Docker Desktop Installer.exe.installer][W] attaching to parent console: The handle is invalid.
+[2026-02-02T07:40:26.203735500Z][Docker Desktop Installer.exe.installer] starting, console mode: false
+[2026-02-02T07:40:26.209299900Z][Docker Desktop Installer.exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1770018026204263800\\Docker Desktop Installer.exe"
+[2026-02-02T07:40:26.383576400Z][Docker Desktop Installer.exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1770018026382508500\\DockerDesktop.d4w"
+[2026-02-02T07:40:55.848131500Z][Docker Desktop Installer.exe.installer] waiting for installer to finish
+[2026-02-02T07:40:55.850129200Z][Docker Desktop Installer.exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1770018026204263800\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770018026382508500\DockerDesktop.d4w]
+[2026-02-02T07:47:53.737010500Z][Docker Desktop Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770018026382508500
+[2026-02-02T07:47:53.744500800Z][Docker Desktop Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770018026204263800

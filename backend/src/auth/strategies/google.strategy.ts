@@ -5,8 +5,8 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  private readonly logger = new Logger(GoogleStrategy.name);
-  private configService: ConfigService;
+  private readonly logger: Logger;
+  private readonly configService: ConfigService;
 
   constructor(configService: ConfigService) {
     const clientID = configService.get<string>('GOOGLE_CLIENT_ID');
@@ -15,6 +15,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       'GOOGLE_CALLBACK_URL',
       'http://localhost:4000/api/v1/auth/google/callback',
     );
+    super({
+      clientID: clientID || 'disabled',
+      clientSecret: clientSecret || 'disabled',
+      callbackURL,
+      scope: ['email', 'profile'],
+    });
+
+    this.logger = new Logger(GoogleStrategy.name);
+    this.configService = configService;
 
     if (!clientID || !clientSecret) {
       // Do not crash the whole server if OAuth isn't configured.
@@ -23,13 +32,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         'GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET missing; Google OAuth is disabled until configured.',
       );
     }
-    super({
-      clientID: clientID || 'disabled',
-      clientSecret: clientSecret || 'disabled',
-      callbackURL,
-      scope: ['email', 'profile'],
-    });
-    this.configService = configService;
   }
 
   async validate(

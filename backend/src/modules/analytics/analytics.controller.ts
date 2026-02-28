@@ -3,7 +3,10 @@ import { AnalyticsService } from './analytics.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
-
+import type { SaasOverviewResponse } from './dto/saas-overview.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Analytics')
+@ApiBearerAuth('bearer')
 @Controller('admin/analytics')
 @UseGuards(JwtAuthGuard, RoleGuard)
 export class AnalyticsController {
@@ -15,8 +18,8 @@ export class AnalyticsController {
    * for use in the super admin dashboard.
    */
   @Get('saas-overview')
-  @Roles('PLATFORM_SUPERADMIN')
-  async getSaasOverview(): Promise<any> {
+  @Roles('PLATFORM_SUPER_ADMIN', 'PLATFORM_SUPERADMIN')
+  async getSaasOverview(): Promise<SaasOverviewResponse> {
     return this.analyticsService.getSaasOverview();
   }
 }

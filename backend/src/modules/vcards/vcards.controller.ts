@@ -14,7 +14,11 @@ import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { Tenant } from '../../decorators/tenant.decorator';
 import { WorkspaceGuard } from '../../guards/workspace.guard';
-
+import { CreateVCardDto, UpdateVCardDto } from './dto/vcards.dto';
+import { Public } from '../../common/decorators/public.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Vcards')
+@ApiBearerAuth('bearer')
 @Controller()
 export class VcardsController {
   constructor(private readonly vcardsService: VcardsService) {}
@@ -30,7 +34,7 @@ export class VcardsController {
   @Post('vcards')
   @UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
   @Roles('tenant_admin', 'TENANT_ADMIN', 'PLATFORM_SUPERADMIN')
-  createTenantVcard(@Tenant() tenantId: string, @Body() body: any) {
+  createTenantVcard(@Tenant() tenantId: string, @Body() body: CreateVCardDto) {
     return this.vcardsService.createForTenant(tenantId, body);
   }
 
@@ -40,7 +44,7 @@ export class VcardsController {
   updateTenantVcard(
     @Tenant() tenantId: string,
     @Param('id') id: string,
-    @Body() body: any,
+    @Body() body: UpdateVCardDto,
   ) {
     return this.vcardsService.updateForTenant(tenantId, id, body);
   }
@@ -54,7 +58,9 @@ export class VcardsController {
 
   // Public read-only endpoint
   @Get('public/vcards/:id')
+  @Public()
   getPublicVcard(@Param('id') id: string) {
     return this.vcardsService.getPublicVcard(id);
   }
 }
+

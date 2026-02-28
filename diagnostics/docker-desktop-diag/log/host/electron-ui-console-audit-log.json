@@ -1,0 +1,35 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 5
+    },
+    "auditLog": "log\\host\\electron-ui-console-audit-log.json",
+    "files": [
+        {
+            "date": 1771229484330,
+            "name": "log\\host\\electron-ui-console-2026-02-16.log",
+            "hash": "667235b7915239b1079a323f08d9f170"
+        },
+        {
+            "date": 1771297155094,
+            "name": "log\\host\\electron-ui-console-2026-02-17.log",
+            "hash": "cdc7ed0f491545f58933274afcfa1148"
+        },
+        {
+            "date": 1771465654922,
+            "name": "log\\host\\electron-ui-console-2026-02-19.log",
+            "hash": "06ccbece0abddcb7968136b6302944f6"
+        },
+        {
+            "date": 1771559433073,
+            "name": "log\\host\\electron-ui-console-2026-02-20.log",
+            "hash": "0a68b1cf5e9ba0a750e0c56fabefc9ca"
+        },
+        {
+            "date": 1771986217021,
+            "name": "log\\host\\electron-ui-console-2026-02-25.log",
+            "hash": "32a84ea3d3c6777b3e44b945b672ee36"
+        }
+    ],
+    "hashType": "md5"
+}

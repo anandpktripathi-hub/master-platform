@@ -42,6 +42,13 @@ export class OfflinePaymentsService {
     private readonly packageService: PackageService,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   async createRequest(params: {
     tenantId: string;
     userId: string;
@@ -67,9 +74,12 @@ export class OfflinePaymentsService {
       throw new BadRequestException('Amount must be greater than zero');
     }
 
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
+    const userOid = this.toObjectId(userId, 'userId');
+
     const doc = new this.offlineModel({
-      tenantId: new Types.ObjectId(tenantId),
-      userId: new Types.ObjectId(userId),
+      tenantId: tenantOid,
+      userId: userOid,
       amount,
       currency: currency.toUpperCase(),
       method,
@@ -83,8 +93,9 @@ export class OfflinePaymentsService {
   }
 
   async listForTenant(tenantId: string): Promise<OfflinePaymentRequest[]> {
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     return this.offlineModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantOid })
       .sort({ createdAt: -1 })
       .exec();
   }
@@ -97,6 +108,10 @@ export class OfflinePaymentsService {
     id: string,
     status: OfflinePaymentRequestStatus,
   ): Promise<OfflinePaymentRequest> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('id must be a valid ObjectId');
+    }
+
     const doc = await this.offlineModel.findById(id).exec();
     if (!doc) {
       throw new NotFoundException('Offline payment request not found');

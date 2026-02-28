@@ -15,50 +15,46 @@ import {
 import {
   TenantPackage,
   UsageCounters,
+  TenantPackageDocument,
 } from '../../../database/schemas/tenant-package.schema';
 import { Tenant } from '../../../database/schemas/tenant.schema';
 import { AuditLogService } from '../../../services/audit-log.service';
 import { Optional } from '@nestjs/common';
 import type { BillingNotificationService } from '../../billing/billing-notification.service';
 import type { TenantsService } from '../../tenants/tenants.service';
+import type {
+  AssignPackageDto,
+  CreatePackageDto,
+  UpdatePackageDto,
+} from '../dto/package.dto';
 // import { PaymentGatewayService } from '../../payments/services/payment-gateway.service';
 // import { PaymentLogService } from '../../payments/services/payment-log.service';
-
-export class CreatePackageDto {
-  name!: string;
-  description?: string;
-  price!: number;
-  billingCycle!: 'monthly' | 'annual' | 'lifetime';
-  trialDays?: number;
-  featureSet!: FeatureSet;
-  limits!: PackageLimits;
-  order?: number;
-  expiryWarningDays?: number;
-}
-
-export class UpdatePackageDto {
-  name?: string;
-  description?: string;
-  price?: number;
-  billingCycle?: 'monthly' | 'annual' | 'lifetime';
-  trialDays?: number;
-  isActive?: boolean;
-  featureSet?: Partial<FeatureSet>;
-  limits?: Partial<PackageLimits>;
-  order?: number;
-  expiryWarningDays?: number;
-}
-
-export class AssignPackageDto {
-  packageId!: string;
-  tenantId!: string;
-  startTrial?: boolean; // Start with trial period
-  notes?: string;
-}
 
 @Injectable()
 export class PackageService {
   private readonly logger = new Logger(PackageService.name);
+
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(value);
+  }
+
+  private normalizeLimit(raw: unknown, defaultValue = 50, max = 100): number {
+    const n = typeof raw === 'number' ? raw : Number.NaN;
+    if (!Number.isFinite(n)) return defaultValue;
+    const value = Math.floor(n);
+    if (value <= 0) return defaultValue;
+    return Math.min(value, max);
+  }
+
+  private normalizeSkip(raw: unknown): number {
+    const n = typeof raw === 'number' ? raw : Number.NaN;
+    if (!Number.isFinite(n)) return 0;
+    const value = Math.floor(n);
+    return value < 0 ? 0 : value;
+  }
 
   constructor(
     @InjectModel(Package.name) private packageModel: Model<Package>,
@@ -137,7 +133,8 @@ export class PackageService {
     updateDto: UpdatePackageDto,
     userId?: string,
   ): Promise<Package> {
-    const pkg = await this.packageModel.findById(packageId);
+    const packageObjectId = this.toObjectId(packageId, 'packageId');
+    const pkg = await this.packageModel.findById(packageObjectId);
 
     if (!pkg) {
       throw new NotFoundException('Package not found');
@@ -220,7 +217,8 @@ export class PackageService {
    * Delete a package
    */
   async deletePackage(packageId: string, userId?: string): Promise<void> {
-    const pkg = await this.packageModel.findById(packageId);
+    const packageObjectId = this.toObjectId(packageId, 'packageId');
+    const pkg = await this.packageModel.findById(packageObjectId);
 
     if (!pkg) {
       throw new NotFoundException('Package not found');
@@ -228,7 +226,7 @@ export class PackageService {
 
     // Check if any tenants are using this package
     const tenantCount = await this.tenantPackageModel.countDocuments({
-      packageId,
+      packageId: packageObjectId,
     });
 
     if (tenantCount > 0) {
@@ -239,7 +237,7 @@ export class PackageService {
 
     const before = pkg.toObject();
 
-    await this.packageModel.deleteOne({ _id: packageId });
+    await this.packageModel.deleteOne({ _id: packageObjectId });
 
     // Audit log
     await this.auditLogService.log({
@@ -258,7 +256,8 @@ export class PackageService {
    * Get a single package
    */
   async getPackage(packageId: string): Promise<Package> {
-    const pkg = await this.packageModel.findById(packageId);
+    const packageObjectId = this.toObjectId(packageId, 'packageId');
+    const pkg = await this.packageModel.findById(packageObjectId);
 
     if (!pkg) {
       throw new NotFoundException('Package not found');
@@ -279,8 +278,8 @@ export class PackageService {
       filter.isActive = options.isActive;
     }
 
-    const limit = Math.min(options.limit || 50, 100);
-    const skip = options.skip || 0;
+    const limit = this.normalizeLimit(options.limit, 50, 100);
+    const skip = this.normalizeSkip(options.skip);
 
     const [data, total] = await Promise.all([
       this.packageModel
@@ -312,14 +311,17 @@ export class PackageService {
     paymentGatewayService?: import('../../payments/services/payment-gateway.service').PaymentGatewayService,
     paymentLogService?: import('../../payments/services/payment-log.service').PaymentLogService,
   ): Promise<TenantPackage> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const packageObjectId = this.toObjectId(packageId, 'packageId');
+
     // Validate tenant exists
-    const tenant = await this.tenantModel.findById(tenantId);
+    const tenant = await this.tenantModel.findById(tenantObjectId);
     if (!tenant) {
       throw new NotFoundException('Tenant not found');
     }
 
     // Validate package exists
-    const pkg = await this.packageModel.findById(packageId);
+    const pkg = await this.packageModel.findById(packageObjectId);
     if (!pkg) {
       throw new NotFoundException('Package not found');
     }
@@ -386,7 +388,7 @@ export class PackageService {
     // Check if tenant already has a package (unique by tenantId). For upgrades/downgrades,
     // update in-place to avoid unique-index collisions and to support plan changes.
     const existing = await this.tenantPackageModel
-      .findOne({ tenantId: new Types.ObjectId(tenantId) })
+      .findOne({ tenantId: tenantObjectId })
       .exec();
 
     // Calculate dates
@@ -459,8 +461,8 @@ export class PackageService {
       saved = await existing.save();
     } else {
       const tenantPackage = new this.tenantPackageModel({
-        tenantId: new Types.ObjectId(tenantId),
-        packageId: new Types.ObjectId(packageId),
+        tenantId: tenantObjectId,
+        packageId: packageObjectId,
         status: statusValue,
         startedAt,
         trialEndsAt,
@@ -477,7 +479,7 @@ export class PackageService {
 
     // Update tenant's planKey
     await this.tenantModel.updateOne(
-      { _id: tenantId },
+      { _id: tenantObjectId },
       { planKey: pkg.name, status: options.startTrial ? 'trialing' : 'active' },
     );
 
@@ -500,8 +502,9 @@ export class PackageService {
    * Get tenant's current package
    */
   async getTenantPackage(tenantId: string): Promise<TenantPackage | null> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.tenantPackageModel
-      .findOne({ tenantId: new Types.ObjectId(tenantId) })
+      .findOne({ tenantId: tenantObjectId })
       .populate('packageId')
       .exec();
   }

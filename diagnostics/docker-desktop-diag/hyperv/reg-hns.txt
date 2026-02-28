@@ -1,0 +1,138 @@
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns
+
+
+Name                           Property                                        
+----                           --------                                        
+Parameters                     CompatibleMajorVersion : 16                     
+                               CompatibleMinorVersion : 0                      
+                               CurrentMajorVersion    : 16                     
+                               CurrentMinorVersion    : 0                      
+                               ServiceDll             :                        
+                               C:\WINDOWS\System32\HostNetSvc.dll              
+                               ServiceDllUnloadOnStop : 1                      
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\Parameters
+
+
+Name                           Property                                        
+----                           --------                                        
+FSEPortPolicy                  DHCPClientPortPolicy-0        : 0 | 17 | 68     
+                               DHCPClientPortPolicy-1        : 1 | 17 | 68     
+                               mDNSPortPolicy-0              : 0 | 17 | 5353   
+                               RPCEndpointMapperPortPolicy-0 : 0 | 6 | 135     
+                               RPCEndpointMapperPortPolicy-1 : 1 | 6 | 135     
+                               RTPPortPolicy-0               : 0 | 17 | 5004   
+                               RTPPortPolicy-1               : 0 | 6 | 5004    
+                               RTPPortPolicy-2               : 1 | 6 | 5004    
+                               SSDPPortPolicy-0              : 0 | 17 | 2869   
+                               SSDPPortPolicy-1              : 0 | 6 | 2869    
+                               SSDPPortPolicy-2              : 1 | 6 | 2869    
+                               UPNPPortPolicy-0              : 0 | 17 | 1900   
+                               UPNPPortPolicy-1              : 0 | 6 | 1900    
+                               UPNPPortPolicy-2              : 1 | 6 | 1900    
+                               WSDPortPolicy-0               : 0 | 17 | 3702   
+                               WSDPortPolicy-1               : 0 | 6 | 3702    
+                               WSDPortPolicy-2               : 1 | 6 | 3702    
+                               WSDPortPolicy-3               : 0 | 17 | 5357   
+                               WSDPortPolicy-4               : 0 | 6 | 5357    
+                               WSDPortPolicy-5               : 1 | 6 | 5357    
+                               WSDPortPolicy-6               : 0 | 17 | 5358   
+                               WSDPortPolicy-7               : 0 | 6 | 5358    
+                               WSDPortPolicy-8               : 1 | 6 | 5358    
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns
+
+
+Name                           Property                                        
+----                           --------                                        
+State                                                                          
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\State
+
+
+Name                           Property                                        
+----                           --------                                        
+HostComputeNetwork                                                             
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\State\HostCo
+    mputeNetwork
+
+
+Name                           Property                                        
+----                           --------                                        
+PersistentStore                                                                
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\State\HostCo
+    mputeNetwork\PersistentStore
+
+
+Name                           Property                                        
+----                           --------                                        
+Activity                       F0C418C6-186D-4409-A75B-0C61C518B443 : {254,    
+                               255, 7, 0...}                                   
+                               92F4D080-08EF-4F37-A196-4AE739D77105 : {254,    
+                               255, 7, 0...}                                   
+Endpoint                                                                       
+GuestNetworkService                                                            
+Namespace                                                                      
+Network                        6D39117A-69E3-436A-9568-F5550EF66EE0 : {254,    
+                               255, 4, 0...}                                   
+NonPersistent                                                                  
+Pending                                                                        
+PolicyList                                                                     
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\State\HostCo
+    mputeNetwork
+
+
+Name                           Property                                        
+----                           --------                                        
+VolatileStore                                                                  
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\State\HostCo
+    mputeNetwork\VolatileStore
+
+
+Name                           Property                                        
+----                           --------                                        
+Activity                                                                       
+Endpoint                                                                       
+GuestNetworkService                                                            
+Namespace                      910F7D92-BA2D-4C3F-98AE-7C0AC590D2DC : {254,    
+                               255, 4, 0...}                                   
+Network                        790E58B4-7939-4434-9358-89AE7DDBE87E : {254,    
+                               255, 4, 0...}                                   
+NonPersistent                                                                  
+Pending                                                                        
+PolicyList                                                                     
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns
+
+
+Name                           Property                                        
+----                           --------                                        
+TriggerInfo                                                                    
+
+
+    Hive: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\hns\TriggerInfo
+
+
+Name                           Property                                        
+----                           --------                                        
+0                              Action    : 1                                   
+                               Data0     : {50, 0, 54, 0...}                   
+                               DataType0 : 2                                   
+                               GUID      : {103, 209, 144, 188...}             
+                               Type      : 6                                   
+
+

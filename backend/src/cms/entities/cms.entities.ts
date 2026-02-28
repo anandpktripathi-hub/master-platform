@@ -71,8 +71,29 @@ export const CmsPageTemplateSchema = SchemaFactory.createForClass(
 
 @Schema({ timestamps: true })
 export class CmsMenuItemEntity {
+  @Prop({ required: true })
+  tenantId!: string;
+
+  @Prop({ required: true })
+  menuName!: string;
+
+  @Prop({ required: true })
+  label!: string;
+
+  @Prop()
+  url?: string;
+
+  @Prop()
+  pageId?: string;
+
   @Prop()
   parentItemId?: string;
+
+  @Prop({ default: 0 })
+  sortOrder!: number;
+
+  @Prop({ default: true })
+  isVisible!: boolean;
 
   @Prop({ type: [Object] })
   children: CmsMenuItemEntity[] = [];

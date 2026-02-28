@@ -1,0 +1,1108 @@
+{
+  "generatedAt": "2026-02-24T04:36:18.165Z",
+  "mode": "code-only",
+  "sources": {
+    "backendModuleScan": "reports/backend_module_readiness_code_scan.json",
+    "frontendRouteMap": "launch-v1-route-map.out.txt",
+    "embeddedRouteMapJsonGeneratedAt": "2026-02-17T09:03:45.270Z"
+  },
+  "backend": {
+    "generatedAt": "2026-02-23T12:42:10.969Z",
+    "totalModules": 43,
+    "completeModules": 43,
+    "completePct": 100,
+    "avgPct": 100,
+    "minPct": 100,
+    "missingSummary": [],
+    "modules": [
+      {
+        "name": "accounting",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "ai-services",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "analytics",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "auth",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 7
+      },
+      {
+        "name": "billing",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 7
+      },
+      {
+        "name": "chat",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "cms",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 2
+      },
+      {
+        "name": "coupons",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 3
+      },
+      {
+        "name": "crm",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 6
+      },
+      {
+        "name": "custom-domains",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "dashboard",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "developer-portal",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "domains",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 3
+      },
+      {
+        "name": "health",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "hierarchy",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 16
+      },
+      {
+        "name": "hrm",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "logger",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "logs",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "marketplace",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "metrics",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "notifications",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 9
+      },
+      {
+        "name": "onboarding",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "orders",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "packages",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 4
+      },
+      {
+        "name": "payments",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 3
+      },
+      {
+        "name": "pos",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "products",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 7
+      },
+      {
+        "name": "profile",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "projects",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "rbac",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 6
+      },
+      {
+        "name": "reports",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "seo",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "settings",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 6
+      },
+      {
+        "name": "social",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "support",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "tenant",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "tenants",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "theme",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "themes",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 1
+      },
+      {
+        "name": "user",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "users",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 9
+      },
+      {
+        "name": "vcards",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 5
+      },
+      {
+        "name": "workspaces",
+        "pct": 100,
+        "missing": [],
+        "tests": "both",
+        "filesCount": 6
+      }
+    ]
+  },
+  "frontend": {
+    "totalRoutes": 74,
+    "statusCounts": {
+      "In": 74
+    },
+    "inPct": 100,
+    "routesWithApiCalls": 17,
+    "apiCallsPct": 23,
+    "routesWithMappedApiCalls": 17,
+    "mappedApiCallsPct": 23,
+    "moduleUsage": [
+      {
+        "module": "auth",
+        "apiCallCount": 4
+      },
+      {
+        "module": "tenant",
+        "apiCallCount": 3
+      },
+      {
+        "module": "packages",
+        "apiCallCount": 3
+      },
+      {
+        "module": "billings",
+        "apiCallCount": 2
+      },
+      {
+        "module": "cms",
+        "apiCallCount": 2
+      },
+      {
+        "module": "me",
+        "apiCallCount": 2
+      },
+      {
+        "module": "billing",
+        "apiCallCount": 1
+      },
+      {
+        "module": "features",
+        "apiCallCount": 1
+      },
+      {
+        "module": "dashboards",
+        "apiCallCount": 1
+      },
+      {
+        "module": "payments",
+        "apiCallCount": 1
+      },
+      {
+        "module": "offline-payments",
+        "apiCallCount": 1
+      },
+      {
+        "module": "products",
+        "apiCallCount": 1
+      },
+      {
+        "module": "orders",
+        "apiCallCount": 1
+      },
+      {
+        "module": "users",
+        "apiCallCount": 1
+      },
+      {
+        "module": "accounting",
+        "apiCallCount": 1
+      },
+      {
+        "module": "hrm",
+        "apiCallCount": 1
+      },
+      {
+        "module": "projects",
+        "apiCallCount": 1
+      },
+      {
+        "module": "pos",
+        "apiCallCount": 1
+      },
+      {
+        "module": "health",
+        "apiCallCount": 1
+      },
+      {
+        "module": "metrics",
+        "apiCallCount": 1
+      },
+      {
+        "module": "onboarding",
+        "apiCallCount": 1
+      }
+    ],
+    "routes": [
+      {
+        "status": "In",
+        "uiRoute": "/",
+        "component": "LandingPage",
+        "componentFile": "frontend/src/pages/LandingPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app",
+        "component": "App",
+        "componentFile": "frontend/src/App.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/accounting",
+        "component": "AccountingDashboard",
+        "componentFile": "frontend/src/pages/AccountingDashboard.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/analytics/billing",
+        "component": "AdminBillingAnalyticsPage",
+        "componentFile": "frontend/src/pages/admin/AdminBillingAnalyticsPage.tsx",
+        "apiCalls": [
+          "GET /billing/analytics/revenue"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/domains",
+        "component": "AdminDomainsPage",
+        "componentFile": "frontend/src/pages/admin/AdminDomainsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/invoices",
+        "component": "AdminInvoicesPage",
+        "componentFile": "frontend/src/pages/admin/AdminInvoicesPage.tsx",
+        "apiCalls": [
+          "GET /billings/admin/all",
+          "POST /billings/admin"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/navigation-map",
+        "component": "AdminNavigationMapPage",
+        "componentFile": "frontend/src/pages/admin/AdminNavigationMapPage.tsx",
+        "apiCalls": [
+          "GET /features"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/overview",
+        "component": "PlatformOverviewDashboard",
+        "componentFile": "frontend/src/pages/admin/PlatformOverviewDashboard.tsx",
+        "apiCalls": [
+          "GET /dashboards/admin/saas-overview"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/payments/logs",
+        "component": "PaymentLogsPage",
+        "componentFile": "frontend/src/pages/admin/PaymentLogsPage.tsx",
+        "apiCalls": [
+          "GET /payments/logs"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/payments/offline",
+        "component": "OfflinePaymentsAdminPage",
+        "componentFile": "frontend/src/billing/OfflinePaymentsAdminPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/settings/advanced",
+        "component": "AdvancedSettings",
+        "componentFile": "frontend/src/pages/AdvancedSettings.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/settings/ui",
+        "component": "UiSettings",
+        "componentFile": "frontend/src/pages/UiSettings.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/support/tickets",
+        "component": "AdminSupportTickets",
+        "componentFile": "frontend/src/pages/AdminSupportTickets.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/tenants",
+        "component": "TenantsPage",
+        "componentFile": "frontend/src/pages/admin/Tenants.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/admin/themes",
+        "component": "AdminThemesPage",
+        "componentFile": "frontend/src/pages/admin/AdminThemesPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/affiliate",
+        "component": "AffiliateDashboard",
+        "componentFile": "frontend/src/pages/AffiliateDashboard.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/ai-tools",
+        "component": "AiToolsPage",
+        "componentFile": "frontend/src/pages/AiToolsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/billing",
+        "component": "BillingDashboard",
+        "componentFile": "frontend/src/pages/BillingDashboard.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/billing/checkout/stripe",
+        "component": "BillingStripeCheckoutPage",
+        "componentFile": "frontend/src/pages/BillingStripeCheckoutPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/billing/invoices",
+        "component": "Invoices",
+        "componentFile": "frontend/src/pages/Invoices.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/billing/offline",
+        "component": "OfflinePaymentsPage",
+        "componentFile": "frontend/src/billing/OfflinePaymentsPage.tsx",
+        "apiCalls": [
+          "POST /offline-payments"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/billing/paypal/return",
+        "component": "BillingPaypalReturn",
+        "componentFile": "frontend/src/pages/BillingPaypalReturn.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/chat",
+        "component": "TeamChatPage",
+        "componentFile": "frontend/src/pages/TeamChatPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/cms/analytics",
+        "component": "CmsAnalyticsPage",
+        "componentFile": "frontend/src/pages/cms/CmsAnalyticsPage.tsx",
+        "apiCalls": [
+          "GET /cms/analytics/tenant"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/cms/page-builder",
+        "component": "CmsPageBuilder",
+        "componentFile": "frontend/src/pages/CmsPageBuilder.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/cms/seo-audit",
+        "component": "CmsSeoAuditPage",
+        "componentFile": "frontend/src/pages/cms/CmsSeoAuditPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/company",
+        "component": "CompanySettings",
+        "componentFile": "frontend/src/pages/CompanySettings.tsx",
+        "apiCalls": [
+          "GET /tenant/profile",
+          "PUT /tenant/profile"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/crm/analytics",
+        "component": "CrmAnalyticsPage",
+        "componentFile": "frontend/src/pages/CrmAnalyticsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/crm/companies",
+        "component": "CrmCompaniesPage",
+        "componentFile": "frontend/src/pages/CrmCompaniesPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/crm/contacts",
+        "component": "CrmContactsPage",
+        "componentFile": "frontend/src/pages/CrmContactsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/crm/deals",
+        "component": "CrmDealsPage",
+        "componentFile": "frontend/src/pages/CrmDealsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/crm/kanban",
+        "component": "CrmKanbanPage",
+        "componentFile": "frontend/src/pages/CrmKanbanPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/crm/tasks",
+        "component": "CrmMyTasksPage",
+        "componentFile": "frontend/src/pages/CrmMyTasksPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard",
+        "component": "Dashboard",
+        "componentFile": "frontend/src/pages/Dashboard.tsx",
+        "apiCalls": [
+          "GET /tenant/dashboard",
+          "GET /products/stats/dashboard",
+          "GET /orders/stats/dashboard",
+          "GET /users/stats/dashboard",
+          "GET /accounting/summary",
+          "GET /hrm/summary",
+          "GET /projects/summary",
+          "GET /pos/summary"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard/audit-logs",
+        "component": "AuditLogs",
+        "componentFile": "frontend/src/pages/dashboard/AuditLogs.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard/cms-menu",
+        "component": "CmsMenuManagement",
+        "componentFile": "frontend/src/pages/dashboard/CmsMenuManagement.tsx",
+        "apiCalls": [
+          "GET /cms/menu"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard/custom-domains",
+        "component": "CustomDomains",
+        "componentFile": "frontend/src/pages/dashboard/CustomDomains.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard/package-features",
+        "component": "PackageFeatures",
+        "componentFile": "frontend/src/pages/dashboard/PackageFeatures.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard/system-health",
+        "component": "SystemHealthPage",
+        "componentFile": "frontend/src/pages/dashboard/SystemHealthPage.tsx",
+        "apiCalls": [
+          "GET /health",
+          "GET /metrics"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/dashboard/tenant-quota",
+        "component": "TenantQuotaUsage",
+        "componentFile": "frontend/src/pages/dashboard/TenantQuotaUsage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/developer",
+        "component": "DeveloperPortalPage",
+        "componentFile": "frontend/src/pages/developer/DeveloperPortalPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/domains",
+        "component": "DomainListPage",
+        "componentFile": "frontend/src/pages/domains/DomainListPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/domains/health",
+        "component": "TenantDomainHealthPage",
+        "componentFile": "frontend/src/pages/domains/TenantDomainHealthPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/hierarchy",
+        "component": "HierarchyManagement",
+        "componentFile": "frontend/src/pages/HierarchyManagement.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/hrm",
+        "component": "HrmDashboard",
+        "componentFile": "frontend/src/pages/HrmDashboard.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/manage-roles",
+        "component": "ManageRoles",
+        "componentFile": "frontend/src/pages/ManageRoles.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/manage-users",
+        "component": "ManageUsers",
+        "componentFile": "frontend/src/pages/ManageUsers.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/marketplace",
+        "component": "MarketplacePage",
+        "componentFile": "frontend/src/pages/marketplace/MarketplacePage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/notifications",
+        "component": "NotificationCenterPage",
+        "componentFile": "frontend/src/pages/NotificationCenterPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/onboarding",
+        "component": "Onboarding",
+        "componentFile": "frontend/src/pages/Onboarding.tsx",
+        "apiCalls": [
+          "GET /packages/me",
+          "GET /packages/me/usage",
+          "POST /onboarding/seed-sample"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/packages",
+        "component": "PackagesPage",
+        "componentFile": "frontend/src/pages/packages/PackagesPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/pos",
+        "component": "PosDashboard",
+        "componentFile": "frontend/src/pages/PosDashboard.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/profile",
+        "component": "ProfileSettings",
+        "componentFile": "frontend/src/pages/ProfileSettings.tsx",
+        "apiCalls": [
+          "GET /me/profile",
+          "PUT /me/profile"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/profile/public",
+        "component": "ProfilePublicEdit",
+        "componentFile": "frontend/src/pages/ProfilePublicEdit.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/projects",
+        "component": "ProjectsDashboard",
+        "componentFile": "frontend/src/pages/ProjectsDashboard.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/seo",
+        "component": "SeoToolsPage",
+        "componentFile": "frontend/src/pages/SeoToolsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/social/connections",
+        "component": "MyConnectionsPage",
+        "componentFile": "frontend/src/pages/MyConnectionsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/social/feed",
+        "component": "ActivityFeedPage",
+        "componentFile": "frontend/src/pages/ActivityFeedPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/social/requests",
+        "component": "ConnectionRequestsPage",
+        "componentFile": "frontend/src/pages/ConnectionRequestsPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/support/tickets",
+        "component": "SupportTickets",
+        "componentFile": "frontend/src/pages/SupportTickets.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/tenant/theme/customize",
+        "component": "TenantThemeCustomizerPage",
+        "componentFile": "frontend/src/pages/tenant/TenantThemeCustomizerPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/tenant/theme/select",
+        "component": "TenantThemeSelectorPage",
+        "componentFile": "frontend/src/pages/tenant/TenantThemeSelectorPage.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/users",
+        "component": "ManageUsers",
+        "componentFile": "frontend/src/pages/ManageUsers.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/app/vcards",
+        "component": "VcardsManager",
+        "componentFile": "frontend/src/pages/VcardsManager.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/b/:slug",
+        "component": "BusinessProfilePublicView",
+        "componentFile": "frontend/src/pages/BusinessProfilePublicView.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/dashboard",
+        "component": "Navigate",
+        "componentFile": "",
+        "apiCalls": [],
+        "notes": "Redirect route (Navigate)."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/directory",
+        "component": "BusinessDirectory",
+        "componentFile": "frontend/src/pages/BusinessDirectory.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/forgot-password",
+        "component": "ForgotPassword",
+        "componentFile": "frontend/src/pages/ForgotPassword.tsx",
+        "apiCalls": [
+          "POST /auth/request-password-reset"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/login",
+        "component": "Login",
+        "componentFile": "frontend/src/pages/Login.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/reset-password",
+        "component": "ResetPassword",
+        "componentFile": "frontend/src/pages/ResetPassword.tsx",
+        "apiCalls": [
+          "POST /auth/reset-password"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/signup",
+        "component": "SignupWizard",
+        "componentFile": "frontend/src/pages/SignupWizard.tsx",
+        "apiCalls": [
+          "GET /packages",
+          "POST /auth/tenant-register"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/u/:handle",
+        "component": "PublicUserProfileView",
+        "componentFile": "frontend/src/pages/PublicUserProfileView.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/vcard/:id",
+        "component": "VcardPublicView",
+        "componentFile": "frontend/src/pages/VcardPublicView.tsx",
+        "apiCalls": [],
+        "notes": "No direct api.* calls detected in component file."
+      },
+      {
+        "status": "In",
+        "uiRoute": "/verify-email",
+        "component": "VerifyEmail",
+        "componentFile": "frontend/src/pages/VerifyEmail.tsx",
+        "apiCalls": [
+          "POST /auth/verify-email"
+        ],
+        "notes": "All detected api.* calls map to backend controllers."
+      }
+    ]
+  },
+  "infra": {
+    "items": [
+      {
+        "path": "docker-compose.yml",
+        "present": true
+      },
+      {
+        "path": "docker-compose.prod.yml",
+        "present": true
+      },
+      {
+        "path": "Dockerfile",
+        "present": true
+      },
+      {
+        "path": "backend/Dockerfile",
+        "present": true
+      },
+      {
+        "path": "frontend/Dockerfile",
+        "present": true
+      },
+      {
+        "path": "START-BACKEND.bat",
+        "present": true
+      },
+      {
+        "path": "START-FRONTEND.bat",
+        "present": true
+      },
+      {
+        "path": "START-BOTH.bat",
+        "present": true
+      },
+      {
+        "path": ".env.example",
+        "present": true
+      }
+    ],
+    "present": 9,
+    "total": 9,
+    "pct": 100
+  },
+  "ci": {
+    "workflowsDir": ".github/workflows",
+    "present": true,
+    "workflowCount": 2
+  }
+}

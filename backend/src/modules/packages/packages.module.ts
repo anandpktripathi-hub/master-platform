@@ -31,7 +31,7 @@ import { SubscriptionExpiryScheduler } from './subscription-expiry.scheduler';
       { name: AuditLog.name, schema: AuditLogSchema },
     ]),
     forwardRef(() => PaymentsModule),
-    BillingModule,
+    forwardRef(() => BillingModule),
     TenantsModule,
     SettingsModule,
   ],

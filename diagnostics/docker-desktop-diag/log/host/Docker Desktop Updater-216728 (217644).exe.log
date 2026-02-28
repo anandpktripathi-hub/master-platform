@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------->8
+[2026-02-02T13:01:02.807584100Z][Docker Desktop Updater-216728 (217644).exe.installer] starting, console mode: true
+[2026-02-02T13:01:02.814888700Z][Docker Desktop Updater-216728 (217644).exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1770037262814328000\\Docker Desktop Installer.exe"
+[2026-02-02T13:01:02.890221400Z][Docker Desktop Updater-216728 (217644).exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1770037262889184100\\DockerDesktop.d4w"
+[2026-02-02T13:01:03.448120800Z][Docker Desktop Updater-216728 (217644).exe.installer] waiting for installer to finish
+[2026-02-02T13:01:03.448120800Z][Docker Desktop Updater-216728 (217644).exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1770037262814328000\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770037262889184100\DockerDesktop.d4w --auto-update --confirm --auto-close-and-start-app]
+[2026-02-02T13:05:02.935452300Z][Docker Desktop Updater-216728 (217644).exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770037262889184100
+[2026-02-02T13:05:02.941142000Z][Docker Desktop Updater-216728 (217644).exe.installer][W] removing <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770037262814328000: unlinkat <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1770037262814328000: The process cannot access the file because it is being used by another process.

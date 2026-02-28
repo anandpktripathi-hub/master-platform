@@ -31,3 +31,7 @@ export class CrmTask {
 }
 
 export const CrmTaskSchema = SchemaFactory.createForClass(CrmTask);
+
+CrmTaskSchema.index({ tenantId: 1, assigneeId: 1, dueDate: 1 });
+CrmTaskSchema.index({ tenantId: 1, assigneeId: 1, completed: 1, dueDate: 1 });
+CrmTaskSchema.index({ tenantId: 1, createdAt: -1 });

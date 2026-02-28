@@ -79,6 +79,11 @@ export class AppModule implements NestModule {
     // 3. TenantContextMiddleware - Populates TenantContextService for DI
     consumer
       .apply(DomainTenantMiddleware, TenantMiddleware, TenantContextMiddleware)
+      .exclude(
+        // Health should stay lightweight and should not require tenant/db resolution.
+        { path: 'health', method: RequestMethod.ALL },
+        { path: 'api/health', method: RequestMethod.ALL },
+      )
       .forRoutes({ path: '*path', method: RequestMethod.ALL });
   }
 }

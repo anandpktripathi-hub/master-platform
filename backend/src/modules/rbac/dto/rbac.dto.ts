@@ -4,8 +4,10 @@ import {
   IsBoolean,
   IsArray,
   IsMongoId,
-  IsEnum,
+  IsIn,
   IsDateString,
+  IsEmail,
+  MinLength,
 } from 'class-validator';
 import {
   PermissionAction,
@@ -13,7 +15,7 @@ import {
 } from '../../../database/schemas/permission.schema';
 
 export class CreatePermissionDto {
-  @IsEnum(['manage', 'create', 'edit', 'delete', 'show'])
+  @IsIn(['manage', 'create', 'edit', 'delete', 'show'])
   action!: PermissionAction;
 
   @IsString()
@@ -84,14 +86,16 @@ export class CreateUserDto {
   @IsString()
   name!: string;
 
-  @IsString()
+  @IsEmail()
   email!: string;
 
   @IsString()
+  @MinLength(8)
   password!: string;
 
+  @IsOptional()
   @IsMongoId()
-  tenantId!: string;
+  tenantId?: string;
 
   @IsMongoId()
   roleId!: string;
@@ -137,5 +141,26 @@ export class UserTenantDto {
 
 export class ResetPasswordDto {
   @IsString()
+  @MinLength(8)
   newPassword!: string;
+}
+
+export class CheckFieldPermissionDto {
+  @IsMongoId()
+  roleId!: string;
+
+  @IsString()
+  module!: string;
+
+  @IsIn(['manage', 'create', 'edit', 'delete', 'show'])
+  action!: PermissionAction;
+
+  @IsOptional()
+  @IsString()
+  field?: string;
+}
+
+export class ToggleLoginDto {
+  @IsBoolean()
+  enable!: boolean;
 }

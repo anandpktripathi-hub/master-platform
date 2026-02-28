@@ -16,8 +16,8 @@ import { DOMAIN_RESELLER_PROVIDER_TOKEN } from './domain-reseller.provider';
 
 @Injectable()
 export class DomainResellerService {
-  // For now we inject the stub implementation; later this can be swapped
-  // for a real provider via NestJS configuration.
+  // Provider is selected via env configuration; when not configured,
+  // it fails safely at call time (does not crash at startup).
   constructor(
     @Inject(DOMAIN_RESELLER_PROVIDER_TOKEN)
     private readonly provider: DomainResellerProvider,

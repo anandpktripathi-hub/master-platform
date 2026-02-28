@@ -1,5 +1,6 @@
 import {
   Injectable,
+  BadRequestException,
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
@@ -37,6 +38,14 @@ export class ChatService {
     private readonly authService: AuthService,
   ) {}
 
+  private toObjectId(value: string, label: string): Types.ObjectId {
+    const trimmed = String(value || '').trim();
+    if (!trimmed || !Types.ObjectId.isValid(trimmed)) {
+      throw new BadRequestException(`${label} is invalid`);
+    }
+    return new Types.ObjectId(trimmed);
+  }
+
   private tenantStreams = new Map<
     string,
     Subject<{ type: string; payload: any }>
@@ -54,7 +63,7 @@ export class ChatService {
   }
 
   async listRooms(tenantId: string) {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const rooms = await this.roomModel
       .find({ tenantId: tenantObjectId })
       .sort({ isDefault: -1, createdAt: 1 })
@@ -78,10 +87,10 @@ export class ChatService {
   async createRoom(
     tenantId: string,
     createdByUserId: string,
-    payload: { name: string; description?: string },
+    payload: { name: string; description?: string; isPrivate?: boolean },
   ) {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const userObjectId = new Types.ObjectId(createdByUserId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userObjectId = this.toObjectId(createdByUserId, 'userId');
 
     const room = await this.roomModel.create({
       tenantId: tenantObjectId,
@@ -89,7 +98,7 @@ export class ChatService {
       description: payload.description?.trim() || undefined,
       isDefault: false,
       createdByUserId: userObjectId,
-      isPrivate: (payload as any).isPrivate === true,
+      isPrivate: payload.isPrivate === true,
     });
 
     await this.ensureMember(
@@ -106,8 +115,8 @@ export class ChatService {
     tenantId: string,
     roomId: string,
   ): Promise<ChatRoomDocument> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const roomObjectId = new Types.ObjectId(roomId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roomObjectId = this.toObjectId(roomId, 'roomId');
 
     const room = await this.roomModel.findOne({
       _id: roomObjectId,
@@ -125,9 +134,9 @@ export class ChatService {
     userId: string,
     role: 'member' | 'admin' = 'member',
   ): Promise<ChatRoomMemberDocument> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const roomObjectId = new Types.ObjectId(roomId);
-    const userObjectId = new Types.ObjectId(userId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roomObjectId = this.toObjectId(roomId, 'roomId');
+    const userObjectId = this.toObjectId(userId, 'userId');
 
     const existing = await this.memberModel.findOne({
       tenantId: tenantObjectId,
@@ -158,8 +167,8 @@ export class ChatService {
   }
 
   async listMembers(tenantId: string, roomId: string) {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const roomObjectId = new Types.ObjectId(roomId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roomObjectId = this.toObjectId(roomId, 'roomId');
 
     const members = await this.memberModel
       .find({ tenantId: tenantObjectId, roomId: roomObjectId })
@@ -173,7 +182,7 @@ export class ChatService {
     roomId: string,
     opts?: { before?: string; limit?: number },
   ) {
-    throw new Error(
+    throw new BadRequestException(
       'listMessages requires user context; use listMessagesForUser',
     );
   }
@@ -231,11 +240,11 @@ export class ChatService {
     const room = await this.getRoomForTenant(tenantId, roomId);
     const tenantObjectId = room.tenantId;
     const roomObjectId = room._id;
-    const senderObjectId = new Types.ObjectId(senderId);
+    const senderObjectId = this.toObjectId(senderId, 'senderId');
 
     const trimmed = content.trim();
     if (!trimmed) {
-      throw new NotFoundException('Message content cannot be empty');
+      throw new BadRequestException('Message content cannot be empty');
     }
 
     if (room.isArchived) {
@@ -289,7 +298,7 @@ export class ChatService {
 
     const users = await this.userModel
       .find({
-        tenantId: new Types.ObjectId(tenantId),
+        tenantId: this.toObjectId(tenantId, 'tenantId'),
         $or: [
           { username: { $in: usernamesOrEmails } },
           { email: { $in: usernamesOrEmails } },
@@ -319,8 +328,8 @@ export class ChatService {
   }
 
   async archiveRoom(tenantId: string, roomId: string, archived: boolean) {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const roomObjectId = new Types.ObjectId(roomId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roomObjectId = this.toObjectId(roomId, 'roomId');
 
     const updated = await this.roomModel.findOneAndUpdate(
       { _id: roomObjectId, tenantId: tenantObjectId },
@@ -336,9 +345,9 @@ export class ChatService {
   }
 
   async removeMember(tenantId: string, roomId: string, userId: string) {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const roomObjectId = new Types.ObjectId(roomId);
-    const userObjectId = new Types.ObjectId(userId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const roomObjectId = this.toObjectId(roomId, 'roomId');
+    const userObjectId = this.toObjectId(userId, 'userId');
 
     await this.memberModel.deleteOne({
       tenantId: tenantObjectId,
@@ -359,9 +368,9 @@ export class ChatService {
       return true;
     }
 
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const roomObjectId = room._id;
-    const userObjectId = new Types.ObjectId(userId);
+    const userObjectId = this.toObjectId(userId, 'userId');
 
     const member = await this.memberModel
       .findOne({

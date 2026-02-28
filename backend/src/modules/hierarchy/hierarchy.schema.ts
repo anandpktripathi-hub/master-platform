@@ -35,3 +35,7 @@ export class HierarchyNode extends Document {
 }
 
 export const HierarchyNodeSchema = SchemaFactory.createForClass(HierarchyNode);
+
+// Indexes are mirrored in `src/migrations/add-hierarchy-indexes.ts` for production.
+HierarchyNodeSchema.index({ parent: 1, type: 1 });
+HierarchyNodeSchema.index({ type: 1, isActive: 1, parent: 1 });

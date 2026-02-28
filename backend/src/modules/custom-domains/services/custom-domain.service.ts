@@ -9,8 +9,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, FilterQuery } from 'mongoose';
 import { CustomDomain } from '../../../database/schemas/custom-domain.schema';
 import { TenantPackage } from '../../../database/schemas/tenant-package.schema';
-import { Package } from '../../../database/schemas/package.schema';
 import { AuditLogService } from '../../../services/audit-log.service';
+import { BillingService } from '../../billing/billing.service';
 import {
   CreateCustomDomainDto,
   UpdateCustomDomainDto,
@@ -54,8 +54,8 @@ export class CustomDomainService {
     private customDomainModel: Model<CustomDomain>,
     @InjectModel(TenantPackage.name)
     private tenantPackageModel: Model<TenantPackage>,
-    @InjectModel(Package.name) private packageModel: Model<Package>,
     private auditLogService: AuditLogService,
+    private readonly billingService: BillingService,
   ) {}
 
   /**
@@ -72,38 +72,8 @@ export class CustomDomainService {
     // Validate domain format
     this.validateDomainFormat(normalizedDomain);
 
-    // Check package feature
-    const tenantPackage = await this.tenantPackageModel
-      .findOne({ tenantId: new Types.ObjectId(tenantId) })
-      .populate('packageId')
-      .exec();
-
-    if (!tenantPackage) {
-      throw new BadRequestException('Tenant has no active package');
-    }
-
-    const pkg = tenantPackage.packageId as unknown as Package;
-    if (!pkg.featureSet.allowCustomDomain) {
-      throw new BadRequestException(
-        'Your package does not allow custom domains. Please upgrade.',
-      );
-    }
-
-    // Check usage limits
-    const currentCustomDomains = tenantPackage.usageCounters.customDomains || 0;
-    const maxAllowed = pkg.limits.maxCustomDomains || 0;
-
-    if (maxAllowed === 0) {
-      throw new BadRequestException(
-        'Your package does not allow custom domains',
-      );
-    }
-
-    if (currentCustomDomains >= maxAllowed) {
-      throw new BadRequestException(
-        `You have reached the limit of ${maxAllowed} custom domains. Please upgrade.`,
-      );
-    }
+    // Plan/feature gate hook.
+    await this.assertTenantPlanAllowsCustomDomains(tenantId);
 
     // Check uniqueness
     const existing = await this.customDomainModel.findOne({
@@ -703,6 +673,27 @@ export class CustomDomainService {
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,
     };
+  }
+
+  /**
+   * Plan check hook for v1.
+   *
+   * This must be driven from the tenant's *active subscription* state.
+   * Billing owns the subscription read model and entitlement decisions.
+   */
+  private async assertTenantPlanAllowsCustomDomains(
+    tenantId: string,
+  ): Promise<void> {
+    // Prefer an authoritative count over usage counters (counters can drift if domains are removed).
+    // Keep this query lightweight: only count this tenant's custom domains.
+    const used = await this.customDomainModel.countDocuments({
+      tenantId: new Types.ObjectId(tenantId),
+      type: 'custom',
+    });
+
+    await this.billingService.assertTenantAllowedCustomDomains(tenantId, {
+      used,
+    });
   }
 
   /**

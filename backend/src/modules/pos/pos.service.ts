@@ -25,7 +25,7 @@ import {
 interface OrderItemInput {
   productId: string;
   quantity: number;
-  unitPrice: number;
+  unitPrice?: number;
 }
 
 interface CreateOrderInput {
@@ -55,11 +55,11 @@ export class PosService {
     private readonly productModel: Model<ProductDocument>,
   ) {}
 
-  private toObjectId(id: string): Types.ObjectId {
-    if (!Types.ObjectId.isValid(id)) {
-      throw new BadRequestException('Invalid ID');
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
     }
-    return new Types.ObjectId(id);
+    return new Types.ObjectId(value);
   }
 
   async getSummary(tenantId: string): Promise<{
@@ -67,7 +67,7 @@ export class PosService {
     totalOrders: number;
     lowStockItems: number;
   }> {
-    const tenantObjectId = this.toObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
 
     const [salesAgg, ordersCount, lowStockItems] = await Promise.all([
       this.orderModel
@@ -91,33 +91,45 @@ export class PosService {
   }
 
   async listStock(tenantId: string) {
-    const tenantObjectId = this.toObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.stockModel
       .find({ tenantId: tenantObjectId })
-      .populate('productId')
+      .populate({ path: 'productId', match: { tenantId: tenantObjectId } })
       .lean()
       .exec();
   }
 
   async adjustStock(tenantId: string, input: AdjustStockInput) {
-    const tenantObjectId = this.toObjectId(tenantId);
-    const productObjectId = this.toObjectId(input.productId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const productObjectId = this.toObjectId(input.productId, 'productId');
+
+    if (!Number.isFinite(input.quantityDelta) || input.quantityDelta === 0) {
+      throw new BadRequestException('quantityDelta must be a non-zero number');
+    }
 
     const product = await this.productModel
-      .findById(productObjectId)
+      .findOne({ _id: productObjectId, tenantId: tenantObjectId })
       .lean()
       .exec();
     if (!product) {
       throw new NotFoundException('Product not found');
     }
 
+    const update: Record<string, unknown> = {
+      $inc: { quantity: input.quantityDelta },
+    };
+
+    if (input.minStock !== undefined) {
+      if (!Number.isFinite(input.minStock) || input.minStock < 0) {
+        throw new BadRequestException('minStock must be a non-negative number');
+      }
+      update.$set = { minStock: input.minStock };
+    }
+
     const stock = await this.stockModel
       .findOneAndUpdate(
         { tenantId: tenantObjectId, productId: productObjectId },
-        {
-          $inc: { quantity: input.quantityDelta },
-          $set: { minStock: input.minStock ?? 0 },
-        },
+        update,
         { upsert: true, new: true, setDefaultsOnInsert: true },
       )
       .exec();
@@ -143,25 +155,30 @@ export class PosService {
   }
 
   async listOrders(tenantId: string, limit = 50) {
-    const tenantObjectId = this.toObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+
+    const normalizedLimit = Number.isFinite(limit)
+      ? Math.min(Math.max(Math.trunc(limit), 1), 200)
+      : 50;
+
     return this.orderModel
       .find({ tenantId: tenantObjectId })
       .sort({ createdAt: -1 })
-      .limit(limit)
+      .limit(normalizedLimit)
       .lean()
       .exec();
   }
 
   async createOrder(tenantId: string, input: CreateOrderInput) {
-    const tenantObjectId = this.toObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
 
     if (!input.items || input.items.length === 0) {
       throw new BadRequestException('Order must have at least one item');
     }
 
-    const productIds = input.items.map((i) => this.toObjectId(i.productId));
+    const productIds = input.items.map((i) => this.toObjectId(i.productId, 'productId'));
     const products = await this.productModel
-      .find({ _id: { $in: productIds } })
+      .find({ _id: { $in: productIds }, tenantId: tenantObjectId })
       .lean()
       .exec();
 
@@ -176,10 +193,16 @@ export class PosService {
       if (item.quantity <= 0) {
         throw new BadRequestException('Quantity must be greater than zero');
       }
-      const unitPrice = item.unitPrice ?? product.price;
+
+      const unitPriceRaw = item.unitPrice ?? product.price;
+      const unitPrice = Number(unitPriceRaw);
+      if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+        throw new BadRequestException('Invalid unit price');
+      }
+
       const lineTotal = unitPrice * item.quantity;
       return {
-        productId: this.toObjectId(item.productId),
+        productId: this.toObjectId(item.productId, 'productId'),
         nameSnapshot: product.name,
         quantity: item.quantity,
         unitPrice,

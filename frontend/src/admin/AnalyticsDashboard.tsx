@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend
 } from 'recharts';
@@ -7,11 +7,24 @@ import Papa from 'papaparse';
 import './AnalyticsDashboard.css';
 
 interface AuditLogEntry {
-  timestamp: string;
-  user: string;
+  _id: string;
+  createdAt?: string;
   action: string;
-  featureId: string;
-  details?: any;
+  resourceType?: string;
+  resourceId?: string;
+  status?: string;
+  actorId?: { email?: string; name?: string } | string;
+}
+
+type AuditLogResponse = {
+  data: AuditLogEntry[];
+  total: number;
+};
+
+function actorLabel(actor: AuditLogEntry['actorId']): string {
+  if (!actor) return '';
+  if (typeof actor === 'string') return actor;
+  return actor.email || actor.name || '';
 }
 
 const AnalyticsDashboard: React.FC = () => {
@@ -22,52 +35,52 @@ const AnalyticsDashboard: React.FC = () => {
   }, []);
 
   const fetchLogs = async () => {
-    const res = await axios.get('/api/audit-log');
-    setLogs(res.data);
+    const res = (await api.get('/audit-log', {
+      params: { limit: 200, skip: 0, sortBy: '-createdAt' },
+    })) as AuditLogResponse;
+    setLogs(Array.isArray(res?.data) ? res.data : []);
   };
 
-  // Most changed features
-  const featureChangeCounts: Record<string, number> = {};
+  // Most common actions
+  const actionCounts: Record<string, number> = {};
   logs.forEach(log => {
-    if (!featureChangeCounts[log.featureId]) featureChangeCounts[log.featureId] = 0;
-    featureChangeCounts[log.featureId]++;
+    const key = log.action || 'unknown';
+    actionCounts[key] = (actionCounts[key] || 0) + 1;
   });
-  const mostChangedFeatures = Object.entries(featureChangeCounts)
+  const mostCommonActions = Object.entries(actionCounts)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
   // Most active users
   const userCounts: Record<string, number> = {};
   logs.forEach(log => {
-    if (!userCounts[log.user]) userCounts[log.user] = 0;
-    userCounts[log.user]++;
+    const user = actorLabel(log.actorId) || 'unknown';
+    userCounts[user] = (userCounts[user] || 0) + 1;
   });
   const mostActiveUsers = Object.entries(userCounts)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
-  // Recent permission changes
+  // Recent events
   const recentChanges = logs.slice(-10).reverse();
 
-  // Feature enable/disable trends (last 30 actions)
-  const enableTrends = logs
-    .filter(log => log.action === 'toggle')
+  // Status trends (last 30 events)
+  const statusTrends = logs
     .slice(-30)
-    .map(log => ({
-      time: log.timestamp,
-      enabled: log.details && log.details.enabled,
-      feature: log.featureId,
-    }));
+    .map((log) => {
+      const status = log.status || 'unknown';
+      return {
+        time: log.createdAt || '',
+        success: status === 'success' ? 1 : 0,
+        failure: status === 'failure' ? 1 : 0,
+        pending: status === 'pending' ? 1 : 0,
+      };
+    });
 
   // Chart data
-  const featureChangeChartData = mostChangedFeatures.map(([feature, count]) => ({ feature, count }));
+  const featureChangeChartData = mostCommonActions.map(([action, count]) => ({ feature: action, count }));
   const userActivityChartData = mostActiveUsers.map(([user, count]) => ({ user, count }));
-  const enableTrendChartData = enableTrends.map((trend) => ({
-    time: trend.time,
-    enabled: trend.enabled ? 1 : 0,
-    disabled: trend.enabled ? 0 : 1,
-    feature: trend.feature,
-  }));
+  const enableTrendChartData = statusTrends;
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28CFE'];
 
@@ -89,7 +102,7 @@ const AnalyticsDashboard: React.FC = () => {
       <button onClick={handleExportCSV} className="analytics-export-btn">Export All Logs (CSV)</button>
       <div className="analytics-charts-container">
         <div>
-          <h4>Most Changed Features</h4>
+          <h4>Most Common Actions</h4>
           <ResponsiveContainer width={300} height={220}>
             <BarChart data={featureChangeChartData} layout="vertical">
               <XAxis type="number" />
@@ -114,23 +127,26 @@ const AnalyticsDashboard: React.FC = () => {
           </ResponsiveContainer>
         </div>
         <div>
-          <h4>Enable/Disable Trends (last 30)</h4>
+          <h4>Status Trends (last 30)</h4>
           <ResponsiveContainer width={400} height={220}>
             <LineChart data={enableTrendChartData}>
               <XAxis dataKey="time" hide />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="enabled" stroke="#22c55e" name="Enabled" />
-              <Line type="monotone" dataKey="disabled" stroke="#e11d48" name="Disabled" />
+              <Line type="monotone" dataKey="success" stroke="#22c55e" name="Success" />
+              <Line type="monotone" dataKey="failure" stroke="#e11d48" name="Failure" />
+              <Line type="monotone" dataKey="pending" stroke="#eab308" name="Pending" />
             </LineChart>
           </ResponsiveContainer>
         </div>
         <div>
-          <h4>Recent Permission Changes</h4>
+          <h4>Recent Events</h4>
           <ul>
             {recentChanges.map((log, idx) => (
-              <li key={idx}>{log.timestamp} - {log.user} - {log.action} - {log.featureId}</li>
+              <li key={idx}>
+                {(log.createdAt || '').toString()} - {actorLabel(log.actorId) || 'unknown'} - {log.action} - {(log.resourceType || '')}{log.resourceId ? `:${log.resourceId}` : ''}
+              </li>
             ))}
           </ul>
         </div>

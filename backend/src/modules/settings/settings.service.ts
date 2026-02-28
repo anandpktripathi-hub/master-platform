@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, Types } from 'mongoose';
 import { Setting, SettingDocument } from './schemas/setting.schema';
 import { SettingEntryDto } from './dto/upsert-settings.dto';
 import { IntegrationSettingsDto } from './dto/integration-settings.dto';
@@ -19,6 +19,13 @@ export class SettingsService {
     private readonly settingModel: Model<SettingDocument>,
   ) {}
 
+  private toObjectId(id: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(id);
+  }
+
   async getGroupAdmin(
     group: string,
     locale?: string,
@@ -30,7 +37,7 @@ export class SettingsService {
     };
 
     if (tenantId) {
-      query.tenantId = tenantId;
+      query.tenantId = this.toObjectId(tenantId, 'tenantId');
     }
 
     if (locale) {
@@ -56,8 +63,18 @@ export class SettingsService {
         scope: entry.scope,
       };
 
+      if (entry.scope === 'TENANT' && !entry.tenantId) {
+        throw new BadRequestException(
+          'tenantId is required for TENANT-scoped settings',
+        );
+      }
+
+      const tenantObjectId = entry.tenantId
+        ? this.toObjectId(entry.tenantId, 'tenantId')
+        : undefined;
+
       if (entry.tenantId) {
-        filter.tenantId = entry.tenantId;
+        filter.tenantId = tenantObjectId;
       }
 
       if (entry.locale) {
@@ -75,7 +92,7 @@ export class SettingsService {
             group,
             key: entry.key,
             scope: entry.scope,
-            tenantId: entry.tenantId,
+            tenantId: tenantObjectId,
             locale: entry.locale,
           },
         },

@@ -8,13 +8,17 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
+import * as crypto from 'crypto';
+import slugify from 'slugify';
 import { objectIdToString } from '../../utils/objectIdToString';
 import { User, UserDocument } from '../../database/schemas/user.schema';
 import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
 import { TenantRegisterDto } from './dto/tenant-register.dto';
+import { SimpleRegisterDto } from './dto/auth.dto';
 import { AuthTokenService } from './services/auth-token.service';
 import { TokenType } from './schemas/auth-token.schema';
 import { EmailService } from '../settings/email.service';
+import { Role } from '../users/role.types';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +35,10 @@ export class AuthService {
     email: string,
     pass: string,
   ): Promise<Omit<UserDocument, 'password'>> {
-    const user = await this.userModel.findOne({ email }).exec();
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await this.userModel
+      .findOne({ email: normalizedEmail })
+      .exec();
     console.log('[VALIDATE USER] Lookup for email:', email, 'Result:', user);
     if (!user) {
       console.error('[VALIDATE USER] User not found for email:', email);
@@ -197,8 +204,9 @@ export class AuthService {
     } = dto;
 
     // 1. Check uniqueness: email, username, subdomain
+    const normalizedEmail = personal.email.toLowerCase().trim();
     const existingEmail = await this.userModel
-      .findOne({ email: personal.email })
+      .findOne({ email: normalizedEmail })
       .exec();
     if (existingEmail) {
       throw new ConflictException('Email already registered');
@@ -255,7 +263,7 @@ export class AuthService {
     // 4. Create Admin User linked to this tenant
     const user = await this.userModel.create({
       name: `${personal.firstName} ${personal.lastName}`,
-      email: personal.email,
+      email: normalizedEmail,
       password: hashedPassword,
       role: 'tenant_admin',
       tenantId: tenant._id,
@@ -320,7 +328,8 @@ export class AuthService {
    * Send email verification link
    */
   async sendVerificationEmail(email: string): Promise<{ message: string }> {
-    const user = await this.userModel.findOne({ email });
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await this.userModel.findOne({ email: normalizedEmail });
     if (!user) {
       throw new BadRequestException('User not found');
     }
@@ -401,7 +410,8 @@ export class AuthService {
    * Request password reset
    */
   async requestPasswordReset(email: string): Promise<{ message: string }> {
-    const user = await this.userModel.findOne({ email });
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await this.userModel.findOne({ email: normalizedEmail });
 
     // Don't reveal if user exists or not for security
     if (!user) {
@@ -520,7 +530,7 @@ export class AuthService {
           oauthProfile.firstName || oauthProfile.displayName?.split(' ')[0],
         lastName:
           oauthProfile.lastName || oauthProfile.displayName?.split(' ')[1],
-        role: 'TENANT_OWNER', // Default role for OAuth users
+        role: Role.USER,
         emailVerified: true, // Trust OAuth provider verification
         oauth: {
           [oauthProfile.provider]: {
@@ -543,13 +553,106 @@ export class AuthService {
 
     // Generate JWT
     const payload = {
-      id: user._id.toString(),
+      sub: user._id.toString(),
       email: user.email,
       role: user.role,
       tenantId: user.tenantId?.toString(),
     };
 
     return this.jwtService.sign(payload);
+  }
+
+  /**
+   * Minimal tenant + admin registration flow (used by the simple frontend Register page).
+   */
+  async registerSimple(dto: SimpleRegisterDto) {
+    const normalizedEmail = dto.email.toLowerCase().trim();
+
+    const existingEmail = await this.userModel
+      .findOne({ email: normalizedEmail })
+      .exec();
+
+    if (existingEmail) {
+      throw new ConflictException('Email already registered');
+    }
+
+    const baseSlug = slugify(dto.tenantName, {
+      lower: true,
+      strict: true,
+      trim: true,
+    });
+
+    const safeBase = baseSlug && baseSlug.length > 0 ? baseSlug : 'tenant';
+    let slug = safeBase;
+
+    for (let i = 0; i < 5; i += 1) {
+      const existing = await this.tenantModel.findOne({ slug }).exec();
+      if (!existing) break;
+      slug = `${safeBase}-${i + 1}`;
+    }
+
+    const stillExists = await this.tenantModel.findOne({ slug }).exec();
+    if (stillExists) {
+      slug = `${safeBase}-${crypto.randomBytes(2).toString('hex')}`;
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+    const tenant = await this.tenantModel.create({
+      name: dto.tenantName,
+      slug,
+      domain: `${slug}.yourdomain.com`,
+      companyName: dto.tenantName,
+      planKey: 'FREE',
+      status: 'trialing',
+      isActive: true,
+      acceptedTerms: false,
+      acceptedPrivacy: false,
+      createdByPlatformOwner: false,
+      skipPayment: false,
+    });
+
+    const user = await this.userModel.create({
+      name: `${dto.firstName} ${dto.lastName}`.trim(),
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      email: normalizedEmail,
+      password: hashedPassword,
+      role: Role.TENANT_ADMIN_LEGACY,
+      tenantId: tenant._id,
+      isActive: true,
+      emailVerified: false,
+    });
+
+    await this.tenantModel
+      .findByIdAndUpdate(tenant._id, { createdByUserId: user._id })
+      .exec();
+
+    const userId = objectIdToString(user._id);
+    const tenantIdStr = objectIdToString(tenant._id);
+
+    const payload = {
+      sub: userId,
+      email: user.email,
+      role: user.role,
+      tenantId: tenantIdStr,
+    };
+
+    return {
+      accessToken: this.jwtService.sign(payload),
+      tenant: {
+        id: tenantIdStr,
+        name: tenant.name,
+        slug: tenant.slug,
+        domain: tenant.domain,
+      },
+      user: {
+        id: userId,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    };
   }
 
   async verifyAccessToken(token: string): Promise<{

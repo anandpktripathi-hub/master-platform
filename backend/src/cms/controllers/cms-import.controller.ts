@@ -13,7 +13,8 @@ import { FigmaImportService } from '../services/figma-import.service';
 import { ImportZipDto } from '../dto/import.dto';
 import { FigmaImportDto } from '../dto/figma-import.dto';
 import { Tenant } from '../../decorators/tenant.decorator';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Cms Import')
 @Controller('cms/import')
 export class CmsImportController {
   constructor(

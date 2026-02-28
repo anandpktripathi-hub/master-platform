@@ -17,16 +17,15 @@ import { RequestWithUser } from '../../common/interfaces/request-with-user.inter
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import {
-  PackageService,
-  CreatePackageDto,
-  UpdatePackageDto,
-} from './services/package.service';
+import { PackageService } from './services/package.service';
+import { CreatePackageDto, UpdatePackageDto } from './dto/package.dto';
 import { PaymentGatewayService } from '../payments/services/payment-gateway.service';
 import { PaymentLogService } from '../payments/services/payment-log.service';
 import { BillingNotificationService } from '../billing/billing-notification.service';
 import { TenantsService } from '../tenants/tenants.service';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Packages')
+@ApiBearerAuth('bearer')
 @Controller('packages')
 export class PackageController {
   constructor(
@@ -205,6 +204,11 @@ export class PackageController {
     if (!req.user) throw new BadRequestException('User not authenticated');
     const userId = req.user.sub;
     if (!userId) throw new BadRequestException('User ID is required');
+
+    if (!body || !body.tenantId) {
+      throw new BadRequestException('tenantId is required');
+    }
+
     return this.packageService.assignPackageToTenant(
       objectIdToString(body.tenantId),
       packageId,
@@ -253,8 +257,8 @@ export class PackageController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
   @HttpCode(200)
-  async sendExpiryWarnings(@Body() body: { daysBeforeExpiry?: number }) {
-    const daysBeforeExpiry = body.daysBeforeExpiry ?? 3;
+  async sendExpiryWarnings(@Body() body: { daysBeforeExpiry?: number } | undefined) {
+    const daysBeforeExpiry = body?.daysBeforeExpiry ?? 3;
     const windowDays =
       await this.packageService.getMaxExpiryWarningWindow(daysBeforeExpiry);
     const processed = await this.packageService.sendSubscriptionExpiryWarnings(

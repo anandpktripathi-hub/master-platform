@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { FeatureNode } from './FeatureManager';
 import './PermissionsMatrix.css';
 
@@ -18,24 +18,24 @@ const PermissionsMatrix: React.FC<PermissionsMatrixProps> = ({ roles, tenants })
   }, []);
 
   const fetchFeatures = async () => {
-    const res = await axios.get('/api/features');
-    setFeatures(res.data);
+    const data = await api.get('/features');
+    setFeatures(Array.isArray(data) ? (data as FeatureNode[]) : []);
   };
 
   const handleToggleRole = async (featureId: string, role: string, assigned: boolean) => {
     if (assigned) {
-      await axios.patch(`/api/features/${featureId}/unassign-role/${role}`);
+      await api.patch(`/features/${featureId}/unassign-role/${role}`);
     } else {
-      await axios.patch(`/api/features/${featureId}/assign-role/${role}`);
+      await api.patch(`/features/${featureId}/assign-role/${role}`);
     }
     fetchFeatures();
   };
 
   const handleToggleTenant = async (featureId: string, tenant: string, assigned: boolean) => {
     if (assigned) {
-      await axios.patch(`/api/features/${featureId}/unassign-tenant/${tenant}`);
+      await api.patch(`/features/${featureId}/unassign-tenant/${tenant}`);
     } else {
-      await axios.patch(`/api/features/${featureId}/assign-tenant/${tenant}`);
+      await api.patch(`/features/${featureId}/assign-tenant/${tenant}`);
     }
     fetchFeatures();
   };

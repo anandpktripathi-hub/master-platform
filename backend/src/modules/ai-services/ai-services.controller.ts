@@ -1,18 +1,20 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import { AiCompletionRequest, AiServicesService } from './ai-services.service';
-import type { Request } from 'express';
-
-interface AuthRequest extends Request {
-  user?: {
-    tenantId?: string;
-  };
-}
-
+import { Tenant } from '../../decorators/tenant.decorator';
+import { AiServicesService } from './ai-services.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  AiCompletionRequestDto,
+  AiSentimentRequestDto,
+  AiSuggestRequestDto,
+} from './dto/ai-services.dto';
+@ApiTags('Ai Services')
+@ApiBearerAuth('bearer')
 @Controller('ai')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
 export class AiServicesController {
   constructor(private readonly aiServices: AiServicesService) {}
 
@@ -30,12 +32,11 @@ export class AiServicesController {
     'PLATFORM_SUPER_ADMIN',
   )
   async generateCompletion(
-    @Req() req: AuthRequest,
-    @Body() request: AiCompletionRequest,
+    @Tenant() tenantId: string | undefined,
+    @Body() request: AiCompletionRequestDto,
   ) {
-    const tenantId = req.user?.tenantId;
     if (!tenantId) {
-      throw new Error('Tenant ID not found in auth context');
+      throw new BadRequestException('Tenant ID is required');
     }
 
     return this.aiServices.generateCompletion(String(tenantId), request);
@@ -54,12 +55,11 @@ export class AiServicesController {
     'PLATFORM_SUPER_ADMIN',
   )
   async analyzeSentiment(
-    @Req() req: AuthRequest,
-    @Body() body: { text: string },
+    @Tenant() tenantId: string | undefined,
+    @Body() body: AiSentimentRequestDto,
   ) {
-    const tenantId = req.user?.tenantId;
     if (!tenantId) {
-      throw new Error('Tenant ID not found in auth context');
+      throw new BadRequestException('Tenant ID is required');
     }
 
     return this.aiServices.analyzeSentiment(String(tenantId), body.text);
@@ -78,12 +78,11 @@ export class AiServicesController {
     'PLATFORM_SUPER_ADMIN',
   )
   async generateContentSuggestions(
-    @Req() req: AuthRequest,
-    @Body() body: { topic: string; contentType: string },
+    @Tenant() tenantId: string | undefined,
+    @Body() body: AiSuggestRequestDto,
   ) {
-    const tenantId = req.user?.tenantId;
     if (!tenantId) {
-      throw new Error('Tenant ID not found in auth context');
+      throw new BadRequestException('Tenant ID is required');
     }
 
     return this.aiServices.generateContentSuggestions(

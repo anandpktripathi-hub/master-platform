@@ -3,7 +3,14 @@ module.exports = {
   rootDir: '.',
   testRegex: '.*\\.(spec|test|e2e-spec)\\.ts$',
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.(t|j)s$': [
+      'ts-jest',
+      {
+        tsconfig: {
+          types: ['jest', 'node'],
+        },
+      },
+    ],
   },
   collectCoverageFrom: [
     'src/**/*.(t|j)s',
@@ -14,13 +21,6 @@ module.exports = {
   ],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
-  globals: {
-    'ts-jest': {
-      tsconfig: {
-        types: ['jest', 'node']
-      }
-    }
-  },
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
   },

@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------->8
+[2026-02-16T13:23:16.725026000Z][Docker%20Desktop%20Installer.exe.installer] starting, console mode: true
+[2026-02-16T13:23:16.737674000Z][Docker%20Desktop%20Installer.exe.installer] extracting "launcher" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771248196736569400\\Docker Desktop Installer.exe"
+[2026-02-16T13:23:16.901653200Z][Docker%20Desktop%20Installer.exe.installer] extracting "DockerDesktop" to "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771248196901653200\\DockerDesktop.d4w"
+[2026-02-16T13:23:48.091463900Z][Docker%20Desktop%20Installer.exe.installer] waiting for installer to finish
+[2026-02-16T13:23:48.091463900Z][Docker%20Desktop%20Installer.exe.installer] running "C:\\Users\\annes\\AppData\\Local\\Temp\\DockerDesktopInstallers\\1771248196736569400\\Docker Desktop Installer.exe" [install -package <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771248196901653200\DockerDesktop.d4w --quiet]
+[2026-02-16T13:26:15.269918200Z][Docker%20Desktop%20Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771248196901653200
+[2026-02-16T13:26:15.271126200Z][Docker%20Desktop%20Installer.exe.installer] removed <HOME>\AppData\Local\Temp\DockerDesktopInstallers\1771248196736569400

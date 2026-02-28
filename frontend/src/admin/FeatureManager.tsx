@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import './FeatureManager.css';
 import FeatureForm from './FeatureForm';
 import EditFeatureForm from './EditFeatureForm';
@@ -29,8 +29,8 @@ const FeatureManager: React.FC = () => {
   const fetchFeatures = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/api/features');
-      setFeatures(res.data);
+      const data = await api.get('/features');
+      setFeatures(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
       setError('Failed to load features');
@@ -44,7 +44,7 @@ const FeatureManager: React.FC = () => {
 
 
   const toggleFeature = async (id: string) => {
-    await axios.patch(`/api/features/${id}/toggle`);
+    await api.patch(`/features/${id}/toggle`);
     fetchFeatures();
   };
 
@@ -59,14 +59,14 @@ const FeatureManager: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    await axios.delete(`/api/features/${id}`);
+    await api.delete(`/features/${id}`);
     setEditNode(null);
     fetchFeatures();
   };
 
   const handleEditSubmit = async (update: Partial<FeatureNode>) => {
     if (editNode) {
-      await axios.patch(`/api/features/${editNode.id}`, update);
+      await api.patch(`/features/${editNode.id}`, update);
       setEditNode(null);
       fetchFeatures();
     }
@@ -77,19 +77,19 @@ const FeatureManager: React.FC = () => {
   };
 
   const handleAssignRole = async (id: string, role: string) => {
-    await axios.patch(`/api/features/${id}/assign-role/${role}`);
+    await api.patch(`/features/${id}/assign-role/${role}`);
     fetchFeatures();
   };
   const handleUnassignRole = async (id: string, role: string) => {
-    await axios.patch(`/api/features/${id}/unassign-role/${role}`);
+    await api.patch(`/features/${id}/unassign-role/${role}`);
     fetchFeatures();
   };
   const handleAssignTenant = async (id: string, tenant: string) => {
-    await axios.patch(`/api/features/${id}/assign-tenant/${tenant}`);
+    await api.patch(`/features/${id}/assign-tenant/${tenant}`);
     fetchFeatures();
   };
   const handleUnassignTenant = async (id: string, tenant: string) => {
-    await axios.patch(`/api/features/${id}/unassign-tenant/${tenant}`);
+    await api.patch(`/features/${id}/unassign-tenant/${tenant}`);
     fetchFeatures();
   };
 
@@ -142,9 +142,13 @@ const FeatureManager: React.FC = () => {
   };
 
   const handleFormSubmit = async (node: Omit<FeatureNode, 'children'>) => {
-    await axios.post('/api/features', node, {
-      params: formParentId ? { parentId: formParentId } : {},
-    });
+    await api.post(
+      '/features',
+      node,
+      {
+        params: formParentId ? { parentId: formParentId } : {},
+      } as any,
+    );
     setShowForm(false);
     setFormParentId(undefined);
     fetchFeatures();

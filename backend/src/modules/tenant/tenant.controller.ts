@@ -1,18 +1,27 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { BadRequestException, Controller, Get, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
+import { Tenant } from '../../decorators/tenant.decorator';
 import { TenantService } from './tenant.service';
-import { Tenant } from '../../database/schemas/tenant.schema';
-
-@Controller('tenants')
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Tenant')
+@ApiBearerAuth('bearer')
+@Controller('tenant')
+@UseGuards(JwtAuthGuard, WorkspaceGuard)
 export class TenantController {
   constructor(private readonly tenantService: TenantService) {}
 
-  @Get()
-  findAll() {
-    return this.tenantService.findAll();
-  }
+  @Get('current')
+  async current(@Tenant() tenantId: string | undefined) {
+    if (!tenantId) {
+      throw new BadRequestException('Tenant ID not found');
+    }
 
-  @Post()
-  create(@Body() createTenantDto: Tenant) {
-    return this.tenantService.create(createTenantDto);
+    const tenant = await this.tenantService.getCurrentTenant(String(tenantId));
+    if (!tenant) {
+      throw new BadRequestException('Tenant not found');
+    }
+
+    return { tenant };
   }
 }

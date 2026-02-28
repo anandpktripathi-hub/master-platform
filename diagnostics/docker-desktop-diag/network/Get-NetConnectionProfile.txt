@@ -1,0 +1,21 @@
+
+
+NetworkCategory          : Public
+DomainAuthenticationKind : None
+IPv4Connectivity         : Internet
+IPv6Connectivity         : Internet
+Caption                  : 
+Description              : 
+ElementName              : 
+InstanceID               : {96745769-4706-4D90-9E74-25083F8FB6D6}
+InterfaceAlias           : Wi-Fi
+InterfaceIndex           : 14
+Name                     : JioFiber
+PSComputerName           : 
+CimClass                 : root/StandardCimv2:MSFT_NetConnectionProfile
+CimInstanceProperties    : {Caption, Description, ElementName, InstanceID...}
+CimSystemProperties      : Microsoft.Management.Infrastructure.CimSystemPropert
+                           ies
+
+
+

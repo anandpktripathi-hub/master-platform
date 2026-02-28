@@ -1,10 +1,11 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { WorkspaceService } from './workspace.service';
 import { WorkspaceGuard } from '../guards/workspace.guard';
 import { User, UserSchema } from '../database/schemas/user.schema';
 import { Tenant, TenantSchema } from '../database/schemas/tenant.schema';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([

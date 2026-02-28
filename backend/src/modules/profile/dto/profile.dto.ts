@@ -7,7 +7,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-import { IsArray, IsUrl, ValidateNested, IsIn } from 'class-validator';
+import { IsArray, IsUrl, ValidateNested, IsIn, IsBoolean, Matches } from 'class-validator';
 import { Type } from 'class-transformer';
 
 /**
@@ -118,6 +118,7 @@ export class ExperienceDto {
   endDate?: string;
 
   @IsOptional()
+  @IsBoolean()
   isCurrent?: boolean;
 
   @IsOptional()
@@ -146,6 +147,7 @@ export class UpdatePublicProfileDto {
   @IsString()
   @MinLength(3)
   @MaxLength(30)
+  @Matches(/^[A-Za-z0-9._-]+$/)
   handle?: string;
 
   @IsOptional()

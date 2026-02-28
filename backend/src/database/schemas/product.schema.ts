@@ -5,6 +5,9 @@ export type ProductDocument = Product & Document;
 
 @Schema({ timestamps: true })
 export class Product {
+  @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
+  tenantId!: Types.ObjectId;
+
   @Prop({ required: true })
   name!: string;
 
@@ -22,3 +25,6 @@ export class Product {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+
+ProductSchema.index({ tenantId: 1, createdAt: -1 });
+ProductSchema.index({ tenantId: 1, isActive: 1 });

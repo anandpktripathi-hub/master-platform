@@ -14,13 +14,22 @@ import {
 } from '@nestjs/common';
 import { RequestWithUser } from '../../common/interfaces/request-with-user.interface';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
+import { Tenant } from '../../decorators/tenant.decorator';
 import { CouponService } from './services/coupon.service';
 import { objectIdToString } from '../../common/utils/objectid.util';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApplyCouponDto,
+  BulkUpdateCouponStatusDto,
+  ValidateCouponDto,
+} from './dto/coupon-actions.dto';
+@ApiTags('Coupons')
+@ApiBearerAuth('bearer')
 @Controller('coupons')
 export class CouponController {
   constructor(private couponService: CouponService) {}
@@ -33,21 +42,20 @@ export class CouponController {
    * Validate a coupon code
    */
   @Post('validate')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
   async validateCoupon(
     @Request() req: RequestWithUser,
-    @Body() body: { code: string; packageId?: string },
+    @Tenant() tenantId: string | undefined,
+    @Body() dto: ValidateCouponDto,
   ) {
     if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
     if (!tenantId) {
       throw new BadRequestException('Tenant ID not found');
     }
-    // ObjectId to string conversion if needed
     return this.couponService.validateCoupon(
-      body.code,
+      dto.code,
       objectIdToString(tenantId),
-      body.packageId,
+      dto.packageId,
     );
   }
 
@@ -55,20 +63,20 @@ export class CouponController {
    * Apply coupon during upgrade/checkout
    */
   @Post('apply')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
   async applyCoupon(
     @Request() req: RequestWithUser,
-    @Body() body: { code: string; context?: string },
+    @Tenant() tenantId: string | undefined,
+    @Body() dto: ApplyCouponDto,
   ) {
     if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
     if (!tenantId) {
       throw new BadRequestException('Tenant ID not found');
     }
     return this.couponService.applyCoupon(
-      body.code,
+      dto.code,
       objectIdToString(tenantId),
-      body.context || 'checkout',
+      'checkout',
     );
   }
 
@@ -203,7 +211,7 @@ export class CouponController {
   @HttpCode(204)
   async bulkUpdateCoupons(
     @Request() req: RequestWithUser,
-    @Body() body: { couponIds: string[]; status: 'active' | 'inactive' },
+    @Body() body: BulkUpdateCouponStatusDto,
   ) {
     if (!req.user) throw new BadRequestException('User not authenticated');
     const userId = req.user.sub;

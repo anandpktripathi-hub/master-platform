@@ -16,6 +16,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateMenuItemDto } from '../dto/create-menu-item.dto';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class CmsMenuService {
@@ -24,11 +25,25 @@ export class CmsMenuService {
     private menuItemRepo: Model<CmsMenuItemEntity>,
   ) {}
 
+  private assertObjectId(value: string, fieldName: string): void {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+  }
+
+  private assertNonEmptyString(value: string, fieldName: string): void {
+    if (typeof value !== 'string' || value.trim().length === 0) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+  }
+
   async createMenuItem(
     tenantId: string,
     menuId: string,
     dto: CreateMenuItemDto,
   ): Promise<CmsMenuItemEntity> {
+    this.assertNonEmptyString(tenantId, 'tenantId');
+    this.assertNonEmptyString(menuId, 'menuId');
     const item = {
       tenantId,
       menuName: menuId,
@@ -46,12 +61,16 @@ export class CmsMenuService {
     tenantId: string,
     menuId: string,
   ): Promise<CmsMenuItemEntity[]> {
+    this.assertNonEmptyString(tenantId, 'tenantId');
+    this.assertNonEmptyString(menuId, 'menuId');
     return this.menuItemRepo
       .find({ tenantId, menuName: menuId })
       .sort({ sortOrder: 1 });
   }
 
   async buildMenuTree(tenantId: string, menuId: string): Promise<any[]> {
+    this.assertNonEmptyString(tenantId, 'tenantId');
+    this.assertNonEmptyString(menuId, 'menuId');
     const items = await this.getMenu(tenantId, menuId);
     const tree: any[] = [];
     const map = new Map();
@@ -79,6 +98,8 @@ export class CmsMenuService {
     itemId: string,
     dto: Partial<CreateMenuItemDto>,
   ): Promise<CmsMenuItemEntity> {
+    this.assertNonEmptyString(tenantId, 'tenantId');
+    this.assertObjectId(itemId, 'itemId');
     const item = await this.menuItemRepo.findOne({ _id: itemId, tenantId });
     if (!item) {
       throw new NotFoundException('Menu item not found');
@@ -95,6 +116,8 @@ export class CmsMenuService {
   }
 
   async deleteMenuItem(tenantId: string, itemId: string): Promise<void> {
+    this.assertNonEmptyString(tenantId, 'tenantId');
+    this.assertObjectId(itemId, 'itemId');
     const result = await this.menuItemRepo.deleteMany({
       _id: itemId,
       tenantId,
@@ -109,7 +132,10 @@ export class CmsMenuService {
     menuId: string,
     order: { id: string; order: number }[],
   ): Promise<void> {
+    this.assertNonEmptyString(tenantId, 'tenantId');
+    this.assertNonEmptyString(menuId, 'menuId');
     for (const item of order) {
+      this.assertObjectId(item.id, 'id');
       await this.menuItemRepo.findByIdAndUpdate(item.id, {
         sortOrder: item.order,
       });

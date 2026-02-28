@@ -1,4 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -23,6 +28,10 @@ import {
 } from '../../database/schemas/user-post.schema';
 import { Ticket, TicketDocument } from '../../database/schemas/ticket.schema';
 import { Tenant, TenantDocument } from '../../database/schemas/tenant.schema';
+import {
+  GetSampleStatusParamsDto,
+  SeedSampleDataParamsDto,
+} from './dto/onboarding.dto';
 
 @Injectable()
 export class OnboardingService {
@@ -45,9 +54,21 @@ export class OnboardingService {
     private readonly tenantModel: Model<TenantDocument>,
   ) {}
 
-  async seedSampleData(params: { tenantId: string; userId: string }) {
-    const tenantObjectId = new Types.ObjectId(params.tenantId);
-    const userObjectId = new Types.ObjectId(params.userId);
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(value);
+  }
+
+  async seedSampleData(params: SeedSampleDataParamsDto) {
+    const tenantObjectId = this.toObjectId(params.tenantId, 'tenantId');
+    const userObjectId = this.toObjectId(params.userId, 'userId');
+
+    const tenant = await this.tenantModel.findById(tenantObjectId).exec();
+    if (!tenant) {
+      throw new NotFoundException('Tenant not found');
+    }
 
     // Avoid creating duplicates if sample already exists
     const existingContact = await this.crmContactModel.findOne({
@@ -121,40 +142,37 @@ export class OnboardingService {
     });
 
     // Ensure the tenant has a visible sample business directory listing
-    const tenant = await this.tenantModel.findById(tenantObjectId).exec();
-    if (tenant) {
-      const tags = Array.from(new Set([...(tenant.tags || []), 'sample-data']));
+    const tags = Array.from(new Set([...(tenant.tags || []), 'sample-data']));
 
-      if (!tenant.isListedInDirectory) {
-        tenant.isListedInDirectory = true;
-      }
-      if (tenant.directoryVisibility !== 'PUBLIC') {
-        tenant.directoryVisibility = 'PUBLIC';
-      }
-      tenant.tags = tags;
-
-      if (!tenant.publicName) {
-        tenant.publicName = tenant.companyName || tenant.name;
-      }
-      if (!tenant.tagline) {
-        tenant.tagline = 'Sample listing to show how your business appears.';
-      }
-      if (!tenant.shortDescription) {
-        tenant.shortDescription =
-          'This is a sample business directory entry created for your workspace.';
-      }
-      if (!tenant.city) {
-        tenant.city = 'Sample City';
-      }
-      if (!tenant.country) {
-        tenant.country = 'Sample Country';
-      }
-      if (!tenant.priceTier) {
-        tenant.priceTier = 'MEDIUM';
-      }
-
-      await tenant.save();
+    if (!tenant.isListedInDirectory) {
+      tenant.isListedInDirectory = true;
     }
+    if (tenant.directoryVisibility !== 'PUBLIC') {
+      tenant.directoryVisibility = 'PUBLIC';
+    }
+    tenant.tags = tags;
+
+    if (!tenant.publicName) {
+      tenant.publicName = tenant.companyName || tenant.name;
+    }
+    if (!tenant.tagline) {
+      tenant.tagline = 'Sample listing to show how your business appears.';
+    }
+    if (!tenant.shortDescription) {
+      tenant.shortDescription =
+        'This is a sample business directory entry created for your workspace.';
+    }
+    if (!tenant.city) {
+      tenant.city = 'Sample City';
+    }
+    if (!tenant.country) {
+      tenant.country = 'Sample Country';
+    }
+    if (!tenant.priceTier) {
+      tenant.priceTier = 'MEDIUM';
+    }
+
+    await tenant.save();
 
     this.logger.log(
       `Seeded sample onboarding data for tenant ${params.tenantId}`,
@@ -180,10 +198,15 @@ export class OnboardingService {
     };
   }
 
-  async getSampleStatus(params: { tenantId: string }) {
-    const tenantObjectId = new Types.ObjectId(params.tenantId);
+  async getSampleStatus(params: GetSampleStatusParamsDto) {
+    const tenantObjectId = this.toObjectId(params.tenantId, 'tenantId');
 
-    const [contact, ticket, post, tenant] = await Promise.all([
+    const tenant = await this.tenantModel.findById(tenantObjectId).exec();
+    if (!tenant) {
+      throw new NotFoundException('Tenant not found');
+    }
+
+    const [contact, ticket, post] = await Promise.all([
       this.crmContactModel.findOne({
         tenantId: tenantObjectId,
         email: 'sample.customer@example.com',
@@ -197,7 +220,6 @@ export class OnboardingService {
         content:
           'Welcome to your new workspace! This is a sample post to show how your feed will look.',
       }),
-      this.tenantModel.findById(tenantObjectId),
     ]);
 
     const directorySample = !!(

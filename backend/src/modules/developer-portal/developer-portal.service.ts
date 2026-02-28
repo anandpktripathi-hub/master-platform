@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -37,6 +37,29 @@ export class DeveloperPortalService {
     private readonly webhookLogModel: Model<WebhookDeliveryLogDocument>,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(value);
+  }
+
+  private normalizeLimit(value: unknown, defaultValue = 50) {
+    const n = typeof value === 'number' ? value : value === undefined ? defaultValue : Number(value);
+    if (!Number.isFinite(n)) {
+      throw new BadRequestException('Invalid limit');
+    }
+    return Math.min(Math.max(Math.trunc(n), 1), 100);
+  }
+
+  private normalizeSkip(value: unknown, defaultValue = 0) {
+    const n = typeof value === 'number' ? value : value === undefined ? defaultValue : Number(value);
+    if (!Number.isFinite(n)) {
+      throw new BadRequestException('Invalid skip');
+    }
+    return Math.max(Math.trunc(n), 0);
+  }
+
   /**
    * Create a new API key for a tenant.
    * Returns the raw key only once; the key is hashed before storing.
@@ -46,6 +69,17 @@ export class DeveloperPortalService {
     userId: string,
     dto: CreateApiKeyDto,
   ): Promise<ApiKeyCreatedResponse> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userObjectId = this.toObjectId(userId, 'userId');
+
+    if (!dto?.name || typeof dto.name !== 'string' || dto.name.trim().length === 0) {
+      throw new BadRequestException('Invalid name');
+    }
+
+    if (dto.expiresAt && Number.isNaN(dto.expiresAt.getTime())) {
+      throw new BadRequestException('Invalid expiresAt');
+    }
+
     // Generate a cryptographically secure random key
     const rawKey = `sk_${crypto.randomBytes(32).toString('hex')}`;
     const keyPrefix = rawKey.substring(0, 12);
@@ -54,9 +88,9 @@ export class DeveloperPortalService {
     const keyHash = await bcrypt.hash(rawKey, 10);
 
     const apiKey = new this.apiKeyModel({
-      tenantId: new Types.ObjectId(tenantId),
-      createdBy: new Types.ObjectId(userId),
-      name: dto.name,
+      tenantId: tenantObjectId,
+      createdBy: userObjectId,
+      name: dto.name.trim(),
       keyHash,
       keyPrefix,
       scopes: dto.scopes || [],
@@ -81,8 +115,9 @@ export class DeveloperPortalService {
    * List all API keys for a tenant (without exposing hashes or raw keys).
    */
   async listApiKeys(tenantId: string) {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const keys = await this.apiKeyModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .sort('-createdAt')
       .exec();
 
@@ -102,9 +137,11 @@ export class DeveloperPortalService {
    * Revoke (deactivate) an API key.
    */
   async revokeApiKey(tenantId: string, keyId: string): Promise<void> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const keyObjectId = this.toObjectId(keyId, 'keyId');
     const key = await this.apiKeyModel.findOne({
-      _id: keyId,
-      tenantId: new Types.ObjectId(tenantId),
+      _id: keyObjectId,
+      tenantId: tenantObjectId,
     });
 
     if (!key) {
@@ -119,9 +156,11 @@ export class DeveloperPortalService {
    * Delete an API key permanently.
    */
   async deleteApiKey(tenantId: string, keyId: string): Promise<void> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const keyObjectId = this.toObjectId(keyId, 'keyId');
     const result = await this.apiKeyModel.deleteOne({
-      _id: keyId,
-      tenantId: new Types.ObjectId(tenantId),
+      _id: keyObjectId,
+      tenantId: tenantObjectId,
     });
 
     if (!result.deletedCount) {
@@ -142,7 +181,7 @@ export class DeveloperPortalService {
     } = {},
   ) {
     const filter: Record<string, unknown> = {
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: this.toObjectId(tenantId, 'tenantId'),
     };
 
     if (options.event) {
@@ -153,8 +192,8 @@ export class DeveloperPortalService {
       filter.status = options.status;
     }
 
-    const limit = Math.min(options.limit || 50, 100);
-    const skip = options.skip || 0;
+    const limit = this.normalizeLimit(options.limit, 50);
+    const skip = this.normalizeSkip(options.skip, 0);
 
     const [logs, total] = await Promise.all([
       this.webhookLogModel
@@ -188,10 +227,12 @@ export class DeveloperPortalService {
    * Get detailed webhook delivery log by ID.
    */
   async getWebhookDeliveryLog(tenantId: string, logId: string) {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const logObjectId = this.toObjectId(logId, 'logId');
     const log = await this.webhookLogModel
       .findOne({
-        _id: logId,
-        tenantId: new Types.ObjectId(tenantId),
+        _id: logObjectId,
+        tenantId: tenantObjectId,
       })
       .lean()
       .exec();

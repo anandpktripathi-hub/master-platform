@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Controller,
   Get,
   Param,
@@ -13,27 +14,51 @@ import {
   Delete,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { ChatService } from './chat.service';
 import { Observable } from 'rxjs';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
+import { Tenant } from '../../decorators/tenant.decorator';
+import type { Request } from 'express';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ArchiveChatRoomDto,
+  CreateChatRoomDto,
+  ListChatMessagesQueryDto,
+  PostChatMessageDto,
+} from './dto/chat.dto';
 
 interface AuthRequest extends Request {
   user?: {
     sub?: string;
     _id?: string;
     tenantId?: string;
+    role?: string;
   };
 }
-
+@ApiTags('Chat')
+@ApiBearerAuth('bearer')
 @Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
+  private canCreatePrivateRooms(rawRole: string | undefined): boolean {
+    const role = String(rawRole || '').trim();
+    const normalized = role.toLowerCase();
+    return (
+      normalized === 'platform_admin' ||
+      normalized === 'platform_super_admin' ||
+      normalized === 'platform_superadmin' ||
+      normalized === 'tenant_admin' ||
+      normalized === 'owner' ||
+      normalized === 'admin'
+    );
+  }
+
   @Get('rooms')
-  @UseGuards(JwtAuthGuard)
-  async listRooms(@Req() req: AuthRequest) {
-    const tenantId = req.user?.tenantId;
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
+  async listRooms(@Tenant() tenantId: string | undefined) {
     if (!tenantId) {
       throw new BadRequestException('Tenant context is required');
     }
@@ -41,69 +66,65 @@ export class ChatController {
   }
 
   @Post('rooms')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
   async createRoom(
     @Req() req: AuthRequest,
-    @Body() body: { name?: string; description?: string; isPrivate?: boolean },
+    @Tenant() tenantId: string | undefined,
+    @Body() body: CreateChatRoomDto,
   ) {
-    const tenantId = req.user?.tenantId;
     const userId = req.user?.sub || req.user?._id;
     if (!tenantId || !userId) {
       throw new BadRequestException('Tenant and user context are required');
     }
-    if (!body.name || !body.name.trim()) {
-      throw new BadRequestException('Room name is required');
+
+    if (body.isPrivate && !this.canCreatePrivateRooms(req.user?.role)) {
+      throw new ForbiddenException(
+        'You are not allowed to create private chat rooms',
+      );
     }
 
     return this.chatService.createRoom(String(tenantId), String(userId), {
       name: body.name,
       description: body.description,
-      // Only tenant admins or platform admins should create private rooms
-      ...(body.isPrivate ? { isPrivate: true } : {}),
-    } as any);
+      isPrivate: body.isPrivate === true,
+    });
   }
 
   @Get('rooms/:roomId/messages')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
   async listMessages(
     @Req() req: AuthRequest,
+    @Tenant() tenantId: string | undefined,
     @Param('roomId') roomId: string,
-    @Query('before') before?: string,
-    @Query('limit') limit?: string,
+    @Query() query: ListChatMessagesQueryDto,
   ) {
-    const tenantId = req.user?.tenantId;
     const userId = req.user?.sub || req.user?._id;
     if (!tenantId || !userId) {
       throw new BadRequestException('Tenant and user context are required');
     }
-
-    const numericLimit = limit ? parseInt(limit, 10) : undefined;
 
     return this.chatService.listMessagesForUser(
       String(tenantId),
       roomId,
       String(userId),
       {
-        before,
-        limit: Number.isFinite(numericLimit) ? numericLimit : undefined,
+        before: query.before,
+        limit: query.limit,
       },
     );
   }
 
   @Post('rooms/:roomId/messages')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
   async postMessage(
     @Req() req: AuthRequest,
+    @Tenant() tenantId: string | undefined,
     @Param('roomId') roomId: string,
-    @Body() body: { content?: string },
+    @Body() body: PostChatMessageDto,
   ) {
-    const tenantId = req.user?.tenantId;
     const userId = req.user?.sub || req.user?._id;
     if (!tenantId || !userId) {
       throw new BadRequestException('Tenant and user context are required');
-    }
-    if (!body.content || !body.content.trim()) {
-      throw new BadRequestException('Message content is required');
     }
 
     return this.chatService.postMessage(
@@ -115,9 +136,12 @@ export class ChatController {
   }
 
   @Post('rooms/:roomId/join')
-  @UseGuards(JwtAuthGuard)
-  async joinRoom(@Req() req: AuthRequest, @Param('roomId') roomId: string) {
-    const tenantId = req.user?.tenantId;
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
+  async joinRoom(
+    @Req() req: AuthRequest,
+    @Tenant() tenantId: string | undefined,
+    @Param('roomId') roomId: string,
+  ) {
     const userId = req.user?.sub || req.user?._id;
     if (!tenantId || !userId) {
       throw new BadRequestException('Tenant and user context are required');
@@ -127,9 +151,11 @@ export class ChatController {
   }
 
   @Get('rooms/:roomId/members')
-  @UseGuards(JwtAuthGuard)
-  async listMembers(@Req() req: AuthRequest, @Param('roomId') roomId: string) {
-    const tenantId = req.user?.tenantId;
+  @UseGuards(JwtAuthGuard, WorkspaceGuard)
+  async listMembers(
+    @Tenant() tenantId: string | undefined,
+    @Param('roomId') roomId: string,
+  ) {
     if (!tenantId) {
       throw new BadRequestException('Tenant context is required');
     }
@@ -195,7 +221,7 @@ export class ChatController {
   }
 
   @Patch('admin/rooms/:roomId/archive')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
   @Roles(
     'platform_admin',
     'tenant_admin',
@@ -203,16 +229,12 @@ export class ChatController {
     'TENANT_ADMIN',
   )
   async archiveRoom(
-    @Req() req: AuthRequest,
+    @Tenant() tenantId: string | undefined,
     @Param('roomId') roomId: string,
-    @Body() body: { archived?: boolean },
+    @Body() body: ArchiveChatRoomDto,
   ) {
-    const tenantId = req.user?.tenantId;
     if (!tenantId) {
       throw new BadRequestException('Tenant context is required');
-    }
-    if (typeof body.archived !== 'boolean') {
-      throw new BadRequestException('archived flag is required');
     }
 
     return this.chatService.archiveRoom(
@@ -223,7 +245,7 @@ export class ChatController {
   }
 
   @Delete('admin/rooms/:roomId/members/:userId')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
   @Roles(
     'platform_admin',
     'tenant_admin',
@@ -231,11 +253,10 @@ export class ChatController {
     'TENANT_ADMIN',
   )
   async removeMember(
-    @Req() req: AuthRequest,
+    @Tenant() tenantId: string | undefined,
     @Param('roomId') roomId: string,
     @Param('userId') userId: string,
   ) {
-    const tenantId = req.user?.tenantId;
     if (!tenantId) {
       throw new BadRequestException('Tenant context is required');
     }

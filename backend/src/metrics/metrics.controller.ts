@@ -1,42 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { MetricsMiddleware } from '../common/middleware/metrics.middleware';
-
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { RoleGuard } from '../guards/role.guard';
+import { Roles } from '../decorators/roles.decorator';
+import { MetricsService } from './metrics.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Metrics')
+@ApiBearerAuth('bearer')
 @Controller('metrics')
 export class MetricsController {
+  constructor(private readonly metricsService: MetricsService) {}
+
   /**
    * Get application metrics in JSON format
    */
   @Get()
   getMetrics() {
-    const metrics = MetricsMiddleware.getMetrics();
-    const avgResponseTime =
-      metrics.totalRequests > 0
-        ? metrics.totalResponseTime / metrics.totalRequests
-        : 0;
-
-    return {
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      requests: {
-        total: metrics.totalRequests,
-        byMethod: metrics.requestsByMethod,
-        byPath: metrics.requestsByPath,
-      },
-      responses: {
-        byStatus: metrics.responsesByStatus,
-        avgResponseTime: Math.round(avgResponseTime),
-        maxResponseTime:
-          metrics.maxResponseTime === 0 ? 0 : metrics.maxResponseTime,
-        minResponseTime:
-          metrics.minResponseTime === Infinity ? 0 : metrics.minResponseTime,
-      },
-      memory: {
-        heapUsed: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
-        heapTotal: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
-        external: Math.round(process.memoryUsage().external / 1024 / 1024),
-        rss: Math.round(process.memoryUsage().rss / 1024 / 1024),
-      },
-    };
+    return this.metricsService.getMetricsJson();
   }
 
   /**
@@ -44,46 +23,18 @@ export class MetricsController {
    */
   @Get('prometheus')
   getPrometheusMetrics() {
-    const metrics = MetricsMiddleware.getMetrics();
-    const avgResponseTime =
-      metrics.totalRequests > 0
-        ? metrics.totalResponseTime / metrics.totalRequests
-        : 0;
-
-    const lines: string[] = [
-      '# HELP http_requests_total Total number of HTTP requests',
-      '# TYPE http_requests_total counter',
-      `http_requests_total ${metrics.totalRequests}`,
-      '',
-      '# HELP http_request_duration_ms HTTP request duration in milliseconds',
-      '# TYPE http_request_duration_ms gauge',
-      `http_request_duration_ms{quantile="avg"} ${Math.round(avgResponseTime)}`,
-      `http_request_duration_ms{quantile="max"} ${metrics.maxResponseTime === 0 ? 0 : metrics.maxResponseTime}`,
-      `http_request_duration_ms{quantile="min"} ${metrics.minResponseTime === Infinity ? 0 : metrics.minResponseTime}`,
-      '',
-      '# HELP process_heap_bytes Process heap size in bytes',
-      '# TYPE process_heap_bytes gauge',
-      `process_heap_bytes ${process.memoryUsage().heapUsed}`,
-      '',
-      '# HELP process_uptime_seconds Process uptime in seconds',
-      '# TYPE process_uptime_seconds counter',
-      `process_uptime_seconds ${Math.round(process.uptime())}`,
-    ];
-
-    // Add per-status metrics
-    Object.entries(metrics.responsesByStatus).forEach(([status, count]) => {
-      lines.push(`http_responses_total{status="${status}"} ${count}`);
-    });
-
-    return lines.join('\n');
+    return this.metricsService.getPrometheusText();
   }
 
   /**
    * Reset metrics (admin only in production)
    */
   @Get('reset')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('PLATFORM_SUPER_ADMIN', 'PLATFORM_SUPERADMIN')
   resetMetrics() {
-    MetricsMiddleware.resetMetrics();
+    this.metricsService.reset();
     return { message: 'Metrics reset successfully' };
   }
 }
+

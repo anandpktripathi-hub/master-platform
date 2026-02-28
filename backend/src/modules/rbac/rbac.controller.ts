@@ -19,9 +19,13 @@ import {
   CreateUserDto,
   UpdateUserDto,
   ResetPasswordDto,
+  CheckFieldPermissionDto,
+  ToggleLoginDto,
 } from './dto/rbac.dto';
 import { CurrentTenant } from '../../decorators/tenant.decorator';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Rbac')
+@ApiBearerAuth('bearer')
 @Controller('rbac')
 @UseGuards(JwtAuthGuard)
 export class RbacController {
@@ -35,8 +39,7 @@ export class RbacController {
    */
   @Post('check-field-permission')
   async checkFieldPermission(
-    @Body()
-    body: { roleId: string; module: string; action: string; field?: string },
+    @Body() body: CheckFieldPermissionDto,
     @CurrentTenant() tenantId: string,
   ) {
     const role = await this.rbacService.getRoleById(tenantId, body.roleId);
@@ -157,7 +160,7 @@ export class RbacController {
   async toggleLogin(
     @CurrentTenant() tenantId: string,
     @Param('userTenantId') userTenantId: string,
-    @Body() body: { enable: boolean },
+    @Body() body: ToggleLoginDto,
   ) {
     return this.rbacService.toggleUserLogin(
       tenantId,

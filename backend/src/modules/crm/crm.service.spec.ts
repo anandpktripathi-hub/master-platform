@@ -102,7 +102,11 @@ describe('CrmService - calendar integration for tasks', () => {
       calendarEventId: 'event-123',
     } as any;
 
-    (taskModel.findOneAndUpdate as jest.Mock).mockResolvedValue(updatedTask);
+    (taskModel.findOneAndUpdate as jest.Mock).mockReturnValue({
+      lean: () => ({
+        exec: jest.fn().mockResolvedValue(updatedTask),
+      }),
+    });
 
     await service.setTaskCompleted(
       tenantId,
@@ -129,7 +133,11 @@ describe('CrmService - calendar integration for tasks', () => {
       calendarEventId: 'event-123',
     } as any;
 
-    (taskModel.findOne as jest.Mock).mockResolvedValue(existingTask);
+    (taskModel.findOne as jest.Mock).mockReturnValue({
+      lean: () => ({
+        exec: jest.fn().mockResolvedValue(existingTask),
+      }),
+    });
     (taskModel.deleteOne as jest.Mock).mockResolvedValue({});
 
     await service.deleteTask(tenantId, userId, taskId.toHexString());

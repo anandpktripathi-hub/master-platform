@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
   Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -12,16 +13,129 @@ import {
 } from '../../database/schemas/billing.schema';
 import { BillingNotificationService } from './billing-notification.service';
 import { TenantsService } from '../tenants/tenants.service';
+import { PackageService } from '../packages/services/package.service';
+import type { TenantPackage } from '../../database/schemas/tenant-package.schema';
+import type { Package } from '../../database/schemas/package.schema';
+
+type CustomDomainsEntitlementOptionsV1 = {
+  used?: number;
+  now?: Date;
+};
 
 @Injectable()
 export class BillingService {
   private readonly logger = new Logger(BillingService.name);
 
+  /**
+   * v1 fallback mapping used only when Package feature/limits are missing.
+   * Primary source of truth should be `Package.featureSet` + `Package.limits`.
+   */
+  private readonly CUSTOM_DOMAINS_FALLBACK_LIMITS_V1: Record<
+    string,
+    { allow: boolean; max: number }
+  > = {
+    free: { allow: false, max: 0 },
+    pro: { allow: true, max: 3 },
+    enterprise: { allow: true, max: 20 },
+  };
+
   constructor(
     @InjectModel(Billing.name) private billingModel: Model<BillingDocument>,
     private readonly billingNotifications: BillingNotificationService,
     private readonly tenantsService: TenantsService,
+    private readonly packageService: PackageService,
   ) {}
+
+  private isTenantPackageActiveNow(
+    tenantPackage: TenantPackage,
+    now: Date,
+  ): boolean {
+    const rawStatus = (tenantPackage as any).status as string | undefined;
+    if (rawStatus === 'trial') {
+      const trialEndsAt = (tenantPackage as any).trialEndsAt as Date | undefined;
+      return !trialEndsAt || trialEndsAt.getTime() > now.getTime();
+    }
+
+    if (rawStatus === 'active') {
+      const expiresAt = (tenantPackage as any).expiresAt as Date | undefined;
+      return !expiresAt || expiresAt.getTime() > now.getTime();
+    }
+
+    return false;
+  }
+
+  private resolveCustomDomainsLimitsV1(pkg?: Package): {
+    allowCustomDomains: boolean;
+    maxAllowed: number;
+  } {
+    const pkgAllow = pkg?.featureSet?.allowCustomDomain;
+    const pkgMax = (pkg as any)?.limits?.maxCustomDomains;
+
+    // Prefer package configuration when present.
+    if (typeof pkgAllow === 'boolean' && typeof pkgMax === 'number') {
+      const maxAllowed = Number.isFinite(pkgMax) ? Math.max(0, Math.floor(pkgMax)) : 0;
+      return {
+        allowCustomDomains: pkgAllow,
+        maxAllowed: pkgAllow ? maxAllowed : 0,
+      };
+    }
+
+    // Fallback for legacy FREE/PRO/ENTERPRISE by package name.
+    const planKey = (pkg?.name || '').trim().toLowerCase();
+    const fallback = this.CUSTOM_DOMAINS_FALLBACK_LIMITS_V1[planKey];
+    if (fallback) {
+      return {
+        allowCustomDomains: fallback.allow,
+        maxAllowed: fallback.allow ? fallback.max : 0,
+      };
+    }
+
+    return { allowCustomDomains: false, maxAllowed: 0 };
+  }
+
+  /**
+   * v1 assertion helper used by other modules.
+   * Centralizes custom-domain entitlement checks on subscription state.
+   */
+  async assertTenantAllowedCustomDomains(
+    tenantId: string,
+    options: CustomDomainsEntitlementOptionsV1 = {},
+  ): Promise<void> {
+    const now = options.now || new Date();
+    const tenantPackage = await this.packageService.getTenantPackage(tenantId);
+    if (!tenantPackage) {
+      throw new BadRequestException('Tenant has no active package');
+    }
+
+    const activeNow = this.isTenantPackageActiveNow(tenantPackage as any, now);
+    if (!activeNow) {
+      throw new BadRequestException('Tenant has no active package');
+    }
+
+    const pkg = (tenantPackage as any).packageId as Package | undefined;
+    const { allowCustomDomains, maxAllowed } = this.resolveCustomDomainsLimitsV1(pkg);
+
+    if (!allowCustomDomains || maxAllowed === 0) {
+      throw new BadRequestException('Your plan does not allow custom domains');
+    }
+
+    const used = (() => {
+      const overrideUsed = options.used;
+      if (typeof overrideUsed === 'number' && Number.isFinite(overrideUsed)) {
+        return Math.max(0, Math.floor(overrideUsed));
+      }
+      const raw = (tenantPackage as any).usageCounters?.customDomains;
+      return typeof raw === 'number' && Number.isFinite(raw)
+        ? Math.max(0, Math.floor(raw))
+        : 0;
+    })();
+
+    if (used >= maxAllowed) {
+      throw new BadRequestException(
+        `You have reached the limit of ${maxAllowed} custom domains. Please upgrade.`,
+      );
+    }
+  }
 
   async findAll(tenantId: string): Promise<Billing[]> {
     try {

@@ -58,6 +58,77 @@ export class PaymentGatewayService {
     };
   }
 
+  /**
+   * Capture an existing PayPal order created client-side via the PayPal JS SDK.
+   *
+   * This is used by the frontend return/callback flow, and intentionally does
+   * not require a full `PaymentRequest` (amount/package) since those details
+   * are not always available on the return screen.
+   */
+  async capturePaypalOrder(orderId: string): Promise<PaymentResult> {
+    if (!orderId) {
+      throw new BadRequestException('PayPal order ID is missing');
+    }
+
+    const settings = await this.getPaymentSettings();
+    if (!settings.enablePayments) {
+      return {
+        success: false,
+        error: 'Payments are currently disabled by configuration',
+      };
+    }
+
+    const gatewayConfig = settings.gateways['paypal'];
+    if (!gatewayConfig || !gatewayConfig.enabled) {
+      return {
+        success: false,
+        error: 'PayPal gateway is not enabled or configured',
+      };
+    }
+
+    const clientId = gatewayConfig.publicKey || process.env.PAYPAL_CLIENT_ID;
+    const clientSecret =
+      gatewayConfig.secretKey || process.env.PAYPAL_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+      return {
+        success: false,
+        error: 'PayPal API credentials are not configured',
+      };
+    }
+
+    // Dynamic require to avoid needing PayPal SDK TS types.
+    const paypalSdk = require('@paypal/checkout-server-sdk');
+
+    const mode = (process.env.PAYPAL_MODE || 'sandbox').toLowerCase();
+    const environment =
+      mode === 'live'
+        ? new paypalSdk.core.LiveEnvironment(clientId, clientSecret)
+        : new paypalSdk.core.SandboxEnvironment(clientId, clientSecret);
+
+    const client = new paypalSdk.core.PayPalHttpClient(environment);
+
+    try {
+      const requestCapture = new paypalSdk.orders.OrdersCaptureRequest(orderId);
+      requestCapture.requestBody({});
+
+      const response = await client.execute(requestCapture);
+      const status = response?.result?.status;
+      const success = status === 'COMPLETED';
+
+      return {
+        success,
+        transactionId: response?.result?.id,
+        error: success ? undefined : `PayPal capture status: ${status}`,
+      };
+    } catch (err: any) {
+      return {
+        success: false,
+        error: err?.message || 'PayPal payment failed',
+      };
+    }
+  }
+
   // Process a payment using the configured gateway settings
   async processPayment(request: PaymentRequest): Promise<PaymentResult> {
     if (!request.amount || !request.sourceToken) {

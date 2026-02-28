@@ -1,0 +1,6 @@
+
+DeviceID DriveType ProviderName VolumeName Size         FreeSpace 
+-------- --------- ------------ ---------- ----         --------- 
+C:       3                      OS         487550087168 1779793920
+
+

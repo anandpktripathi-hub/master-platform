@@ -1,5 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
+import { Types } from 'mongoose';
 
 type TenantRequest = Request & {
   tenantId?: string;
@@ -16,6 +17,13 @@ export const Tenant = createParamDecorator(
       (request.headers['x-workspace-id'] as string | undefined);
 
     if (headerTenant) {
+      // If a domain/slug is provided in the header, TenantMiddleware may have
+      // already resolved it to an actual tenant ObjectId and set request.tenantId.
+      // Prefer the resolved ObjectId to avoid downstream ObjectId validation errors.
+      if (!Types.ObjectId.isValid(headerTenant) && request.tenantId) {
+        return request.tenantId;
+      }
+
       return headerTenant;
     }
 

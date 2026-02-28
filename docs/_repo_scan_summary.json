@@ -1,0 +1,1640 @@
+{
+  "generatedAt": "2026-02-19T12:34:01.290Z",
+  "root": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app",
+  "backend": {
+    "modules": [
+      {
+        "name": "settings",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\settings",
+        "score": 73,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 49
+      },
+      {
+        "name": "domains",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\domains",
+        "score": 70,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": true,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 9
+      },
+      {
+        "name": "auth",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\auth",
+        "score": 67,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 14
+      },
+      {
+        "name": "themes",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\themes",
+        "score": 65,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 7
+      },
+      {
+        "name": "payments",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\payments",
+        "score": 60,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": true,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 7
+      },
+      {
+        "name": "billing",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\billing",
+        "score": 60,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": true,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 6
+      },
+      {
+        "name": "notifications",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\notifications",
+        "score": 60,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": true,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 6
+      },
+      {
+        "name": "crm",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\crm",
+        "score": 60,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": true,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "hierarchy",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\hierarchy",
+        "score": 57,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 14
+      },
+      {
+        "name": "users",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\users",
+        "score": 55,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 8
+      },
+      {
+        "name": "custom-domains",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\custom-domains",
+        "score": 55,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 6
+      },
+      {
+        "name": "coupons",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\coupons",
+        "score": 55,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "rbac",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\rbac",
+        "score": 55,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "tenants",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\tenants",
+        "score": 55,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "profile",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\profile",
+        "score": 55,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 4
+      },
+      {
+        "name": "packages",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\packages",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 4
+      },
+      {
+        "name": "products",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\products",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 4
+      },
+      {
+        "name": "accounting",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\accounting",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "ai-services",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\ai-services",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "analytics",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\analytics",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "chat",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\chat",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "dashboard",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\dashboard",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "developer-portal",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\developer-portal",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "hrm",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\hrm",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "logs",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\logs",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "marketplace",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\marketplace",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "onboarding",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\onboarding",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "pos",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\pos",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "projects",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\projects",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "reports",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\reports",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "social",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\social",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "support",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\support",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "theme",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\theme",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "user",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\user",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "vcards",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\vcards",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "cms",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\cms",
+        "score": 30,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 2
+      },
+      {
+        "name": "health",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\health",
+        "score": 30,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 2
+      },
+      {
+        "name": "orders",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\orders",
+        "score": 30,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 2
+      },
+      {
+        "name": "seo",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\seo",
+        "score": 30,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 2
+      },
+      {
+        "name": "tenant",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\tenant",
+        "score": 30,
+        "metrics": {
+          "module": false,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 2
+      }
+    ],
+    "topLevel": [
+      {
+        "name": "cms",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\cms",
+        "score": 71,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 39
+      },
+      {
+        "name": "tenants",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\tenants",
+        "score": 69,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": true,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 25
+      },
+      {
+        "name": "common",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\common",
+        "score": 61,
+        "metrics": {
+          "module": true,
+          "controller": false,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": true,
+          "tests": true,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 37
+      },
+      {
+        "name": "billing",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing",
+        "score": 59,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 28
+      },
+      {
+        "name": "feature-registry",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\feature-registry",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 8
+      },
+      {
+        "name": "workspaces",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\workspaces",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 4
+      },
+      {
+        "name": "health",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\health",
+        "score": 45,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 3
+      },
+      {
+        "name": "database",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\database",
+        "score": 35,
+        "metrics": {
+          "module": true,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": true,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 59
+      },
+      {
+        "name": "auth",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\auth",
+        "score": 30,
+        "metrics": {
+          "module": false,
+          "controller": true,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 6
+      },
+      {
+        "name": "metrics",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\metrics",
+        "score": 30,
+        "metrics": {
+          "module": true,
+          "controller": true,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 2
+      },
+      {
+        "name": "logger",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\logger",
+        "score": 15,
+        "metrics": {
+          "module": true,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "services",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\services",
+        "score": 15,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": true,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "middleware",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\middleware",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "config",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\config",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "guards",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\guards",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 4
+      },
+      {
+        "name": "audit",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\audit",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "filters",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\filters",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "pipes",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\pipes",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "utils",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\utils",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "types",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\types",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "strategies",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\strategies",
+        "score": 0,
+        "metrics": {
+          "module": false,
+          "controller": false,
+          "service": false,
+          "dto": false,
+          "schemaOrEntity": false,
+          "tests": false,
+          "docs": false,
+          "migrations": false
+        },
+        "fileCount": 0
+      }
+    ]
+  },
+  "frontend": {
+    "areas": [
+      {
+        "name": "pages",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages",
+        "score": 67,
+        "metrics": {
+          "routes": true,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": true,
+          "docs": false
+        },
+        "fileCount": 86
+      },
+      {
+        "name": "router.tsx",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\router.tsx",
+        "score": 50,
+        "metrics": {
+          "present": true
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "modules",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\modules",
+        "score": 30,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": true,
+          "docs": false
+        },
+        "fileCount": 12
+      },
+      {
+        "name": "admin",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\admin",
+        "score": 30,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": true,
+          "docs": false
+        },
+        "fileCount": 11
+      },
+      {
+        "name": "theme",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\theme",
+        "score": 30,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": true,
+          "docs": false
+        },
+        "fileCount": 6
+      },
+      {
+        "name": "components",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\components",
+        "score": 26,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 50
+      },
+      {
+        "name": "contexts",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\contexts",
+        "score": 20,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "providers",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\providers",
+        "score": 20,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "themes",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\themes",
+        "score": 20,
+        "metrics": {
+          "routes": false,
+          "components": true,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 1
+      },
+      {
+        "name": "api",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\api",
+        "score": 15,
+        "metrics": {
+          "routes": false,
+          "components": false,
+          "api": true,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 10
+      },
+      {
+        "name": "styles",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\styles",
+        "score": 10,
+        "metrics": {
+          "routes": false,
+          "components": false,
+          "api": false,
+          "tests": false,
+          "styles": true,
+          "docs": false
+        },
+        "fileCount": 5
+      },
+      {
+        "name": "services",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\services",
+        "score": 0,
+        "metrics": {
+          "routes": false,
+          "components": false,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 10
+      },
+      {
+        "name": "types",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\types",
+        "score": 0,
+        "metrics": {
+          "routes": false,
+          "components": false,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 4
+      },
+      {
+        "name": "utils",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\utils",
+        "score": 0,
+        "metrics": {
+          "routes": false,
+          "components": false,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 2
+      },
+      {
+        "name": "navigation",
+        "dir": "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\navigation",
+        "score": 0,
+        "metrics": {
+          "routes": false,
+          "components": false,
+          "api": false,
+          "tests": false,
+          "styles": false,
+          "docs": false
+        },
+        "fileCount": 1
+      }
+    ]
+  },
+  "earningReadiness": {
+    "stages": {
+      "subscriptions": {
+        "description": "Plans/packages/subscriptions lifecycle and UI entry points",
+        "totalChecks": 6,
+        "passedChecks": 6,
+        "score": 100,
+        "checks": [
+          {
+            "id": "backend_packages_module",
+            "label": "Backend packages/subscription module exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\packages\\packages.module.ts"
+            ]
+          },
+          {
+            "id": "subscription_scheduler",
+            "label": "Subscription expiry/warnings scheduler exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\packages\\subscription-expiry.scheduler.ts"
+            ]
+          },
+          {
+            "id": "plan_config",
+            "label": "Plan configuration referenced in backend",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\config\\plans.config.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\database\\schemas\\tenant.schema.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\analytics\\analytics.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\auth\\auth.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\packages\\services\\package.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\tenants\\dto\\tenant-public-profile.dto.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\tenants\\tenants.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\workspaces\\workspace.service.ts"
+            ]
+          },
+          {
+            "id": "tenant_plan_fields",
+            "label": "Tenant schema contains plan/subscription fields",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\database\\schemas\\tenant.schema.ts"
+            ]
+          },
+          {
+            "id": "frontend_pricing_page",
+            "label": "Frontend Pricing page exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\Pricing.tsx"
+            ]
+          },
+          {
+            "id": "frontend_billing_dashboard",
+            "label": "Frontend Billing dashboard exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\BillingDashboard.tsx"
+            ]
+          }
+        ]
+      },
+      "payments": {
+        "description": "Ability to take payment (Stripe/PayPal) from UI through backend processing",
+        "totalChecks": 7,
+        "passedChecks": 6,
+        "score": 86,
+        "checks": [
+          {
+            "id": "stripe_checkout_endpoint",
+            "label": "Stripe checkout endpoint exists (controller route)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\addons.controller.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\lifetime.controller.ts"
+            ]
+          },
+          {
+            "id": "stripe_backend",
+            "label": "Backend Stripe integration code exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\checkout\\checkout.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\stripe-addons.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\stripe.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\subscription\\subscription.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\webhook\\webhook.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\payments\\services\\payment-gateway.service.ts"
+            ]
+          },
+          {
+            "id": "paypal_controller_endpoint",
+            "label": "PayPal API endpoint exists (controller route)",
+            "pass": false,
+            "evidence": []
+          },
+          {
+            "id": "paypal_backend",
+            "label": "Backend PayPal capture/integration code exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\payments\\services\\payment-gateway.service.ts"
+            ]
+          },
+          {
+            "id": "stripe_frontend_checkout",
+            "label": "Frontend Stripe checkout page exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\BillingStripeCheckoutPage.tsx"
+            ]
+          },
+          {
+            "id": "paypal_frontend_return",
+            "label": "Frontend PayPal return page exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\BillingPaypalReturn.tsx"
+            ]
+          },
+          {
+            "id": "env_payment_docs",
+            "label": "Environment docs include payment keys",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\docs\\ENVIRONMENT_VARIABLES.md"
+            ]
+          }
+        ]
+      },
+      "webhooks": {
+        "description": "Payment/webhook reliability: signed webhooks, raw-body handling, logging/persistence",
+        "totalChecks": 6,
+        "passedChecks": 6,
+        "score": 100,
+        "checks": [
+          {
+            "id": "stripe_webhook_controller",
+            "label": "Stripe webhook controller/handler exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\webhook.handler.ts"
+            ]
+          },
+          {
+            "id": "stripe_signature_verify",
+            "label": "Stripe webhook signature verification exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\stripe.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\webhook.handler.ts"
+            ]
+          },
+          {
+            "id": "raw_body_middleware",
+            "label": "Raw body middleware for Stripe webhook exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\monetization.module.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\stripe-webhook-raw-body.middleware.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\stripe.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\webhook.handler.ts"
+            ]
+          },
+          {
+            "id": "webhook_wired_in_module",
+            "label": "Webhook middleware/route wiring exists (module configure)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\monetization.module.ts"
+            ]
+          },
+          {
+            "id": "incoming_webhook_schema",
+            "label": "Incoming webhook event persistence schema exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\monetization.module.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\stripe\\webhook.handler.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\common\\webhooks\\incoming-webhook-events.service.spec.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\common\\webhooks\\incoming-webhook-events.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\database\\schemas\\incoming-webhook-event.schema.ts"
+            ]
+          },
+          {
+            "id": "webhook_logs_api",
+            "label": "Webhook delivery logs API exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\developer-portal\\developer-portal.controller.ts"
+            ]
+          }
+        ]
+      },
+      "entitlements": {
+        "description": "Feature gating/entitlements (plans → features) and management UI",
+        "totalChecks": 5,
+        "passedChecks": 5,
+        "score": 100,
+        "checks": [
+          {
+            "id": "feature_registry_module",
+            "label": "Backend feature registry exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\feature-registry\\featureRegistry.module.ts"
+            ]
+          },
+          {
+            "id": "feature_registry_admin_ui",
+            "label": "Frontend Feature Manager UI exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\admin\\FeatureManager.tsx"
+            ]
+          },
+          {
+            "id": "tenant_theme_feature_folders",
+            "label": "Tenant/theme modules exist (evidence of per-tenant customization)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\themes",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\themes"
+            ]
+          },
+          {
+            "id": "entitlement_keywords",
+            "label": "Plan/feature references exist in backend services",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\config\\plans.config.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\database\\schemas\\tenant.schema.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\analytics\\analytics.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\auth\\auth.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\packages\\services\\package.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\tenants\\dto\\tenant-public-profile.dto.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\tenants\\tenants.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\workspaces\\workspace.service.ts"
+            ]
+          },
+          {
+            "id": "entitlement_enforcement",
+            "label": "Feature gating enforcement exists (guard/middleware)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\feature-registry\\featureGuard.ts"
+            ]
+          }
+        ]
+      },
+      "invoicing": {
+        "description": "Invoice model + API + UI to view/export invoices",
+        "totalChecks": 5,
+        "passedChecks": 4,
+        "score": 80,
+        "checks": [
+          {
+            "id": "invoice_schema",
+            "label": "Invoice schema/model exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\analytics\\revenue.controller.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\billing\\monetization.module.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\database\\schemas\\invoice.schema.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\accounting\\accounting.module.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\accounting\\accounting.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\analytics\\analytics.module.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\analytics\\analytics.service.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\reports\\reports.module.ts"
+            ]
+          },
+          {
+            "id": "accounting_module",
+            "label": "Accounting module exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\accounting\\accounting.module.ts"
+            ]
+          },
+          {
+            "id": "invoice_endpoints",
+            "label": "Invoice API methods exist (list/create/update)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\accounting\\accounting.controller.ts",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\accounting\\accounting.service.ts"
+            ]
+          },
+          {
+            "id": "frontend_invoices_page",
+            "label": "Frontend invoices page exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\Invoices.tsx"
+            ]
+          },
+          {
+            "id": "invoice_pdf_export_impl",
+            "label": "Invoice PDF/export implementation exists (not just dependency)",
+            "pass": false,
+            "evidence": []
+          }
+        ]
+      },
+      "adminControls": {
+        "description": "Admin RBAC, user/role management, settings, audit logs",
+        "totalChecks": 6,
+        "passedChecks": 6,
+        "score": 100,
+        "checks": [
+          {
+            "id": "rbac_module",
+            "label": "Backend RBAC module exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\rbac\\rbac.module.ts"
+            ]
+          },
+          {
+            "id": "rbac_seed",
+            "label": "RBAC seeding exists (roles/permissions)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\rbac\\seed.service.ts"
+            ]
+          },
+          {
+            "id": "frontend_manage_users",
+            "label": "Frontend Manage Users page exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\ManageUsers.tsx"
+            ]
+          },
+          {
+            "id": "frontend_manage_roles",
+            "label": "Frontend Manage Roles page exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\pages\\ManageRoles.tsx"
+            ]
+          },
+          {
+            "id": "backend_admin_settings",
+            "label": "Backend admin settings endpoints exist",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\src\\modules\\settings\\settings.controller.ts"
+            ]
+          },
+          {
+            "id": "frontend_audit_ui",
+            "label": "Frontend audit log viewer exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\frontend\\src\\admin\\AuditLogViewer.tsx"
+            ]
+          }
+        ]
+      },
+      "marketplaceReady": {
+        "description": "CodeCanyon-style packaging: installability, docs, docker, deploy guides, CI presence",
+        "totalChecks": 7,
+        "passedChecks": 7,
+        "score": 100,
+        "checks": [
+          {
+            "id": "quick_start_doc",
+            "label": "Quick start documentation exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\docs\\QUICK_START.md"
+            ]
+          },
+          {
+            "id": "deployment_doc",
+            "label": "Deployment guide exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\docs\\DEPLOYMENT_GUIDE.md"
+            ]
+          },
+          {
+            "id": "env_vars_doc",
+            "label": "Environment variable reference exists",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\docs\\ENVIRONMENT_VARIABLES.md"
+            ]
+          },
+          {
+            "id": "docker_compose",
+            "label": "docker-compose exists (Mongo + Redis + app)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\docker-compose.yml"
+            ]
+          },
+          {
+            "id": "start_scripts",
+            "label": "Windows start scripts exist",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\START-BOTH.bat",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\START-BACKEND.bat",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\START-FRONTEND.bat"
+            ]
+          },
+          {
+            "id": "github_actions",
+            "label": "CI workflows exist",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\.github\\workflows"
+            ]
+          },
+          {
+            "id": "env_example",
+            "label": ".env.example exists (fast setup for buyers)",
+            "pass": true,
+            "evidence": [
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\.env.example",
+              "C:\\Users\\annes\\Desktop\\smetasc-saas-multi-tenancy-app\\backend\\.env.example"
+            ]
+          }
+        ]
+      }
+    },
+    "weights": {
+      "subscriptions": 18,
+      "payments": 18,
+      "webhooks": 16,
+      "entitlements": 16,
+      "invoicing": 16,
+      "adminControls": 16,
+      "marketplaceReady": 10
+    },
+    "overall": {
+      "weightedScore": 95,
+      "criticalPathMinScore": 80
+    }
+  }
+}

@@ -1,0 +1,75 @@
+
+
+DHCPLeaseExpires             : 26-02-2026 12:09:55 AM
+Index                        : 1
+Description                  : Realtek 8821CE Wireless LAN 802.11ac PCI-E NIC
+DHCPEnabled                  : True
+DHCPLeaseObtained            : 25-02-2026 05:09:55 AM
+DHCPServer                   : 192.168.29.1
+DNSDomain                    : 
+DNSDomainSuffixSearchOrder   : {}
+DNSEnabledForWINSResolution  : False
+DNSHostName                  : <HOST>
+DNSServerSearchOrder         : {192.168.29.1}
+DomainDNSRegistrationEnabled : False
+FullDNSRegistrationEnabled   : True
+IPAddress                    : {192.168.29.150, fe80::a09b:f320:b18f:b514, 
+                               2405:201:8002:181c:85d4:fafc:f041:2d0b, 
+                               2405:201:8002:181c:a167:1269:8fbc:2a0}
+IPConnectionMetric           : 35
+IPEnabled                    : True
+IPFilterSecurityEnabled      : False
+WINSEnableLMHostsLookup      : True
+WINSHostLookupFile           : 
+WINSPrimaryServer            : 
+WINSScopeID                  : 
+WINSSecondaryServer          : 
+Caption                      : [00000001] Realtek 8821CE Wireless LAN 802.11ac 
+                               PCI-E NIC
+SettingID                    : {96745769-4706-4D90-9E74-25083F8FB6D6}
+ArpAlwaysSourceRoute         : 
+ArpUseEtherSNAP              : 
+DatabasePath                 : %SystemRoot%\System32\drivers\etc
+DeadGWDetectEnabled          : 
+DefaultIPGateway             : {192.168.29.1, fe80::f6ca:e7ff:fea8:f526}
+DefaultTOS                   : 
+DefaultTTL                   : 
+ForwardBufferMemory          : 
+GatewayCostMetric            : {0, 16}
+IGMPLevel                    : 
+InterfaceIndex               : 14
+IPPortSecurityEnabled        : 
+IPSecPermitIPProtocols       : {}
+IPSecPermitTCPPorts          : {}
+IPSecPermitUDPPorts          : {}
+IPSubnet                     : {255.255.255.0, 64, 128, 64}
+IPUseZeroBroadcast           : 
+IPXAddress                   : 
+IPXEnabled                   : 
+IPXFrameType                 : 
+IPXMediaType                 : 
+IPXNetworkNumber             : 
+IPXVirtualNetNumber          : 
+KeepAliveInterval            : 
+KeepAliveTime                : 
+MACAddress                   : 58:CD:C9:37:14:8F
+MTU                          : 
+NumForwardPackets            : 
+PMTUBHDetectEnabled          : 
+PMTUDiscoveryEnabled         : 
+ServiceName                  : RTWlanE
+TcpipNetbiosOptions          : 0
+TcpMaxConnectRetransmissions : 
+TcpMaxDataRetransmissions    : 
+TcpNumConnections            : 
+TcpUseRFC1122UrgentPointer   : 
+TcpWindowSize                : 
+PSComputerName               : 
+CimClass                     : root/cimv2:Win32_NetworkAdapterConfiguration
+CimInstanceProperties        : {Caption, Description, SettingID, 
+                               ArpAlwaysSourceRoute...}
+CimSystemProperties          : Microsoft.Management.Infrastructure.CimSystemPro
+                               perties
+
+
+

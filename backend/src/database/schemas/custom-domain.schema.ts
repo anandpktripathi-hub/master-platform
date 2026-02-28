@@ -3,6 +3,17 @@ import { Document, Types } from 'mongoose';
 
 export type CustomDomainDocument = CustomDomain & Document;
 
+export type CustomDomainType = 'custom' | 'subdomain';
+export type CustomDomainVerificationStatus = 'pending' | 'verified' | 'failed';
+// Keep a small, consistent set for v1. Older docs may contain legacy values.
+export type CustomDomainSslStatus =
+  | 'none'
+  | 'pending'
+  | 'issued'
+  | 'failed'
+  | 'renewing'
+  | 'expired';
+
 @Schema({ timestamps: true })
 export class CustomDomain {
   @Prop({ type: Types.ObjectId, ref: 'Tenant', required: true })
@@ -14,6 +25,20 @@ export class CustomDomain {
     trim: true,
   })
   domain!: string;
+
+  @Prop({
+    type: String,
+    enum: ['custom', 'subdomain'],
+    default: 'custom',
+  })
+  type!: CustomDomainType;
+
+  @Prop({
+    type: String,
+    enum: ['pending', 'verified', 'failed'],
+    default: 'pending',
+  })
+  verificationStatus!: CustomDomainVerificationStatus;
 
   @Prop({
     type: String,
@@ -44,8 +69,13 @@ export class CustomDomain {
   @Prop({ type: String, required: false, enum: ['acme', 'manual'] })
   sslProvider!: 'acme' | 'manual'; // ACME (LetsEncrypt) or manually uploaded
 
-  @Prop({ required: false })
-  sslStatus!: string; // pending/issued/failed/renewing
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['none', 'pending', 'issued', 'failed', 'renewing', 'expired'],
+    default: 'none',
+  })
+  sslStatus!: CustomDomainSslStatus;
 
   @Prop({ required: false })
   sslCertificateId!: string; // External cert provider ID
@@ -61,6 +91,11 @@ export class CustomDomain {
 
   @Prop({ default: false })
   isPrimary!: boolean;
+
+  // Optional link to a specific site/website entity if/when the product
+  // supports multiple sites per tenant.
+  @Prop({ type: Types.ObjectId, required: false })
+  targetSiteId?: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   createdBy!: Types.ObjectId;
@@ -82,6 +117,7 @@ CustomDomainSchema.index({ domain: 1 }, { unique: true });
 
 // Index for fast lookups by tenant
 CustomDomainSchema.index({ tenantId: 1, status: 1 });
+CustomDomainSchema.index({ tenantId: 1, verificationStatus: 1, sslStatus: 1 });
 
 // Index for SSL renewal checks
 CustomDomainSchema.index({ sslExpiresAt: 1, status: 1 });

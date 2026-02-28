@@ -1,0 +1,3692 @@
+[
+    {
+        "StartTime":  null,
+        "Handles":  220,
+        "Name":  "AggregatorHost",
+        "NPM":  12792,
+        "PM":  4505600,
+        "SI":  0,
+        "VM":  2203427414016,
+        "WS":  3981312
+    },
+    {
+        "StartTime":  "\/Date(1771855036635)\/",
+        "Handles":  386,
+        "Name":  "AppActions",
+        "NPM":  21280,
+        "PM":  12742656,
+        "SI":  1,
+        "VM":  2480970977280,
+        "WS":  5341184
+    },
+    {
+        "StartTime":  "\/Date(1771855716276)\/",
+        "Handles":  287,
+        "Name":  "ApplicationFrameHost",
+        "NPM":  18504,
+        "PM":  9814016,
+        "SI":  1,
+        "VM":  2203554222080,
+        "WS":  2748416
+    },
+    {
+        "StartTime":  "\/Date(1771996221020)\/",
+        "Handles":  422,
+        "Name":  "audiodg",
+        "NPM":  19240,
+        "PM":  23519232,
+        "SI":  0,
+        "VM":  2203680477184,
+        "WS":  35401728
+    },
+    {
+        "StartTime":  "\/Date(1771855726495)\/",
+        "Handles":  334,
+        "Name":  "backgroundTaskHost",
+        "NPM":  31072,
+        "PM":  8880128,
+        "SI":  1,
+        "VM":  2203930529792,
+        "WS":  12288
+    },
+    {
+        "StartTime":  "\/Date(1771991218574)\/",
+        "Handles":  367,
+        "Name":  "cagent",
+        "NPM":  19472,
+        "PM":  30814208,
+        "SI":  1,
+        "VM":  5860114432,
+        "WS":  20459520
+    },
+    {
+        "StartTime":  "\/Date(1771995622720)\/",
+        "Handles":  227,
+        "Name":  "Code",
+        "NPM":  20400,
+        "PM":  47079424,
+        "SI":  1,
+        "VM":  3693665333248,
+        "WS":  5652480
+    },
+    {
+        "StartTime":  "\/Date(1771995532694)\/",
+        "Handles":  181,
+        "Name":  "Code",
+        "NPM":  19824,
+        "PM":  30621696,
+        "SI":  1,
+        "VM":  3693665333248,
+        "WS":  6197248
+    },
+    {
+        "StartTime":  "\/Date(1771995583045)\/",
+        "Handles":  277,
+        "Name":  "Code",
+        "NPM":  21808,
+        "PM":  168919040,
+        "SI":  1,
+        "VM":  3693698887680,
+        "WS":  50937856
+    },
+    {
+        "StartTime":  "\/Date(1771995583111)\/",
+        "Handles":  203,
+        "Name":  "Code",
+        "NPM":  21264,
+        "PM":  71405568,
+        "SI":  1,
+        "VM":  3693725102080,
+        "WS":  14151680
+    },
+    {
+        "StartTime":  "\/Date(1771995532794)\/",
+        "Handles":  182,
+        "Name":  "Code",
+        "NPM":  19960,
+        "PM":  31268864,
+        "SI":  1,
+        "VM":  3710845202432,
+        "WS":  9592832
+    },
+    {
+        "StartTime":  "\/Date(1771905367874)\/",
+        "Handles":  606,
+        "Name":  "Code",
+        "NPM":  59864,
+        "PM":  1440759808,
+        "SI":  1,
+        "VM":  3714604568576,
+        "WS":  971964416
+    },
+    {
+        "StartTime":  "\/Date(1771905367098)\/",
+        "Handles":  1309,
+        "Name":  "Code",
+        "NPM":  34384,
+        "PM":  253325312,
+        "SI":  1,
+        "VM":  2238902378496,
+        "WS":  131125248
+    },
+    {
+        "StartTime":  "\/Date(1771905365407)\/",
+        "Handles":  1410,
+        "Name":  "Code",
+        "NPM":  67832,
+        "PM":  169422848,
+        "SI":  1,
+        "VM":  3713137991680,
+        "WS":  73924608
+    },
+    {
+        "StartTime":  "\/Date(1771995532655)\/",
+        "Handles":  195,
+        "Name":  "Code",
+        "NPM":  23872,
+        "PM":  314216448,
+        "SI":  1,
+        "VM":  3710887145472,
+        "WS":  32206848
+    },
+    {
+        "StartTime":  "\/Date(1771905366881)\/",
+        "Handles":  479,
+        "Name":  "Code",
+        "NPM":  16352,
+        "PM":  12750848,
+        "SI":  1,
+        "VM":  2255261347840,
+        "WS":  2875392
+    },
+    {
+        "StartTime":  "\/Date(1771905367157)\/",
+        "Handles":  404,
+        "Name":  "Code",
+        "NPM":  24008,
+        "PM":  18821120,
+        "SI":  1,
+        "VM":  2255369281536,
+        "WS":  16678912
+    },
+    {
+        "StartTime":  "\/Date(1771995532737)\/",
+        "Handles":  181,
+        "Name":  "Code",
+        "NPM":  19672,
+        "PM":  26968064,
+        "SI":  1,
+        "VM":  3710845202432,
+        "WS":  6844416
+    },
+    {
+        "StartTime":  "\/Date(1771995622606)\/",
+        "Handles":  232,
+        "Name":  "Code",
+        "NPM":  21456,
+        "PM":  119054336,
+        "SI":  1,
+        "VM":  3693698887680,
+        "WS":  33677312
+    },
+    {
+        "StartTime":  "\/Date(1771996630070)\/",
+        "Handles":  252,
+        "Name":  "Code",
+        "NPM":  57104,
+        "PM":  273625088,
+        "SI":  1,
+        "VM":  3693715664896,
+        "WS":  338104320
+    },
+    {
+        "StartTime":  "\/Date(1771905370382)\/",
+        "Handles":  744,
+        "Name":  "Code",
+        "NPM":  115688,
+        "PM":  332034048,
+        "SI":  1,
+        "VM":  3725537808384,
+        "WS":  32169984
+    },
+    {
+        "StartTime":  "\/Date(1771995548742)\/",
+        "Handles":  294,
+        "Name":  "Code",
+        "NPM":  22152,
+        "PM":  23273472,
+        "SI":  1,
+        "VM":  3710916526080,
+        "WS":  5148672
+    },
+    {
+        "StartTime":  "\/Date(1771996630036)\/",
+        "Handles":  239,
+        "Name":  "Code",
+        "NPM":  21944,
+        "PM":  241922048,
+        "SI":  1,
+        "VM":  3693707276288,
+        "WS":  307503104
+    },
+    {
+        "StartTime":  "\/Date(1771995586108)\/",
+        "Handles":  186,
+        "Name":  "Code",
+        "NPM":  19824,
+        "PM":  35135488,
+        "SI":  1,
+        "VM":  3693665333248,
+        "WS":  8744960
+    },
+    {
+        "StartTime":  "\/Date(1771905371098)\/",
+        "Handles":  361,
+        "Name":  "Code",
+        "NPM":  32496,
+        "PM":  109076480,
+        "SI":  1,
+        "VM":  3695568605184,
+        "WS":  23523328
+    },
+    {
+        "StartTime":  "\/Date(1771995548924)\/",
+        "Handles":  318,
+        "Name":  "Code",
+        "NPM":  23920,
+        "PM":  25759744,
+        "SI":  1,
+        "VM":  3693788114944,
+        "WS":  6987776
+    },
+    {
+        "StartTime":  "\/Date(1771995531652)\/",
+        "Handles":  416,
+        "Name":  "Code",
+        "NPM":  32504,
+        "PM":  58580992,
+        "SI":  1,
+        "VM":  3695572074496,
+        "WS":  41377792
+    },
+    {
+        "StartTime":  "\/Date(1771995514706)\/",
+        "Handles":  885,
+        "Name":  "Code",
+        "NPM":  220184,
+        "PM":  1820913664,
+        "SI":  1,
+        "VM":  3718142726144,
+        "WS":  1054511104
+    },
+    {
+        "StartTime":  "\/Date(1771905371160)\/",
+        "Handles":  401,
+        "Name":  "Code",
+        "NPM":  32568,
+        "PM":  190689280,
+        "SI":  1,
+        "VM":  3712775376896,
+        "WS":  134406144
+    },
+    {
+        "StartTime":  "\/Date(1771995679150)\/",
+        "Handles":  310,
+        "Name":  "Code",
+        "NPM":  64960,
+        "PM":  342310912,
+        "SI":  1,
+        "VM":  3714363809792,
+        "WS":  48021504
+    },
+    {
+        "StartTime":  "\/Date(1771995532607)\/",
+        "Handles":  208,
+        "Name":  "Code",
+        "NPM":  20336,
+        "PM":  34148352,
+        "SI":  1,
+        "VM":  3693667078144,
+        "WS":  6180864
+    },
+    {
+        "StartTime":  "\/Date(1771995532860)\/",
+        "Handles":  222,
+        "Name":  "Code",
+        "NPM":  21928,
+        "PM":  80560128,
+        "SI":  1,
+        "VM":  3693701386240,
+        "WS":  7012352
+    },
+    {
+        "StartTime":  "\/Date(1771995532545)\/",
+        "Handles":  215,
+        "Name":  "Code",
+        "NPM":  26976,
+        "PM":  135352320,
+        "SI":  1,
+        "VM":  3710880636928,
+        "WS":  16433152
+    },
+    {
+        "StartTime":  "\/Date(1771996630873)\/",
+        "Handles":  234,
+        "Name":  "Code",
+        "NPM":  21520,
+        "PM":  46051328,
+        "SI":  1,
+        "VM":  3710870368256,
+        "WS":  113537024
+    },
+    {
+        "StartTime":  "\/Date(1771995721499)\/",
+        "Handles":  279,
+        "Name":  "Code",
+        "NPM":  23504,
+        "PM":  444661760,
+        "SI":  1,
+        "VM":  3710881255424,
+        "WS":  49860608
+    },
+    {
+        "StartTime":  "\/Date(1771991211334)\/",
+        "Handles":  242,
+        "Name":  "com.docker.build",
+        "NPM":  14728,
+        "PM":  24547328,
+        "SI":  1,
+        "VM":  5658079232,
+        "WS":  12054528
+    },
+    {
+        "StartTime":  "\/Date(1771996634531)\/",
+        "Handles":  232,
+        "Name":  "com.docker.diagnose",
+        "NPM":  15520,
+        "PM":  45199360,
+        "SI":  1,
+        "VM":  5637718016,
+        "WS":  46608384
+    },
+    {
+        "StartTime":  null,
+        "Handles":  572,
+        "Name":  "com.docker.service",
+        "NPM":  42328,
+        "PM":  55410688,
+        "SI":  0,
+        "VM":  5059497984,
+        "WS":  26918912
+    },
+    {
+        "StartTime":  "\/Date(1771994734666)\/",
+        "Handles":  433,
+        "Name":  "comet",
+        "NPM":  34304,
+        "PM":  89477120,
+        "SI":  1,
+        "VM":  3815962349568,
+        "WS":  96493568
+    },
+    {
+        "StartTime":  "\/Date(1771996220790)\/",
+        "Handles":  256,
+        "Name":  "comet",
+        "NPM":  17752,
+        "PM":  9166848,
+        "SI":  1,
+        "VM":  2358520901632,
+        "WS":  23687168
+    },
+    {
+        "StartTime":  "\/Date(1771995887287)\/",
+        "Handles":  405,
+        "Name":  "comet",
+        "NPM":  34224,
+        "PM":  71589888,
+        "SI":  1,
+        "VM":  3814190960640,
+        "WS":  109486080
+    },
+    {
+        "StartTime":  "\/Date(1771995705907)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  35000,
+        "PM":  77914112,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  95576064
+    },
+    {
+        "StartTime":  "\/Date(1771996440228)\/",
+        "Handles":  434,
+        "Name":  "comet",
+        "NPM":  36144,
+        "PM":  80060416,
+        "SI":  1,
+        "VM":  3814196576256,
+        "WS":  142606336
+    },
+    {
+        "StartTime":  "\/Date(1771995551029)\/",
+        "Handles":  404,
+        "Name":  "comet",
+        "NPM":  33800,
+        "PM":  75730944,
+        "SI":  1,
+        "VM":  3814190829568,
+        "WS":  86708224
+    },
+    {
+        "StartTime":  "\/Date(1771994734934)\/",
+        "Handles":  306,
+        "Name":  "comet",
+        "NPM":  25672,
+        "PM":  32641024,
+        "SI":  1,
+        "VM":  3815881089024,
+        "WS":  10313728
+    },
+    {
+        "StartTime":  "\/Date(1771994733925)\/",
+        "Handles":  511,
+        "Name":  "comet",
+        "NPM":  46928,
+        "PM":  25751552,
+        "SI":  1,
+        "VM":  2358799872000,
+        "WS":  35770368
+    },
+    {
+        "StartTime":  "\/Date(1771996173266)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34584,
+        "PM":  80113664,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  141934592
+    },
+    {
+        "StartTime":  "\/Date(1771994732881)\/",
+        "Handles":  355,
+        "Name":  "comet",
+        "NPM":  11568,
+        "PM":  2662400,
+        "SI":  1,
+        "VM":  2306629599232,
+        "WS":  1576960
+    },
+    {
+        "StartTime":  "\/Date(1771995722902)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34360,
+        "PM":  79151104,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  103829504
+    },
+    {
+        "StartTime":  "\/Date(1771996068987)\/",
+        "Handles":  427,
+        "Name":  "comet",
+        "NPM":  35280,
+        "PM":  74813440,
+        "SI":  1,
+        "VM":  3814195691520,
+        "WS":  131428352
+    },
+    {
+        "StartTime":  "\/Date(1771994732388)\/",
+        "Handles":  2740,
+        "Name":  "comet",
+        "NPM":  120872,
+        "PM":  196050944,
+        "SI":  1,
+        "VM":  2359501262848,
+        "WS":  204435456
+    },
+    {
+        "StartTime":  "\/Date(1771996417014)\/",
+        "Handles":  425,
+        "Name":  "comet",
+        "NPM":  34632,
+        "PM":  84406272,
+        "SI":  1,
+        "VM":  3814194655232,
+        "WS":  147124224
+    },
+    {
+        "StartTime":  "\/Date(1771994734016)\/",
+        "Handles":  226,
+        "Name":  "comet",
+        "NPM":  18232,
+        "PM":  11649024,
+        "SI":  1,
+        "VM":  2358526713856,
+        "WS":  6475776
+    },
+    {
+        "StartTime":  "\/Date(1771996355825)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34936,
+        "PM":  74117120,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  138878976
+    },
+    {
+        "StartTime":  "\/Date(1771995828907)\/",
+        "Handles":  451,
+        "Name":  "comet",
+        "NPM":  36984,
+        "PM":  120709120,
+        "SI":  1,
+        "VM":  3814225235968,
+        "WS":  177917952
+    },
+    {
+        "StartTime":  "\/Date(1771996118522)\/",
+        "Handles":  455,
+        "Name":  "comet",
+        "NPM":  39104,
+        "PM":  155185152,
+        "SI":  1,
+        "VM":  3815972278272,
+        "WS":  218611712
+    },
+    {
+        "StartTime":  "\/Date(1771994734916)\/",
+        "Handles":  370,
+        "Name":  "comet",
+        "NPM":  32528,
+        "PM":  50462720,
+        "SI":  1,
+        "VM":  3815961309184,
+        "WS":  34869248
+    },
+    {
+        "StartTime":  "\/Date(1771996424440)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34648,
+        "PM":  75304960,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  137052160
+    },
+    {
+        "StartTime":  "\/Date(1771996438847)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34936,
+        "PM":  72515584,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  136269824
+    },
+    {
+        "StartTime":  "\/Date(1771995713139)\/",
+        "Handles":  404,
+        "Name":  "comet",
+        "NPM":  33800,
+        "PM":  74289152,
+        "SI":  1,
+        "VM":  3814190829568,
+        "WS":  98922496
+    },
+    {
+        "StartTime":  "\/Date(1771996417998)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34144,
+        "PM":  79134720,
+        "SI":  1,
+        "VM":  3814193790976,
+        "WS":  141234176
+    },
+    {
+        "StartTime":  "\/Date(1771995719030)\/",
+        "Handles":  428,
+        "Name":  "comet",
+        "NPM":  34360,
+        "PM":  79417344,
+        "SI":  1,
+        "VM":  3814192742400,
+        "WS":  100577280
+    },
+    {
+        "StartTime":  "\/Date(1771994733909)\/",
+        "Handles":  2671,
+        "Name":  "comet",
+        "NPM":  79488,
+        "PM":  625393664,
+        "SI":  1,
+        "VM":  2361008287744,
+        "WS":  429793280
+    },
+    {
+        "StartTime":  "\/Date(1771995770354)\/",
+        "Handles":  337,
+        "Name":  "comet",
+        "NPM":  31440,
+        "PM":  104759296,
+        "SI":  1,
+        "VM":  3815912222720,
+        "WS":  84463616
+    },
+    {
+        "StartTime":  "\/Date(1771994734924)\/",
+        "Handles":  300,
+        "Name":  "comet",
+        "NPM":  25752,
+        "PM":  34574336,
+        "SI":  1,
+        "VM":  3815864311808,
+        "WS":  16490496
+    },
+    {
+        "StartTime":  "\/Date(1771996239522)\/",
+        "Handles":  426,
+        "Name":  "comet",
+        "NPM":  35192,
+        "PM":  86765568,
+        "SI":  1,
+        "VM":  3814220791808,
+        "WS":  147804160
+    },
+    {
+        "StartTime":  "\/Date(1771994736776)\/",
+        "Handles":  412,
+        "Name":  "comet",
+        "NPM":  32352,
+        "PM":  88502272,
+        "SI":  1,
+        "VM":  3815934717952,
+        "WS":  74977280
+    },
+    {
+        "StartTime":  "\/Date(1771994868350)\/",
+        "Handles":  1102,
+        "Name":  "comet",
+        "NPM":  67648,
+        "PM":  296898560,
+        "SI":  1,
+        "VM":  3814400004096,
+        "WS":  334221312
+    },
+    {
+        "StartTime":  "\/Date(1771996011749)\/",
+        "Handles":  350,
+        "Name":  "comet",
+        "NPM":  26632,
+        "PM":  45187072,
+        "SI":  1,
+        "VM":  3814166970368,
+        "WS":  73154560
+    },
+    {
+        "StartTime":  "\/Date(1771996418724)\/",
+        "Handles":  428,
+        "Name":  "comet",
+        "NPM":  35176,
+        "PM":  81674240,
+        "SI":  1,
+        "VM":  3814196195328,
+        "WS":  144936960
+    },
+    {
+        "StartTime":  "\/Date(1771994736815)\/",
+        "Handles":  419,
+        "Name":  "comet",
+        "NPM":  29888,
+        "PM":  52523008,
+        "SI":  1,
+        "VM":  3814197620736,
+        "WS":  64237568
+    },
+    {
+        "StartTime":  "\/Date(1771995715924)\/",
+        "Handles":  421,
+        "Name":  "comet",
+        "NPM":  34496,
+        "PM":  78540800,
+        "SI":  1,
+        "VM":  3814193790976,
+        "WS":  102563840
+    },
+    {
+        "StartTime":  "\/Date(1771995945101)\/",
+        "Handles":  427,
+        "Name":  "comet",
+        "NPM":  34560,
+        "PM":  78209024,
+        "SI":  1,
+        "VM":  3814193790976,
+        "WS":  123822080
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1732608,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  487424
+    },
+    {
+        "StartTime":  "\/Date(1771990308758)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1462272,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  106496
+    },
+    {
+        "StartTime":  null,
+        "Handles":  100,
+        "Name":  "conhost",
+        "NPM":  8432,
+        "PM":  1249280,
+        "SI":  1,
+        "VM":  2203417542656,
+        "WS":  7327744
+    },
+    {
+        "StartTime":  "\/Date(1771995565116)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10064,
+        "PM":  1425408,
+        "SI":  1,
+        "VM":  2203416858624,
+        "WS":  1318912
+    },
+    {
+        "StartTime":  "\/Date(1771989304380)\/",
+        "Handles":  110,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1544192,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771990486013)\/",
+        "Handles":  114,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1564672,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  114688
+    },
+    {
+        "StartTime":  "\/Date(1771994237707)\/",
+        "Handles":  119,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1519616,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  1249280
+    },
+    {
+        "StartTime":  null,
+        "Handles":  77,
+        "Name":  "conhost",
+        "NPM":  7752,
+        "PM":  1155072,
+        "SI":  0,
+        "VM":  2203392630784,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771996641934)\/",
+        "Handles":  96,
+        "Name":  "conhost",
+        "NPM":  8704,
+        "PM":  1261568,
+        "SI":  1,
+        "VM":  2203417550848,
+        "WS":  7471104
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1724416,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  491520
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1720320,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  405504
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1720320,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  491520
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1716224,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  491520
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1703936,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  487424
+    },
+    {
+        "StartTime":  null,
+        "Handles":  144,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1732608,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  483328
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1720320,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  483328
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "conhost",
+        "NPM":  11016,
+        "PM":  1728512,
+        "SI":  0,
+        "VM":  2203407409152,
+        "WS":  487424
+    },
+    {
+        "StartTime":  "\/Date(1771905380543)\/",
+        "Handles":  114,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1478656,
+        "SI":  1,
+        "VM":  2203417260032,
+        "WS":  94208
+    },
+    {
+        "StartTime":  "\/Date(1771994718157)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10064,
+        "PM":  1433600,
+        "SI":  1,
+        "VM":  2203416866816,
+        "WS":  126976
+    },
+    {
+        "StartTime":  "\/Date(1771991218669)\/",
+        "Handles":  96,
+        "Name":  "conhost",
+        "NPM":  8160,
+        "PM":  1204224,
+        "SI":  1,
+        "VM":  2203416494080,
+        "WS":  704512
+    },
+    {
+        "StartTime":  "\/Date(1771995544650)\/",
+        "Handles":  99,
+        "Name":  "conhost",
+        "NPM":  8160,
+        "PM":  1200128,
+        "SI":  1,
+        "VM":  2203416494080,
+        "WS":  925696
+    },
+    {
+        "StartTime":  "\/Date(1771995611664)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10064,
+        "PM":  1445888,
+        "SI":  1,
+        "VM":  2203416866816,
+        "WS":  1392640
+    },
+    {
+        "StartTime":  "\/Date(1771993401940)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1462272,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  122880
+    },
+    {
+        "StartTime":  "\/Date(1771945595060)\/",
+        "Handles":  113,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1462272,
+        "SI":  1,
+        "VM":  2203417260032,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771986495345)\/",
+        "Handles":  114,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1671168,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  131072
+    },
+    {
+        "StartTime":  "\/Date(1771909715953)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1474560,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  139264
+    },
+    {
+        "StartTime":  "\/Date(1771986441231)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1478656,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  147456
+    },
+    {
+        "StartTime":  "\/Date(1771990444000)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1482752,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  135168
+    },
+    {
+        "StartTime":  "\/Date(1771905468912)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1470464,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  106496
+    },
+    {
+        "StartTime":  "\/Date(1771945650952)\/",
+        "Handles":  113,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1470464,
+        "SI":  1,
+        "VM":  2203417260032,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771986160105)\/",
+        "Handles":  114,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1531904,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  131072
+    },
+    {
+        "StartTime":  "\/Date(1771989790718)\/",
+        "Handles":  113,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1523712,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771946046258)\/",
+        "Handles":  114,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1527808,
+        "SI":  1,
+        "VM":  2203417260032,
+        "WS":  147456
+    },
+    {
+        "StartTime":  "\/Date(1771986385609)\/",
+        "Handles":  111,
+        "Name":  "conhost",
+        "NPM":  10200,
+        "PM":  1482752,
+        "SI":  1,
+        "VM":  2203417268224,
+        "WS":  135168
+    },
+    {
+        "StartTime":  "\/Date(1771991194167)\/",
+        "Handles":  97,
+        "Name":  "conhost",
+        "NPM":  8432,
+        "PM":  1196032,
+        "SI":  1,
+        "VM":  2203416502272,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771995647195)\/",
+        "Handles":  114,
+        "Name":  "conhost",
+        "NPM":  10064,
+        "PM":  1433600,
+        "SI":  1,
+        "VM":  2203416858624,
+        "WS":  1515520
+    },
+    {
+        "StartTime":  "\/Date(1771854788467)\/",
+        "Handles":  1164,
+        "Name":  "Copilot",
+        "NPM":  140624,
+        "PM":  72134656,
+        "SI":  1,
+        "VM":  2481467240448,
+        "WS":  11886592
+    },
+    {
+        "StartTime":  "\/Date(1771855726470)\/",
+        "Handles":  114,
+        "Name":  "crashpad_handler",
+        "NPM":  8576,
+        "PM":  1527808,
+        "SI":  1,
+        "VM":  4409241600,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771854621363)\/",
+        "Handles":  526,
+        "Name":  "CrossDeviceResume",
+        "NPM":  27200,
+        "PM":  41746432,
+        "SI":  1,
+        "VM":  2203792011264,
+        "WS":  3956736
+    },
+    {
+        "StartTime":  "\/Date(1771854648455)\/",
+        "Handles":  1266,
+        "Name":  "CrossDeviceService",
+        "NPM":  119272,
+        "PM":  33189888,
+        "SI":  1,
+        "VM":  2237778075648,
+        "WS":  11796480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1220,
+        "Name":  "csrss",
+        "NPM":  49320,
+        "PM":  4149248,
+        "SI":  1,
+        "VM":  2203488636928,
+        "WS":  1617920
+    },
+    {
+        "StartTime":  null,
+        "Handles":  941,
+        "Name":  "csrss",
+        "NPM":  33656,
+        "PM":  2592768,
+        "SI":  0,
+        "VM":  2203439886336,
+        "WS":  1220608
+    },
+    {
+        "StartTime":  "\/Date(1771854636869)\/",
+        "Handles":  527,
+        "Name":  "ctfmon",
+        "NPM":  21968,
+        "PM":  8503296,
+        "SI":  1,
+        "VM":  2203497639936,
+        "WS":  8425472
+    },
+    {
+        "StartTime":  null,
+        "Handles":  348,
+        "Name":  "Dell.Connected.Service.Delivery",
+        "NPM":  22440,
+        "PM":  22564864,
+        "SI":  0,
+        "VM":  4896755712,
+        "WS":  1019904
+    },
+    {
+        "StartTime":  null,
+        "Handles":  661,
+        "Name":  "Dell.Connected.Service.Delivery.SubAgent",
+        "NPM":  99728,
+        "PM":  30343168,
+        "SI":  0,
+        "VM":  2480984489984,
+        "WS":  26128384
+    },
+    {
+        "StartTime":  null,
+        "Handles":  875,
+        "Name":  "Dell.CoreServices.Client",
+        "NPM":  171384,
+        "PM":  70279168,
+        "SI":  0,
+        "VM":  2481087717376,
+        "WS":  11100160
+    },
+    {
+        "StartTime":  null,
+        "Handles":  806,
+        "Name":  "Dell.Digital.Delivery.Service.SubAgent",
+        "NPM":  144040,
+        "PM":  42655744,
+        "SI":  0,
+        "VM":  2481093672960,
+        "WS":  10571776
+    },
+    {
+        "StartTime":  null,
+        "Handles":  536,
+        "Name":  "Dell.Remediation.Agent",
+        "NPM":  69208,
+        "PM":  15425536,
+        "SI":  0,
+        "VM":  2480941207552,
+        "WS":  1499136
+    },
+    {
+        "StartTime":  null,
+        "Handles":  872,
+        "Name":  "Dell.TechHub",
+        "NPM":  95056,
+        "PM":  41865216,
+        "SI":  0,
+        "VM":  2481023868928,
+        "WS":  2994176
+    },
+    {
+        "StartTime":  null,
+        "Handles":  688,
+        "Name":  "Dell.TechHub.Analytics.SubAgent",
+        "NPM":  150656,
+        "PM":  54616064,
+        "SI":  0,
+        "VM":  2481032658944,
+        "WS":  24219648
+    },
+    {
+        "StartTime":  null,
+        "Handles":  615,
+        "Name":  "Dell.TechHub.DataManager.SubAgent",
+        "NPM":  117200,
+        "PM":  49680384,
+        "SI":  0,
+        "VM":  2481069236224,
+        "WS":  31514624
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1273,
+        "Name":  "Dell.TechHub.Diagnostics.SubAgent",
+        "NPM":  146352,
+        "PM":  129761280,
+        "SI":  0,
+        "VM":  2481229049856,
+        "WS":  10321920
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1940,
+        "Name":  "Dell.TechHub.Instrumentation.SubAgent",
+        "NPM":  221144,
+        "PM":  193499136,
+        "SI":  0,
+        "VM":  2481427664896,
+        "WS":  89604096
+    },
+    {
+        "StartTime":  null,
+        "Handles":  671,
+        "Name":  "Dell.TechHub.Instrumentation.UserProcess",
+        "NPM":  115984,
+        "PM":  36302848,
+        "SI":  1,
+        "VM":  2481037869056,
+        "WS":  28250112
+    },
+    {
+        "StartTime":  null,
+        "Handles":  663,
+        "Name":  "Dell.UCA.Manager",
+        "NPM":  109448,
+        "PM":  36069376,
+        "SI":  0,
+        "VM":  2481005477888,
+        "WS":  9089024
+    },
+    {
+        "StartTime":  null,
+        "Handles":  746,
+        "Name":  "Dell.Update.SubAgent",
+        "NPM":  49392,
+        "PM":  51818496,
+        "SI":  0,
+        "VM":  4981305344,
+        "WS":  11550720
+    },
+    {
+        "StartTime":  null,
+        "Handles":  622,
+        "Name":  "Dell.UUE.CoreSubAgent",
+        "NPM":  105560,
+        "PM":  34197504,
+        "SI":  0,
+        "VM":  2481005301760,
+        "WS":  2846720
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1086,
+        "Name":  "DellEnterpriseClientFrameworkSubAgent",
+        "NPM":  80176,
+        "PM":  77545472,
+        "SI":  0,
+        "VM":  5210742784,
+        "WS":  9166848
+    },
+    {
+        "StartTime":  "\/Date(1771854729191)\/",
+        "Handles":  921,
+        "Name":  "DellOptimizer.Systray",
+        "NPM":  152504,
+        "PM":  128270336,
+        "SI":  1,
+        "VM":  2481570623488,
+        "WS":  15814656
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1219,
+        "Name":  "DellSupportAssistRemedationService",
+        "NPM":  111784,
+        "PM":  84004864,
+        "SI":  0,
+        "VM":  5344743424,
+        "WS":  21340160
+    },
+    {
+        "StartTime":  null,
+        "Handles":  174,
+        "Name":  "docker",
+        "NPM":  9304,
+        "PM":  18083840,
+        "SI":  1,
+        "VM":  5577388032,
+        "WS":  17170432
+    },
+    {
+        "StartTime":  "\/Date(1771991216051)\/",
+        "Handles":  331,
+        "Name":  "Docker Desktop",
+        "NPM":  18872,
+        "PM":  13967360,
+        "SI":  1,
+        "VM":  2238152585216,
+        "WS":  3076096
+    },
+    {
+        "StartTime":  "\/Date(1771991218529)\/",
+        "Handles":  362,
+        "Name":  "Docker Desktop",
+        "NPM":  26824,
+        "PM":  128110592,
+        "SI":  1,
+        "VM":  3693780377600,
+        "WS":  1368064
+    },
+    {
+        "StartTime":  "\/Date(1771991215828)\/",
+        "Handles":  660,
+        "Name":  "Docker Desktop",
+        "NPM":  26704,
+        "PM":  95408128,
+        "SI":  1,
+        "VM":  2238655188992,
+        "WS":  7581696
+    },
+    {
+        "StartTime":  "\/Date(1771991213742)\/",
+        "Handles":  873,
+        "Name":  "Docker Desktop",
+        "NPM":  46584,
+        "PM":  140570624,
+        "SI":  1,
+        "VM":  3694043828224,
+        "WS":  55230464
+    },
+    {
+        "StartTime":  "\/Date(1771991211532)\/",
+        "Handles":  121,
+        "Name":  "docker-sandbox",
+        "NPM":  9328,
+        "PM":  27103232,
+        "SI":  1,
+        "VM":  5574934528,
+        "WS":  589824
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1792,
+        "Name":  "dwm",
+        "NPM":  62752,
+        "PM":  278200320,
+        "SI":  1,
+        "VM":  2204185870336,
+        "WS":  51724288
+    },
+    {
+        "StartTime":  "\/Date(1771855726114)\/",
+        "Handles":  607,
+        "Name":  "EdgeGameAssist",
+        "NPM":  28728,
+        "PM":  43589632,
+        "SI":  1,
+        "VM":  56343916544,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771854619898)\/",
+        "Handles":  3529,
+        "Name":  "explorer",
+        "NPM":  98592,
+        "PM":  164356096,
+        "SI":  1,
+        "VM":  2204367716352,
+        "WS":  92151808
+    },
+    {
+        "StartTime":  "\/Date(1771855053741)\/",
+        "Handles":  221,
+        "Name":  "FileCoAuth",
+        "NPM":  17008,
+        "PM":  10035200,
+        "SI":  1,
+        "VM":  2203476168704,
+        "WS":  258048
+    },
+    {
+        "StartTime":  null,
+        "Handles":  484,
+        "Name":  "FileSyncHelper",
+        "NPM":  19336,
+        "PM":  6635520,
+        "SI":  0,
+        "VM":  2203460329472,
+        "WS":  2211840
+    },
+    {
+        "StartTime":  null,
+        "Handles":  43,
+        "Name":  "fontdrvhost",
+        "NPM":  8032,
+        "PM":  2007040,
+        "SI":  1,
+        "VM":  2203394494464,
+        "WS":  16384
+    },
+    {
+        "StartTime":  null,
+        "Handles":  43,
+        "Name":  "fontdrvhost",
+        "NPM":  8032,
+        "PM":  2011136,
+        "SI":  0,
+        "VM":  2203396116480,
+        "WS":  57344
+    },
+    {
+        "StartTime":  null,
+        "Handles":  146,
+        "Name":  "git",
+        "NPM":  10888,
+        "PM":  39682048,
+        "SI":  1,
+        "VM":  5469687808,
+        "WS":  10731520
+    },
+    {
+        "StartTime":  null,
+        "Handles":  179,
+        "Name":  "git",
+        "NPM":  8304,
+        "PM":  1753088,
+        "SI":  1,
+        "VM":  4409491456,
+        "WS":  7901184
+    },
+    {
+        "StartTime":  null,
+        "Handles":  0,
+        "Name":  "Idle",
+        "NPM":  272,
+        "PM":  61440,
+        "SI":  0,
+        "VM":  8192,
+        "WS":  8192
+    },
+    {
+        "StartTime":  null,
+        "Handles":  408,
+        "Name":  "IntelAudioService",
+        "NPM":  38896,
+        "PM":  44470272,
+        "SI":  0,
+        "VM":  4991414272,
+        "WS":  3420160
+    },
+    {
+        "StartTime":  null,
+        "Handles":  150,
+        "Name":  "IntelCpHDCPSvc",
+        "NPM":  8776,
+        "PM":  1593344,
+        "SI":  0,
+        "VM":  2203404288000,
+        "WS":  20480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  390,
+        "Name":  "IntelGraphicsSoftware.Service",
+        "NPM":  42416,
+        "PM":  9072640,
+        "SI":  0,
+        "VM":  2237563572224,
+        "WS":  4276224
+    },
+    {
+        "StartTime":  "\/Date(1771854608847)\/",
+        "Handles":  181,
+        "Name":  "ipf_helper",
+        "NPM":  11488,
+        "PM":  2211840,
+        "SI":  1,
+        "VM":  2203428548608,
+        "WS":  917504
+    },
+    {
+        "StartTime":  null,
+        "Handles":  149,
+        "Name":  "ipf_uf",
+        "NPM":  9864,
+        "PM":  2330624,
+        "SI":  0,
+        "VM":  2203405709312,
+        "WS":  1351680
+    },
+    {
+        "StartTime":  null,
+        "Handles":  143,
+        "Name":  "ipfsvc",
+        "NPM":  13032,
+        "PM":  1740800,
+        "SI":  0,
+        "VM":  2203397365760,
+        "WS":  20480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  145,
+        "Name":  "jhi_service",
+        "NPM":  9872,
+        "PM":  1568768,
+        "SI":  0,
+        "VM":  2203400519680,
+        "WS":  24576
+    },
+    {
+        "StartTime":  "\/Date(1771854974239)\/",
+        "Handles":  172,
+        "Name":  "jusched",
+        "NPM":  11960,
+        "PM":  1597440,
+        "SI":  1,
+        "VM":  76124160,
+        "WS":  24576
+    },
+    {
+        "StartTime":  "\/Date(1771854638169)\/",
+        "Handles":  852,
+        "Name":  "LockApp",
+        "NPM":  36128,
+        "PM":  52092928,
+        "SI":  1,
+        "VM":  2203841441792,
+        "WS":  45056
+    },
+    {
+        "StartTime":  null,
+        "Handles":  62,
+        "Name":  "LsaIso",
+        "NPM":  10480,
+        "PM":  1511424,
+        "SI":  0,
+        "VM":  4348416000,
+        "WS":  24576
+    },
+    {
+        "StartTime":  null,
+        "Handles":  2077,
+        "Name":  "lsass",
+        "NPM":  29792,
+        "PM":  13086720,
+        "SI":  0,
+        "VM":  2203470626816,
+        "WS":  12312576
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1334,
+        "Name":  "mc-fw-host",
+        "NPM":  101968,
+        "PM":  384954368,
+        "SI":  0,
+        "VM":  2238973485056,
+        "WS":  133050368
+    },
+    {
+        "StartTime":  "\/Date(1771854611183)\/",
+        "Handles":  375,
+        "Name":  "mc-fw-host",
+        "NPM":  31192,
+        "PM":  11104256,
+        "SI":  1,
+        "VM":  2203580432384,
+        "WS":  6496256
+    },
+    {
+        "StartTime":  null,
+        "Handles":  380,
+        "Name":  "mc-neo-host",
+        "NPM":  21600,
+        "PM":  26365952,
+        "SI":  0,
+        "VM":  2203912036352,
+        "WS":  9216000
+    },
+    {
+        "StartTime":  null,
+        "Handles":  0,
+        "Name":  "Memory Compression",
+        "NPM":  0,
+        "PM":  7737344,
+        "SI":  0,
+        "VM":  2657353728,
+        "WS":  1506541568
+    },
+    {
+        "StartTime":  null,
+        "Handles":  337,
+        "Name":  "MidiSrv",
+        "NPM":  17792,
+        "PM":  7651328,
+        "SI":  0,
+        "VM":  2203443302400,
+        "WS":  32768
+    },
+    {
+        "StartTime":  null,
+        "Handles":  260,
+        "Name":  "msdtc",
+        "NPM":  15144,
+        "PM":  4042752,
+        "SI":  0,
+        "VM":  2203422593024,
+        "WS":  28672
+    },
+    {
+        "StartTime":  "\/Date(1771989504840)\/",
+        "Handles":  1410,
+        "Name":  "msedge",
+        "NPM":  54752,
+        "PM":  55791616,
+        "SI":  1,
+        "VM":  2445639589888,
+        "WS":  32509952
+    },
+    {
+        "StartTime":  "\/Date(1771989505484)\/",
+        "Handles":  371,
+        "Name":  "msedge",
+        "NPM":  23872,
+        "PM":  71122944,
+        "SI":  1,
+        "VM":  2359106904064,
+        "WS":  8015872
+    },
+    {
+        "StartTime":  "\/Date(1771989505133)\/",
+        "Handles":  147,
+        "Name":  "msedge",
+        "NPM":  10752,
+        "PM":  2584576,
+        "SI":  1,
+        "VM":  2306633265152,
+        "WS":  1613824
+    },
+    {
+        "StartTime":  "\/Date(1771989505686)\/",
+        "Handles":  172,
+        "Name":  "msedge",
+        "NPM":  12112,
+        "PM":  9334784,
+        "SI":  1,
+        "VM":  2358556655616,
+        "WS":  3055616
+    },
+    {
+        "StartTime":  "\/Date(1771989505482)\/",
+        "Handles":  336,
+        "Name":  "msedge",
+        "NPM":  20984,
+        "PM":  18468864,
+        "SI":  1,
+        "VM":  2358763704320,
+        "WS":  6508544
+    },
+    {
+        "StartTime":  "\/Date(1771854635626)\/",
+        "Handles":  150,
+        "Name":  "msedgewebview2",
+        "NPM":  10208,
+        "PM":  2609152,
+        "SI":  1,
+        "VM":  2306627932160,
+        "WS":  835584
+    },
+    {
+        "StartTime":  "\/Date(1771854922044)\/",
+        "Handles":  382,
+        "Name":  "msedgewebview2",
+        "NPM":  24184,
+        "PM":  14839808,
+        "SI":  1,
+        "VM":  2358798819328,
+        "WS":  17833984
+    },
+    {
+        "StartTime":  "\/Date(1771854696839)\/",
+        "Handles":  1441,
+        "Name":  "msedgewebview2",
+        "NPM":  59072,
+        "PM":  48799744,
+        "SI":  1,
+        "VM":  2411043577856,
+        "WS":  4231168
+    },
+    {
+        "StartTime":  "\/Date(1771854696882)\/",
+        "Handles":  159,
+        "Name":  "msedgewebview2",
+        "NPM":  11024,
+        "PM":  2678784,
+        "SI":  1,
+        "VM":  2306645360640,
+        "WS":  872448
+    },
+    {
+        "StartTime":  "\/Date(1771854953812)\/",
+        "Handles":  1457,
+        "Name":  "msedgewebview2",
+        "NPM":  59312,
+        "PM":  49287168,
+        "SI":  1,
+        "VM":  2410975068160,
+        "WS":  39247872
+    },
+    {
+        "StartTime":  "\/Date(1771854933392)\/",
+        "Handles":  346,
+        "Name":  "msedgewebview2",
+        "NPM":  35872,
+        "PM":  105967616,
+        "SI":  1,
+        "VM":  3815991283712,
+        "WS":  87867392
+    },
+    {
+        "StartTime":  "\/Date(1771854922196)\/",
+        "Handles":  172,
+        "Name":  "msedgewebview2",
+        "NPM":  12248,
+        "PM":  9428992,
+        "SI":  1,
+        "VM":  2358556241920,
+        "WS":  3698688
+    },
+    {
+        "StartTime":  "\/Date(1771854955329)\/",
+        "Handles":  173,
+        "Name":  "msedgewebview2",
+        "NPM":  12248,
+        "PM":  9445376,
+        "SI":  1,
+        "VM":  2358556241920,
+        "WS":  2949120
+    },
+    {
+        "StartTime":  "\/Date(1771854921300)\/",
+        "Handles":  1456,
+        "Name":  "msedgewebview2",
+        "NPM":  57992,
+        "PM":  48844800,
+        "SI":  1,
+        "VM":  2410990575616,
+        "WS":  40333312
+    },
+    {
+        "StartTime":  "\/Date(1771854697204)\/",
+        "Handles":  180,
+        "Name":  "msedgewebview2",
+        "NPM":  12248,
+        "PM":  11730944,
+        "SI":  1,
+        "VM":  2358556241920,
+        "WS":  20480
+    },
+    {
+        "StartTime":  "\/Date(1771854697142)\/",
+        "Handles":  365,
+        "Name":  "msedgewebview2",
+        "NPM":  21800,
+        "PM":  14258176,
+        "SI":  1,
+        "VM":  2358780182528,
+        "WS":  1085440
+    },
+    {
+        "StartTime":  "\/Date(1771854635386)\/",
+        "Handles":  1198,
+        "Name":  "msedgewebview2",
+        "NPM":  56400,
+        "PM":  44990464,
+        "SI":  1,
+        "VM":  2410970468352,
+        "WS":  22036480
+    },
+    {
+        "StartTime":  "\/Date(1771854922057)\/",
+        "Handles":  461,
+        "Name":  "msedgewebview2",
+        "NPM":  25840,
+        "PM":  63152128,
+        "SI":  1,
+        "VM":  2359060955136,
+        "WS":  10829824
+    },
+    {
+        "StartTime":  "\/Date(1771854697486)\/",
+        "Handles":  447,
+        "Name":  "msedgewebview2",
+        "NPM":  31976,
+        "PM":  133619712,
+        "SI":  1,
+        "VM":  3814225448960,
+        "WS":  524288
+    },
+    {
+        "StartTime":  "\/Date(1771854636523)\/",
+        "Handles":  370,
+        "Name":  "msedgewebview2",
+        "NPM":  21936,
+        "PM":  15249408,
+        "SI":  1,
+        "VM":  2358816067584,
+        "WS":  8040448
+    },
+    {
+        "StartTime":  "\/Date(1771854636523)\/",
+        "Handles":  814,
+        "Name":  "msedgewebview2",
+        "NPM":  26792,
+        "PM":  88084480,
+        "SI":  1,
+        "VM":  2359146962944,
+        "WS":  9912320
+    },
+    {
+        "StartTime":  "\/Date(1771854636753)\/",
+        "Handles":  178,
+        "Name":  "msedgewebview2",
+        "NPM":  11840,
+        "PM":  10268672,
+        "SI":  1,
+        "VM":  2358556217344,
+        "WS":  3182592
+    },
+    {
+        "StartTime":  "\/Date(1771854637028)\/",
+        "Handles":  403,
+        "Name":  "msedgewebview2",
+        "NPM":  33736,
+        "PM":  71241728,
+        "SI":  1,
+        "VM":  3817735290880,
+        "WS":  14598144
+    },
+    {
+        "StartTime":  "\/Date(1771854697143)\/",
+        "Handles":  943,
+        "Name":  "msedgewebview2",
+        "NPM":  27200,
+        "PM":  118534144,
+        "SI":  1,
+        "VM":  2359196893184,
+        "WS":  4730880
+    },
+    {
+        "StartTime":  "\/Date(1771854955085)\/",
+        "Handles":  391,
+        "Name":  "msedgewebview2",
+        "NPM":  24592,
+        "PM":  14315520,
+        "SI":  1,
+        "VM":  2358831325184,
+        "WS":  17833984
+    },
+    {
+        "StartTime":  "\/Date(1771854955097)\/",
+        "Handles":  532,
+        "Name":  "msedgewebview2",
+        "NPM":  27200,
+        "PM":  75415552,
+        "SI":  1,
+        "VM":  2359111688192,
+        "WS":  10440704
+    },
+    {
+        "StartTime":  "\/Date(1771854921545)\/",
+        "Handles":  151,
+        "Name":  "msedgewebview2",
+        "NPM":  10752,
+        "PM":  2646016,
+        "SI":  1,
+        "VM":  2306644725760,
+        "WS":  1888256
+    },
+    {
+        "StartTime":  "\/Date(1771854954143)\/",
+        "Handles":  151,
+        "Name":  "msedgewebview2",
+        "NPM":  11024,
+        "PM":  2686976,
+        "SI":  1,
+        "VM":  2306661502976,
+        "WS":  1941504
+    },
+    {
+        "StartTime":  "\/Date(1771854971565)\/",
+        "Handles":  390,
+        "Name":  "msedgewebview2",
+        "NPM":  43360,
+        "PM":  215928832,
+        "SI":  1,
+        "VM":  3815997362176,
+        "WS":  46063616
+    },
+    {
+        "StartTime":  null,
+        "Handles":  53,
+        "Name":  "NgcIso",
+        "NPM":  6128,
+        "PM":  1224704,
+        "SI":  0,
+        "VM":  4346728448,
+        "WS":  4096
+    },
+    {
+        "StartTime":  null,
+        "Handles":  792,
+        "Name":  "OfficeClickToRun",
+        "NPM":  28232,
+        "PM":  33476608,
+        "SI":  0,
+        "VM":  2203584700416,
+        "WS":  8278016
+    },
+    {
+        "StartTime":  "\/Date(1771854726002)\/",
+        "Handles":  1197,
+        "Name":  "OneDrive",
+        "NPM":  67552,
+        "PM":  132759552,
+        "SI":  1,
+        "VM":  2207410540544,
+        "WS":  13066240
+    },
+    {
+        "StartTime":  "\/Date(1771945677104)\/",
+        "Handles":  551,
+        "Name":  "OneDrive.Sync.Service",
+        "NPM":  28896,
+        "PM":  42901504,
+        "SI":  1,
+        "VM":  2203605856256,
+        "WS":  4333568
+    },
+    {
+        "StartTime":  "\/Date(1771995544586)\/",
+        "Handles":  62,
+        "Name":  "pet",
+        "NPM":  6264,
+        "PM":  2756608,
+        "SI":  1,
+        "VM":  2203380846592,
+        "WS":  1118208
+    },
+    {
+        "StartTime":  "\/Date(1771855415696)\/",
+        "Handles":  1320,
+        "Name":  "PhoneExperienceHost",
+        "NPM":  143344,
+        "PM":  100741120,
+        "SI":  1,
+        "VM":  2238225924096,
+        "WS":  18231296
+    },
+    {
+        "StartTime":  "\/Date(1771986496151)\/",
+        "Handles":  540,
+        "Name":  "powershell",
+        "NPM":  34712,
+        "PM":  67371008,
+        "SI":  1,
+        "VM":  2204046675968,
+        "WS":  7786496
+    },
+    {
+        "StartTime":  "\/Date(1771905469286)\/",
+        "Handles":  482,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  67706880,
+        "SI":  1,
+        "VM":  2204028903424,
+        "WS":  6483968
+    },
+    {
+        "StartTime":  "\/Date(1771909716273)\/",
+        "Handles":  528,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  74153984,
+        "SI":  1,
+        "VM":  2204028895232,
+        "WS":  3919872
+    },
+    {
+        "StartTime":  "\/Date(1771986442360)\/",
+        "Handles":  479,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  64811008,
+        "SI":  1,
+        "VM":  2204028866560,
+        "WS":  7704576
+    },
+    {
+        "StartTime":  "\/Date(1771993402393)\/",
+        "Handles":  528,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  75272192,
+        "SI":  1,
+        "VM":  2204028911616,
+        "WS":  5013504
+    },
+    {
+        "StartTime":  "\/Date(1771996639335)\/",
+        "Handles":  579,
+        "Name":  "powershell",
+        "NPM":  29912,
+        "PM":  56381440,
+        "SI":  1,
+        "VM":  2204022218752,
+        "WS":  66138112
+    },
+    {
+        "StartTime":  "\/Date(1771994718547)\/",
+        "Handles":  646,
+        "Name":  "powershell",
+        "NPM":  31056,
+        "PM":  74080256,
+        "SI":  1,
+        "VM":  2204024725504,
+        "WS":  4784128
+    },
+    {
+        "StartTime":  "\/Date(1771996640356)\/",
+        "Handles":  561,
+        "Name":  "powershell",
+        "NPM":  30184,
+        "PM":  61788160,
+        "SI":  1,
+        "VM":  2204024881152,
+        "WS":  72998912
+    },
+    {
+        "StartTime":  "\/Date(1771986386081)\/",
+        "Handles":  481,
+        "Name":  "powershell",
+        "NPM":  31056,
+        "PM":  64835584,
+        "SI":  1,
+        "VM":  2204024696832,
+        "WS":  5844992
+    },
+    {
+        "StartTime":  "\/Date(1771995565974)\/",
+        "Handles":  600,
+        "Name":  "powershell",
+        "NPM":  30920,
+        "PM":  68509696,
+        "SI":  1,
+        "VM":  2204023660544,
+        "WS":  7430144
+    },
+    {
+        "StartTime":  "\/Date(1771990309078)\/",
+        "Handles":  479,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  65941504,
+        "SI":  1,
+        "VM":  2204028870656,
+        "WS":  6393856
+    },
+    {
+        "StartTime":  "\/Date(1771990444279)\/",
+        "Handles":  479,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  64765952,
+        "SI":  1,
+        "VM":  2204028891136,
+        "WS":  6029312
+    },
+    {
+        "StartTime":  "\/Date(1771995647495)\/",
+        "Handles":  789,
+        "Name":  "powershell",
+        "NPM":  62216,
+        "PM":  107601920,
+        "SI":  1,
+        "VM":  2204074889216,
+        "WS":  6963200
+    },
+    {
+        "StartTime":  "\/Date(1771995612527)\/",
+        "Handles":  657,
+        "Name":  "powershell",
+        "NPM":  31056,
+        "PM":  74444800,
+        "SI":  1,
+        "VM":  2204027842560,
+        "WS":  9777152
+    },
+    {
+        "StartTime":  "\/Date(1771986160298)\/",
+        "Handles":  512,
+        "Name":  "powershell",
+        "NPM":  33096,
+        "PM":  66490368,
+        "SI":  1,
+        "VM":  2204032770048,
+        "WS":  5779456
+    },
+    {
+        "StartTime":  "\/Date(1771994237894)\/",
+        "Handles":  604,
+        "Name":  "powershell",
+        "NPM":  32816,
+        "PM":  69427200,
+        "SI":  1,
+        "VM":  2204031758336,
+        "WS":  22622208
+    },
+    {
+        "StartTime":  "\/Date(1771990486341)\/",
+        "Handles":  608,
+        "Name":  "powershell",
+        "NPM":  34168,
+        "PM":  68476928,
+        "SI":  1,
+        "VM":  2204038889472,
+        "WS":  7094272
+    },
+    {
+        "StartTime":  "\/Date(1771905380943)\/",
+        "Handles":  494,
+        "Name":  "powershell",
+        "NPM":  31056,
+        "PM":  64253952,
+        "SI":  1,
+        "VM":  2204024725504,
+        "WS":  5890048
+    },
+    {
+        "StartTime":  "\/Date(1771946046320)\/",
+        "Handles":  493,
+        "Name":  "powershell",
+        "NPM":  31192,
+        "PM":  65585152,
+        "SI":  1,
+        "VM":  2204028928000,
+        "WS":  6291456
+    },
+    {
+        "StartTime":  null,
+        "Handles":  297,
+        "Name":  "PresentMonService",
+        "NPM":  12760,
+        "PM":  6930432,
+        "SI":  0,
+        "VM":  4426792960,
+        "WS":  757760
+    },
+    {
+        "StartTime":  null,
+        "Handles":  236,
+        "Name":  "QuickShareService",
+        "NPM":  12472,
+        "PM":  17526784,
+        "SI":  0,
+        "VM":  281822191616,
+        "WS":  450560
+    },
+    {
+        "StartTime":  null,
+        "Handles":  0,
+        "Name":  "Registry",
+        "NPM":  26384,
+        "PM":  12197888,
+        "SI":  0,
+        "VM":  200781824,
+        "WS":  13484032
+    },
+    {
+        "StartTime":  null,
+        "Handles":  172,
+        "Name":  "RstMwService",
+        "NPM":  11224,
+        "PM":  2396160,
+        "SI":  0,
+        "VM":  2203415773184,
+        "WS":  24576
+    },
+    {
+        "StartTime":  null,
+        "Handles":  146,
+        "Name":  "RtkBtManServ",
+        "NPM":  7608,
+        "PM":  1581056,
+        "SI":  0,
+        "VM":  2203387559936,
+        "WS":  20480
+    },
+    {
+        "StartTime":  "\/Date(1771854915192)\/",
+        "Handles":  156,
+        "Name":  "RuntimeBroker",
+        "NPM":  10480,
+        "PM":  2510848,
+        "SI":  1,
+        "VM":  2203436716032,
+        "WS":  1576960
+    },
+    {
+        "StartTime":  "\/Date(1771854639044)\/",
+        "Handles":  553,
+        "Name":  "RuntimeBroker",
+        "NPM":  24944,
+        "PM":  11923456,
+        "SI":  1,
+        "VM":  2203543257088,
+        "WS":  10289152
+    },
+    {
+        "StartTime":  "\/Date(1771855726890)\/",
+        "Handles":  146,
+        "Name":  "RuntimeBroker",
+        "NPM":  9392,
+        "PM":  2355200,
+        "SI":  1,
+        "VM":  2203433066496,
+        "WS":  1478656
+    },
+    {
+        "StartTime":  "\/Date(1771854885740)\/",
+        "Handles":  240,
+        "Name":  "RuntimeBroker",
+        "NPM":  13336,
+        "PM":  3149824,
+        "SI":  1,
+        "VM":  2203462299648,
+        "WS":  2244608
+    },
+    {
+        "StartTime":  "\/Date(1771854650962)\/",
+        "Handles":  164,
+        "Name":  "RuntimeBroker",
+        "NPM":  10752,
+        "PM":  2633728,
+        "SI":  1,
+        "VM":  2203437703168,
+        "WS":  1613824
+    },
+    {
+        "StartTime":  "\/Date(1771854632758)\/",
+        "Handles":  846,
+        "Name":  "RuntimeBroker",
+        "NPM":  36352,
+        "PM":  19316736,
+        "SI":  1,
+        "VM":  2203659816960,
+        "WS":  17899520
+    },
+    {
+        "StartTime":  "\/Date(1771854946880)\/",
+        "Handles":  164,
+        "Name":  "RuntimeBroker",
+        "NPM":  10752,
+        "PM":  2592768,
+        "SI":  1,
+        "VM":  2203437703168,
+        "WS":  1642496
+    },
+    {
+        "StartTime":  "\/Date(1771855727187)\/",
+        "Handles":  154,
+        "Name":  "RuntimeBroker",
+        "NPM":  9528,
+        "PM":  2437120,
+        "SI":  1,
+        "VM":  2203432415232,
+        "WS":  1404928
+    },
+    {
+        "StartTime":  "\/Date(1771855816453)\/",
+        "Handles":  277,
+        "Name":  "RuntimeBroker",
+        "NPM":  14016,
+        "PM":  3649536,
+        "SI":  1,
+        "VM":  2203471466496,
+        "WS":  2318336
+    },
+    {
+        "StartTime":  "\/Date(1771854631622)\/",
+        "Handles":  1093,
+        "Name":  "SearchHost",
+        "NPM":  51488,
+        "PM":  86016000,
+        "SI":  1,
+        "VM":  2255589281792,
+        "WS":  10772480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1239,
+        "Name":  "SearchIndexer",
+        "NPM":  22144,
+        "PM":  28483584,
+        "SI":  0,
+        "VM":  2203531800576,
+        "WS":  11829248
+    },
+    {
+        "StartTime":  null,
+        "Handles":  0,
+        "Name":  "Secure System",
+        "NPM":  272,
+        "PM":  180224,
+        "SI":  0,
+        "VM":  2768896,
+        "WS":  64679936
+    },
+    {
+        "StartTime":  null,
+        "Handles":  494,
+        "Name":  "SecurityHealthService",
+        "NPM":  22456,
+        "PM":  8073216,
+        "SI":  0,
+        "VM":  2203507044352,
+        "WS":  1388544
+    },
+    {
+        "StartTime":  "\/Date(1771854665754)\/",
+        "Handles":  183,
+        "Name":  "SecurityHealthSystray",
+        "NPM":  11024,
+        "PM":  2170880,
+        "SI":  1,
+        "VM":  2203436359680,
+        "WS":  20480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  721,
+        "Name":  "servicehost",
+        "NPM":  40960,
+        "PM":  26324992,
+        "SI":  0,
+        "VM":  2238210121728,
+        "WS":  15892480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  986,
+        "Name":  "services",
+        "NPM":  19264,
+        "PM":  7671808,
+        "SI":  0,
+        "VM":  2203438141440,
+        "WS":  7282688
+    },
+    {
+        "StartTime":  "\/Date(1771855815677)\/",
+        "Handles":  700,
+        "Name":  "ShellExperienceHost",
+        "NPM":  31528,
+        "PM":  47161344,
+        "SI":  1,
+        "VM":  2203831091200,
+        "WS":  61440
+    },
+    {
+        "StartTime":  "\/Date(1771946237902)\/",
+        "Handles":  445,
+        "Name":  "ShellHost",
+        "NPM":  22448,
+        "PM":  39419904,
+        "SI":  1,
+        "VM":  2203741138944,
+        "WS":  4853760
+    },
+    {
+        "StartTime":  "\/Date(1771854618051)\/",
+        "Handles":  782,
+        "Name":  "sihost",
+        "NPM":  25024,
+        "PM":  8720384,
+        "SI":  1,
+        "VM":  2203558301696,
+        "WS":  13664256
+    },
+    {
+        "StartTime":  null,
+        "Handles":  58,
+        "Name":  "smss",
+        "NPM":  4464,
+        "PM":  1314816,
+        "SI":  0,
+        "VM":  2203376168960,
+        "WS":  24576
+    },
+    {
+        "StartTime":  null,
+        "Handles":  432,
+        "Name":  "spoolsv",
+        "NPM":  21632,
+        "PM":  5963776,
+        "SI":  0,
+        "VM":  2203432243200,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771854631465)\/",
+        "Handles":  994,
+        "Name":  "StartMenuExperienceHost",
+        "NPM":  49064,
+        "PM":  107098112,
+        "SI":  1,
+        "VM":  2207237537792,
+        "WS":  11309056
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1152,
+        "Name":  "SupportAssistAgent",
+        "NPM":  322416,
+        "PM":  117006336,
+        "SI":  0,
+        "VM":  2481337020416,
+        "WS":  12087296
+    },
+    {
+        "StartTime":  null,
+        "Handles":  361,
+        "Name":  "svchost",
+        "NPM":  17728,
+        "PM":  6893568,
+        "SI":  0,
+        "VM":  2203422265344,
+        "WS":  5664768
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1426,
+        "Name":  "svchost",
+        "NPM":  29472,
+        "PM":  15753216,
+        "SI":  0,
+        "VM":  2203499094016,
+        "WS":  24190976
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1713,
+        "Name":  "svchost",
+        "NPM":  22872,
+        "PM":  10821632,
+        "SI":  0,
+        "VM":  2203422691328,
+        "WS":  13176832
+    },
+    {
+        "StartTime":  null,
+        "Handles":  362,
+        "Name":  "svchost",
+        "NPM":  15520,
+        "PM":  3518464,
+        "SI":  0,
+        "VM":  2203417899008,
+        "WS":  3710976
+    },
+    {
+        "StartTime":  null,
+        "Handles":  247,
+        "Name":  "svchost",
+        "NPM":  12000,
+        "PM":  2805760,
+        "SI":  0,
+        "VM":  2203414482944,
+        "WS":  2449408
+    },
+    {
+        "StartTime":  null,
+        "Handles":  214,
+        "Name":  "svchost",
+        "NPM":  13264,
+        "PM":  2609152,
+        "SI":  0,
+        "VM":  2203421913088,
+        "WS":  1753088
+    },
+    {
+        "StartTime":  null,
+        "Handles":  198,
+        "Name":  "svchost",
+        "NPM":  7896,
+        "PM":  2076672,
+        "SI":  0,
+        "VM":  2203410907136,
+        "WS":  1064960
+    },
+    {
+        "StartTime":  null,
+        "Handles":  109,
+        "Name":  "svchost",
+        "NPM":  11024,
+        "PM":  1458176,
+        "SI":  0,
+        "VM":  2203400466432,
+        "WS":  659456
+    },
+    {
+        "StartTime":  null,
+        "Handles":  199,
+        "Name":  "svchost",
+        "NPM":  46408,
+        "PM":  11534336,
+        "SI":  0,
+        "VM":  2203419254784,
+        "WS":  3358720
+    },
+    {
+        "StartTime":  null,
+        "Handles":  261,
+        "Name":  "svchost",
+        "NPM":  14016,
+        "PM":  3555328,
+        "SI":  0,
+        "VM":  2203419557888,
+        "WS":  1458176
+    },
+    {
+        "StartTime":  null,
+        "Handles":  332,
+        "Name":  "svchost",
+        "NPM":  10072,
+        "PM":  2306048,
+        "SI":  0,
+        "VM":  2203418083328,
+        "WS":  5283840
+    },
+    {
+        "StartTime":  null,
+        "Handles":  339,
+        "Name":  "svchost",
+        "NPM":  13216,
+        "PM":  3788800,
+        "SI":  0,
+        "VM":  2203424313344,
+        "WS":  1347584
+    },
+    {
+        "StartTime":  null,
+        "Handles":  199,
+        "Name":  "svchost",
+        "NPM":  11296,
+        "PM":  2695168,
+        "SI":  0,
+        "VM":  2203432747008,
+        "WS":  1355776
+    },
+    {
+        "StartTime":  null,
+        "Handles":  366,
+        "Name":  "svchost",
+        "NPM":  17672,
+        "PM":  3981312,
+        "SI":  0,
+        "VM":  2203421667328,
+        "WS":  4886528
+    },
+    {
+        "StartTime":  null,
+        "Handles":  134,
+        "Name":  "svchost",
+        "NPM":  11688,
+        "PM":  1916928,
+        "SI":  0,
+        "VM":  2203407040512,
+        "WS":  978944
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1239,
+        "Name":  "svchost",
+        "NPM":  23416,
+        "PM":  7487488,
+        "SI":  0,
+        "VM":  2203437862912,
+        "WS":  7962624
+    },
+    {
+        "StartTime":  null,
+        "Handles":  280,
+        "Name":  "svchost",
+        "NPM":  12248,
+        "PM":  3006464,
+        "SI":  0,
+        "VM":  2203419332608,
+        "WS":  6004736
+    },
+    {
+        "StartTime":  null,
+        "Handles":  460,
+        "Name":  "svchost",
+        "NPM":  19704,
+        "PM":  5287936,
+        "SI":  0,
+        "VM":  2203454091264,
+        "WS":  11546624
+    },
+    {
+        "StartTime":  null,
+        "Handles":  198,
+        "Name":  "svchost",
+        "NPM":  10256,
+        "PM":  2011136,
+        "SI":  0,
+        "VM":  2203410055168,
+        "WS":  3960832
+    },
+    {
+        "StartTime":  null,
+        "Handles":  171,
+        "Name":  "svchost",
+        "NPM":  11040,
+        "PM":  2371584,
+        "SI":  0,
+        "VM":  2203421503488,
+        "WS":  1323008
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1311,
+        "Name":  "svchost",
+        "NPM":  15648,
+        "PM":  3497984,
+        "SI":  0,
+        "VM":  2203422867456,
+        "WS":  1146880
+    },
+    {
+        "StartTime":  null,
+        "Handles":  366,
+        "Name":  "svchost",
+        "NPM":  13856,
+        "PM":  4317184,
+        "SI":  0,
+        "VM":  2203431051264,
+        "WS":  970752
+    },
+    {
+        "StartTime":  null,
+        "Handles":  542,
+        "Name":  "svchost",
+        "NPM":  15176,
+        "PM":  18677760,
+        "SI":  0,
+        "VM":  2203449319424,
+        "WS":  9527296
+    },
+    {
+        "StartTime":  null,
+        "Handles":  408,
+        "Name":  "svchost",
+        "NPM":  8576,
+        "PM":  1667072,
+        "SI":  0,
+        "VM":  2203406929920,
+        "WS":  1409024
+    },
+    {
+        "StartTime":  null,
+        "Handles":  236,
+        "Name":  "svchost",
+        "NPM":  14352,
+        "PM":  3506176,
+        "SI":  0,
+        "VM":  2207858589696,
+        "WS":  6246400
+    },
+    {
+        "StartTime":  null,
+        "Handles":  193,
+        "Name":  "svchost",
+        "NPM":  10536,
+        "PM":  2560000,
+        "SI":  0,
+        "VM":  2203414667264,
+        "WS":  1249280
+    },
+    {
+        "StartTime":  null,
+        "Handles":  190,
+        "Name":  "svchost",
+        "NPM":  13336,
+        "PM":  2256896,
+        "SI":  0,
+        "VM":  2203416268800,
+        "WS":  573440
+    },
+    {
+        "StartTime":  null,
+        "Handles":  194,
+        "Name":  "svchost",
+        "NPM":  11232,
+        "PM":  2215936,
+        "SI":  0,
+        "VM":  2203415011328,
+        "WS":  1671168
+    },
+    {
+        "StartTime":  null,
+        "Handles":  215,
+        "Name":  "svchost",
+        "NPM":  12496,
+        "PM":  2473984,
+        "SI":  0,
+        "VM":  2203466756096,
+        "WS":  2805760
+    },
+    {
+        "StartTime":  null,
+        "Handles":  433,
+        "Name":  "svchost",
+        "NPM":  15360,
+        "PM":  4112384,
+        "SI":  0,
+        "VM":  2203442593792,
+        "WS":  8798208
+    },
+    {
+        "StartTime":  null,
+        "Handles":  204,
+        "Name":  "svchost",
+        "NPM":  10744,
+        "PM":  2052096,
+        "SI":  0,
+        "VM":  2203414261760,
+        "WS":  1282048
+    },
+    {
+        "StartTime":  "\/Date(1771854618108)\/",
+        "Handles":  507,
+        "Name":  "svchost",
+        "NPM":  18832,
+        "PM":  10579968,
+        "SI":  1,
+        "VM":  2203468312576,
+        "WS":  4669440
+    },
+    {
+        "StartTime":  null,
+        "Handles":  128,
+        "Name":  "svchost",
+        "NPM":  8168,
+        "PM":  1646592,
+        "SI":  0,
+        "VM":  2203402702848,
+        "WS":  1052672
+    },
+    {
+        "StartTime":  null,
+        "Handles":  345,
+        "Name":  "svchost",
+        "NPM":  11160,
+        "PM":  16498688,
+        "SI":  0,
+        "VM":  2203483115520,
+        "WS":  15245312
+    },
+    {
+        "StartTime":  null,
+        "Handles":  225,
+        "Name":  "svchost",
+        "NPM":  11944,
+        "PM":  2576384,
+        "SI":  0,
+        "VM":  2203417960448,
+        "WS":  2322432
+    },
+    {
+        "StartTime":  null,
+        "Handles":  573,
+        "Name":  "svchost",
+        "NPM":  26544,
+        "PM":  7217152,
+        "SI":  0,
+        "VM":  2203477577728,
+        "WS":  7606272
+    },
+    {
+        "StartTime":  null,
+        "Handles":  277,
+        "Name":  "svchost",
+        "NPM":  16400,
+        "PM":  3497984,
+        "SI":  0,
+        "VM":  2203456647168,
+        "WS":  1986560
+    },
+    {
+        "StartTime":  null,
+        "Handles":  545,
+        "Name":  "svchost",
+        "NPM":  35312,
+        "PM":  14872576,
+        "SI":  0,
+        "VM":  2203457347584,
+        "WS":  4784128
+    },
+    {
+        "StartTime":  null,
+        "Handles":  354,
+        "Name":  "svchost",
+        "NPM":  30040,
+        "PM":  4644864,
+        "SI":  0,
+        "VM":  2203586068480,
+        "WS":  6483968
+    },
+    {
+        "StartTime":  null,
+        "Handles":  325,
+        "Name":  "svchost",
+        "NPM":  10880,
+        "PM":  2539520,
+        "SI":  0,
+        "VM":  2203421614080,
+        "WS":  1449984
+    },
+    {
+        "StartTime":  null,
+        "Handles":  137,
+        "Name":  "svchost",
+        "NPM":  9120,
+        "PM":  1683456,
+        "SI":  0,
+        "VM":  2203403800576,
+        "WS":  1191936
+    },
+    {
+        "StartTime":  null,
+        "Handles":  183,
+        "Name":  "svchost",
+        "NPM":  11104,
+        "PM":  2007040,
+        "SI":  0,
+        "VM":  2203415494656,
+        "WS":  2482176
+    },
+    {
+        "StartTime":  null,
+        "Handles":  177,
+        "Name":  "svchost",
+        "NPM":  12504,
+        "PM":  1822720,
+        "SI":  0,
+        "VM":  2203411173376,
+        "WS":  544768
+    },
+    {
+        "StartTime":  null,
+        "Handles":  722,
+        "Name":  "svchost",
+        "NPM":  32128,
+        "PM":  29216768,
+        "SI":  0,
+        "VM":  2203560931328,
+        "WS":  18092032
+    },
+    {
+        "StartTime":  null,
+        "Handles":  393,
+        "Name":  "svchost",
+        "NPM":  21512,
+        "PM":  3358720,
+        "SI":  0,
+        "VM":  2204498759680,
+        "WS":  942080
+    },
+    {
+        "StartTime":  null,
+        "Handles":  472,
+        "Name":  "svchost",
+        "NPM":  22128,
+        "PM":  39800832,
+        "SI":  0,
+        "VM":  2203683500032,
+        "WS":  16859136
+    },
+    {
+        "StartTime":  null,
+        "Handles":  133,
+        "Name":  "svchost",
+        "NPM":  8952,
+        "PM":  1503232,
+        "SI":  0,
+        "VM":  2203401822208,
+        "WS":  233472
+    },
+    {
+        "StartTime":  null,
+        "Handles":  442,
+        "Name":  "svchost",
+        "NPM":  20408,
+        "PM":  5267456,
+        "SI":  0,
+        "VM":  2203462897664,
+        "WS":  1941504
+    },
+    {
+        "StartTime":  null,
+        "Handles":  644,
+        "Name":  "svchost",
+        "NPM":  18336,
+        "PM":  20189184,
+        "SI":  0,
+        "VM":  2203473113088,
+        "WS":  23572480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  120,
+        "Name":  "svchost",
+        "NPM":  8848,
+        "PM":  2334720,
+        "SI":  0,
+        "VM":  2203408568320,
+        "WS":  2117632
+    },
+    {
+        "StartTime":  null,
+        "Handles":  196,
+        "Name":  "svchost",
+        "NPM":  10616,
+        "PM":  2183168,
+        "SI":  0,
+        "VM":  2203411238912,
+        "WS":  1249280
+    },
+    {
+        "StartTime":  null,
+        "Handles":  126,
+        "Name":  "svchost",
+        "NPM":  9024,
+        "PM":  1847296,
+        "SI":  0,
+        "VM":  2203405352960,
+        "WS":  1028096
+    },
+    {
+        "StartTime":  null,
+        "Handles":  216,
+        "Name":  "svchost",
+        "NPM":  12928,
+        "PM":  2539520,
+        "SI":  0,
+        "VM":  2203418877952,
+        "WS":  3809280
+    },
+    {
+        "StartTime":  "\/Date(1771854629601)\/",
+        "Handles":  290,
+        "Name":  "svchost",
+        "NPM":  14560,
+        "PM":  4206592,
+        "SI":  1,
+        "VM":  2203496013824,
+        "WS":  4509696
+    },
+    {
+        "StartTime":  null,
+        "Handles":  515,
+        "Name":  "svchost",
+        "NPM":  19632,
+        "PM":  7036928,
+        "SI":  0,
+        "VM":  2203483037696,
+        "WS":  12976128
+    },
+    {
+        "StartTime":  null,
+        "Handles":  206,
+        "Name":  "svchost",
+        "NPM":  11160,
+        "PM":  2330624,
+        "SI":  0,
+        "VM":  2203420516352,
+        "WS":  1421312
+    },
+    {
+        "StartTime":  null,
+        "Handles":  135,
+        "Name":  "svchost",
+        "NPM":  9256,
+        "PM":  1986560,
+        "SI":  0,
+        "VM":  2203410780160,
+        "WS":  1298432
+    },
+    {
+        "StartTime":  null,
+        "Handles":  309,
+        "Name":  "svchost",
+        "NPM":  17648,
+        "PM":  5009408,
+        "SI":  0,
+        "VM":  2203449085952,
+        "WS":  6856704
+    },
+    {
+        "StartTime":  null,
+        "Handles":  268,
+        "Name":  "svchost",
+        "NPM":  14328,
+        "PM":  2826240,
+        "SI":  0,
+        "VM":  2203431231488,
+        "WS":  6066176
+    },
+    {
+        "StartTime":  "\/Date(1771854618194)\/",
+        "Handles":  106,
+        "Name":  "svchost",
+        "NPM":  7624,
+        "PM":  1486848,
+        "SI":  1,
+        "VM":  2203423821824,
+        "WS":  999424
+    },
+    {
+        "StartTime":  "\/Date(1771854618285)\/",
+        "Handles":  492,
+        "Name":  "svchost",
+        "NPM":  19896,
+        "PM":  9539584,
+        "SI":  1,
+        "VM":  2203559034880,
+        "WS":  12062720
+    },
+    {
+        "StartTime":  null,
+        "Handles":  450,
+        "Name":  "svchost",
+        "NPM":  21704,
+        "PM":  5890048,
+        "SI":  0,
+        "VM":  2203453931520,
+        "WS":  6389760
+    },
+    {
+        "StartTime":  null,
+        "Handles":  280,
+        "Name":  "svchost",
+        "NPM":  14560,
+        "PM":  4595712,
+        "SI":  0,
+        "VM":  2203453489152,
+        "WS":  18415616
+    },
+    {
+        "StartTime":  null,
+        "Handles":  208,
+        "Name":  "svchost",
+        "NPM":  12824,
+        "PM":  2715648,
+        "SI":  0,
+        "VM":  2203420467200,
+        "WS":  1404928
+    },
+    {
+        "StartTime":  null,
+        "Handles":  249,
+        "Name":  "svchost",
+        "NPM":  11912,
+        "PM":  2834432,
+        "SI":  0,
+        "VM":  2203411656704,
+        "WS":  4005888
+    },
+    {
+        "StartTime":  null,
+        "Handles":  167,
+        "Name":  "svchost",
+        "NPM":  11576,
+        "PM":  2281472,
+        "SI":  0,
+        "VM":  2203417059328,
+        "WS":  1343488
+    },
+    {
+        "StartTime":  null,
+        "Handles":  482,
+        "Name":  "svchost",
+        "NPM":  19496,
+        "PM":  10387456,
+        "SI":  0,
+        "VM":  2203502718976,
+        "WS":  6062080
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1014,
+        "Name":  "svchost",
+        "NPM":  20504,
+        "PM":  11841536,
+        "SI":  0,
+        "VM":  2203498180608,
+        "WS":  8331264
+    },
+    {
+        "StartTime":  null,
+        "Handles":  367,
+        "Name":  "svchost",
+        "NPM":  24944,
+        "PM":  46604288,
+        "SI":  0,
+        "VM":  2203630403584,
+        "WS":  22900736
+    },
+    {
+        "StartTime":  null,
+        "Handles":  291,
+        "Name":  "svchost",
+        "NPM":  13744,
+        "PM":  3624960,
+        "SI":  0,
+        "VM":  2203441606656,
+        "WS":  3502080
+    },
+    {
+        "StartTime":  "\/Date(1771854639859)\/",
+        "Handles":  247,
+        "Name":  "svchost",
+        "NPM":  12520,
+        "PM":  2887680,
+        "SI":  1,
+        "VM":  2203464888320,
+        "WS":  2519040
+    },
+    {
+        "StartTime":  "\/Date(1771854632777)\/",
+        "Handles":  272,
+        "Name":  "svchost",
+        "NPM":  15512,
+        "PM":  3989504,
+        "SI":  1,
+        "VM":  2203480236032,
+        "WS":  2596864
+    },
+    {
+        "StartTime":  null,
+        "Handles":  169,
+        "Name":  "svchost",
+        "NPM":  10072,
+        "PM":  2072576,
+        "SI":  0,
+        "VM":  2203412189184,
+        "WS":  3166208
+    },
+    {
+        "StartTime":  null,
+        "Handles":  317,
+        "Name":  "svchost",
+        "NPM":  15888,
+        "PM":  4005888,
+        "SI":  0,
+        "VM":  2203431010304,
+        "WS":  2101248
+    },
+    {
+        "StartTime":  null,
+        "Handles":  487,
+        "Name":  "svchost",
+        "NPM":  12592,
+        "PM":  3596288,
+        "SI":  0,
+        "VM":  2203426697216,
+        "WS":  2666496
+    },
+    {
+        "StartTime":  null,
+        "Handles":  234,
+        "Name":  "svchost",
+        "NPM":  13584,
+        "PM":  3358720,
+        "SI":  0,
+        "VM":  2203428593664,
+        "WS":  1835008
+    },
+    {
+        "StartTime":  null,
+        "Handles":  224,
+        "Name":  "svchost",
+        "NPM":  13672,
+        "PM":  2289664,
+        "SI":  0,
+        "VM":  2203415134208,
+        "WS":  614400
+    },
+    {
+        "StartTime":  null,
+        "Handles":  198,
+        "Name":  "svchost",
+        "NPM":  16056,
+        "PM":  7405568,
+        "SI":  0,
+        "VM":  2203706814464,
+        "WS":  1556480
+    },
+    {
+        "StartTime":  null,
+        "Handles":  339,
+        "Name":  "svchost",
+        "NPM":  16640,
+        "PM":  4521984,
+        "SI":  0,
+        "VM":  2203452481536,
+        "WS":  1843200
+    },
+    {
+        "StartTime":  null,
+        "Handles":  120,
+        "Name":  "svchost",
+        "NPM":  8424,
+        "PM":  1548288,
+        "SI":  0,
+        "VM":  2203402899456,
+        "WS":  991232
+    },
+    {
+        "StartTime":  null,
+        "Handles":  259,
+        "Name":  "svchost",
+        "NPM":  15008,
+        "PM":  4108288,
+        "SI":  0,
+        "VM":  2203443879936,
+        "WS":  2985984
+    },
+    {
+        "StartTime":  null,
+        "Handles":  642,
+        "Name":  "svchost",
+        "NPM":  38160,
+        "PM":  15085568,
+        "SI":  0,
+        "VM":  2203696517120,
+        "WS":  9895936
+    },
+    {
+        "StartTime":  null,
+        "Handles":  242,
+        "Name":  "svchost",
+        "NPM":  18960,
+        "PM":  2473984,
+        "SI":  0,
+        "VM":  2203416346624,
+        "WS":  1167360
+    },
+    {
+        "StartTime":  "\/Date(1771867286216)\/",
+        "Handles":  150,
+        "Name":  "svchost",
+        "NPM":  9392,
+        "PM":  1974272,
+        "SI":  1,
+        "VM":  2203433799680,
+        "WS":  1163264
+    },
+    {
+        "StartTime":  null,
+        "Handles":  170,
+        "Name":  "svchost",
+        "NPM":  10744,
+        "PM":  2060288,
+        "SI":  0,
+        "VM":  2203410223104,
+        "WS":  1052672
+    },
+    {
+        "StartTime":  "\/Date(1771854738387)\/",
+        "Handles":  263,
+        "Name":  "svchost",
+        "NPM":  13736,
+        "PM":  3137536,
+        "SI":  1,
+        "VM":  2203444805632,
+        "WS":  1470464
+    },
+    {
+        "StartTime":  null,
+        "Handles":  261,
+        "Name":  "svchost",
+        "NPM":  16848,
+        "PM":  4497408,
+        "SI":  0,
+        "VM":  2203437744128,
+        "WS":  7856128
+    },
+    {
+        "StartTime":  null,
+        "Handles":  157,
+        "Name":  "svchost",
+        "NPM":  43016,
+        "PM":  1953792,
+        "SI":  0,
+        "VM":  2203411308544,
+        "WS":  1183744
+    },
+    {
+        "StartTime":  null,
+        "Handles":  220,
+        "Name":  "svchost",
+        "NPM":  15944,
+        "PM":  3092480,
+        "SI":  0,
+        "VM":  2203429732352,
+        "WS":  1261568
+    },
+    {
+        "StartTime":  null,
+        "Handles":  450,
+        "Name":  "svchost",
+        "NPM":  27424,
+        "PM":  4104192,
+        "SI":  0,
+        "VM":  2203444596736,
+        "WS":  1798144
+    },
+    {
+        "StartTime":  null,
+        "Handles":  177,
+        "Name":  "svchost",
+        "NPM":  9456,
+        "PM":  1970176,
+        "SI":  0,
+        "VM":  2203410472960,
+        "WS":  10125312
+    },
+    {
+        "StartTime":  null,
+        "Handles":  6741,
+        "Name":  "System",
+        "NPM":  272,
+        "PM":  40960,
+        "SI":  0,
+        "VM":  4583424,
+        "WS":  147456
+    },
+    {
+        "StartTime":  "\/Date(1771854680733)\/",
+        "Handles":  617,
+        "Name":  "taskhostw",
+        "NPM":  27992,
+        "PM":  10063872,
+        "SI":  1,
+        "VM":  2203520761856,
+        "WS":  3645440
+    },
+    {
+        "StartTime":  "\/Date(1771854618392)\/",
+        "Handles":  326,
+        "Name":  "taskhostw",
+        "NPM":  35800,
+        "PM":  8003584,
+        "SI":  1,
+        "VM":  2203591540736,
+        "WS":  5947392
+    },
+    {
+        "StartTime":  "\/Date(1771996640334)\/",
+        "Handles":  179,
+        "Name":  "tasklist",
+        "NPM":  13320,
+        "PM":  2617344,
+        "SI":  1,
+        "VM":  2203423559680,
+        "WS":  13631488
+    },
+    {
+        "StartTime":  null,
+        "Handles":  232,
+        "Name":  "TiWorker",
+        "NPM":  14152,
+        "PM":  5079040,
+        "SI":  0,
+        "VM":  2203431026688,
+        "WS":  18759680
+    },
+    {
+        "StartTime":  null,
+        "Handles":  146,
+        "Name":  "TrustedInstaller",
+        "NPM":  10072,
+        "PM":  2011136,
+        "SI":  0,
+        "VM":  2203392507904,
+        "WS":  10088448
+    },
+    {
+        "StartTime":  "\/Date(1771996639728)\/",
+        "Handles":  131,
+        "Name":  "typeperf",
+        "NPM":  7080,
+        "PM":  7585792,
+        "SI":  1,
+        "VM":  2203382730752,
+        "WS":  11010048
+    },
+    {
+        "StartTime":  "\/Date(1771854608526)\/",
+        "Handles":  484,
+        "Name":  "uihost",
+        "NPM":  28088,
+        "PM":  13414400,
+        "SI":  1,
+        "VM":  2203547291648,
+        "WS":  10366976
+    },
+    {
+        "StartTime":  null,
+        "Handles":  122,
+        "Name":  "unsecapp",
+        "NPM":  8712,
+        "PM":  1613824,
+        "SI":  0,
+        "VM":  2203388841984,
+        "WS":  2109440
+    },
+    {
+        "StartTime":  "\/Date(1771854768189)\/",
+        "Handles":  129,
+        "Name":  "unsecapp",
+        "NPM":  9256,
+        "PM":  1753088,
+        "SI":  1,
+        "VM":  2203411066880,
+        "WS":  2277376
+    },
+    {
+        "StartTime":  null,
+        "Handles":  201,
+        "Name":  "vmcompute",
+        "NPM":  11400,
+        "PM":  3375104,
+        "SI":  0,
+        "VM":  2203392471040,
+        "WS":  589824
+    },
+    {
+        "StartTime":  null,
+        "Handles":  238,
+        "Name":  "WavesAudioService",
+        "NPM":  14552,
+        "PM":  13320192,
+        "SI":  0,
+        "VM":  4867342336,
+        "WS":  1638400
+    },
+    {
+        "StartTime":  "\/Date(1771854695831)\/",
+        "Handles":  1863,
+        "Name":  "WavesSvc64",
+        "NPM":  36472,
+        "PM":  73101312,
+        "SI":  1,
+        "VM":  2203628724224,
+        "WS":  10452992
+    },
+    {
+        "StartTime":  null,
+        "Handles":  1366,
+        "Name":  "WavesSysSvc64",
+        "NPM":  42616,
+        "PM":  66596864,
+        "SI":  0,
+        "VM":  2203772862464,
+        "WS":  5013504
+    },
+    {
+        "StartTime":  "\/Date(1771854911993)\/",
+        "Handles":  1560,
+        "Name":  "WhatsApp.Root",
+        "NPM":  141960,
+        "PM":  105594880,
+        "SI":  1,
+        "VM":  2533155999744,
+        "WS":  31784960
+    },
+    {
+        "StartTime":  "\/Date(1771854942836)\/",
+        "Handles":  1570,
+        "Name":  "WhatsApp.Root",
+        "NPM":  145496,
+        "PM":  100769792,
+        "SI":  1,
+        "VM":  2533143912448,
+        "WS":  20828160
+    },
+    {
+        "StartTime":  "\/Date(1771854632441)\/",
+        "Handles":  894,
+        "Name":  "Widgets",
+        "NPM":  37392,
+        "PM":  16183296,
+        "SI":  1,
+        "VM":  2255202725888,
+        "WS":  10199040
+    },
+    {
+        "StartTime":  "\/Date(1771854633357)\/",
+        "Handles":  354,
+        "Name":  "WidgetService",
+        "NPM":  21656,
+        "PM":  6131712,
+        "SI":  1,
+        "VM":  2203556728832,
+        "WS":  2846720
+    },
+    {
+        "StartTime":  "\/Date(1771905723618)\/",
+        "Handles":  442,
+        "Name":  "WindowsPackageManagerServer",
+        "NPM":  22696,
+        "PM":  8966144,
+        "SI":  1,
+        "VM":  2203579330560,
+        "WS":  6934528
+    },
+    {
+        "StartTime":  null,
+        "Handles":  163,
+        "Name":  "wininit",
+        "NPM":  12016,
+        "PM":  1667072,
+        "SI":  0,
+        "VM":  2203408064512,
+        "WS":  483328
+    },
+    {
+        "StartTime":  null,
+        "Handles":  290,
+        "Name":  "winlogon",
+        "NPM":  13400,
+        "PM":  2818048,
+        "SI":  1,
+        "VM":  2203460304896,
+        "WS":  483328
+    },
+    {
+        "StartTime":  null,
+        "Handles":  357,
+        "Name":  "WmiPrvSE",
+        "NPM":  20512,
+        "PM":  13443072,
+        "SI":  0,
+        "VM":  2203450904576,
+        "WS":  11534336
+    },
+    {
+        "StartTime":  null,
+        "Handles":  201,
+        "Name":  "WmiPrvSE",
+        "NPM":  13744,
+        "PM":  7970816,
+        "SI":  0,
+        "VM":  2203410173952,
+        "WS":  19288064
+    },
+    {
+        "StartTime":  null,
+        "Handles":  282,
+        "Name":  "WMIRegistrationService",
+        "NPM":  15432,
+        "PM":  3231744,
+        "SI":  0,
+        "VM":  96079872,
+        "WS":  32768
+    },
+    {
+        "StartTime":  null,
+        "Handles":  496,
+        "Name":  "wslservice",
+        "NPM":  23896,
+        "PM":  7581696,
+        "SI":  0,
+        "VM":  2203483176960,
+        "WS":  5640192
+    },
+    {
+        "StartTime":  null,
+        "Handles":  537,
+        "Name":  "WUDFHost",
+        "NPM":  31056,
+        "PM":  11821056,
+        "SI":  0,
+        "VM":  2203445981184,
+        "WS":  5922816
+    },
+    {
+        "StartTime":  null,
+        "Handles":  293,
+        "Name":  "WUDFHost",
+        "NPM":  17176,
+        "PM":  6049792,
+        "SI":  0,
+        "VM":  2203419480064,
+        "WS":  3522560
+    },
+    {
+        "StartTime":  null,
+        "Handles":  255,
+        "Name":  "WUDFHost",
+        "NPM":  12096,
+        "PM":  5681152,
+        "SI":  0,
+        "VM":  2203446013952,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771855726156)\/",
+        "Handles":  631,
+        "Name":  "XboxGameBarSpotify",
+        "NPM":  31032,
+        "PM":  50188288,
+        "SI":  1,
+        "VM":  4802498560,
+        "WS":  16384
+    },
+    {
+        "StartTime":  "\/Date(1771855728019)\/",
+        "Handles":  354,
+        "Name":  "XboxPcAppFT",
+        "NPM":  22448,
+        "PM":  45723648,
+        "SI":  1,
+        "VM":  2203859361792,
+        "WS":  2187264
+    }
+]

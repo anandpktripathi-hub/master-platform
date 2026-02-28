@@ -1,6 +1,8 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { WorkspaceGuard } from './guards/workspace.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
@@ -12,6 +14,7 @@ import { SecurityHeadersMiddleware } from './middleware/security-headers.middlew
 import { IpRestrictionMiddleware } from './middleware/ip-restriction.middleware';
 import { MetricsModule } from './metrics/metrics.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
+import { TenantModule } from './modules/tenant/tenant.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ThemesModule } from './modules/themes/themes.module';
@@ -62,6 +65,7 @@ import { StorageModule } from './common/storage/storage.module';
     DatabaseModule,
     UsersModule,
     TenantsModule,
+    TenantModule,
     ProductsModule,
     ThemesModule,
     AuthModule,
@@ -107,7 +111,11 @@ import { StorageModule } from './common/storage/storage.module';
   providers: [
     IpRestrictionMiddleware,
     TenantMiddleware,
-    // WorkspaceGuard is no longer provided globally. Use @UseGuards(WorkspaceGuard) at controller/route level.
+    // Default-secure posture: all routes require JWT + workspace context.
+    // Use @Public() to explicitly opt-out on specific endpoints.
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: WorkspaceGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule implements NestModule {

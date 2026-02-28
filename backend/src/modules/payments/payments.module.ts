@@ -15,24 +15,27 @@ import {
 import { Package, PackageSchema } from '../../database/schemas/package.schema';
 import { OfflinePaymentsService } from './services/offline-payments.service';
 import { OfflinePaymentsController } from './controllers/offline-payments.controller';
+import { AdminPaymentsController } from './controllers/admin-payments.controller';
 import { BillingModule } from '../billing/billing.module';
 import { TenantsModule } from '../tenants/tenants.module';
 import { PackagesModule } from '../packages/packages.module';
+import { PaymentLog, PaymentLogSchema } from '../../database/schemas/payment-log.schema';
 
 @Module({
   imports: [
     SettingsModule,
-    BillingModule,
+    forwardRef(() => BillingModule),
     TenantsModule,
     forwardRef(() => PackagesModule),
     MongooseModule.forFeature([
       { name: OfflinePaymentRequest.name, schema: OfflinePaymentRequestSchema },
       { name: TenantPackage.name, schema: TenantPackageSchema },
       { name: Package.name, schema: PackageSchema },
+      { name: PaymentLog.name, schema: PaymentLogSchema },
     ]),
   ],
   providers: [PaymentGatewayService, PaymentLogService, OfflinePaymentsService],
-  controllers: [PaymentsController, OfflinePaymentsController],
+  controllers: [PaymentsController, OfflinePaymentsController, AdminPaymentsController],
   exports: [PaymentGatewayService, PaymentLogService, OfflinePaymentsService],
 })
 export class PaymentsModule {}

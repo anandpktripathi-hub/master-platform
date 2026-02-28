@@ -5,15 +5,25 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
-  private readonly logger = new Logger(GithubStrategy.name);
+  private readonly logger: Logger;
+  private readonly configService: ConfigService;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(configService: ConfigService) {
     const clientID = configService.get<string>('GITHUB_CLIENT_ID');
     const clientSecret = configService.get<string>('GITHUB_CLIENT_SECRET');
     const callbackURL = configService.get<string>(
       'GITHUB_CALLBACK_URL',
       'http://localhost:4000/api/v1/auth/github/callback',
     );
+    super({
+      clientID: clientID || 'disabled',
+      clientSecret: clientSecret || 'disabled',
+      callbackURL,
+      scope: ['user:email'],
+    });
+
+    this.logger = new Logger(GithubStrategy.name);
+    this.configService = configService;
 
     if (!clientID || !clientSecret) {
       // Do not crash the whole server if OAuth isn't configured.
@@ -22,12 +32,6 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         'GITHUB_CLIENT_ID/GITHUB_CLIENT_SECRET missing; GitHub OAuth is disabled until configured.',
       );
     }
-    super({
-      clientID: clientID || 'disabled',
-      clientSecret: clientSecret || 'disabled',
-      callbackURL,
-      scope: ['user:email'],
-    });
   }
 
   async validate(

@@ -1,5 +1,7 @@
 import {
+  BadRequestException,
   Controller,
+  ForbiddenException,
   Get,
   Post,
   Delete,
@@ -10,37 +12,61 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
-import {
-  DeveloperPortalService,
-  CreateApiKeyDto,
-} from './developer-portal.service';
+import { DeveloperPortalService } from './developer-portal.service';
 import type { Request } from 'express';
+import { Tenant } from '../../decorators/tenant.decorator';
+import { CreateApiKeyDto, ListWebhookLogsQueryDto } from './dto/developer-portal.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 interface AuthRequest extends Request {
   user?: {
     tenantId?: string;
     sub?: string;
     _id?: string;
+    role?: string;
   };
 }
-
+@ApiTags('Developer Portal')
+@ApiBearerAuth('bearer')
 @Controller('developer')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, WorkspaceGuard, RolesGuard)
 export class DeveloperPortalController {
   constructor(private readonly devPortal: DeveloperPortalService) {}
 
-  private getTenantAndUser(req: AuthRequest): {
-    tenantId: string;
-    userId: string;
-  } {
-    const tenantId = req.user?.tenantId;
+  private normalizeRole(role: unknown) {
+    return String(role || '').trim().toLowerCase();
+  }
+
+  private isPlatformAdmin(req: AuthRequest) {
+    const role = this.normalizeRole(req.user?.role);
+    return role === 'platform_super_admin' || role === 'platform_superadmin' || role === 'platform_admin';
+  }
+
+  private getTenantAndUser(
+    req: AuthRequest,
+    tenantIdFromContext: string | undefined,
+  ): { tenantId: string; userId: string } {
+    const userTenantId = req.user?.tenantId ? String(req.user.tenantId) : undefined;
     const userId = req.user?.sub || req.user?._id;
-    if (!tenantId || !userId) {
-      throw new Error('Tenant or user ID not found in auth context');
+
+    if (!userId) {
+      throw new BadRequestException('User ID not found in auth context');
     }
-    return { tenantId: String(tenantId), userId: String(userId) };
+
+    const effectiveTenantId = tenantIdFromContext || userTenantId;
+    if (!effectiveTenantId) {
+      throw new BadRequestException('Tenant ID not found in request context');
+    }
+
+    // Prevent tenant spoofing via headers for non-platform users.
+    if (!this.isPlatformAdmin(req) && userTenantId && effectiveTenantId !== userTenantId) {
+      throw new ForbiddenException('Cross-tenant access is not allowed');
+    }
+
+    return { tenantId: String(effectiveTenantId), userId: String(userId) };
   }
 
   /**
@@ -48,9 +74,17 @@ export class DeveloperPortalController {
    */
   @Post('api-keys')
   @Roles('tenant_admin', 'admin', 'owner', 'platform_admin')
-  async createApiKey(@Req() req: AuthRequest, @Body() dto: CreateApiKeyDto) {
-    const { tenantId, userId } = this.getTenantAndUser(req);
-    return this.devPortal.createApiKey(tenantId, userId, dto);
+  async createApiKey(
+    @Req() req: AuthRequest,
+    @Tenant() tenantIdFromContext: string | undefined,
+    @Body() dto: CreateApiKeyDto,
+  ) {
+    const { tenantId, userId } = this.getTenantAndUser(req, tenantIdFromContext);
+    return this.devPortal.createApiKey(tenantId, userId, {
+      name: dto.name,
+      scopes: dto.scopes,
+      expiresAt: dto.expiresAt ? new Date(dto.expiresAt) : undefined,
+    });
   }
 
   /**
@@ -65,8 +99,11 @@ export class DeveloperPortalController {
     'platform_admin',
     'PLATFORM_SUPER_ADMIN',
   )
-  async listApiKeys(@Req() req: AuthRequest) {
-    const { tenantId } = this.getTenantAndUser(req);
+  async listApiKeys(
+    @Req() req: AuthRequest,
+    @Tenant() tenantIdFromContext: string | undefined,
+  ) {
+    const { tenantId } = this.getTenantAndUser(req, tenantIdFromContext);
     return this.devPortal.listApiKeys(tenantId);
   }
 
@@ -75,8 +112,12 @@ export class DeveloperPortalController {
    */
   @Post('api-keys/:keyId/revoke')
   @Roles('tenant_admin', 'admin', 'owner', 'platform_admin')
-  async revokeApiKey(@Req() req: AuthRequest, @Param('keyId') keyId: string) {
-    const { tenantId } = this.getTenantAndUser(req);
+  async revokeApiKey(
+    @Req() req: AuthRequest,
+    @Tenant() tenantIdFromContext: string | undefined,
+    @Param('keyId') keyId: string,
+  ) {
+    const { tenantId } = this.getTenantAndUser(req, tenantIdFromContext);
     await this.devPortal.revokeApiKey(tenantId, keyId);
     return { success: true };
   }
@@ -86,8 +127,12 @@ export class DeveloperPortalController {
    */
   @Delete('api-keys/:keyId')
   @Roles('tenant_admin', 'admin', 'owner', 'platform_admin')
-  async deleteApiKey(@Req() req: AuthRequest, @Param('keyId') keyId: string) {
-    const { tenantId } = this.getTenantAndUser(req);
+  async deleteApiKey(
+    @Req() req: AuthRequest,
+    @Tenant() tenantIdFromContext: string | undefined,
+    @Param('keyId') keyId: string,
+  ) {
+    const { tenantId } = this.getTenantAndUser(req, tenantIdFromContext);
     await this.devPortal.deleteApiKey(tenantId, keyId);
     return { success: true };
   }
@@ -106,17 +151,15 @@ export class DeveloperPortalController {
   )
   async listWebhookLogs(
     @Req() req: AuthRequest,
-    @Query('limit') limit?: number,
-    @Query('skip') skip?: number,
-    @Query('event') event?: string,
-    @Query('status') status?: string,
+    @Tenant() tenantIdFromContext: string | undefined,
+    @Query() query: ListWebhookLogsQueryDto,
   ) {
-    const { tenantId } = this.getTenantAndUser(req);
+    const { tenantId } = this.getTenantAndUser(req, tenantIdFromContext);
     return this.devPortal.listWebhookDeliveryLogs(tenantId, {
-      limit: limit ? +limit : undefined,
-      skip: skip ? +skip : undefined,
-      event,
-      status,
+      limit: query.limit,
+      skip: query.skip,
+      event: query.event,
+      status: query.status,
     });
   }
 
@@ -132,8 +175,12 @@ export class DeveloperPortalController {
     'platform_admin',
     'PLATFORM_SUPER_ADMIN',
   )
-  async getWebhookLog(@Req() req: AuthRequest, @Param('logId') logId: string) {
-    const { tenantId } = this.getTenantAndUser(req);
+  async getWebhookLog(
+    @Req() req: AuthRequest,
+    @Tenant() tenantIdFromContext: string | undefined,
+    @Param('logId') logId: string,
+  ) {
+    const { tenantId } = this.getTenantAndUser(req, tenantIdFromContext);
     return this.devPortal.getWebhookDeliveryLog(tenantId, logId);
   }
 }

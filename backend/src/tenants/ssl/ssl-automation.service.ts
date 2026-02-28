@@ -29,7 +29,11 @@ export class SslAutomationService {
       .find({
         status: 'verified',
         sslProvider: 'acme',
-        $or: [{ sslStatus: { $exists: false } }, { sslStatus: 'pending' }],
+        $or: [
+          { sslStatus: { $exists: false } },
+          { sslStatus: 'none' },
+          { sslStatus: 'pending' },
+        ],
       })
       .lean();
 

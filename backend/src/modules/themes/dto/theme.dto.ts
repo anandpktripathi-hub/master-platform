@@ -2,7 +2,8 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsEnum,
+  IsIn,
+  IsMongoId,
   IsObject,
 } from 'class-validator';
 
@@ -23,7 +24,7 @@ export class CreateThemeDto {
   @IsNotEmpty()
   cssVariables!: Record<string, string>;
 
-  @IsEnum(['ACTIVE', 'INACTIVE'])
+  @IsIn(['ACTIVE', 'INACTIVE'])
   @IsOptional()
   status?: 'ACTIVE' | 'INACTIVE';
 }
@@ -45,14 +46,13 @@ export class UpdateThemeDto {
   @IsOptional()
   cssVariables?: Record<string, string>;
 
-  @IsEnum(['ACTIVE', 'INACTIVE'])
+  @IsIn(['ACTIVE', 'INACTIVE'])
   @IsOptional()
   status?: 'ACTIVE' | 'INACTIVE';
 }
 
 export class SelectThemeDto {
-  @IsString()
-  @IsNotEmpty()
+  @IsMongoId()
   themeId!: string;
 }
 

@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { StripeService } from './stripe/stripe.service';
 import { LifetimeController } from './stripe/lifetime.controller';
 import { AddonsController } from './stripe/addons.controller';
-import { StripeWebhookHandler } from './stripe/webhook.handler';
+import { StripeWebhookController } from './stripe/stripe-webhook.controller';
 import { StripeWebhookRawBodyMiddleware } from './stripe/stripe-webhook-raw-body.middleware';
 import { UsageMeterService } from './usage/usage-meter.service';
 import { RedisProvider } from './usage/redis.provider';
@@ -34,6 +34,11 @@ import {
   TenantPackage,
   TenantPackageSchema,
 } from '../database/schemas/tenant-package.schema';
+import { Account, AccountSchema } from '../database/schemas/account.schema';
+import {
+  Transaction,
+  TransactionSchema,
+} from '../database/schemas/transaction.schema';
 
 @Module({
   imports: [
@@ -46,6 +51,8 @@ import {
       { name: Invoice.name, schema: InvoiceSchema },
       { name: IncomingWebhookEvent.name, schema: IncomingWebhookEventSchema },
       { name: TenantPackage.name, schema: TenantPackageSchema },
+      { name: Account.name, schema: AccountSchema },
+      { name: Transaction.name, schema: TransactionSchema },
     ]),
   ],
   providers: [
@@ -59,7 +66,7 @@ import {
   controllers: [
     LifetimeController,
     AddonsController,
-    StripeWebhookHandler,
+    StripeWebhookController,
     UsageController,
     WalletController,
     CommissionController,

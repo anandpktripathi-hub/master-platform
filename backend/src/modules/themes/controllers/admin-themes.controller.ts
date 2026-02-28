@@ -14,12 +14,14 @@ import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { ThemesService } from '../services/themes.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   CreateThemeDto,
   UpdateThemeDto,
   ThemeResponseDto,
 } from '../dto/theme.dto';
-
+@ApiTags('Admin Themes')
+@ApiBearerAuth('bearer')
 @Controller('admin/themes')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('ADMIN')

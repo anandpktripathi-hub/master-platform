@@ -1,0 +1,566 @@
+<HOME>\.docker :
+
+RelativePath                                          Owner                  Si
+                                                                             ze
+                                                                             By
+                                                                             te
+                                                                              s
+------------                                          -----                  --
+.token_seed                                           <USER>          74
+.token_seed.lock                                      <USER>           0
+config.json                                           BUILTIN\Administrators 78
+daemon.json                                           BUILTIN\Administrators 24
+windows-daemon.json                                   BUILTIN\Administrators 28
+bin\inference\.llamacpp_version                       <USER>          71
+bin\inference\com.docker.llama-server.exe             <USER>          76
+bin\inference\com.docker.nv-gpu-info.exe              <USER>          96
+bin\inference\ggml-base.dll                           <USER>          20
+bin\inference\ggml-cpu-alderlake.dll                  <USER>          52
+bin\inference\ggml-cpu-cannonlake.dll                 <USER>          68
+bin\inference\ggml-cpu-cascadelake.dll                <USER>          80
+bin\inference\ggml-cpu-cooperlake.dll                 <USER>          92
+bin\inference\ggml-cpu-haswell.dll                    <USER>          36
+bin\inference\ggml-cpu-icelake.dll                    <USER>          48
+bin\inference\ggml-cpu-ivybridge.dll                  <USER>          92
+bin\inference\ggml-cpu-piledriver.dll                 <USER>          52
+bin\inference\ggml-cpu-sandybridge.dll                <USER>          24
+bin\inference\ggml-cpu-sapphirerapids.dll             <USER>          64
+bin\inference\ggml-cpu-skylakex.dll                   <USER>          00
+bin\inference\ggml-cpu-sse42.dll                      <USER>          08
+bin\inference\ggml-cpu-x64.dll                        <USER>          76
+bin\inference\ggml-cpu-zen4.dll                       <USER>          60
+bin\inference\ggml-vulkan.dll                         <USER>          88
+bin\inference\ggml.dll                                <USER>          48
+bin\inference\llama-server.exe                        <USER>          76
+bin\inference\llama.dll                               <USER>          92
+bin\inference\mtmd.dll                                <USER>          24
+buildx\.buildNodeID                                   <USER>          16
+buildx\.lock                                          <USER>           0
+buildx\current                                        BUILTIN\Administrators 48
+buildx\activity\default                               <USER>          20
+buildx\refs\version                                   <USER>           1
+buildx\refs\default\default\05knh694a8u33lc50z0ppekj3 <USER>          41
+buildx\refs\default\default\07gpedcbic9q29l8p8069oaqg <USER>          38
+buildx\refs\default\default\0uyj1aouf9anlrmjc92qr5433 <USER>          38
+buildx\refs\default\default\29ji3bbik9ws7p23e6sexn88m <USER>          38
+buildx\refs\default\default\2d32302eetedrmg14uwxz0ywh <USER>          41
+buildx\refs\default\default\2d8rt07mdsdekptv4cysmscdi <USER>          41
+buildx\refs\default\default\2y6l2xd8bzcm9ot0o01onukso <USER>          38
+buildx\refs\default\default\5bpvuygm6yyusy72aw0gzvtx6 <USER>          38
+buildx\refs\default\default\603oub5350t9x08i4pponogij <USER>          38
+buildx\refs\default\default\6d5f3ci1xmnvl9lpfp38ilwy8 <USER>          38
+buildx\refs\default\default\6duxspoba4wiji8ii4wodf1ho <USER>          38
+buildx\refs\default\default\7ytvjcr1rxw7vaupboci9zdnz <USER>          38
+buildx\refs\default\default\8cmahab7r2ibxv4uvy27qvb87 <USER>          41
+buildx\refs\default\default\8kwrerohkitbbkm4c2rt3sc8w <USER>          41
+buildx\refs\default\default\8vg4btr5j72e7qotm8k4am2ln <USER>          41
+buildx\refs\default\default\ad0prda1guishwlcr0ke228pm <USER>          38
+buildx\refs\default\default\be2dc6e6q2jvl68tnb3m643vr <USER>          41
+buildx\refs\default\default\bh9tk3vhoc908lgonlscawzou <USER>          38
+buildx\refs\default\default\cv3gogtps62rq17mhjlqt0xnd <USER>          41
+buildx\refs\default\default\d210t3g8pkg70ak0lhmpuzo8k <USER>          38
+buildx\refs\default\default\dh54y1p0qxl8ik647hlvodao6 <USER>          38
+buildx\refs\default\default\dq64bvh2ng8jjq21san719muf <USER>          41
+buildx\refs\default\default\fnpv5utnguvvllv71cvqzouf1 <USER>          38
+buildx\refs\default\default\io5da4p8buuqd9pd6sz900g4o <USER>          41
+buildx\refs\default\default\kcbvz6qhh9n9mgvkp0bkgj1k9 <USER>          38
+buildx\refs\default\default\kdnu1xh2md0igjt1fk743m280 <USER>          38
+buildx\refs\default\default\lpaww0ei3qrts03kc2bw1uswi <USER>          41
+buildx\refs\default\default\m0glbvsa8027b4tonyao3euew <USER>          41
+buildx\refs\default\default\mf8bxhr06u99fphhp7f3rebcg <USER>          38
+buildx\refs\default\default\mqpfqnlggzcyqprzsdq85a6gh <USER>          38
+buildx\refs\default\default\mzw97tdcmqj9bptb856ztedtk <USER>          41
+buildx\refs\default\default\n5lfb7y9hyskwfvkhczltivsq <USER>          38
+buildx\refs\default\default\nuqpept477cmwlrsua7koadvj <USER>          41
+buildx\refs\default\default\ofolizfw94kt97thnsmsa2m1q <USER>          41
+buildx\refs\default\default\oiswz8dxiff1y0jirs7t5lcri <USER>          41
+buildx\refs\default\default\p5dra2c1d4r54nddugjzw6ajf <USER>          41
+buildx\refs\default\default\piqmlbtcxbrt4c7neis9iaob6 <USER>          38
+buildx\refs\default\default\plijgf8afxrx79gf87sgju43y <USER>          41
+buildx\refs\default\default\pyn7ls3nodu90zipgxv0t8hvp <USER>          38
+buildx\refs\default\default\q2if2k2s00q96b183yhrk09aj <USER>          41
+buildx\refs\default\default\qigkyw15o878cxwci8s8mgunj <USER>          38
+buildx\refs\default\default\qij13ktpawoilrq933vmq6g8o <USER>          41
+buildx\refs\default\default\rmbqw9rgi5f8cxqn3mv0l6q83 <USER>          38
+buildx\refs\default\default\rzkypi7vn0agqaaq15d7r93ac <USER>          41
+buildx\refs\default\default\s1cg6gf6be4eu1qevoyew4znp <USER>          38
+buildx\refs\default\default\s74ao4zr5s7t32ldq5xkb1we0 <USER>          41
+buildx\refs\default\default\svkgfgy4mjqv84gcq32528tq7 <USER>          41
+buildx\refs\default\default\taaaqfzvqnfm9mho9ysbtj5gf <USER>          38
+buildx\refs\default\default\tzp8pxkpvu01mlawujaqxgpz0 <USER>          38
+buildx\refs\default\default\ugt3a7jhhjl8ersq4iupt90im <USER>          38
+buildx\refs\default\default\umhbwlij0z7fq0b5pri1fqn32 <USER>          41
+buildx\refs\default\default\vgfnk1z5kt4hdp6grvj7tj2rx <USER>          38
+buildx\refs\default\default\vn5fu31bhmbfcevo4n8gi8y4g <USER>          41
+buildx\refs\default\default\vpsywhd3pvuega031s4nj8kon <USER>          38
+buildx\refs\default\default\w79y8ftiop4wcsc4v7an0zdvg <USER>          38
+buildx\refs\default\default\wec5k7atigufeimd0xzb4bcng <USER>          38
+buildx\refs\default\default\wnw6a20a87r9vrc4yrsm5vqz5 <USER>          38
+buildx\refs\default\default\yih7k9kas9sd85ji9bgav24n9 <USER>          41
+buildx\refs\default\default\z1u0vihbv9hithwr1hqokavbr <USER>          38
+buildx\refs\default\default\zek5lampuqc60m6c6hv305no3 <USER>          41
+buildx\refs\__group__\0v23dexbcwr7onyixv3g8of54       <USER>          88
+buildx\refs\__group__\3i7fqhwxh8pyzinhnirdxspho       <USER>          88
+buildx\refs\__group__\73u840ahu5ck8929zp6v7xsym       <USER>          88
+buildx\refs\__group__\7u2j17o4feqlg8j9jb6tfh83i       <USER>          88
+buildx\refs\__group__\8wkk5ykvf0q01rdhadqmg9ddv       <USER>          88
+buildx\refs\__group__\afp8ho8byoxxtkugry6o7uexm       <USER>          60
+buildx\refs\__group__\blxedbii9yox49scwqhqwegad       <USER>          88
+buildx\refs\__group__\bzce9fzn28j623ff06o4u6874       <USER>          88
+buildx\refs\__group__\c49sseid9yy711yk6zh4fum92       <USER>          88
+buildx\refs\__group__\esbul0xxuue0cn8ndyku2xokx       <USER>          88
+buildx\refs\__group__\gtqjsbwaxo19upudrl6klnmpw       <USER>          88
+buildx\refs\__group__\h8xyvpi9po1sfswozjmp3jnio       <USER>          60
+buildx\refs\__group__\ij6kml6zazdv3fbja90cvywp6       <USER>          60
+buildx\refs\__group__\j9bfpv6k2he7m9bmkyfth5zww       <USER>          88
+buildx\refs\__group__\jfkren0136vxuixijtnlpth2b       <USER>          88
+buildx\refs\__group__\jyqxqz5ysamq5rbpguqtekuht       <USER>          88
+buildx\refs\__group__\kregwc0b2jej2as0vi8p4w95m       <USER>          88
+buildx\refs\__group__\lu4x1uxtsa1xru29flb7lcbx0       <USER>          88
+buildx\refs\__group__\m6jr02c3fycvxtjmhdd3dmswc       <USER>          88
+buildx\refs\__group__\n379ak4z6z3m3h3ujq2evu047       <USER>          88
+buildx\refs\__group__\oi5fwhifbbf1d585b9ulikj49       <USER>          60
+buildx\refs\__group__\qn650rqnof3libe4k83onj9rm       <USER>          60
+buildx\refs\__group__\qwfcyoyj8bve0wacyi86g7hyf       <USER>          60
+buildx\refs\__group__\rb6j255lyjesn4sclzpfv0m7e       <USER>          60
+buildx\refs\__group__\rhyc2h4i8ekknj4po85i8pqjo       <USER>          60
+buildx\refs\__group__\rmyiwa9f2estslc706m4axv4j       <USER>          88
+buildx\refs\__group__\sqchlv46b34chr2xzgf5a9srd       <USER>          88
+buildx\refs\__group__\t71sog2jkfhwheoto5koelrwb       <USER>          88
+buildx\refs\__group__\t7i4jp8ddid9crdjdx3c5ncmq       <USER>          60
+buildx\refs\__group__\tgvv1a8lo1vi4izlvheekvpqe       <USER>          88
+buildx\refs\__group__\uopgl0ig3tf6bdixxltnwpq16       <USER>          88
+buildx\refs\__group__\wq74ta5r9n23plml4pkixj0vj       <USER>          60
+buildx\refs\__group__\wxz2zuz7b5iyvz3otm4vggrfl       <USER>          60
+buildx\refs\__group__\x617029s1lknhxpdgtr3od9dx       <USER>          60
+buildx\refs\__group__\yj859r9y9kpvr52p7p0lw9khi       <USER>          88
+buildx\refs\__group__\zlbmcsqvft8lfu94758j3t4qi       <USER>          88
+cagent\session-directories.json                       <USER>          49
+cloud\docker-cloud-daemon.lock                        <USER>           0
+cloud\logs\diagnostic.json                            <USER>          91
+contexts\meta\fe9c6bd7a66301f49ca9b6a70b217107cd12... BUILTIN\Administrators 18
+desktop-build\.lock                                   <USER>           0
+docker-next\containerd\config.toml                    <USER>          00
+gordon\config.json                                    <USER>          96
+gordon\history                                        <USER>          76
+gordon\threads\7b8968018da95132\desktop\95430cdd-8... <USER>          25
+mcp\catalog.json                                      <USER>          11
+mcp\config.yaml                                       <USER>           0
+mcp\registry.yaml                                     <USER>          36
+mcp\tools.yaml                                        <USER>           0
+mcp\catalogs\docker-mcp.yaml                          <USER>          27
+models\layout.json                                    <USER>          24
+models\models.json                                    <USER>          18
+modules\cli-plugins-wsl\docker-mcp                    <USER>          00
+
+
+
+
+<HOME>\AppData\Roaming\Docker :
+
+RelativePath                                                                   
+------------                                                                   
+.trackid                                                                       
+analyticsmonitor.dat                                                           
+auth-token-family-creation-time.txt                                            
+features-overrides.json                                                        
+locked-directories                                                             
+login-info.json                                                                
+marlin.dat                                                                     
+reports.log                                                                    
+settings-store.json                                                            
+unleash-v2-docker-desktop.json                                                 
+wc.dat                                                                         
+extensions\dockersamples_labspace-extension\beaker.svg                         
+extensions\dockersamples_labspace-extension\metadata.json                      
+extensions\dockersamples_labspace-extension\.extension\image-inspect.json      
+extensions\dockersamples_labspace-extension\ui\ui\beaker.svg                   
+extensions\dockersamples_labspace-extension\ui\ui\index.html                   
+extensions\dockersamples_labspace-extension\ui\ui\assets\index-DAkkwlj7.css    
+extensions\dockersamples_labspace-extension\ui\ui\assets\index-Qp0ljQMR.js     
+extensions\layer5_kanvas-docker-extension\kanvas-mark-logo-light.svg           
+extensions\layer5_kanvas-docker-extension\metadata.json                        
+extensions\layer5_kanvas-docker-extension\.extension\image-inspect.json        
+extensions\layer5_kanvas-docker-extension\ui\ui\asset-manifest.json            
+extensions\layer5_kanvas-docker-extension\ui\ui\index.html                     
+extensions\layer5_kanvas-docker-extension\ui\ui\static\css\main.9376ce5b.css   
+extensions\layer5_kanvas-docker-extension\ui\ui\static\css\main.9376ce5b.css...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\js\main.3eea1297.js     
+extensions\layer5_kanvas-docker-extension\ui\ui\static\js\main.3eea1297.js.L...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\js\main.3eea1297.js.map 
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\index.18d046e0b...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\meshery-design-...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\meshery-design-...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\QanelasSoftBold...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\QanelasSoftMedi...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\QanelasSoftRegu...
+extensions\layer5_kanvas-docker-extension\ui\ui\static\media\QanelasSoftSemi...
+extensions\layer5_kanvas-docker-extension\vm\docker-compose.yaml               
+extensions\maltus_docker-logs-viewer\docker.svg                                
+extensions\maltus_docker-logs-viewer\metadata.json                             
+extensions\maltus_docker-logs-viewer\.extension\image-inspect.json             
+extensions\maltus_docker-logs-viewer\ui\ui\index.html                          
+extensions\maltus_docker-logs-viewer\ui\ui\assets\index-Df_jhsBS.js            
+extensions\maltus_docker-logs-viewer\vm\docker-compose.yaml                    
+extensions\prizz_deep-dive\metadata.json                                       
+extensions\prizz_deep-dive\scuba.svg                                           
+extensions\prizz_deep-dive\.extension\image-inspect.json                       
+extensions\prizz_deep-dive\ui\ui\index.html                                    
+extensions\prizz_deep-dive\ui\ui\scuba.svg                                     
+extensions\prizz_deep-dive\ui\ui\assets\index-DJq5Huvy.js                      
+extensions\prizz_deep-dive\vm\docker-compose.yaml                              
+extensions\rw4lll_openwebui-docker-extension\metadata.json                     
+extensions\rw4lll_openwebui-docker-extension\open-webui.svg                    
+extensions\rw4lll_openwebui-docker-extension\.extension\image-inspect.json     
+extensions\rw4lll_openwebui-docker-extension\ui\ui\index.html                  
+extensions\rw4lll_openwebui-docker-extension\ui\ui\assets\index-DFFK0rWu.js    
+extensions\rw4lll_openwebui-docker-extension\vm\docker-compose.yaml            
+extensions\spurin_diveintolabs-extension\diveinto.svg                          
+extensions\spurin_diveintolabs-extension\metadata.json                         
+extensions\spurin_diveintolabs-extension\.extension\image-inspect.json         
+extensions\spurin_diveintolabs-extension\ui\ui\.browserslistrc                 
+extensions\spurin_diveintolabs-extension\ui\ui\.env                            
+extensions\spurin_diveintolabs-extension\ui\ui\index.html                      
+extensions\spurin_diveintolabs-extension\vm\docker-compose.yaml                
+
+
+
+
+C:\Program Files\Docker\Docker :
+
+RelativePath                                             Owner                 
+------------                                             -----                 
+app.json                                                 BUILTIN\Administrators
+com.docker.service                                       BUILTIN\Administrators
+com.docker.service.config                                BUILTIN\Administrators
+com.docker.service.pdb                                   BUILTIN\Administrators
+courgette64.exe                                          BUILTIN\Administrators
+Docker Desktop Installer.exe                             BUILTIN\Administrators
+Docker Desktop Installer.exe.config                      BUILTIN\Administrators
+Docker Desktop Installer.pdb                             BUILTIN\Administrators
+Docker Desktop.exe                                       BUILTIN\Administrators
+Docker.Core.dll                                          BUILTIN\Administrators
+Docker.Core.pdb                                          BUILTIN\Administrators
+DockerCli.exe                                            BUILTIN\Administrators
+HttpOverStream.Client.dll                                BUILTIN\Administrators
+HttpOverStream.dll                                       BUILTIN\Administrators
+HttpOverStream.NamedPipe.dll                             BUILTIN\Administrators
+HttpOverStream.Server.Owin.dll                           BUILTIN\Administrators
+installationmanifest.json                                BUILTIN\Administrators
+InstallerCli.exe                                         BUILTIN\Administrators
+InstallerCli.exe.config                                  BUILTIN\Administrators
+InstallerCli.pdb                                         BUILTIN\Administrators
+microsoft.management.infrastructure.dll                  BUILTIN\Administrators
+microsoft.management.infrastructure.native.dll           BUILTIN\Administrators
+microsoft.management.infrastructure.native.unmanaged.dll BUILTIN\Administrators
+Microsoft.Owin.dll                                       BUILTIN\Administrators
+Microsoft.Owin.Hosting.dll                               BUILTIN\Administrators
+Microsoft.Windows.ComputeVirtualization.dll              BUILTIN\Administrators
+Newtonsoft.Json.Bson.dll                                 BUILTIN\Administrators
+Newtonsoft.Json.dll                                      BUILTIN\Administrators
+NLog.dll                                                 BUILTIN\Administrators
+Owin.dll                                                 BUILTIN\Administrators
+Semver.dll                                               BUILTIN\Administrators
+SimCim.Core.dll                                          BUILTIN\Administrators
+SimCim.Root.StandardCimV2.dll                            BUILTIN\Administrators
+SimCim.Root.V2.dll                                       BUILTIN\Administrators
+SimCim.Root.Virtualization.V2.dll                        BUILTIN\Administrators
+System.Buffers.dll                                       BUILTIN\Administrators
+System.Diagnostics.DiagnosticSource.dll                  BUILTIN\Administrators
+System.Management.Automation.dll                         BUILTIN\Administrators
+System.Memory.dll                                        BUILTIN\Administrators
+System.Net.Http.Formatting.dll                           BUILTIN\Administrators
+System.Numerics.Vectors.dll                              BUILTIN\Administrators
+System.Reactive.Core.dll                                 BUILTIN\Administrators
+System.Reactive.Interfaces.dll                           BUILTIN\Administrators
+System.Reactive.Linq.dll                                 BUILTIN\Administrators
+System.Runtime.CompilerServices.Unsafe.dll               BUILTIN\Administrators
+System.Threading.Tasks.Extensions.dll                    BUILTIN\Administrators
+System.ValueTuple.dll                                    BUILTIN\Administrators
+System.Web.Http.dll                                      BUILTIN\Administrators
+System.Web.Http.Owin.dll                                 BUILTIN\Administrators
+frontend\chrome_100_percent.pak                          BUILTIN\Administrators
+frontend\chrome_200_percent.pak                          BUILTIN\Administrators
+frontend\d3dcompiler_47.dll                              BUILTIN\Administrators
+frontend\Docker Desktop.exe                              BUILTIN\Administrators
+frontend\ffmpeg.dll                                      BUILTIN\Administrators
+frontend\icudtl.dat                                      BUILTIN\Administrators
+frontend\libEGL.dll                                      BUILTIN\Administrators
+frontend\libGLESv2.dll                                   BUILTIN\Administrators
+frontend\LICENSE.electron.txt                            BUILTIN\Administrators
+frontend\LICENSES.chromium.html                          BUILTIN\Administrators
+frontend\resources.pak                                   BUILTIN\Administrators
+frontend\snapshot_blob.bin                               BUILTIN\Administrators
+frontend\v8_context_snapshot.bin                         BUILTIN\Administrators
+frontend\vk_swiftshader.dll                              BUILTIN\Administrators
+frontend\vk_swiftshader_icd.json                         BUILTIN\Administrators
+frontend\vulkan-1.dll                                    BUILTIN\Administrators
+frontend\locales\en-US.pak                               BUILTIN\Administrators
+frontend\resources\app.asar                              BUILTIN\Administrators
+frontend\resources\LICENSE.rtf                           BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\conpty_console_l... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\package.json        BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\node_modul... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\node_modul... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\node_modul... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\node_modul... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\node_modul... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\.f... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\co... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\pt... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\pt... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\pt... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\pt... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\pt... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\pt... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\build\Release\wi... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\shared\conout.js    BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\shared\conout.js... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\worker\conoutSoc... BUILTIN\Administrators
+frontend\resources\app.asar.unpacked\worker\conoutSoc... BUILTIN\Administrators
+frontend\resources\assets\app\icon.icns                  BUILTIN\Administrators
+frontend\resources\assets\app\icon.ico                   BUILTIN\Administrators
+frontend\resources\assets\app\icon.png                   BUILTIN\Administrators
+frontend\resources\dist\OSS-LICENSES                     BUILTIN\Administrators
+frontend\resources\regedit\vbs\ArchitectureAgnosticRe... BUILTIN\Administrators
+frontend\resources\regedit\vbs\ArchitectureSpecificRe... BUILTIN\Administrators
+frontend\resources\regedit\vbs\JsonSafeTest.wsf          BUILTIN\Administrators
+frontend\resources\regedit\vbs\regCreateKey.wsf          BUILTIN\Administrators
+frontend\resources\regedit\vbs\regDeleteKey.wsf          BUILTIN\Administrators
+frontend\resources\regedit\vbs\regDeleteValue.wsf        BUILTIN\Administrators
+frontend\resources\regedit\vbs\regList.wsf               BUILTIN\Administrators
+frontend\resources\regedit\vbs\regListStream.wsf         BUILTIN\Administrators
+frontend\resources\regedit\vbs\regPutValue.wsf           BUILTIN\Administrators
+frontend\resources\regedit\vbs\regUtil.vbs               BUILTIN\Administrators
+frontend\resources\regedit\vbs\util.vbs                  BUILTIN\Administrators
+frontend\resources\regedit\vbs\wsRegReadList.wsf         BUILTIN\Administrators
+frontend\resources\regedit\vbs\wsRegReadListStream.wsf   BUILTIN\Administrators
+resources\.gitignore                                     BUILTIN\Administrators
+resources\com.docker.admin.exe                           BUILTIN\Administrators
+resources\com.docker.backend.exe                         BUILTIN\Administrators
+resources\com.docker.build.exe                           BUILTIN\Administrators
+resources\com.docker.diagnose.exe                        BUILTIN\Administrators
+resources\componentsVersion.json                         BUILTIN\Administrators
+resources\config-options.json                            BUILTIN\Administrators
+resources\ddvp.ico                                       BUILTIN\Administrators
+resources\Docker desktop.exe                             BUILTIN\Administrators
+resources\docker-desktop.iso                             BUILTIN\Administrators
+resources\docker-desktop.iso.sha256                      BUILTIN\Administrators
+resources\dockerd.exe                                    BUILTIN\Administrators
+resources\linux-daemon-options.json                      BUILTIN\Administrators
+resources\tile-error.png                                 BUILTIN\Administrators
+resources\tile-icon.png                                  BUILTIN\Administrators
+resources\windows-daemon-options.json                    BUILTIN\Administrators
+resources\bin\cagent.exe                                 BUILTIN\Administrators
+resources\bin\docker                                     BUILTIN\Administrators
+resources\bin\docker-compose                             BUILTIN\Administrators
+resources\bin\docker-compose.exe                         BUILTIN\Administrators
+resources\bin\docker-credential-desktop.exe              BUILTIN\Administrators
+resources\bin\docker-credential-ecr-login.exe            BUILTIN\Administrators
+resources\bin\docker-credential-wincred.exe              BUILTIN\Administrators
+resources\bin\docker.exe                                 BUILTIN\Administrators
+resources\bin\extension-admin.exe                        BUILTIN\Administrators
+resources\bin\hub-tool.exe                               BUILTIN\Administrators
+resources\bin\kubectl.exe                                BUILTIN\Administrators
+resources\bin\local-sandboxesd.exe                       BUILTIN\Administrators
+resources\cli-plugins\docker-ai.exe                      BUILTIN\Administrators
+resources\cli-plugins\docker-buildx.exe                  BUILTIN\Administrators
+resources\cli-plugins\docker-compose.exe                 BUILTIN\Administrators
+resources\cli-plugins\docker-debug.exe                   BUILTIN\Administrators
+resources\cli-plugins\docker-desktop.exe                 BUILTIN\Administrators
+resources\cli-plugins\docker-extension.exe               BUILTIN\Administrators
+resources\cli-plugins\docker-init.exe                    BUILTIN\Administrators
+resources\cli-plugins\docker-mcp.exe                     BUILTIN\Administrators
+resources\cli-plugins\docker-model.exe                   BUILTIN\Administrators
+resources\cli-plugins\docker-offload.exe                 BUILTIN\Administrators
+resources\cli-plugins\docker-pass.exe                    BUILTIN\Administrators
+resources\cli-plugins\docker-sandbox.exe                 BUILTIN\Administrators
+resources\cli-plugins\docker-sbom.exe                    BUILTIN\Administrators
+resources\cli-plugins\docker-scout.exe                   BUILTIN\Administrators
+resources\model-runner\bin\com.docker.llama-server.di... BUILTIN\Administrators
+resources\model-runner\bin\com.docker.llama-server.exe   BUILTIN\Administrators
+resources\model-runner\bin\com.docker.nv-gpu-info.exe    BUILTIN\Administrators
+resources\model-runner\bin\ggml-base.dll                 BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-alderlake.dll        BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-haswell.dll          BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-icelake.dll          BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-sandybridge.dll      BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-sapphirerapids.dll   BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-skylakex.dll         BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-sse42.dll            BUILTIN\Administrators
+resources\model-runner\bin\ggml-cpu-x64.dll              BUILTIN\Administrators
+resources\model-runner\bin\ggml.dll                      BUILTIN\Administrators
+resources\model-runner\bin\llama.dll                     BUILTIN\Administrators
+resources\model-runner\bin\mtmd.dll                      BUILTIN\Administrators
+resources\wsl\docker-wsl-cli.iso                         BUILTIN\Administrators
+resources\wsl\docker-wsl-cli.iso.sha256                  BUILTIN\Administrators
+resources\wsl\ext4.vhdx                                  BUILTIN\Administrators
+resources\wsl\wsl-data.tar                               BUILTIN\Administrators
+
+
+
+
+<HOME>\AppData\Local\Docker :
+
+RelativePath                                            Owner         SizeBytes
+------------                                            -----         ---------
+backend.lock                                            <USER>         0
+install-log.10.txt                                      <USER>      1313
+install-log.11.txt                                      <USER>      1313
+install-log.12.txt                                      <USER>      1313
+install-log.13.txt                                      <USER>      1313
+install-log.9.txt                                       <USER>      1866
+install-log.txt                                         <USER>       970
+volume-backup-schedule.json                             <USER>         3
+cagent\session.db                                       <USER>   1028096
+cagent\session.db-shm                                   <USER>     32768
+cagent\session.db-wal                                   <USER>   4593832
+log\host\com.docker.backend.exe.log                     <USER>    616176
+log\host\com.docker.backend.exe.log.0                   <USER>   1048519
+log\host\com.docker.backend.exe.log.1                   <USER>   1048472
+log\host\com.docker.backend.exe.log.2                   <USER>   1048511
+log\host\com.docker.backend.exe.log.3                   <USER>   1048541
+log\host\com.docker.backend.exe.log.4                   <USER>   1048429
+log\host\com.docker.backend.exe.log.5                   <USER>   1048535
+log\host\com.docker.backend.exe.log.6                   <USER>   1048494
+log\host\com.docker.backend.exe.log.7                   <USER>   1048500
+log\host\com.docker.backend.exe.log.8                   <USER>   1048476
+log\host\com.docker.build.log                           <USER>    339945
+log\host\com.docker.diagnose.exe.log                    <USER>    313471
+log\host\Docker Desktop Installer.exe.log               <USER>      4748
+log\host\Docker Desktop Updater-211793 (213807).exe.log <USER>      1635
+log\host\Docker Desktop Updater-211793 (216728).exe.log <USER>      1635
+log\host\Docker Desktop Updater-213807 (214940).exe.log <USER>      1600
+log\host\Docker Desktop Updater-214940 (216728).exe.log <USER>      1591
+log\host\Docker Desktop Updater-216728 (217644).exe.log <USER>      1635
+log\host\Docker Desktop Updater-217644 (218372).exe.log <USER>      9564
+log\host\Docker Desktop.exe.log                         <USER>     30923
+log\host\Docker Desktop.exe.stderr.log                  <USER>     16967
+log\host\Docker Desktop.exe.stdout.log                  <USER>     15068
+log\host\Docker%20Desktop%20Installer.exe.log           <USER>      1357
+log\host\docker-debug-plugin.log                        <USER>       416
+log\host\docker-desktop.exe.log                         <USER>     62681
+log\host\docker-desktop.exe.log.0                       <USER>   1048502
+log\host\docker-desktop.exe.log.1                       <USER>   1048538
+log\host\docker-sandbox.log                             <USER>     42857
+log\host\electron-2026-02-16.log                        <USER>    102310
+log\host\electron-2026-02-17.1.log                      <USER>  20972006
+log\host\electron-2026-02-17.2.log                      <USER>  20971938
+log\host\electron-2026-02-17.3.log                      <USER>   3082704
+log\host\electron-2026-02-17.log                        <USER>  20974151
+log\host\electron-2026-02-19.log                        <USER>    436771
+log\host\electron-2026-02-20.log                        <USER>     14699
+log\host\electron-2026-02-25.1.log                      BUILTIN\Ad...         0
+log\host\electron-2026-02-25.log                        <USER>  20973586
+log\host\electron-audit-log.json                        <USER>      1693
+log\host\electron-errd-2026-02-20.log                   <USER>       411
+log\host\electron-errd-2026-02-25.log                   <USER>       490
+log\host\electron-errd-audit-log.json                   <USER>         0
+log\host\electron-ui-console-2026-02-16.log             <USER>      1584
+log\host\electron-ui-console-2026-02-17.log             <USER>    579180
+log\host\electron-ui-console-2026-02-19.log             <USER>      3208
+log\host\electron-ui-console-2026-02-20.log             <USER>         0
+log\host\electron-ui-console-2026-02-25.log             <USER>       260
+log\host\electron-ui-console-audit-log.json             <USER>      1075
+log\host\httpproxy.log                                  BUILTIN\Ad...    225311
+log\host\httpproxy.log.0                                <USER>   1048466
+log\host\httpproxy.log.1                                <USER>   1048522
+log\host\httpproxy.log.2                                <USER>   1048504
+log\host\httpproxy.log.3                                <USER>   1048560
+log\host\httpproxy.log.4                                <USER>   1048573
+log\host\httpproxy.log.5                                <USER>   1048544
+log\host\inference.log                                  <USER>    100792
+log\host\ipc.stacks.log                                 <USER>   1034645
+log\host\monitor.log                                    BUILTIN\Ad...    909862
+log\host\monitor.log.0                                  BUILTIN\Ad...   1048459
+log\host\monitor.log.1                                  <USER>   1048447
+log\host\monitor.log.2                                  <USER>   1048451
+log\host\monitor.log.3                                  <USER>   1048508
+log\host\monitor.log.4                                  <USER>   1048534
+log\host\monitor.log.5                                  <USER>   1048546
+log\host\monitor.log.6                                  <USER>   1048458
+log\host\monitor.log.7                                  <USER>   1048427
+log\host\monitor.log.8                                  <USER>   1048435
+log\vm\init.log                                         BUILTIN\Ad...    107507
+log\vm\init.log.0                                       <USER>   1048452
+log\vm\init.log.1                                       <USER>   1048566
+log\vm\init.log.2                                       <USER>   1048401
+log\vm\init.log.3                                       <USER>   1048422
+log\vm\init.log.4                                       <USER>   1048567
+log\vm\init.log.5                                       <USER>   1048567
+log\vm\init.log.6                                       <USER>   1048356
+log\vm\init.log.7                                       <USER>   1048417
+log\vm\init.log.8                                       <USER>   1048562
+run\dockerInference                                     BUILTIN\Ad...         0
+run\userAnalyticsOtlpHttp.sock                          BUILTIN\Ad...         0
+tasks\14344.json                                        BUILTIN\Ad...        92
+tasks\20616.json                                        BUILTIN\Ad...        84
+tasks\25992.json                                        BUILTIN\Ad...        84
+wsl\disk\docker_data.vhdx                               <USER> ...785664
+wsl\main\ext4.vhdx                                      BUILTIN\Ad... 109051904
+
+
+
+
+C:\ProgramData\DockerDesktop :
+
+RelativePath                 Owner                  SizeBytes Created          
+------------                 -----                  --------- -------          
+install-cli-log-admin.10.txt BUILTIN\Administrators      2738 02-02-2026 06:...
+install-cli-log-admin.11.txt BUILTIN\Administrators      2233 16-02-2026 06:...
+install-cli-log-admin.7.txt  BUILTIN\Administrators      2134 02-02-2026 01:...
+install-cli-log-admin.8.txt  BUILTIN\Administrators      2710 02-02-2026 01:...
+install-cli-log-admin.9.txt  BUILTIN\Administrators      2227 02-02-2026 06:...
+install-cli-log-admin.txt    BUILTIN\Administrators      2738 16-02-2026 06:...
+install-log-admin.10.txt     BUILTIN\Administrators     17941 16-02-2026 06:...
+install-log-admin.6.txt      BUILTIN\Administrators     57201 02-02-2026 06:...
+install-log-admin.7.txt      BUILTIN\Administrators      4024 16-02-2026 06:...
+install-log-admin.8.txt      BUILTIN\Administrators      4024 16-02-2026 06:...
+install-log-admin.9.txt      BUILTIN\Administrators      4024 16-02-2026 06:...
+install-log-admin.txt        BUILTIN\Administrators      4035 16-02-2026 06:...
+service.0.txt                BUILTIN\Administrators      1462 25-02-2026 09:...
+service.txt                  BUILTIN\Administrators      5690 25-02-2026 10:...
+
+
+
+
+C:\Program Files\Docker\cli-plugins :
+
+RelativePath         Owner                  SizeBytes Created               
+------------         -----                  --------- -------               
+docker-ai.exe        BUILTIN\Administrators  36192176 30-11-2025 10:35:22 AM
+docker-buildx.exe    BUILTIN\Administrators  92223408 30-11-2025 10:35:23 AM
+docker-compose.exe   BUILTIN\Administrators  32025520 30-11-2025 10:35:24 AM
+docker-debug.exe     BUILTIN\Administrators  19513264 30-11-2025 10:35:25 AM
+docker-desktop.exe   BUILTIN\Administrators  20124080 30-11-2025 10:35:25 AM
+docker-extension.exe BUILTIN\Administrators  19861424 30-11-2025 10:35:26 AM
+docker-init.exe      BUILTIN\Administrators  18999728 30-11-2025 10:35:26 AM
+docker-mcp.exe       BUILTIN\Administrators  46368176 30-11-2025 10:35:27 AM
+docker-model.exe     BUILTIN\Administrators  29273008 30-11-2025 10:35:28 AM
+docker-offload.exe   BUILTIN\Administrators  56948656 30-11-2025 10:35:28 AM
+docker-pass.exe      BUILTIN\Administrators  17427888 30-11-2025 10:35:29 AM
+docker-sandbox.exe   BUILTIN\Administrators  33658288 30-11-2025 10:35:30 AM
+docker-sbom.exe      BUILTIN\Administrators  21609392 30-11-2025 10:35:30 AM
+docker-scout.exe     BUILTIN\Administrators 194236848 30-11-2025 10:35:31 AM
+
+

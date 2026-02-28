@@ -16,3 +16,6 @@ export class Dashboard {
 }
 
 export const DashboardSchema = SchemaFactory.createForClass(Dashboard);
+
+DashboardSchema.index({ tenantId: 1 });
+

@@ -9,7 +9,9 @@ export class User {
   @Prop({ required: true })
   name!: string;
 
-  @Prop({ required: true, unique: true })
+  // NOTE: Do NOT use a global unique index on email in a multi-tenant app.
+  // Uniqueness is enforced via compound index (email + tenantId).
+  @Prop({ required: true, lowercase: true, trim: true })
   email!: string;
 
   @Prop({ required: true })

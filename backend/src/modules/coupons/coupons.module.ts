@@ -5,6 +5,11 @@ import {
   CouponUsage,
   CouponUsageSchema,
 } from '../../database/schemas/coupon-usage.schema';
+import { Package, PackageSchema } from '../../database/schemas/package.schema';
+import {
+  TenantPackage,
+  TenantPackageSchema,
+} from '../../database/schemas/tenant-package.schema';
 import {
   AuditLog,
   AuditLogSchema,
@@ -19,6 +24,8 @@ import { RoleGuard } from '../../guards/role.guard';
     MongooseModule.forFeature([
       { name: Coupon.name, schema: CouponSchema },
       { name: CouponUsage.name, schema: CouponUsageSchema },
+      { name: Package.name, schema: PackageSchema },
+      { name: TenantPackage.name, schema: TenantPackageSchema },
       { name: AuditLog.name, schema: AuditLogSchema },
     ]),
   ],

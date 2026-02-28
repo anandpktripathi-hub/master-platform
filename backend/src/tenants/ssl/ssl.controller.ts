@@ -4,7 +4,9 @@ import { SslAutomationService } from './ssl-automation.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Ssl')
+@ApiBearerAuth('bearer')
 @Controller('tenants/ssl')
 export class SslController {
   constructor(

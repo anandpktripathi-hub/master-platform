@@ -1,22 +1,18 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Patch,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { HierarchyService } from './hierarchy.service';
-import { HierarchyNode } from './hierarchy.schema';
-
+import { ApiTags } from '@nestjs/swagger';
+import {
+  CreateHierarchyNodeDto,
+  GetHierarchyTreeQueryDto,
+  UpdateHierarchyNodeDto,
+} from './dto/hierarchy.dto';
+@ApiTags('Hierarchy')
 @Controller('hierarchy')
 export class HierarchyController {
   constructor(private readonly hierarchyService: HierarchyService) {}
 
   @Post()
-  async create(@Body() data: Partial<HierarchyNode>) {
+  async create(@Body() data: CreateHierarchyNodeDto) {
     return this.hierarchyService.createNode(data);
   }
 
@@ -31,7 +27,7 @@ export class HierarchyController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() data: Partial<HierarchyNode>) {
+  async update(@Param('id') id: string, @Body() data: UpdateHierarchyNodeDto) {
     return this.hierarchyService.updateNode(id, data);
   }
 
@@ -42,7 +38,7 @@ export class HierarchyController {
   }
 
   @Get()
-  async getTree(@Query('rootType') rootType?: string) {
-    return this.hierarchyService.getTree(rootType);
+  async getTree(@Query() query: GetHierarchyTreeQueryDto) {
+    return this.hierarchyService.getTree(query.rootType);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -6,12 +6,19 @@ import {
   PushSubscriptionDocument,
 } from '../../database/schemas/push-subscription.schema';
 
-export interface SavePushSubscriptionInput {
+type SavePushSubscriptionInput = {
   endpoint: string;
   keys: {
     p256dh: string;
     auth: string;
   };
+};
+
+function toObjectId(value: string, fieldName: string): Types.ObjectId {
+  if (!Types.ObjectId.isValid(value)) {
+    throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+  }
+  return new Types.ObjectId(value);
 }
 
 @Injectable()
@@ -26,9 +33,16 @@ export class PushSubscriptionsService {
     userId: string,
     input: SavePushSubscriptionInput,
   ): Promise<PushSubscription> {
+    if (!input?.endpoint) {
+      throw new BadRequestException('endpoint is required');
+    }
+    if (!input?.keys?.p256dh || !input?.keys?.auth) {
+      throw new BadRequestException('keys.p256dh and keys.auth are required');
+    }
+
     const filter = {
-      tenantId: new Types.ObjectId(tenantId),
-      userId: new Types.ObjectId(userId),
+      tenantId: toObjectId(tenantId, 'tenantId'),
+      userId: toObjectId(userId, 'userId'),
       endpoint: input.endpoint,
     };
 
@@ -54,8 +68,9 @@ export class PushSubscriptionsService {
 
   async getForTenant(tenantId: string): Promise<PushSubscription[]> {
     return this.subscriptionModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
-      .lean<PushSubscriptionDocument[]>();
+      .find({ tenantId: toObjectId(tenantId, 'tenantId') })
+      .lean<PushSubscriptionDocument[]>()
+      .exec();
   }
 
   async getForUser(
@@ -64,18 +79,33 @@ export class PushSubscriptionsService {
   ): Promise<PushSubscription[]> {
     return this.subscriptionModel
       .find({
-        tenantId: new Types.ObjectId(tenantId),
-        userId: new Types.ObjectId(userId),
+        tenantId: toObjectId(tenantId, 'tenantId'),
+        userId: toObjectId(userId, 'userId'),
       })
-      .lean<PushSubscriptionDocument[]>();
+      .lean<PushSubscriptionDocument[]>()
+      .exec();
   }
 
-  async removeByEndpoint(tenantId: string, endpoint: string): Promise<void> {
+  async removeByEndpoint(
+    tenantId: string,
+    endpoint: string,
+    userId?: string,
+  ): Promise<void> {
+    if (!endpoint) {
+      throw new BadRequestException('endpoint is required');
+    }
+
+    const filter: Record<string, unknown> = {
+      tenantId: toObjectId(tenantId, 'tenantId'),
+      endpoint,
+    };
+
+    if (userId) {
+      filter.userId = toObjectId(userId, 'userId');
+    }
+
     await this.subscriptionModel
-      .deleteMany({
-        tenantId: new Types.ObjectId(tenantId),
-        endpoint,
-      })
+      .deleteMany(filter)
       .exec();
   }
 }

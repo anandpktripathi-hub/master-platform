@@ -1,0 +1,30 @@
+[
+    {
+        "PSComputerName":  "<HOST>",
+        "Description":  "Update",
+        "HotFixID":  "KB5074828",
+        "InstalledBy":  "NT AUTHORITY\\SYSTEM",
+        "InstalledOn":  "30 January 2026 12:00:00 AM"
+    },
+    {
+        "PSComputerName":  "<HOST>",
+        "Description":  "Update",
+        "HotFixID":  "KB5054156",
+        "InstalledBy":  "NT AUTHORITY\\SYSTEM",
+        "InstalledOn":  "01 November 2025 12:00:00 AM"
+    },
+    {
+        "PSComputerName":  "<HOST>",
+        "Description":  "Security Update",
+        "HotFixID":  "KB5077181",
+        "InstalledBy":  "NT AUTHORITY\\SYSTEM",
+        "InstalledOn":  "12 February 2026 12:00:00 AM"
+    },
+    {
+        "PSComputerName":  "<HOST>",
+        "Description":  "Security Update",
+        "HotFixID":  "KB5077869",
+        "InstalledBy":  "NT AUTHORITY\\SYSTEM",
+        "InstalledOn":  "11 February 2026 12:00:00 AM"
+    }
+]

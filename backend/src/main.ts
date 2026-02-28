@@ -22,7 +22,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, InternalServerErrorException } from '@nestjs/common';
 import helmet from 'helmet';
-import { ValidationExceptionFilter } from './filters/validation-exception.filter';
+import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 
 // Global error handlers for unhandled rejections and exceptions
 process.on('unhandledRejection', (reason) => {
@@ -98,12 +98,25 @@ function validateCriticalEnv(): void {
 }
 
 async function bootstrap() {
+  const bootTrace = String(process.env.BOOT_TRACE || '') === 'true';
+  const bootStartMs = Date.now();
+  const bootLog = (message: string) => {
+    if (!bootTrace) return;
+    const elapsedMs = Date.now() - bootStartMs;
+    // Use console to ensure visibility even if logger is misconfigured.
+    console.log(`[BOOT] +${elapsedMs}ms ${message}`);
+  };
+
   // Critical environment validation for production-like deployments
   // Run this before NestFactory.create() so we fail fast without doing any
   // expensive module initialization or external connections.
+  bootLog('validateCriticalEnv() start');
   validateCriticalEnv();
+  bootLog('validateCriticalEnv() done');
 
+  bootLog('NestFactory.create(AppModule) start');
   const app = await NestFactory.create(AppModule);
+  bootLog('NestFactory.create(AppModule) done');
 
   app.enableShutdownHooks();
 
@@ -111,6 +124,7 @@ async function bootstrap() {
 
   // Security: Helmet for HTTP headers
   app.use(helmet());
+  bootLog('helmet() configured');
 
   // Security: CORS configuration
   app.enableCors({
@@ -126,6 +140,7 @@ async function bootstrap() {
       'X-Workspace-Id',
     ],
   });
+  bootLog('cors configured');
 
   // Security: Global validation pipe with strict settings
   app.useGlobalPipes(
@@ -139,14 +154,15 @@ async function bootstrap() {
       },
     }),
   );
+  bootLog('global ValidationPipe configured');
 
-  // Register global validation exception filter
-  app.useGlobalFilters(new ValidationExceptionFilter());
+  // Register a single global exception filter for consistent responses
+  app.useGlobalFilters(new AllExceptionsFilter());
   logger.info('Application is running with security hardening enabled');
+  bootLog('global AllExceptionsFilter configured');
 
   app.use(errorHandler);
-
-  setupSwagger(app);
+  bootLog('errorHandler middleware configured');
 
   // Metrics endpoint (optional - comment out if not needed)
   // app.get('/metrics', (req, res) => {
@@ -156,11 +172,38 @@ async function bootstrap() {
 
   // Prefer the standard PORT env var (used by Docker/Heroku/etc.), then platform override.
   const port = Number(process.env.PORT || process.env.PLATFORM_BACKEND_PORT || 4000);
-  await app.listen(port);
+  // In Docker, the service must bind to 0.0.0.0 to be reachable via published ports.
+  bootLog(`app.listen(${port}, 0.0.0.0) start`);
+  await app.listen(port, '0.0.0.0');
+  bootLog(`app.listen(${port}, 0.0.0.0) done`);
   console.log(`Backend is running on http://localhost:${port}`);
   console.log(
     'Security features enabled: Helmet, CORS, Rate Limiting, Input Validation',
   );
+
+  // Swagger generation can be expensive in large Nest apps.
+  // Bind/listen first so health checks and basic endpoints are reachable immediately.
+  const swaggerEnabled =
+    process.env.SWAGGER_ENABLED === 'true' ||
+    (process.env.NODE_ENV !== 'production' &&
+      process.env.SWAGGER_ENABLED !== 'false');
+
+  if (swaggerEnabled) {
+    setImmediate(() => {
+      try {
+        logger.info('[Swagger] Generating OpenAPI document...');
+        setupSwagger(app);
+        logger.info('[Swagger] Swagger UI and JSON routes enabled');
+      } catch (err) {
+        logger.warn(
+          '[Swagger] Failed to initialize Swagger (continuing without docs):',
+          err,
+        );
+      }
+    });
+  } else {
+    logger.info('[Swagger] Disabled (set SWAGGER_ENABLED=true to enable)');
+  }
 }
 bootstrap().catch((err) => {
   console.error('[BOOTSTRAP] Failed to start application:', err);

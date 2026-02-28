@@ -93,14 +93,16 @@ describe('PushSubscriptionsService', () => {
 
   it('should remove subscription by endpoint', async () => {
     const tenantId = new Types.ObjectId().toHexString();
+    const userId = new Types.ObjectId().toHexString();
     const endpoint = 'https://example.com/push/1';
 
     model.deleteMany.mockReturnValue({ exec: () => Promise.resolve() } as any);
 
-    await service.removeByEndpoint(tenantId, endpoint);
+    await service.removeByEndpoint(tenantId, endpoint, userId);
 
     expect(model.deleteMany).toHaveBeenCalledWith({
       tenantId: new Types.ObjectId(tenantId),
+      userId: new Types.ObjectId(userId),
       endpoint,
     });
   });

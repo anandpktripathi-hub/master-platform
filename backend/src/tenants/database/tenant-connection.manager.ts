@@ -7,6 +7,11 @@ const MAX_POOL_SIZE = 10;
 
 @Injectable()
 export class TenantConnectionManager {
+  /**
+   * NOTE (v1): This class implements a per-tenant database-per-tenantId model.
+   * The current v1 direction is shared DB + tenantId scoping, so this is kept
+   * for future use and should not be wired into request handling yet.
+   */
   private connections: Map<string, Connection> = new Map();
   private logger = new Logger(TenantConnectionManager.name);
 

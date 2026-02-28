@@ -6,6 +6,79 @@ import { GlobalExceptionFilter } from './common/filters/global-exception.filter'
 import helmet from 'helmet';
 import compression from 'compression';
 
+const BOOT_START_MS = Date.now();
+function bootLog(message: string): void {
+  if (process.env.NODE_ENV === 'production') return;
+  const delta = Date.now() - BOOT_START_MS;
+  // Keep logs concise; helps diagnose startup hangs in dev.
+  // Avoid logging secrets or full error objects here.
+  console.log(`[root-bootstrap +${delta}ms] ${message}`);
+}
+
+function installDevMongoFailureGuard(): void {
+  const mongoOptional =
+    process.env.NODE_ENV !== 'production' &&
+    String(process.env.MONGO_REQUIRED || '').toLowerCase() !== 'true';
+
+  if (!mongoOptional) return;
+
+  let logged = false;
+
+  const isMongoRefused = (value: unknown): boolean => {
+    const message =
+      typeof value === 'string'
+        ? value
+        : (value as any)?.message
+          ? String((value as any).message)
+          : '';
+
+    return (
+      message.includes('MongoServerSelectionError') ||
+      (message.includes('ECONNREFUSED') && message.includes('27017'))
+    );
+  };
+
+  const logOnce = (value: unknown) => {
+    if (logged) return;
+    logged = true;
+    const message =
+      typeof value === 'string'
+        ? value
+        : (value as any)?.message
+          ? String((value as any).message)
+          : String(value);
+
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[root-dev] MongoDB connection failed (${message}). ` +
+        `Continuing to run without DB. Start MongoDB on localhost:27017 or set DATABASE_URL to a reachable instance.`,
+    );
+  };
+
+  process.on('unhandledRejection', (reason) => {
+    if (isMongoRefused(reason)) {
+      logOnce(reason);
+      return;
+    }
+
+    // Unknown unhandled rejections should still fail fast.
+    // eslint-disable-next-line no-console
+    console.error('[root-dev] Unhandled promise rejection:', reason);
+    process.exit(1);
+  });
+
+  process.on('uncaughtException', (err) => {
+    if (isMongoRefused(err)) {
+      logOnce(err);
+      return;
+    }
+
+    // eslint-disable-next-line no-console
+    console.error('[root-dev] Uncaught exception:', err);
+    process.exit(1);
+  });
+}
+
 function validateCriticalEnv(): void {
   if (process.env.NODE_ENV !== 'production') return;
 
@@ -28,8 +101,13 @@ function validateCriticalEnv(): void {
 
 async function bootstrap() {
   try {
+    installDevMongoFailureGuard();
+    bootLog('bootstrap() start');
     validateCriticalEnv();
+
+    bootLog('NestFactory.create(AppModule) begin');
     const app = await NestFactory.create(AppModule);
+    bootLog('NestFactory.create(AppModule) done');
 
     app.enableShutdownHooks();
 
@@ -74,7 +152,9 @@ async function bootstrap() {
       .addTag('Orders')
       .build();
 
+    bootLog('SwaggerModule.createDocument() begin');
     const document = SwaggerModule.createDocument(app, config);
+    bootLog('SwaggerModule.createDocument() done');
 
     SwaggerModule.setup(`${apiPrefix}/docs`, app, document);
 
@@ -84,7 +164,9 @@ async function bootstrap() {
     });
 
     const port = Number(process.env.PORT || 3000);
+    bootLog(`app.listen(${port}) begin`);
     await app.listen(port);
+    bootLog(`app.listen(${port}) done`);
 
     console.log(`\nRoot app is running on: http://localhost:${port}`);
     console.log(`API Documentation available at: http://localhost:${port}/api/docs\n`);

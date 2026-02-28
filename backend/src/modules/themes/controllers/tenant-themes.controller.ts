@@ -13,6 +13,7 @@ import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { ThemesService } from '../services/themes.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   SelectThemeDto,
   CustomizeThemeDto,
@@ -21,7 +22,8 @@ import {
   CreateThemeDto,
   UpdateThemeDto,
 } from '../dto/theme.dto';
-
+@ApiTags('Tenant Themes')
+@ApiBearerAuth('bearer')
 @Controller('tenant/theme')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('TENANT_OWNER', 'USER')

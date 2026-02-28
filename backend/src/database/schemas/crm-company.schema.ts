@@ -19,3 +19,6 @@ export class CrmCompany {
 }
 
 export const CrmCompanySchema = SchemaFactory.createForClass(CrmCompany);
+
+CrmCompanySchema.index({ tenantId: 1, createdAt: -1 });
+CrmCompanySchema.index({ tenantId: 1, name: 1 });

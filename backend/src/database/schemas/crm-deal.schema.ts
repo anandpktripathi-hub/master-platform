@@ -36,3 +36,7 @@ export class CrmDeal {
 }
 
 export const CrmDealSchema = SchemaFactory.createForClass(CrmDeal);
+
+CrmDealSchema.index({ tenantId: 1, createdAt: -1 });
+CrmDealSchema.index({ tenantId: 1, stage: 1, createdAt: -1 });
+CrmDealSchema.index({ tenantId: 1, ownerId: 1, createdAt: -1 });

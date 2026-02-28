@@ -1,0 +1,7 @@
+Server:  reliance.reliance
+Address:  2405:201:8002:181c::c0a8:1d01
+
+Name:    www.google.com
+Addresses:  2404:6800:4009:80b::2004
+	  142.250.195.68
+

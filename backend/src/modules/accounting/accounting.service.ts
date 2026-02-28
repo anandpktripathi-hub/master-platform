@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -16,6 +16,25 @@ import {
 import { Bill, BillDocument } from '../../database/schemas/bill.schema';
 import { Goal, GoalDocument } from '../../database/schemas/goal.schema';
 
+type TransactionPayload = Omit<Partial<Transaction>, 'accountId' | 'date'> & {
+  accountId?: string | Types.ObjectId;
+  date?: string | Date;
+};
+
+type InvoicePayload = Omit<Partial<Invoice>, 'issueDate' | 'dueDate'> & {
+  issueDate?: string | Date;
+  dueDate?: string | Date;
+};
+
+type BillPayload = Omit<Partial<Bill>, 'issueDate' | 'dueDate'> & {
+  issueDate?: string | Date;
+  dueDate?: string | Date;
+};
+
+type GoalPayload = Omit<Partial<Goal>, 'dueDate'> & {
+  dueDate?: string | Date;
+};
+
 @Injectable()
 export class AccountingService {
   constructor(
@@ -29,10 +48,26 @@ export class AccountingService {
     @InjectModel(Goal.name) private readonly goalModel: Model<GoalDocument>,
   ) {}
 
+  private asObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
+  private asDate(value: unknown, fieldName: string): Date {
+    const date = value instanceof Date ? value : new Date(String(value));
+    if (Number.isNaN(date.getTime())) {
+      throw new BadRequestException(`${fieldName} must be a valid date`);
+    }
+    return date;
+  }
+
   // Accounts
   async listAccounts(tenantId: string): Promise<Account[]> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
     return this.accountModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .lean()
       .exec();
   }
@@ -41,9 +76,10 @@ export class AccountingService {
     tenantId: string,
     payload: Partial<Account>,
   ): Promise<Account> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
     const doc = new this.accountModel({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
     return doc.save();
   }
@@ -53,9 +89,11 @@ export class AccountingService {
     id: string,
     payload: Partial<Account>,
   ): Promise<Account | null> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
     return this.accountModel
       .findOneAndUpdate(
-        { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
+        { _id: idObjectId, tenantId: tenantObjectId },
         { $set: payload },
         { new: true },
       )
@@ -63,10 +101,12 @@ export class AccountingService {
   }
 
   async deleteAccount(tenantId: string, id: string): Promise<void> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
     await this.accountModel
       .findOneAndDelete({
-        _id: new Types.ObjectId(id),
-        tenantId: new Types.ObjectId(tenantId),
+        _id: idObjectId,
+        tenantId: tenantObjectId,
       })
       .exec();
   }
@@ -77,42 +117,68 @@ export class AccountingService {
     accountId?: string,
   ): Promise<Transaction[]> {
     const filter: Record<string, unknown> = {
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: this.asObjectId(tenantId, 'tenantId'),
     };
     if (accountId) {
-      filter.accountId = new Types.ObjectId(accountId);
+      filter.accountId = this.asObjectId(accountId, 'accountId');
     }
     return this.transactionModel.find(filter).sort({ date: -1 }).lean().exec();
   }
 
   async recordTransaction(
     tenantId: string,
-    payload: Partial<Transaction>,
+    payload: TransactionPayload,
   ): Promise<Transaction> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const rawAccountId = payload.accountId as unknown;
+    const accountObjectId =
+      rawAccountId instanceof Types.ObjectId
+        ? rawAccountId
+        : this.asObjectId(String(rawAccountId), 'accountId');
+    const date = payload.date ? this.asDate(payload.date, 'date') : new Date();
+
     const doc = new this.transactionModel({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
-      date: payload.date ? payload.date : new Date(),
+      accountId: accountObjectId,
+      tenantId: tenantObjectId,
+      date,
     });
     return doc.save();
   }
 
   // Invoices
   async listInvoices(tenantId: string): Promise<Invoice[]> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
     return this.invoiceModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .sort({ issueDate: -1 })
+      .lean()
+      .exec();
+  }
+
+  async getInvoiceById(tenantId: string, id: string): Promise<Invoice | null> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
+    return this.invoiceModel
+      .findOne({ _id: idObjectId, tenantId: tenantObjectId })
       .lean()
       .exec();
   }
 
   async createInvoice(
     tenantId: string,
-    payload: Partial<Invoice>,
+    payload: InvoicePayload,
   ): Promise<Invoice> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    if (payload.issueDate) {
+      payload.issueDate = this.asDate(payload.issueDate, 'issueDate');
+    }
+    if (payload.dueDate) {
+      payload.dueDate = this.asDate(payload.dueDate, 'dueDate');
+    }
     const doc = new this.invoiceModel({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
     return doc.save();
   }
@@ -120,11 +186,19 @@ export class AccountingService {
   async updateInvoice(
     tenantId: string,
     id: string,
-    payload: Partial<Invoice>,
+    payload: InvoicePayload,
   ): Promise<Invoice | null> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
+    if (payload.issueDate) {
+      payload.issueDate = this.asDate(payload.issueDate, 'issueDate');
+    }
+    if (payload.dueDate) {
+      payload.dueDate = this.asDate(payload.dueDate, 'dueDate');
+    }
     return this.invoiceModel
       .findOneAndUpdate(
-        { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
+        { _id: idObjectId, tenantId: tenantObjectId },
         { $set: payload },
         { new: true },
       )
@@ -132,27 +206,37 @@ export class AccountingService {
   }
 
   async deleteInvoice(tenantId: string, id: string): Promise<void> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
     await this.invoiceModel
       .findOneAndDelete({
-        _id: new Types.ObjectId(id),
-        tenantId: new Types.ObjectId(tenantId),
+        _id: idObjectId,
+        tenantId: tenantObjectId,
       })
       .exec();
   }
 
   // Bills
   async listBills(tenantId: string): Promise<Bill[]> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
     return this.billModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .sort({ issueDate: -1 })
       .lean()
       .exec();
   }
 
-  async createBill(tenantId: string, payload: Partial<Bill>): Promise<Bill> {
+  async createBill(tenantId: string, payload: BillPayload): Promise<Bill> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    if (payload.issueDate) {
+      payload.issueDate = this.asDate(payload.issueDate, 'issueDate');
+    }
+    if (payload.dueDate) {
+      payload.dueDate = this.asDate(payload.dueDate, 'dueDate');
+    }
     const doc = new this.billModel({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
     return doc.save();
   }
@@ -160,11 +244,19 @@ export class AccountingService {
   async updateBill(
     tenantId: string,
     id: string,
-    payload: Partial<Bill>,
+    payload: BillPayload,
   ): Promise<Bill | null> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
+    if (payload.issueDate) {
+      payload.issueDate = this.asDate(payload.issueDate, 'issueDate');
+    }
+    if (payload.dueDate) {
+      payload.dueDate = this.asDate(payload.dueDate, 'dueDate');
+    }
     return this.billModel
       .findOneAndUpdate(
-        { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
+        { _id: idObjectId, tenantId: tenantObjectId },
         { $set: payload },
         { new: true },
       )
@@ -172,27 +264,34 @@ export class AccountingService {
   }
 
   async deleteBill(tenantId: string, id: string): Promise<void> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
     await this.billModel
       .findOneAndDelete({
-        _id: new Types.ObjectId(id),
-        tenantId: new Types.ObjectId(tenantId),
+        _id: idObjectId,
+        tenantId: tenantObjectId,
       })
       .exec();
   }
 
   // Goals
   async listGoals(tenantId: string): Promise<Goal[]> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
     return this.goalModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .sort({ createdAt: -1 })
       .lean()
       .exec();
   }
 
-  async createGoal(tenantId: string, payload: Partial<Goal>): Promise<Goal> {
+  async createGoal(tenantId: string, payload: GoalPayload): Promise<Goal> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    if (payload.dueDate) {
+      payload.dueDate = this.asDate(payload.dueDate, 'dueDate');
+    }
     const doc = new this.goalModel({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
     return doc.save();
   }
@@ -200,11 +299,16 @@ export class AccountingService {
   async updateGoal(
     tenantId: string,
     id: string,
-    payload: Partial<Goal>,
+    payload: GoalPayload,
   ): Promise<Goal | null> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
+    if (payload.dueDate) {
+      payload.dueDate = this.asDate(payload.dueDate, 'dueDate');
+    }
     return this.goalModel
       .findOneAndUpdate(
-        { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
+        { _id: idObjectId, tenantId: tenantObjectId },
         { $set: payload },
         { new: true },
       )
@@ -212,10 +316,12 @@ export class AccountingService {
   }
 
   async deleteGoal(tenantId: string, id: string): Promise<void> {
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const idObjectId = this.asObjectId(id, 'id');
     await this.goalModel
       .findOneAndDelete({
-        _id: new Types.ObjectId(id),
-        tenantId: new Types.ObjectId(tenantId),
+        _id: idObjectId,
+        tenantId: tenantObjectId,
       })
       .exec();
   }
@@ -233,7 +339,7 @@ export class AccountingService {
       net: number;
     }[];
   }> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
     const now = new Date();
     const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
@@ -382,12 +488,12 @@ export class AccountingService {
     totals: { income: number; expense: number; net: number };
     byMonth: { month: string; income: number; expense: number; net: number }[];
   }> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
 
     const now = new Date();
-    const toDate = to ? new Date(to) : now;
+    const toDate = to ? this.asDate(to, 'to') : now;
     const fromDate = from
-      ? new Date(from)
+      ? this.asDate(from, 'from')
       : new Date(toDate.getFullYear(), toDate.getMonth() - 11, 1);
 
     const agg = await this.transactionModel
@@ -487,8 +593,8 @@ export class AccountingService {
     byType: { type: string; balance: number }[];
     totals: { assets: number; liabilities: number; equity: number };
   }> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
-    const asOfDate = asOf ? new Date(asOf) : new Date();
+    const tenantObjectId = this.asObjectId(tenantId, 'tenantId');
+    const asOfDate = asOf ? this.asDate(asOf, 'asOf') : new Date();
 
     const agg = await this.transactionModel
       .aggregate([
@@ -560,3 +666,4 @@ export class AccountingService {
     };
   }
 }
+

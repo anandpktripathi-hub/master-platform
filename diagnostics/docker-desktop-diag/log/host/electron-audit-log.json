@@ -1,0 +1,55 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 9
+    },
+    "auditLog": "log\\host\\electron-audit-log.json",
+    "files": [
+        {
+            "date": 1771229183174,
+            "name": "log\\host\\electron-2026-02-16.log",
+            "hash": "b352a3ac63f582315a5d42442e5e6105"
+        },
+        {
+            "date": 1771268411441,
+            "name": "log\\host\\electron-2026-02-17.log",
+            "hash": "34eda505b760f3e23b67bbc2707e24de"
+        },
+        {
+            "date": 1771332658169,
+            "name": "log\\host\\electron-2026-02-17.1.log",
+            "hash": "04c372610ac8ee29e2423615dadf01b0"
+        },
+        {
+            "date": 1771338058301,
+            "name": "log\\host\\electron-2026-02-17.2.log",
+            "hash": "d95055c868192e5babf35bb530f9a09b"
+        },
+        {
+            "date": 1771345306832,
+            "name": "log\\host\\electron-2026-02-17.3.log",
+            "hash": "6cdbbde5a49a6cbabc409db6c894d3b0"
+        },
+        {
+            "date": 1771465652378,
+            "name": "log\\host\\electron-2026-02-19.log",
+            "hash": "6bf12c2f866ef3a8d4aeaa084b724817"
+        },
+        {
+            "date": 1771559430919,
+            "name": "log\\host\\electron-2026-02-20.log",
+            "hash": "464733f7df8591cf534aef38dd43e137"
+        },
+        {
+            "date": 1771986215775,
+            "name": "log\\host\\electron-2026-02-25.log",
+            "hash": "22847ead515c641ebecac80814e47405"
+        },
+        {
+            "date": 1771996660139,
+            "name": "log\\host\\electron-2026-02-25.1.log",
+            "hash": "80ae29f8e5a87c9b8c97ba4f509542e7"
+        }
+    ],
+    "hashType": "md5"
+}

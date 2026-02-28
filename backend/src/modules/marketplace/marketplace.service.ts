@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -13,11 +14,7 @@ import {
   TenantPluginInstall,
   TenantPluginInstallDocument,
 } from '../../database/schemas/tenant-plugin-install.schema';
-
-export interface InstallPluginDto {
-  pluginId: string;
-  config?: Record<string, unknown>;
-}
+import { InstallPluginDto } from './dto/marketplace.dto';
 
 @Injectable()
 export class MarketplaceService {
@@ -27,6 +24,13 @@ export class MarketplaceService {
     @InjectModel(TenantPluginInstall.name)
     private readonly installModel: Model<TenantPluginInstallDocument>,
   ) {}
+
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(value);
+  }
 
   /**
    * List all available marketplace plugins (public catalog).
@@ -61,7 +65,7 @@ export class MarketplaceService {
 
     const existingInstall = await this.installModel
       .findOne({
-        tenantId: new Types.ObjectId(tenantId),
+        tenantId: this.toObjectId(tenantId, 'tenantId'),
         pluginId: dto.pluginId,
       })
       .exec();
@@ -73,14 +77,23 @@ export class MarketplaceService {
     }
 
     const install = new this.installModel({
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: this.toObjectId(tenantId, 'tenantId'),
       pluginId: dto.pluginId,
       enabled: true,
       config: dto.config || plugin.defaultConfig || {},
-      installedBy: new Types.ObjectId(userId),
+      installedBy: this.toObjectId(userId, 'userId'),
     });
 
-    const saved = await install.save();
+    let saved: any;
+    try {
+      saved = await install.save();
+    } catch (error) {
+      const code = (error as any)?.code;
+      if (code === 11000) {
+        throw new ConflictException('Plugin is already installed for this tenant');
+      }
+      throw error;
+    }
 
     return {
       id: String(saved._id),
@@ -97,7 +110,7 @@ export class MarketplaceService {
    */
   async listTenantInstalls(tenantId: string) {
     const installs = await this.installModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: this.toObjectId(tenantId, 'tenantId') })
       .sort('-createdAt')
       .lean()
       .exec();
@@ -117,7 +130,7 @@ export class MarketplaceService {
   async togglePlugin(tenantId: string, pluginId: string, enabled: boolean) {
     const install = await this.installModel
       .findOne({
-        tenantId: new Types.ObjectId(tenantId),
+        tenantId: this.toObjectId(tenantId, 'tenantId'),
         pluginId,
       })
       .exec();
@@ -141,7 +154,7 @@ export class MarketplaceService {
    */
   async uninstallPlugin(tenantId: string, pluginId: string) {
     const result = await this.installModel.deleteOne({
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: this.toObjectId(tenantId, 'tenantId'),
       pluginId,
     });
 

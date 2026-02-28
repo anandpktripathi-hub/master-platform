@@ -18,8 +18,9 @@ import { DomainsController } from './domains.controller';
 import { DomainService } from './services/domain.service';
 import { DomainResellerService } from './services/domain-reseller.service';
 import {
-  StubDomainResellerProvider,
   CloudflareDomainResellerProvider,
+  HttpDomainResellerProvider,
+  NotConfiguredDomainResellerProvider,
   DOMAIN_RESELLER_PROVIDER_TOKEN,
   DomainResellerProvider,
 } from './services/domain-reseller.provider';
@@ -41,21 +42,40 @@ import { RoleGuard } from '../../guards/role.guard';
     DomainService,
     AuditLogService,
     RoleGuard,
-    StubDomainResellerProvider,
     CloudflareDomainResellerProvider,
+    HttpDomainResellerProvider,
+    NotConfiguredDomainResellerProvider,
     {
       provide: DOMAIN_RESELLER_PROVIDER_TOKEN,
       useFactory: (
-        stub: StubDomainResellerProvider,
         cloudflare: CloudflareDomainResellerProvider,
+        http: HttpDomainResellerProvider,
+        notConfigured: NotConfiguredDomainResellerProvider,
       ): DomainResellerProvider => {
-        const provider = process.env.DOMAIN_RESELLER_PROVIDER;
-        if (provider === 'cloudflare') {
-          return cloudflare;
-        }
-        return stub;
+        const provider = (
+          process.env.DOMAIN_PROVIDER ||
+          process.env.DOMAIN_RESELLER_PROVIDER ||
+          ''
+        )
+          .trim()
+          .toLowerCase();
+
+        // If the base URL is configured, default to the HTTP provider even if
+        // DOMAIN_PROVIDER isn't explicitly set.
+        const hasHttpConfig = Boolean(
+          (process.env.DOMAIN_RESELLER_BASE_URL || '').trim(),
+        );
+
+        if (provider === 'cloudflare') return cloudflare;
+        if (provider === 'http' || provider === 'generic') return http;
+        if (!provider && hasHttpConfig) return http;
+        return notConfigured;
       },
-      inject: [StubDomainResellerProvider, CloudflareDomainResellerProvider],
+      inject: [
+        CloudflareDomainResellerProvider,
+        HttpDomainResellerProvider,
+        NotConfiguredDomainResellerProvider,
+      ],
     },
     DomainResellerService,
   ],

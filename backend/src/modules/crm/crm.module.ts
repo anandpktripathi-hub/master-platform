@@ -18,6 +18,9 @@ import { SettingsModule } from '../settings/settings.module';
 import { CrmNotificationService } from './crm-notification.service';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { CalendarModule } from '../../common/calendar/calendar.module';
+import { TenantGuard } from '../../common/guards/tenant.guard';
+import { PublicFormsController } from './public-forms.controller';
+import { TenantsModule } from '../tenants/tenants.module';
 
 @Module({
   imports: [
@@ -32,9 +35,10 @@ import { CalendarModule } from '../../common/calendar/calendar.module';
     SettingsModule,
     NotificationsModule,
     CalendarModule,
+    TenantsModule,
   ],
-  providers: [CrmService, CrmNotificationService],
-  controllers: [CrmController],
+  providers: [CrmService, CrmNotificationService, TenantGuard],
+  controllers: [CrmController, PublicFormsController],
   exports: [CrmService],
 })
 export class CrmModule {}

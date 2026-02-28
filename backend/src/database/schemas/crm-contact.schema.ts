@@ -28,3 +28,6 @@ export class CrmContact {
 }
 
 export const CrmContactSchema = SchemaFactory.createForClass(CrmContact);
+
+CrmContactSchema.index({ tenantId: 1, createdAt: -1 });
+CrmContactSchema.index({ tenantId: 1, email: 1 });

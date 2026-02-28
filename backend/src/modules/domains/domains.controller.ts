@@ -20,12 +20,14 @@ import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { DomainService } from './services/domain.service';
 import { DomainResellerService } from './services/domain-reseller.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   CreateDomainDto,
   UpdateDomainDto,
   ListDomainsQueryDto,
 } from './dto/domain.dto';
-
+@ApiTags('Domains')
+@ApiBearerAuth('bearer')
 @Controller('domains')
 export class DomainsController {
   private readonly logger = new Logger(DomainsController.name);

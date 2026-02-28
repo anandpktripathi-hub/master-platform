@@ -1,0 +1,10 @@
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  3.0  0.0   3072  2176 hvc0     Sl+  10:48   0:00 /init
+root         2  2.6  0.0   3072  2176 hvc0     Sl+  10:48   0:00 /init
+root         7 16.0  0.1  48472  8448 hvc0     S+   10:48   0:00 /usr/bin/WSLGd
+root        11  0.0  0.0   3072  1792 hvc0     Sl+  10:48   0:00 plan9 --control-socket 6 --log-level 4 --server-fd 7 --pipe-fd 9 --log-truncate
+wslg        14 21.0  0.2  62796 18560 hvc0     D+   10:48   0:00 /usr/bin/weston --backend=rdp-backend.so --modules=wslgd-notify.so --xwayland --socket=wayland-0 --shell=rdprail-shell.so --log=/mnt/wslg/weston.log --logger-scopes=log,rdp-backend,rdprail-shell
+root        15  0.0  0.0   3080   896 ?        Ss   10:48   0:00 /init
+root        16  0.0  0.0   3096  1152 ?        S    10:48   0:00 /init
+root        17  0.0  0.0   3096  1024 ?        S    10:48   0:00 /init
+wslg        18  0.0  0.0   6404  2304 pts/0    Rs+  10:48   0:00 ps uax

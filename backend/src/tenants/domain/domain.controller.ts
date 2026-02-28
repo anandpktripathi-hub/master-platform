@@ -10,18 +10,17 @@ import {
   HttpStatus,
   UseInterceptors,
   ClassSerializerInterceptor,
-  Query,
 } from '@nestjs/common';
 import { DomainService } from './domain.service';
 import { VerifyDomainDto } from './dto/verify-domain.dto';
 import { MapDomainDto } from './dto/map-domain.dto';
 import { UpdateDomainDto } from './dto/update-domain.dto';
-import { AuthGuard } from '../../common/guards/auth.guard';
+import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { TenantGuard } from '../../common/guards/tenant.guard';
-import rateLimit from 'express-rate-limit';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Domain')
 @Controller('tenants/domain')
-@UseGuards(AuthGuard, TenantGuard)
+@UseGuards(JwtAuthGuard, TenantGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class DomainController {
   constructor(private readonly domainService: DomainService) {}

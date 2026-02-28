@@ -1,0 +1,957 @@
+{
+  "generatedAt": "2026-02-27T03:40:28.506Z",
+  "weights": {
+    "module": 10,
+    "controller": 15,
+    "service": 15,
+    "dto": 15,
+    "schema": 15,
+    "tests": 20,
+    "migrations": 10
+  },
+  "count": 43,
+  "results": [
+    {
+      "name": "accounting",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "accounting.controller.spec.ts",
+        "accounting.controller.ts",
+        "accounting.module.ts",
+        "accounting.service.spec.ts",
+        "accounting.service.ts"
+      ]
+    },
+    {
+      "name": "ai-services",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "ai-services.controller.spec.ts",
+        "ai-services.controller.ts",
+        "ai-services.module.ts",
+        "ai-services.service.spec.ts",
+        "ai-services.service.ts"
+      ]
+    },
+    {
+      "name": "analytics",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "analytics.controller.spec.ts",
+        "analytics.controller.ts",
+        "analytics.module.ts",
+        "analytics.service.spec.ts",
+        "analytics.service.ts"
+      ]
+    },
+    {
+      "name": "auth",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 7,
+      "sampleFiles": [
+        "auth.controller.spec.ts",
+        "auth.controller.ts",
+        "auth.module.ts",
+        "auth.service.ts",
+        "jwt-auth.guard.ts",
+        "jwt.strategy.ts"
+      ]
+    },
+    {
+      "name": "billing",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 7,
+      "sampleFiles": [
+        "billing-notification.service.spec.ts",
+        "billing-notification.service.ts",
+        "billing.controller.spec.ts",
+        "billing.controller.ts",
+        "billing.module.ts",
+        "billing.service.spec.ts"
+      ]
+    },
+    {
+      "name": "chat",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "chat.controller.spec.ts",
+        "chat.controller.ts",
+        "chat.module.ts",
+        "chat.service.spec.ts",
+        "chat.service.ts"
+      ]
+    },
+    {
+      "name": "cms",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 2,
+      "sampleFiles": [
+        "cms.module.ts",
+        "enums.ts"
+      ]
+    },
+    {
+      "name": "coupons",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 3,
+      "sampleFiles": [
+        "coupons.controller.spec.ts",
+        "coupons.controller.ts",
+        "coupons.module.ts"
+      ]
+    },
+    {
+      "name": "crm",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 6,
+      "sampleFiles": [
+        "crm-notification.service.ts",
+        "crm.controller.spec.ts",
+        "crm.controller.ts",
+        "crm.module.ts",
+        "crm.service.spec.ts",
+        "crm.service.ts"
+      ]
+    },
+    {
+      "name": "custom-domains",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "custom-domain-ssl.scheduler.ts",
+        "custom-domains.controller.spec.ts",
+        "custom-domains.controller.ts",
+        "custom-domains.module.ts",
+        "tenant-domains.controller.ts"
+      ]
+    },
+    {
+      "name": "dashboard",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "dashboard.controller.spec.ts",
+        "dashboard.controller.ts",
+        "dashboard.module.ts",
+        "dashboard.service.spec.ts",
+        "dashboard.service.ts"
+      ]
+    },
+    {
+      "name": "developer-portal",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "developer-portal.controller.spec.ts",
+        "developer-portal.controller.ts",
+        "developer-portal.module.ts",
+        "developer-portal.service.spec.ts",
+        "developer-portal.service.ts"
+      ]
+    },
+    {
+      "name": "domains",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 3,
+      "sampleFiles": [
+        "domains.controller.spec.ts",
+        "domains.controller.ts",
+        "domains.module.ts"
+      ]
+    },
+    {
+      "name": "health",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "health.controller.spec.ts",
+        "health.controller.ts",
+        "health.module.ts",
+        "health.service.spec.ts",
+        "health.service.ts"
+      ]
+    },
+    {
+      "name": "hierarchy",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 16,
+      "sampleFiles": [
+        "billing-hierarchy.controller.ts",
+        "billing-hierarchy.service.ts",
+        "domain-hierarchy.controller.ts",
+        "domain-hierarchy.service.ts",
+        "hierarchy.controller.spec.ts",
+        "hierarchy.controller.ts"
+      ]
+    },
+    {
+      "name": "hrm",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "hrm.controller.spec.ts",
+        "hrm.controller.ts",
+        "hrm.module.ts",
+        "hrm.service.spec.ts",
+        "hrm.service.ts"
+      ]
+    },
+    {
+      "name": "logger",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "logger.controller.spec.ts",
+        "logger.controller.ts",
+        "logger.module.ts",
+        "logger.service.spec.ts",
+        "logger.service.ts"
+      ]
+    },
+    {
+      "name": "logs",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "logs.module.ts",
+        "tenant-log.controller.spec.ts",
+        "tenant-log.controller.ts",
+        "tenant-log.service.spec.ts",
+        "tenant-log.service.ts"
+      ]
+    },
+    {
+      "name": "marketplace",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "marketplace.controller.spec.ts",
+        "marketplace.controller.ts",
+        "marketplace.module.ts",
+        "marketplace.service.spec.ts",
+        "marketplace.service.ts"
+      ]
+    },
+    {
+      "name": "metrics",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "metrics.controller.spec.ts",
+        "metrics.controller.ts",
+        "metrics.module.ts",
+        "metrics.service.spec.ts",
+        "metrics.service.ts"
+      ]
+    },
+    {
+      "name": "notifications",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 9,
+      "sampleFiles": [
+        "notifications.controller.spec.ts",
+        "notifications.controller.ts",
+        "notifications.module.ts",
+        "notifications.service.spec.ts",
+        "notifications.service.ts",
+        "push-subscriptions.controller.spec.ts"
+      ]
+    },
+    {
+      "name": "onboarding",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "onboarding.controller.spec.ts",
+        "onboarding.controller.ts",
+        "onboarding.module.ts",
+        "onboarding.service.spec.ts",
+        "onboarding.service.ts"
+      ]
+    },
+    {
+      "name": "orders",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "orders.controller.spec.ts",
+        "orders.controller.ts",
+        "orders.module.ts",
+        "orders.stats.controller.spec.ts",
+        "orders.stats.controller.ts"
+      ]
+    },
+    {
+      "name": "packages",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 4,
+      "sampleFiles": [
+        "packages.controller.spec.ts",
+        "packages.controller.ts",
+        "packages.module.ts",
+        "subscription-expiry.scheduler.ts"
+      ]
+    },
+    {
+      "name": "payments",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 3,
+      "sampleFiles": [
+        "payments.controller.spec.ts",
+        "payments.controller.ts",
+        "payments.module.ts"
+      ]
+    },
+    {
+      "name": "pos",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "pos.controller.spec.ts",
+        "pos.controller.ts",
+        "pos.module.ts",
+        "pos.service.spec.ts",
+        "pos.service.ts"
+      ]
+    },
+    {
+      "name": "products",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 7,
+      "sampleFiles": [
+        "products.controller.spec.ts",
+        "products.controller.ts",
+        "products.module.ts",
+        "products.service.spec.ts",
+        "products.service.ts",
+        "products.stats.controller.spec.ts"
+      ]
+    },
+    {
+      "name": "profile",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "profile.controller.spec.ts",
+        "profile.controller.ts",
+        "profile.module.ts",
+        "profile.service.spec.ts",
+        "profile.service.ts"
+      ]
+    },
+    {
+      "name": "projects",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "projects.controller.spec.ts",
+        "projects.controller.ts",
+        "projects.module.ts",
+        "projects.service.spec.ts",
+        "projects.service.ts"
+      ]
+    },
+    {
+      "name": "rbac",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 6,
+      "sampleFiles": [
+        "rbac.controller.spec.ts",
+        "rbac.controller.ts",
+        "rbac.module.ts",
+        "rbac.service.spec.ts",
+        "rbac.service.ts",
+        "seed.service.ts"
+      ]
+    },
+    {
+      "name": "reports",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "reports.controller.spec.ts",
+        "reports.controller.ts",
+        "reports.module.ts",
+        "reports.service.spec.ts",
+        "reports.service.ts"
+      ]
+    },
+    {
+      "name": "seo",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "seo.controller.spec.ts",
+        "seo.controller.ts",
+        "seo.module.ts",
+        "seo.service.spec.ts",
+        "seo.service.ts"
+      ]
+    },
+    {
+      "name": "settings",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 6,
+      "sampleFiles": [
+        "email.service.ts",
+        "settings.controller.spec.ts",
+        "settings.controller.ts",
+        "settings.module.ts",
+        "settings.service.spec.ts",
+        "settings.service.ts"
+      ]
+    },
+    {
+      "name": "social",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "social.controller.spec.ts",
+        "social.controller.ts",
+        "social.module.ts",
+        "social.service.spec.ts",
+        "social.service.ts"
+      ]
+    },
+    {
+      "name": "support",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "support.controller.spec.ts",
+        "support.controller.ts",
+        "support.module.ts",
+        "support.service.spec.ts",
+        "support.service.ts"
+      ]
+    },
+    {
+      "name": "tenant",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "tenant.controller.spec.ts",
+        "tenant.controller.ts",
+        "tenant.module.ts",
+        "tenant.service.spec.ts",
+        "tenant.service.ts"
+      ]
+    },
+    {
+      "name": "tenants",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "tenants.controller.spec.ts",
+        "tenants.controller.ts",
+        "tenants.module.ts",
+        "tenants.service.spec.ts",
+        "tenants.service.ts"
+      ]
+    },
+    {
+      "name": "theme",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "theme.controller.spec.ts",
+        "theme.controller.ts",
+        "theme.module.ts",
+        "theme.service.spec.ts",
+        "theme.service.ts"
+      ]
+    },
+    {
+      "name": "themes",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 1,
+      "sampleFiles": [
+        "themes.module.ts"
+      ]
+    },
+    {
+      "name": "user",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "user.controller.spec.ts",
+        "user.controller.ts",
+        "user.module.ts",
+        "user.service.spec.ts",
+        "user.service.ts"
+      ]
+    },
+    {
+      "name": "users",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 9,
+      "sampleFiles": [
+        "role.types.ts",
+        "user.controller.ts",
+        "user.service.ts",
+        "users.controller.spec.ts",
+        "users.controller.ts",
+        "users.module.ts"
+      ]
+    },
+    {
+      "name": "vcards",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 5,
+      "sampleFiles": [
+        "vcards.controller.spec.ts",
+        "vcards.controller.ts",
+        "vcards.module.ts",
+        "vcards.service.spec.ts",
+        "vcards.service.ts"
+      ]
+    },
+    {
+      "name": "workspaces",
+      "pct": 100,
+      "present": {
+        "module": true,
+        "controller": true,
+        "service": true,
+        "dto": true,
+        "schema": true,
+        "tests": "both",
+        "migrations": true
+      },
+      "missing": [],
+      "filesCount": 6,
+      "sampleFiles": [
+        "workspace-shared.module.ts",
+        "workspace.controller.spec.ts",
+        "workspace.controller.ts",
+        "workspace.module.ts",
+        "workspace.service.spec.ts",
+        "workspace.service.ts"
+      ]
+    }
+  ]
+}

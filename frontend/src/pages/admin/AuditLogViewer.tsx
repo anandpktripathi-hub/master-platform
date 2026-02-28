@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   Typography,
+  Alert,
   Table,
   TableBody,
   TableCell,
@@ -91,6 +92,12 @@ export default function AuditLogViewer() {
     return new Date(dateString).toLocaleString();
   };
 
+  const formatActor = (actorId: any) => {
+    if (!actorId) return '';
+    if (typeof actorId === 'string') return actorId;
+    return actorId.email || actorId.name || String(actorId);
+  };
+
   const renderChanges = (log: AuditLog) => {
     if (!log.changes || log.changes.length === 0) {
       return <Typography variant="body2">No changes</Typography>;
@@ -129,7 +136,7 @@ export default function AuditLogViewer() {
             </Typography>
           </TableCell>
           <TableCell>{getStatusChip(log.status)}</TableCell>
-          <TableCell>{log.actorId}</TableCell>
+          <TableCell>{formatActor((log as any).actorId)}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell colSpan={7} sx={{ py: 0, borderBottom: isExpanded ? undefined : 'none' }}>

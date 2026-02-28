@@ -1,0 +1,21 @@
+/sys/fs/cgroup:
+total 0
+-r--r--r-- 1 root root 0 Feb 25 10:48 cgroup.controllers
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cgroup.max.depth
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cgroup.max.descendants
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cgroup.pressure
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cgroup.procs
+-r--r--r-- 1 root root 0 Feb 25 10:48 cgroup.stat
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cgroup.subtree_control
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cgroup.threads
+-rw-r--r-- 1 root root 0 Feb 25 10:48 cpu.pressure
+-r--r--r-- 1 root root 0 Feb 25 10:48 cpuset.cpus.effective
+-r--r--r-- 1 root root 0 Feb 25 10:48 cpuset.mems.effective
+-r--r--r-- 1 root root 0 Feb 25 10:48 cpu.stat
+-r--r--r-- 1 root root 0 Feb 25 10:48 cpu.stat.local
+-rw-r--r-- 1 root root 0 Feb 25 10:48 io.pressure
+-r--r--r-- 1 root root 0 Feb 25 10:48 io.stat
+-r--r--r-- 1 root root 0 Feb 25 10:48 memory.numa_stat
+-rw-r--r-- 1 root root 0 Feb 25 10:48 memory.pressure
+--w------- 1 root root 0 Feb 25 10:48 memory.reclaim
+-r--r--r-- 1 root root 0 Feb 25 10:48 memory.stat

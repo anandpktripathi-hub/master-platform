@@ -1,0 +1,7 @@
+#TYPE System.Diagnostics.EventLogEntry#Application/DockerService/0
+"EventID","MachineName","Data","Index","Category","CategoryNumber","EntryType","Message","Source","ReplacementStrings","InstanceId","TimeGenerated","TimeWritten","UserName","Site","Container"
+"0","<HOST>","System.Byte[]","31710","(0)","0","Information","PowerEvent handled successfully by the service.","DockerService","System.String[]","0","25-02-2026 10:10:00 AM","25-02-2026 10:10:00 AM",,,
+"0","<HOST>","System.Byte[]","31706","(0)","0","Information","PowerEvent handled successfully by the service.","DockerService","System.String[]","0","25-02-2026 10:09:55 AM","25-02-2026 10:09:55 AM",,,
+"0","<HOST>","System.Byte[]","31703","(0)","0","Information","Service started successfully.","DockerService","System.String[]","0","25-02-2026 09:20:51 AM","25-02-2026 09:20:51 AM",,,
+"0","<HOST>","System.Byte[]","31702","(0)","0","Information","Service stopped successfully.","DockerService","System.String[]","0","25-02-2026 09:17:02 AM","25-02-2026 09:17:02 AM",,,
+"0","<HOST>","System.Byte[]","31700","(0)","0","Information","Service started successfully.","DockerService","System.String[]","0","25-02-2026 09:16:36 AM","25-02-2026 09:16:36 AM",,,

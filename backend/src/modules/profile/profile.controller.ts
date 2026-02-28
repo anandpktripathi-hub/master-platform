@@ -16,6 +16,8 @@ import {
   UpdateTenantProfileDto,
   UpdatePublicProfileDto,
 } from './dto/profile.dto';
+import { Public } from '../../common/decorators/public.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 interface AuthRequest extends Request {
   user: {
@@ -24,7 +26,8 @@ interface AuthRequest extends Request {
     tenantId?: string;
   };
 }
-
+@ApiTags('Profile')
+@ApiBearerAuth('bearer')
 @Controller()
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
@@ -115,6 +118,7 @@ export class ProfileController {
    * Checks if a public handle is available
    */
   @Get('public/profiles/check-handle')
+  @Public()
   async checkHandle(@Query('handle') handle?: string) {
     if (!handle) throw new BadRequestException('Handle is required');
     const available = await this.profileService.isHandleAvailable(handle);
@@ -126,6 +130,7 @@ export class ProfileController {
    * Returns a public user profile by handle
    */
   @Get('public/profiles/:handle')
+  @Public()
   async getPublicProfile(@Param('handle') handle: string) {
     if (!handle) throw new BadRequestException('Handle is required');
     return this.profileService.getPublicProfileByHandle(handle);

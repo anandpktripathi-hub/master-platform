@@ -13,16 +13,20 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { RequestWithUser } from '../../common/interfaces/request-with-user.interface';
+import { TenantGuard } from '../../common/guards/tenant.guard';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/roles.decorator';
+import { Tenant } from '../../decorators/tenant.decorator';
 import { CustomDomainService } from './services/custom-domain.service';
 import { objectIdToString } from '../../common/utils/objectid.util';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   CreateCustomDomainDto,
   UpdateCustomDomainDto,
 } from './dto/custom-domain.dto';
-
+@ApiTags('Custom Domains')
+@ApiBearerAuth('bearer')
 @Controller('custom-domains')
 export class CustomDomainController {
   constructor(private customDomainService: CustomDomainService) {}
@@ -35,18 +39,13 @@ export class CustomDomainController {
    * Get current tenant's custom domains
    */
   @Get('me')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   async getTenantCustomDomains(
-    @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Query('status') status?: string,
     @Query('limit') limit?: string,
     @Query('skip') skip?: string,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     return this.customDomainService.getCustomDomainsForTenant(
       objectIdToString(tenantId),
       {
@@ -61,19 +60,14 @@ export class CustomDomainController {
    * Request a custom domain for tenant
    */
   @Post('me')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   async requestCustomDomain(
     @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Body() createDto: CreateCustomDomainDto,
   ) {
     if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    if (!req.user) throw new BadRequestException('User not authenticated');
     const userId = req.user.sub;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     if (!userId) throw new BadRequestException('User ID is required');
     return this.customDomainService.requestCustomDomain(
       objectIdToString(tenantId),
@@ -86,16 +80,11 @@ export class CustomDomainController {
    * Verify domain ownership
    */
   @Post('me/:domainId/verify')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   async verifyDomainOwnership(
-    @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Param('domainId') domainId: string,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     const verified = await this.customDomainService.verifyDomainOwnership(
       domainId,
       objectIdToString(tenantId),
@@ -107,16 +96,11 @@ export class CustomDomainController {
    * Get SSL certificate for verified domain
    */
   @Post('me/:domainId/ssl/issue')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   async issueSslCertificate(
-    @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Param('domainId') domainId: string,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     return this.customDomainService.issueSslCertificate(
       domainId,
       objectIdToString(tenantId),
@@ -127,17 +111,14 @@ export class CustomDomainController {
    * Set custom domain as primary
    */
   @Post('me/:domainId/primary')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   async setPrimaryCustomDomain(
     @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Param('domainId') domainId: string,
   ) {
     if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
     const userId = req.user.sub;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     if (!userId) throw new BadRequestException('User ID is required');
     return this.customDomainService.setPrimaryDomain(
       domainId,
@@ -150,17 +131,12 @@ export class CustomDomainController {
    * Update custom domain
    */
   @Patch('me/:domainId')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   async updateCustomDomain(
-    @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Param('domainId') domainId: string,
     @Body() updateDto: UpdateCustomDomainDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     const domain = await this.customDomainService.getCustomDomainsForTenant(
       objectIdToString(tenantId),
     );
@@ -185,18 +161,15 @@ export class CustomDomainController {
    * Delete custom domain
    */
   @Delete('me/:domainId')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, TenantGuard)
   @HttpCode(204)
   async deleteCustomDomain(
     @Request() req: RequestWithUser,
+    @Tenant() tenantId: string,
     @Param('domainId') domainId: string,
   ) {
     if (!req.user) throw new BadRequestException('User not authenticated');
-    const tenantId = req.user.tenantId;
     const userId = req.user.sub;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
-    }
     if (!userId) throw new BadRequestException('User ID is required');
     await this.customDomainService.deleteCustomDomain(
       domainId,

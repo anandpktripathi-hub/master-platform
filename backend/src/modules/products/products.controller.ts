@@ -1,21 +1,54 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
+import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { ListProductsQueryDto } from './dto/products.dto';
+import { TenantGuard } from '../../common/guards/tenant.guard';
+import { Tenant } from '../../decorators/tenant.decorator';
 
 @ApiTags('Products')
+@ApiBearerAuth('bearer')
 @Controller('products')
+@UseGuards(JwtAuthGuard, TenantGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all products' })
-  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
-    return this.productsService.findAll(Number(page), Number(limit));
+  findAll(
+    @Tenant() tenantId: string,
+    @Query() query: ListProductsQueryDto,
+  ) {
+    const pageNum = Number(query.page ?? 1);
+    const limitNum = Number(query.limit ?? 10);
+
+    if (!Number.isFinite(pageNum) || !Number.isInteger(pageNum) || pageNum < 1) {
+      throw new BadRequestException('Invalid page');
+    }
+
+    if (
+      !Number.isFinite(limitNum) ||
+      !Number.isInteger(limitNum) ||
+      limitNum < 1 ||
+      limitNum > 100
+    ) {
+      throw new BadRequestException('Invalid limit');
+    }
+
+    return this.productsService.findAll(tenantId, pageNum, limitNum);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get product by ID' })
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(id);
+  findOne(@Tenant() tenantId: string, @Param('id') id: string) {
+    return this.productsService.findOne(tenantId, id);
   }
 }
+

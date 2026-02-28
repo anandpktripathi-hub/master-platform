@@ -25,6 +25,13 @@ export class SocialService {
     private readonly commentModel: Model<PostCommentDocument>,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   // ===== Connections =====
 
   async sendConnectionRequest(
@@ -35,20 +42,22 @@ export class SocialService {
     if (requesterId === recipientId) {
       throw new BadRequestException('Cannot connect to yourself');
     }
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
+    const requesterOid = this.toObjectId(requesterId, 'requesterId');
+    const recipientOid = this.toObjectId(recipientId, 'recipientId');
     const existing = await this.connectionModel.findOne({
       tenantId: tenantOid,
       $or: [
-        { requesterId, recipientId },
-        { requesterId: recipientId, recipientId: requesterId },
+        { requesterId: requesterOid, recipientId: recipientOid },
+        { requesterId: recipientOid, recipientId: requesterOid },
       ],
     });
     if (existing) {
       throw new BadRequestException('Connection already exists or pending');
     }
     return this.connectionModel.create({
-      requesterId: new Types.ObjectId(requesterId),
-      recipientId: new Types.ObjectId(recipientId),
+      requesterId: requesterOid,
+      recipientId: recipientOid,
       tenantId: tenantOid,
       status: 'PENDING',
     });
@@ -59,11 +68,11 @@ export class SocialService {
     connectionId: string,
     tenantId: string,
   ) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     const conn = await this.connectionModel.findOne({
-      _id: connectionId,
+      _id: this.toObjectId(connectionId, 'connectionId'),
       tenantId: tenantOid,
-      recipientId: new Types.ObjectId(userId),
+      recipientId: this.toObjectId(userId, 'userId'),
       status: 'PENDING',
     });
     if (!conn) {
@@ -80,11 +89,11 @@ export class SocialService {
     connectionId: string,
     tenantId: string,
   ) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     const conn = await this.connectionModel.findOne({
-      _id: connectionId,
+      _id: this.toObjectId(connectionId, 'connectionId'),
       tenantId: tenantOid,
-      recipientId: new Types.ObjectId(userId),
+      recipientId: this.toObjectId(userId, 'userId'),
       status: 'PENDING',
     });
     if (!conn) {
@@ -96,11 +105,11 @@ export class SocialService {
   }
 
   async listPendingRequests(userId: string, tenantId: string) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     return this.connectionModel
       .find({
         tenantId: tenantOid,
-        recipientId: new Types.ObjectId(userId),
+        recipientId: this.toObjectId(userId, 'userId'),
         status: 'PENDING',
       })
       .populate('requesterId', 'name email')
@@ -109,18 +118,19 @@ export class SocialService {
   }
 
   async listMyConnections(userId: string, tenantId: string) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
+    const userOid = this.toObjectId(userId, 'userId');
     const connections = await this.connectionModel
       .find({
         $or: [
           {
             tenantId: tenantOid,
-            requesterId: new Types.ObjectId(userId),
+            requesterId: userOid,
             status: 'ACCEPTED',
           },
           {
             tenantId: tenantOid,
-            recipientId: new Types.ObjectId(userId),
+            recipientId: userOid,
             status: 'ACCEPTED',
           },
         ],
@@ -146,19 +156,21 @@ export class SocialService {
     userId2: string,
     tenantId: string,
   ): Promise<boolean> {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
+    const userOid1 = this.toObjectId(userId1, 'userId1');
+    const userOid2 = this.toObjectId(userId2, 'userId2');
     const conn = await this.connectionModel.findOne({
       $or: [
         {
           tenantId: tenantOid,
-          requesterId: userId1,
-          recipientId: userId2,
+          requesterId: userOid1,
+          recipientId: userOid2,
           status: 'ACCEPTED',
         },
         {
           tenantId: tenantOid,
-          requesterId: userId2,
-          recipientId: userId1,
+          requesterId: userOid2,
+          recipientId: userOid1,
           status: 'ACCEPTED',
         },
       ],
@@ -177,9 +189,9 @@ export class SocialService {
     if (!content?.trim()) {
       throw new BadRequestException('Content is required');
     }
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     return this.postModel.create({
-      authorId: new Types.ObjectId(authorId),
+      authorId: this.toObjectId(authorId, 'authorId'),
       tenantId: tenantOid,
       content,
       visibility,
@@ -190,19 +202,20 @@ export class SocialService {
   }
 
   async listFeedPosts(userId: string, tenantId: string, limit = 50) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
+    const userOid = this.toObjectId(userId, 'userId');
     // Get user's connections
     const connections = await this.connectionModel
       .find({
         $or: [
           {
             tenantId: tenantOid,
-            requesterId: new Types.ObjectId(userId),
+            requesterId: userOid,
             status: 'ACCEPTED',
           },
           {
             tenantId: tenantOid,
-            recipientId: new Types.ObjectId(userId),
+            recipientId: userOid,
             status: 'ACCEPTED',
           },
         ],
@@ -218,7 +231,7 @@ export class SocialService {
     const posts = await this.postModel
       .find({
         $or: [
-          { tenantId: tenantOid, authorId: new Types.ObjectId(userId) },
+          { tenantId: tenantOid, authorId: userOid },
           { tenantId: tenantOid, visibility: 'PUBLIC' },
           {
             tenantId: tenantOid,
@@ -239,15 +252,15 @@ export class SocialService {
   }
 
   async toggleLike(postId: string, userId: string, tenantId: string) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     const post = await this.postModel.findOne({
-      _id: postId,
+      _id: this.toObjectId(postId, 'postId'),
       tenantId: tenantOid,
     });
     if (!post) {
       throw new BadRequestException('Post not found');
     }
-    const userOid = new Types.ObjectId(userId);
+    const userOid = this.toObjectId(userId, 'userId');
     const idx = post.likes.findIndex((id) => id.equals(userOid));
     if (idx >= 0) {
       post.likes.splice(idx, 1);
@@ -269,17 +282,17 @@ export class SocialService {
     if (!content?.trim()) {
       throw new BadRequestException('Content is required');
     }
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     const post = await this.postModel.findOne({
-      _id: postId,
+      _id: this.toObjectId(postId, 'postId'),
       tenantId: tenantOid,
     });
     if (!post) {
       throw new BadRequestException('Post not found');
     }
     const comment = await this.commentModel.create({
-      postId: new Types.ObjectId(postId),
-      authorId: new Types.ObjectId(authorId),
+      postId: this.toObjectId(postId, 'postId'),
+      authorId: this.toObjectId(authorId, 'authorId'),
       tenantId: tenantOid,
       content,
     });
@@ -290,11 +303,12 @@ export class SocialService {
   }
 
   async listComments(postId: string, tenantId: string) {
-    const tenantOid = new Types.ObjectId(tenantId);
+    const tenantOid = this.toObjectId(tenantId, 'tenantId');
     return this.commentModel
-      .find({ postId, tenantId: tenantOid })
+      .find({ postId: this.toObjectId(postId, 'postId'), tenantId: tenantOid })
       .populate('authorId', 'name email')
       .sort({ createdAt: 1 })
       .lean();
   }
 }
+

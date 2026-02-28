@@ -1,0 +1,284 @@
+[
+    {
+        "DisplayName":  null,
+        "DisplayVersion":  null,
+        "Publisher":  null,
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "Docker Desktop",
+        "DisplayVersion":  "4.60.1",
+        "Publisher":  "Docker Inc.",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "Git",
+        "DisplayVersion":  "2.53.0",
+        "Publisher":  "The Git Development Community",
+        "InstallDate":  "20260216"
+    },
+    {
+        "DisplayName":  "Microsoft Office Home and Student 2021 - en-us",
+        "DisplayVersion":  "16.0.19628.20214",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "Intel(R) Graphics Software \u0026 Drivers",
+        "DisplayVersion":  "1.0.1054.4",
+        "Publisher":  "Intel(R) Corporation",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "McAfee",
+        "DisplayVersion":  "1.35.148.1",
+        "Publisher":  "McAfee, LLC",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "Microsoft OneDrive",
+        "DisplayVersion":  "26.012.0119.0002",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "Microsoft OneNote - en-us",
+        "DisplayVersion":  "16.0.19628.20214",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  null,
+        "DisplayVersion":  null,
+        "Publisher":  null,
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "WinHTTrack Website Copier 3.49-2 (x64)",
+        "DisplayVersion":  "3.49.2",
+        "Publisher":  "HTTrack",
+        "InstallDate":  "20251031"
+    },
+    {
+        "DisplayName":  "WinRAR 7.13 (64-bit)",
+        "DisplayVersion":  "7.13.0",
+        "Publisher":  "win.rar GmbH",
+        "InstallDate":  null
+    },
+    {
+        "DisplayName":  "XAMPP",
+        "DisplayVersion":  "8.2.12-0",
+        "Publisher":  "Apache Friends",
+        "InstallDate":  "20251101"
+    },
+    {
+        "DisplayName":  "Dell SupportAssist",
+        "DisplayVersion":  "4.10.6.48716",
+        "Publisher":  "Dell Inc.",
+        "InstallDate":  "20251209"
+    },
+    {
+        "DisplayName":  "GitHub CLI",
+        "DisplayVersion":  "2.82.1",
+        "Publisher":  "GitHub, Inc.",
+        "InstallDate":  "20251103"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Host FX Resolver - 9.0.3 (x64)",
+        "DisplayVersion":  "72.12.29501",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251007"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Runtime - 9.0.3 (x64)",
+        "DisplayVersion":  "72.12.29501",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251007"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Runtime - 8.0.12 (x64)",
+        "DisplayVersion":  "64.48.26165",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Dell SupportAssist Remediation",
+        "DisplayVersion":  "5.5.9.18925",
+        "Publisher":  "Dell Inc.",
+        "InstallDate":  "20240520"
+    },
+    {
+        "DisplayName":  "Cirrus High Definition Audio Driver Setup",
+        "DisplayVersion":  "2.2.62",
+        "Publisher":  "Cirrus Logic Inc.",
+        "InstallDate":  "20251120"
+    },
+    {
+        "DisplayName":  "Microsoft ASP.NET Core 8.0.12 Shared Framework (x64)",
+        "DisplayVersion":  "8.0.12.24603",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Dell Optimizer",
+        "DisplayVersion":  "6.1.1.0",
+        "Publisher":  "Dell",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Microsoft Visual C++ 2012 x64 Additional Runtime - 11.0.61030",
+        "DisplayVersion":  "11.0.61030",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251113"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Host - 6.0.27 (x64)",
+        "DisplayVersion":  "48.108.8828",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20240520"
+    },
+    {
+        "DisplayName":  "Dell Connected Service Delivery",
+        "DisplayVersion":  "1.0.0.0",
+        "Publisher":  "Dell Technologies, Inc.",
+        "InstallDate":  "20251031"
+    },
+    {
+        "DisplayName":  "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.44.35211",
+        "DisplayVersion":  "14.44.35211",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251210"
+    },
+    {
+        "DisplayName":  "OPPO USB Drivers 2.2.6.0",
+        "DisplayVersion":  "2.2.6.0",
+        "Publisher":  "OPPO mobile telecommunications Corp., LTD",
+        "InstallDate":  "20251116"
+    },
+    {
+        "DisplayName":  "Microsoft Visual Studio Installer",
+        "DisplayVersion":  "4.0.2168.39045",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20260110"
+    },
+    {
+        "DisplayName":  "Java 8 Update 481 (64-bit)",
+        "DisplayVersion":  "8.0.4810.10",
+        "Publisher":  "Oracle Corporation",
+        "InstallDate":  "20260202"
+    },
+    {
+        "DisplayName":  "Microsoft Windows Desktop Runtime - 8.0.12 (x64)",
+        "DisplayVersion":  "64.48.26178",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Host FX Resolver - 6.0.27 (x64)",
+        "DisplayVersion":  "48.108.8828",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20240520"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Runtime - 6.0.27 (x64)",
+        "DisplayVersion":  "48.108.8828",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20240520"
+    },
+    {
+        "DisplayName":  "Windows Subsystem for Linux",
+        "DisplayVersion":  "2.6.1.0",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251101"
+    },
+    {
+        "DisplayName":  "Office 16 Click-to-Run Licensing Component",
+        "DisplayVersion":  "16.0.18925.20168",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20250725"
+    },
+    {
+        "DisplayName":  "Office 16 Click-to-Run Extensibility Component",
+        "DisplayVersion":  "16.0.19628.20214",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20260220"
+    },
+    {
+        "DisplayName":  "Dell SupportAssist OS Recovery Plugin for Dell Update",
+        "DisplayVersion":  "5.5.15.0",
+        "Publisher":  "Dell Inc.",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Node.js",
+        "DisplayVersion":  "22.17.0",
+        "Publisher":  "Node.js Foundation",
+        "InstallDate":  "20251031"
+    },
+    {
+        "DisplayName":  "MongoDB Shell",
+        "DisplayVersion":  "2.7.0",
+        "Publisher":  "MongoDB Inc.",
+        "InstallDate":  "20260216"
+    },
+    {
+        "DisplayName":  "Dell Connected Service Delivery SubAgent",
+        "DisplayVersion":  "1.0.0.0",
+        "Publisher":  "Dell Technologies, Inc.",
+        "InstallDate":  "20251206"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Host - 8.0.12 (x64)",
+        "DisplayVersion":  "64.48.26165",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Microsoft Update Health Tools",
+        "DisplayVersion":  "5.72.0.0",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20250503"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Host FX Resolver - 8.0.12 (x64)",
+        "DisplayVersion":  "64.48.26165",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Dell.Digital.Delivery-64Bit",
+        "DisplayVersion":  "3.5.9.0",
+        "Publisher":  "Dell Technologies, Inc.",
+        "InstallDate":  "20251112"
+    },
+    {
+        "DisplayName":  "Microsoft Visual C++ 2012 x64 Minimum Runtime - 11.0.61030",
+        "DisplayVersion":  "11.0.61030",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251113"
+    },
+    {
+        "DisplayName":  "Dell Core Services",
+        "DisplayVersion":  "1.11.12.0",
+        "Publisher":  "Dell, Inc.",
+        "InstallDate":  "20251206"
+    },
+    {
+        "DisplayName":  "Microsoft .NET Host - 9.0.3 (x64)",
+        "DisplayVersion":  "72.12.29501",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251007"
+    },
+    {
+        "DisplayName":  "Microsoft Windows Desktop Runtime - 9.0.3 (x64)",
+        "DisplayVersion":  "72.12.29522",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20251007"
+    },
+    {
+        "DisplayName":  "Microsoft Windows Desktop Runtime - 6.0.27 (x64)",
+        "DisplayVersion":  "48.108.8836",
+        "Publisher":  "Microsoft Corporation",
+        "InstallDate":  "20240520"
+    }
+]

@@ -1,23 +1,28 @@
 ﻿import {
-  Controller,
-  Get,
-  Query,
-  Post,
+  BadRequestException,
   Body,
-  UseGuards,
-  Req,
+  Controller,
+  Delete,
+  Get,
   Param,
   Patch,
-  Delete,
+  Post,
+  Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UsersService } from './users.service';
-import { CreateUserDto, BulkCreateUserDto } from './dto/create-user.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { RolesGuard } from '../../guards/roles.guard';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../../decorators/roles.decorator';
+import { RolesGuard } from '../../guards/roles.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { objectIdToString } from '../../utils/objectIdToString';
+import { BulkCreateUserDto, CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersService } from './users.service';
+import { Public } from '../../common/decorators/public.decorator';
 
 @ApiTags('Users')
+@ApiBearerAuth('bearer')
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
@@ -40,6 +45,7 @@ export class UsersController {
   // PUBLIC (no auth) – legacy public listing
   @Get('public')
   @ApiOperation({ summary: 'Get all users public, no auth' })
+  @Public()
   async findAllPublic() {
     return this.usersService.findAll(1, 1000);
   }
@@ -48,10 +54,15 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   @ApiOperation({ summary: 'Get current logged-in user' })
-  async getMe(@Req() req: { user?: { userId?: string } }) {
-    const userId = req.user?.userId;
+  async getMe(
+    @Req() req: { user?: { userId?: string; sub?: string; _id?: unknown } },
+  ) {
+    let userId = req.user?.userId || req.user?.sub;
+    if (!userId && req.user?._id && typeof req.user._id === 'object') {
+      userId = objectIdToString(req.user._id);
+    }
     if (!userId) {
-      throw new Error('User ID not found in request');
+      throw new BadRequestException('User ID not found in request');
     }
     return this.usersService.findOne(userId);
   }
@@ -76,10 +87,7 @@ export class UsersController {
   @Roles('platform_admin')
   @Patch(':id')
   @ApiOperation({ summary: 'Update user by ID' })
-  async update(
-    @Param('id') id: string,
-    @Body() updateDto: Record<string, unknown>,
-  ) {
+  async update(@Param('id') id: string, @Body() updateDto: UpdateUserDto) {
     return this.usersService.update(id, updateDto);
   }
 

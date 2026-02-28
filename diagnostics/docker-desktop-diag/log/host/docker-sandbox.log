@@ -1,0 +1,285 @@
+-------------------------------------------------------------------------------->8
+[2026-02-02T07:54:58.940938700Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T07:54:58.945786000Z] {"time":"2026-02-02T13:24:58.9402814+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.3 windows/amd64"}
+[2026-02-02T07:54:58.948663200Z] {"time":"2026-02-02T13:24:58.9422301+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T07:54:58.949231100Z] {"time":"2026-02-02T13:24:58.9427871+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T07:54:58.955060500Z] {"time":"2026-02-02T13:24:58.9427871+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T07:54:58.955601200Z] {"time":"2026-02-02T13:24:58.9433989+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T07:54:58.956409300Z] {"time":"2026-02-02T13:24:58.9444507+05:30","level":"INFO","msg":"idle VM monitor started","idle_timeout":1800000000000}
+[2026-02-02T07:54:59.443258300Z] {"time":"2026-02-02T13:24:59.4432583+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T07:55:26.349474100Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T07:55:26.350830300Z] {"time":"2026-02-02T13:25:26.3488551+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T07:55:26.351487500Z] {"time":"2026-02-02T13:25:26.3508303+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T07:55:26.352531600Z] {"time":"2026-02-02T13:25:26.3508303+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T07:55:26.353065900Z] {"time":"2026-02-02T13:25:26.3514875+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T07:55:26.353376400Z] {"time":"2026-02-02T13:25:26.3514875+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T07:55:26.354124300Z] {"time":"2026-02-02T13:25:26.3525316+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T07:55:26.852050900Z] {"time":"2026-02-02T13:25:26.8520509+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T09:55:43.025149200Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T09:55:43.090993300Z] {"time":"2026-02-02T15:25:43.0216144+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T09:55:43.091733700Z] {"time":"2026-02-02T15:25:43.0257815+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T09:55:43.091733700Z] {"time":"2026-02-02T15:25:43.0257815+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T09:55:43.092346800Z] {"time":"2026-02-02T15:25:43.0257815+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T09:55:43.092346800Z] {"time":"2026-02-02T15:25:43.0269159+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T09:55:43.092956000Z] {"time":"2026-02-02T15:25:43.0269159+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T09:55:43.535079600Z] {"time":"2026-02-02T15:25:43.5280918+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T11:22:06.986782400Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T11:22:07.034814800Z] {"time":"2026-02-02T16:52:07.0205109+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T11:22:07.065982700Z] {"time":"2026-02-02T16:52:07.064498+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T11:22:07.101660500Z] {"time":"2026-02-02T16:52:07.0972118+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T11:22:07.140149400Z] {"time":"2026-02-02T16:52:07.1175188+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T11:22:07.172025700Z] {"time":"2026-02-02T16:52:07.1709604+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T11:22:07.227809200Z] {"time":"2026-02-02T16:52:07.2196739+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T11:22:07.613384800Z] {"time":"2026-02-02T16:52:07.6133848+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T11:42:17.851955000Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T11:42:17.861204100Z] {"time":"2026-02-02T17:12:17.858467+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T11:42:17.863129800Z] {"time":"2026-02-02T17:12:17.8625354+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T11:42:17.864321300Z] {"time":"2026-02-02T17:12:17.8643213+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T11:42:17.870465100Z] {"time":"2026-02-02T17:12:17.8657122+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T11:42:17.874021700Z] {"time":"2026-02-02T17:12:17.8740217+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T11:42:17.879765900Z] {"time":"2026-02-02T17:12:17.879169+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T11:42:18.365363800Z] {"time":"2026-02-02T17:12:18.3653638+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:23:46.298157500Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T12:23:46.326655700Z] {"time":"2026-02-02T17:53:46.3158331+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T12:23:46.328700600Z] {"time":"2026-02-02T17:53:46.3235128+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T12:23:46.339241300Z] {"time":"2026-02-02T17:53:46.3281813+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T12:23:46.354811300Z] {"time":"2026-02-02T17:53:46.3311391+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:23:46.366559700Z] {"time":"2026-02-02T17:53:46.3612924+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:23:46.406930700Z] {"time":"2026-02-02T17:53:46.4027405+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T12:23:46.838699200Z] {"time":"2026-02-02T17:53:46.8360247+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:36:52.464505000Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T12:36:52.479659100Z] {"time":"2026-02-02T18:06:52.4756679+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T12:36:52.483361500Z] {"time":"2026-02-02T18:06:52.4827603+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T12:36:52.484000800Z] {"time":"2026-02-02T18:06:52.4840008+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T12:36:52.493242800Z] {"time":"2026-02-02T18:06:52.4865739+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:36:52.497579300Z] {"time":"2026-02-02T18:06:52.4975793+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:36:52.502508400Z] {"time":"2026-02-02T18:06:52.5014219+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T12:36:52.986441600Z] {"time":"2026-02-02T18:06:52.9864416+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:53:53.621466200Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T12:53:53.623257800Z] {"time":"2026-02-02T18:23:53.6214662+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T12:53:53.623257800Z] {"time":"2026-02-02T18:23:53.622657+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T12:53:53.623257800Z] {"time":"2026-02-02T18:23:53.6232578+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T12:53:53.623257800Z] {"time":"2026-02-02T18:23:53.6232578+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:53:53.623859800Z] {"time":"2026-02-02T18:23:53.6232578+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:53:53.623859800Z] {"time":"2026-02-02T18:23:53.6238598+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T12:53:54.123714500Z] {"time":"2026-02-02T18:23:54.1237145+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T12:59:16.943886700Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T12:59:16.951447300Z] {"time":"2026-02-02T18:29:16.9486929+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T12:59:16.952530500Z] {"time":"2026-02-02T18:29:16.9525305+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T12:59:16.954305300Z] {"time":"2026-02-02T18:29:16.9543053+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T12:59:16.960210300Z] {"time":"2026-02-02T18:29:16.9555713+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:59:16.962453700Z] {"time":"2026-02-02T18:29:16.9624537+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T12:59:16.965945100Z] {"time":"2026-02-02T18:29:16.9642011+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T12:59:17.455797000Z] {"time":"2026-02-02T18:29:17.455797+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-02T13:05:21.141572600Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-02T13:05:21.144629500Z] {"time":"2026-02-02T18:35:21.1408712+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-02T13:05:21.145292500Z] {"time":"2026-02-02T18:35:21.1439834+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-02T13:05:21.145292500Z] {"time":"2026-02-02T18:35:21.1446295+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-02T13:05:21.145892200Z] {"time":"2026-02-02T18:35:21.1446295+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T13:05:21.146768700Z] {"time":"2026-02-02T18:35:21.1452925+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-02T13:05:21.147371500Z] {"time":"2026-02-02T18:35:21.1462227+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-02T13:05:21.646353900Z] {"time":"2026-02-02T18:35:21.6463539+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-04T07:05:30.243337300Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-04T07:05:30.244593400Z] {"time":"2026-02-04T12:35:30.2433373+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-04T07:05:30.244593400Z] {"time":"2026-02-04T12:35:30.2440284+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-04T07:05:30.244593400Z] {"time":"2026-02-04T12:35:30.2440284+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-04T07:05:30.245173600Z] {"time":"2026-02-04T12:35:30.2440284+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-04T07:05:30.245173600Z] {"time":"2026-02-04T12:35:30.2445934+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-04T07:05:30.245757600Z] {"time":"2026-02-04T12:35:30.2445934+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-04T07:05:30.744564100Z] {"time":"2026-02-04T12:35:30.7445641+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-12T03:47:23.998422100Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-12T03:47:24.021252700Z] {"time":"2026-02-12T09:17:24.0154827+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-12T03:47:24.027456500Z] {"time":"2026-02-12T09:17:24.0264182+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-12T03:47:24.032523300Z] {"time":"2026-02-12T09:17:24.0310593+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-12T03:47:24.046603900Z] {"time":"2026-02-12T09:17:24.03411+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-12T03:47:24.056775100Z] {"time":"2026-02-12T09:17:24.0517814+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-12T03:47:24.060777800Z] {"time":"2026-02-12T09:17:24.0588112+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-12T03:47:24.535028400Z] {"time":"2026-02-12T09:17:24.5341769+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-13T04:35:26.033402100Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-13T04:35:26.039205900Z] {"time":"2026-02-13T10:05:26.0375104+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-13T04:35:26.040353300Z] {"time":"2026-02-13T10:05:26.0403533+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-13T04:35:26.041449000Z] {"time":"2026-02-13T10:05:26.041449+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-13T04:35:26.045886700Z] {"time":"2026-02-13T10:05:26.0425458+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-13T04:35:26.047583000Z] {"time":"2026-02-13T10:05:26.047583+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-13T04:35:26.049754900Z] {"time":"2026-02-13T10:05:26.0492084+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-13T04:35:26.551529900Z] {"time":"2026-02-13T10:05:26.5510156+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-13T12:42:16.881890500Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-13T12:42:16.900484500Z] {"time":"2026-02-13T18:12:16.8923153+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-13T12:42:16.901659200Z] {"time":"2026-02-13T18:12:16.9010351+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-13T12:42:16.905632900Z] {"time":"2026-02-13T18:12:16.9038595+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-13T12:42:16.914976500Z] {"time":"2026-02-13T18:12:16.9076876+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-13T12:42:16.919475400Z] {"time":"2026-02-13T18:12:16.9188158+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-13T12:42:16.930833700Z] {"time":"2026-02-13T18:12:16.9218797+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-13T12:42:17.408206900Z] {"time":"2026-02-13T18:12:17.4076001+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-16T12:39:49.640020100Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-16T12:39:49.647519400Z] {"time":"2026-02-16T18:09:49.6445379+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-16T12:39:49.649965500Z] {"time":"2026-02-16T18:09:49.6499655+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-16T12:39:49.651665500Z] {"time":"2026-02-16T18:09:49.6510729+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-16T12:39:49.656683100Z] {"time":"2026-02-16T18:09:49.6522704+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-16T12:39:49.659561900Z] {"time":"2026-02-16T18:09:49.6595619+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-16T12:39:49.662273800Z] {"time":"2026-02-16T18:09:49.6617476+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-16T12:39:50.152442600Z] {"time":"2026-02-16T18:09:50.1524426+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-16T13:31:04.878286800Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-16T13:31:04.879353000Z] {"time":"2026-02-16T19:01:04.8782868+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-16T13:31:04.879353000Z] {"time":"2026-02-16T19:01:04.8788251+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-16T13:31:04.879894300Z] {"time":"2026-02-16T19:01:04.8788251+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-16T13:31:04.879894300Z] {"time":"2026-02-16T19:01:04.8788251+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-16T13:31:04.879894300Z] {"time":"2026-02-16T19:01:04.879353+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-16T13:31:04.879894300Z] {"time":"2026-02-16T19:01:04.879353+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-16T13:31:05.379038200Z] {"time":"2026-02-16T19:01:05.3790382+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-16T18:04:01.927484500Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-16T18:04:01.951547400Z] {"time":"2026-02-16T23:34:01.9367626+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-16T18:04:01.956895800Z] {"time":"2026-02-16T23:34:01.9561783+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-16T18:04:01.963750000Z] {"time":"2026-02-16T23:34:01.9627196+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-16T18:04:01.988411100Z] {"time":"2026-02-16T23:34:01.9701023+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-16T18:04:02.007956900Z] {"time":"2026-02-16T23:34:02.0074436+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-16T18:04:02.017617000Z] {"time":"2026-02-16T23:34:02.0131165+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-16T18:04:02.468740600Z] {"time":"2026-02-16T23:34:02.4687406+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-17T02:59:12.524925300Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-17T02:59:12.535850600Z] {"time":"2026-02-17T08:29:12.5316221+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-17T02:59:12.538674500Z] {"time":"2026-02-17T08:29:12.5376348+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-17T02:59:12.541776600Z] {"time":"2026-02-17T08:29:12.5406455+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-17T02:59:12.548168900Z] {"time":"2026-02-17T08:29:12.5430621+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T02:59:12.551909400Z] {"time":"2026-02-17T08:29:12.5519094+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T02:59:12.556676300Z] {"time":"2026-02-17T08:29:12.5561665+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-17T02:59:13.044593800Z] {"time":"2026-02-17T08:29:13.0445938+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-17T09:13:50.047405300Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-17T09:13:50.067077800Z] {"time":"2026-02-17T14:43:50.0633146+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-17T09:13:50.070424300Z] {"time":"2026-02-17T14:43:50.0704243+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-17T09:13:50.080202600Z] {"time":"2026-02-17T14:43:50.07856+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-17T09:13:50.094101000Z] {"time":"2026-02-17T14:43:50.0850627+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T09:13:50.097288100Z] {"time":"2026-02-17T14:43:50.0972881+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T09:13:50.102990200Z] {"time":"2026-02-17T14:43:50.0993573+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-17T09:13:50.582565300Z] {"time":"2026-02-17T14:43:50.5825653+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-17T09:26:46.984943800Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-17T09:26:46.986203900Z] {"time":"2026-02-17T14:56:46.9849438+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-17T09:26:46.986774500Z] {"time":"2026-02-17T14:56:46.9862039+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-17T09:26:46.986774500Z] {"time":"2026-02-17T14:56:46.9862039+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-17T09:26:46.986774500Z] {"time":"2026-02-17T14:56:46.9867745+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T09:26:46.987328300Z] {"time":"2026-02-17T14:56:46.9873283+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T09:26:46.987895200Z] {"time":"2026-02-17T14:56:46.9873283+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-17T09:26:47.487022700Z] {"time":"2026-02-17T14:56:47.4870227+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T09:38:57.554904100Z] {"time":"2026-02-17T15:08:57.5085626+05:30","level":"INFO","msg":"received signal","signal":15}
+[2026-02-17T09:38:57.565718900Z] {"time":"2026-02-17T15:08:57.5639262+05:30","level":"INFO","msg":"stopping server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T09:38:57.566271400Z] {"time":"2026-02-17T15:08:57.5662714+05:30","level":"INFO","msg":"shutting down server"}
+[2026-02-17T09:38:57.566856500Z] {"time":"2026-02-17T15:08:57.5668565+05:30","level":"INFO","msg":"VM monitor stopping"}
+[2026-02-17T09:38:57.569090800Z] {"time":"2026-02-17T15:08:57.5668565+05:30","level":"INFO","msg":"closing VMs","count":0}
+[2026-02-17T09:38:57.569645100Z] {"time":"2026-02-17T15:08:57.5690908+05:30","level":"INFO","msg":"closing VMs","count":0}
+[2026-02-17T09:38:57.582618200Z] {"time":"2026-02-17T15:08:57.5810018+05:30","level":"INFO","msg":"echo server was closed"}
+[2026-02-17T09:38:57.587012200Z] {"time":"2026-02-17T15:08:57.5870122+05:30","level":"INFO","msg":"API server shut down gracefully, exiting"}
+-------------------------------------------------------------------------------->8
+[2026-02-17T10:40:33.364269900Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-17T10:40:33.375774000Z] {"time":"2026-02-17T16:10:33.374662+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-17T10:40:33.379000400Z] {"time":"2026-02-17T16:10:33.3790004+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-17T10:40:33.379542900Z] {"time":"2026-02-17T16:10:33.3795429+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-17T10:40:33.383828200Z] {"time":"2026-02-17T16:10:33.3800783+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T10:40:33.385979600Z] {"time":"2026-02-17T16:10:33.3859796+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-17T10:40:33.388130200Z] {"time":"2026-02-17T16:10:33.3876034+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-17T10:40:33.879681600Z] {"time":"2026-02-17T16:10:33.8796816+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-19T01:47:16.383638300Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-19T01:47:16.421946800Z] {"time":"2026-02-19T07:17:16.4127575+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-19T01:47:16.430654700Z] {"time":"2026-02-19T07:17:16.4306547+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-19T01:47:16.442075100Z] {"time":"2026-02-19T07:17:16.4396606+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-19T01:47:16.485599300Z] {"time":"2026-02-19T07:17:16.4448964+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T01:47:16.531527700Z] {"time":"2026-02-19T07:17:16.5194353+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T01:47:16.543384500Z] {"time":"2026-02-19T07:17:16.5346613+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-19T01:47:16.948343900Z] {"time":"2026-02-19T07:17:16.9455685+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-19T02:13:11.675426000Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-19T02:13:11.684016800Z] {"time":"2026-02-19T07:43:11.6815864+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-19T02:13:11.685249900Z] {"time":"2026-02-19T07:43:11.6852499+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-19T02:13:11.688699700Z] {"time":"2026-02-19T07:43:11.687477+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-19T02:13:11.695628200Z] {"time":"2026-02-19T07:43:11.6904261+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T02:13:11.699972600Z] {"time":"2026-02-19T07:43:11.6992353+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T02:13:11.704658400Z] {"time":"2026-02-19T07:43:11.7028992+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-19T02:13:12.190626300Z] {"time":"2026-02-19T07:43:12.1906263+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-19T04:12:15.568153300Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-19T04:12:15.577259500Z] {"time":"2026-02-19T09:42:15.5739241+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-19T04:12:15.579784500Z] {"time":"2026-02-19T09:42:15.5797845+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-19T04:12:15.582272300Z] {"time":"2026-02-19T09:42:15.5816419+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-19T04:12:15.588307200Z] {"time":"2026-02-19T09:42:15.5835549+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T04:12:15.590758300Z] {"time":"2026-02-19T09:42:15.5907583+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T04:12:15.595339900Z] {"time":"2026-02-19T09:42:15.5933294+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-19T04:12:16.084597200Z] {"time":"2026-02-19T09:42:16.0842853+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-19T04:31:54.066706900Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-19T04:31:54.075138100Z] {"time":"2026-02-19T10:01:54.0720179+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-19T04:31:54.077510300Z] {"time":"2026-02-19T10:01:54.0775103+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-19T04:31:54.078736600Z] {"time":"2026-02-19T10:01:54.078104+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-19T04:31:54.083529200Z] {"time":"2026-02-19T10:01:54.0793215+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T04:31:54.086463900Z] {"time":"2026-02-19T10:01:54.0864639+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T04:31:54.089587500Z] {"time":"2026-02-19T10:01:54.0890069+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-19T04:31:54.579094800Z] {"time":"2026-02-19T10:01:54.5790948+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-19T05:58:01.295741700Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-19T05:58:01.297472100Z] {"time":"2026-02-19T11:28:01.2957417+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-19T05:58:01.297472100Z] {"time":"2026-02-19T11:28:01.2962894+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-19T05:58:01.297472100Z] {"time":"2026-02-19T11:28:01.2962894+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-19T05:58:01.297472100Z] {"time":"2026-02-19T11:28:01.2962894+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T05:58:01.297472100Z] {"time":"2026-02-19T11:28:01.2969225+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T05:58:01.297472100Z] {"time":"2026-02-19T11:28:01.2969225+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-19T05:58:01.796567900Z] {"time":"2026-02-19T11:28:01.7965679+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-19T09:10:32.035846600Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-19T09:10:32.058584700Z] {"time":"2026-02-19T14:40:32.0401115+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-19T09:10:32.063451700Z] {"time":"2026-02-19T14:40:32.04981+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-19T09:10:32.065023900Z] {"time":"2026-02-19T14:40:32.0519393+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-19T09:10:32.065023900Z] {"time":"2026-02-19T14:40:32.0536474+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T09:10:32.069229100Z] {"time":"2026-02-19T14:40:32.0627847+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-19T09:10:32.073596400Z] {"time":"2026-02-19T14:40:32.0671254+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-19T09:10:32.555454100Z] {"time":"2026-02-19T14:40:32.5542901+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-20T03:50:24.632544000Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-20T03:50:24.642085500Z] {"time":"2026-02-20T09:20:24.6391759+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-20T03:50:24.643755200Z] {"time":"2026-02-20T09:20:24.6437552+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-20T03:50:24.646665500Z] {"time":"2026-02-20T09:20:24.6455421+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-20T03:50:24.652806300Z] {"time":"2026-02-20T09:20:24.6479311+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-20T03:50:24.656721200Z] {"time":"2026-02-20T09:20:24.6567212+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-20T03:50:24.660373000Z] {"time":"2026-02-20T09:20:24.6590989+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-20T03:50:25.147731500Z] {"time":"2026-02-20T09:20:25.1477315+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-25T02:23:24.077925900Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-25T02:23:24.104662000Z] {"time":"2026-02-25T07:53:24.0949413+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-25T02:23:24.111827200Z] {"time":"2026-02-25T07:53:24.1097725+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-25T02:23:24.125885600Z] {"time":"2026-02-25T07:53:24.1244229+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-25T02:23:24.146760500Z] {"time":"2026-02-25T07:53:24.1289281+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-25T02:23:24.153485100Z] {"time":"2026-02-25T07:53:24.1534851+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-25T02:23:24.168533900Z] {"time":"2026-02-25T07:53:24.1653598+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-25T02:23:24.631711100Z] {"time":"2026-02-25T07:53:24.6299836+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-25T02:47:34.177570900Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-25T02:47:34.202832300Z] {"time":"2026-02-25T08:17:34.1912543+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-25T02:47:34.206472600Z] {"time":"2026-02-25T08:17:34.2058832+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-25T02:47:34.211179300Z] {"time":"2026-02-25T08:17:34.2105131+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-25T02:47:34.225332800Z] {"time":"2026-02-25T08:17:34.2140676+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-25T02:47:34.231035400Z] {"time":"2026-02-25T08:17:34.2310354+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-25T02:47:34.238878200Z] {"time":"2026-02-25T08:17:34.2376079+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-25T02:47:34.719106500Z] {"time":"2026-02-25T08:17:34.7170912+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+-------------------------------------------------------------------------------->8
+[2026-02-25T03:46:51.733335300Z] Starting daemon at \\.\pipe\docker_sandboxes_sandboxd (Ctrl+C to stop)...
+[2026-02-25T03:46:51.746109900Z] {"time":"2026-02-25T09:16:51.7429854+05:30","level":"INFO","msg":"starting sandboxd","version":"sandboxd/v0.0.0+unknown go/1.25.6 windows/amd64"}
+[2026-02-25T03:46:51.747863700Z] {"time":"2026-02-25T09:16:51.7473246+05:30","level":"INFO","msg":"created secrets store for credential management"}
+[2026-02-25T03:46:51.750676100Z] {"time":"2026-02-25T09:16:51.7495776+05:30","level":"INFO","msg":"vm registry initialized","discovered_vms":0}
+[2026-02-25T03:46:51.762109100Z] {"time":"2026-02-25T09:16:51.7527766+05:30","level":"INFO","msg":"starting api server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-25T03:46:51.766717900Z] {"time":"2026-02-25T09:16:51.766128+05:30","level":"INFO","msg":"starting server","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}
+[2026-02-25T03:46:51.771398400Z] {"time":"2026-02-25T09:16:51.7696784+05:30","level":"INFO","msg":"VM monitor started","idle_timeout":1800000000000,"max_running_vms":3}
+[2026-02-25T03:46:52.253147800Z] {"time":"2026-02-25T09:16:52.2531478+05:30","level":"INFO","msg":"api server started successfully","address":"\\\\.\\pipe\\docker_sandboxes_sandboxd"}

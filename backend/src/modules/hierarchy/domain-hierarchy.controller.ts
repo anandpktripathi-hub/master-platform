@@ -1,6 +1,8 @@
 import { Controller, Post, Get, Body, Param, Delete } from '@nestjs/common';
 import { DomainHierarchyService } from './domain-hierarchy.service';
-
+import { AssignNodeIdsDto } from './dto/assign-node-ids.dto';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Domain Hierarchy')
 @Controller('domain-hierarchy')
 export class DomainHierarchyController {
   constructor(private readonly service: DomainHierarchyService) {}
@@ -8,9 +10,9 @@ export class DomainHierarchyController {
   @Post(':domainId')
   async assignNodes(
     @Param('domainId') domainId: string,
-    @Body('nodeIds') nodeIds: string[],
+    @Body() body: AssignNodeIdsDto,
   ) {
-    return this.service.assignNodesToDomain(domainId, nodeIds);
+    return this.service.assignNodesToDomain(domainId, body.nodeIds);
   }
 
   @Get(':domainId')

@@ -18,10 +18,23 @@ import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { objectIdToString } from '../../utils/objectIdToString';
 import { Role } from '../users/role.types';
+import { UpdateTenantPublicProfileDto } from './dto/tenant-public-profile.dto';
 
 @Injectable()
 export class TenantsService {
   private readonly logger = new Logger(TenantsService.name);
+
+  private escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  private toObjectId(value: unknown, fieldName: string): Types.ObjectId {
+    const asString = typeof value === 'string' ? value : String(value ?? '');
+    if (!Types.ObjectId.isValid(asString)) {
+      throw new BadRequestException(`${fieldName} is invalid`);
+    }
+    return new Types.ObjectId(asString);
+  }
 
   constructor(
     @InjectModel(Tenant.name)
@@ -48,6 +61,9 @@ export class TenantsService {
     }
 
     try {
+      if (!Types.ObjectId.isValid(tenantId)) {
+        return null;
+      }
       const tenantObjectId = new Types.ObjectId(tenantId);
       const tenant = await this.tenantModel.findById(tenantObjectId).lean();
 
@@ -124,6 +140,53 @@ export class TenantsService {
     return tenant.save();
   }
 
+  async listTenants(input: {
+    page?: number;
+    limit?: number;
+    q?: string;
+  }): Promise<{
+    items: Tenant[];
+    total: number;
+    page: number;
+    limit: number;
+  }> {
+    const page = Number.isFinite(input.page) && (input.page as number) > 0 ? (input.page as number) : 1;
+    const limitRaw =
+      Number.isFinite(input.limit) && (input.limit as number) > 0
+        ? (input.limit as number)
+        : 20;
+    const limit = Math.min(100, Math.max(1, limitRaw));
+    const skip = (page - 1) * limit;
+
+    const query: Record<string, unknown> = {};
+    if (input.q) {
+      const raw = String(input.q).trim();
+      if (raw.length > 100) {
+        throw new BadRequestException('q is too long');
+      }
+      const safe = this.escapeRegExp(raw);
+      const re = new RegExp(safe, 'i');
+      query.$or = [
+        { name: re },
+        { slug: re },
+        { companyName: re },
+        { publicName: re },
+      ];
+    }
+
+    const [items, total] = await Promise.all([
+      this.tenantModel
+        .find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean<Tenant[]>(),
+      this.tenantModel.countDocuments(query).exec(),
+    ]);
+
+    return { items, total, page, limit };
+  }
+
   private normalizeHost(hostRaw: string): string {
     const host = String(hostRaw || '')
       .trim()
@@ -182,15 +245,51 @@ export class TenantsService {
   }
 
   async getCurrentTenant(tenantId: string) {
+    if (!tenantId || !Types.ObjectId.isValid(tenantId)) {
+      return null;
+    }
     return this.tenantModel.findById(tenantId).lean();
   }
 
   async updateTenantPublicProfile(
     tenantId: string,
-    payload: Partial<TenantDocument>,
+    payload: UpdateTenantPublicProfileDto,
   ) {
+    if (!tenantId || !Types.ObjectId.isValid(tenantId)) {
+      throw new BadRequestException('Tenant ID is invalid');
+    }
+
+    const update: Record<string, unknown> = {
+      ...(payload.publicName !== undefined && { publicName: payload.publicName }),
+      ...(payload.tagline !== undefined && { tagline: payload.tagline }),
+      ...(payload.shortDescription !== undefined && {
+        shortDescription: payload.shortDescription,
+      }),
+      ...(payload.fullDescription !== undefined && {
+        fullDescription: payload.fullDescription,
+      }),
+      ...(payload.logoUrl !== undefined && { logoUrl: payload.logoUrl }),
+      ...(payload.coverImageUrl !== undefined && {
+        coverImageUrl: payload.coverImageUrl,
+      }),
+      ...(payload.categories !== undefined && { categories: payload.categories }),
+      ...(payload.tags !== undefined && { tags: payload.tags }),
+      ...(payload.websiteUrl !== undefined && { websiteUrl: payload.websiteUrl }),
+      ...(payload.contactEmailPublic !== undefined && {
+        contactEmailPublic: payload.contactEmailPublic,
+      }),
+      ...(payload.contactPhonePublic !== undefined && {
+        contactPhonePublic: payload.contactPhonePublic,
+      }),
+      ...(payload.isListedInDirectory !== undefined && {
+        isListedInDirectory: payload.isListedInDirectory,
+      }),
+      ...(payload.city !== undefined && { city: payload.city }),
+      ...(payload.country !== undefined && { country: payload.country }),
+    };
+
     const updated = await this.tenantModel
-      .findByIdAndUpdate(tenantId, payload, { new: true })
+      .findByIdAndUpdate(tenantId, { $set: update }, { new: true })
       .lean();
     if (!updated) {
       throw new BadRequestException('Tenant not found');
@@ -247,11 +346,17 @@ export class TenantsService {
       query.avgRating = { $gte: filter.minRating };
     }
     if (filter.q) {
+      const raw = String(filter.q).trim();
+      if (raw.length > 100) {
+        throw new BadRequestException('q is too long');
+      }
+      const safe = this.escapeRegExp(raw);
+      const re = new RegExp(safe, 'i');
       query.$or = [
-        { name: new RegExp(filter.q, 'i') },
-        { publicName: new RegExp(filter.q, 'i') },
-        { shortDescription: new RegExp(filter.q, 'i') },
-        { tags: new RegExp(filter.q, 'i') },
+        { name: re },
+        { publicName: re },
+        { shortDescription: re },
+        { tags: re },
       ];
     }
 
@@ -263,22 +368,26 @@ export class TenantsService {
       .lean();
   }
 
-  async listBusinessReviews(tenantId: Types.ObjectId) {
+  async listBusinessReviews(tenantId: string) {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.reviewModel
-      .find({ tenantId, status: 'PUBLISHED' })
+      .find({ tenantId: tenantObjectId, status: 'PUBLISHED' })
       .sort({ createdAt: -1 })
       .lean();
   }
 
   async addBusinessReview(
-    tenantId: Types.ObjectId,
-    userId: Types.ObjectId,
+    tenantId: string,
+    userId: string,
     rating: number,
     comment?: string,
   ) {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const userObjectId = this.toObjectId(userId, 'userId');
+
     await this.reviewModel.create({
-      tenantId,
-      userId,
+      tenantId: tenantObjectId,
+      userId: userObjectId,
       rating,
       comment,
       status: 'PUBLISHED',
@@ -286,7 +395,7 @@ export class TenantsService {
 
     const agg = await this.reviewModel
       .aggregate([
-        { $match: { tenantId, status: 'PUBLISHED' } },
+        { $match: { tenantId: tenantObjectId, status: 'PUBLISHED' } },
         {
           $group: {
             _id: '$tenantId',
@@ -300,7 +409,7 @@ export class TenantsService {
     const { avgRating = 0, reviewCount = 0 } = agg[0] || {};
 
     await this.tenantModel.updateOne(
-      { _id: tenantId },
+      { _id: tenantObjectId },
       { $set: { avgRating, reviewCount } },
     );
   }
@@ -313,6 +422,11 @@ export class TenantsService {
     dto: ManualCreateTenantDto,
     createdByAdminId: string,
   ) {
+    const createdByAdminObjectId = this.toObjectId(
+      createdByAdminId,
+      'createdByAdminId',
+    );
+
     const {
       personal,
       company,
@@ -355,11 +469,15 @@ export class TenantsService {
     const tempPassword = password || crypto.randomBytes(8).toString('hex');
     const hashedPassword = await bcrypt.hash(tempPassword, 10);
 
+    const primaryDomain = process.env.PLATFORM_PRIMARY_DOMAIN
+      ? String(process.env.PLATFORM_PRIMARY_DOMAIN).trim()
+      : 'yourdomain.com';
+
     // 3. Create Tenant record (marked as platform-created)
     const tenant = await this.tenantModel.create({
       name: company.companyName,
       slug: subdomain,
-      domain: `${subdomain}.yourdomain.com`,
+      domain: `${subdomain}.${primaryDomain}`,
       companyName: company.companyName,
       companyDateOfBirth: company.companyDateOfBirth
         ? new Date(company.companyDateOfBirth)
@@ -376,7 +494,7 @@ export class TenantsService {
       acceptedPrivacyAt: compliance.acceptedPrivacy ? new Date() : undefined,
       createdByPlatformOwner: true,
       skipPayment: skipPayment || false,
-      createdByUserId: new Types.ObjectId(createdByAdminId),
+      createdByUserId: createdByAdminObjectId,
     });
 
     // 4. Create Admin User for this tenant
@@ -403,12 +521,10 @@ export class TenantsService {
       companyIdNumberForUser: company.companyIdNumberForUser,
     });
 
-    // 5. Placeholder for invitation email
+    // 5. Invitation email (not implemented yet)
     if (sendInviteEmail && !password) {
-      // TODO: Implement email service to send set-password link
-      // await this.emailService.sendSetPasswordInvite(user.email, tempPassword);
-      console.log(
-        `[INVITE PLACEHOLDER] Send invite to ${user.email} with temp password: ${tempPassword}`,
+      this.logger.warn(
+        `sendInviteEmail requested for ${String(user.email).trim()} but email sending is not implemented`,
       );
     }
 
@@ -433,7 +549,7 @@ export class TenantsService {
         username: user.username,
       },
       temporaryPassword: !password ? tempPassword : undefined,
-      inviteSent: sendInviteEmail && !password,
+      inviteSent: false,
     };
   }
 }

@@ -15,7 +15,8 @@ import { UploadThemeDto } from './dto/upload-theme.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { StorageService } from '../../common/storage/storage.service';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Branding')
 @Controller('branding')
 export class BrandingController {
   private readonly logger = new Logger(BrandingController.name);

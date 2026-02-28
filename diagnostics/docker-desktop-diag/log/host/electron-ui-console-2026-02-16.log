@@ -1,0 +1,8 @@
+2026-02-16T08:11:24.329Z error 	Error: Max retries reached: {"message":"could not retrieve Desktop settings, check if Docker Desktop is installed properly"} (app://dd/main.rend.js:157)
+2026-02-16T08:40:44.463Z error 	Error: Max retries reached: {"message":"could not retrieve Desktop settings, check if Docker Desktop is installed properly"} (app://dd/main.rend.js:157)
+2026-02-16T09:21:59.765Z error 	Error: Max retries reached: {"message":"could not retrieve Desktop settings, check if Docker Desktop is installed properly"} (app://dd/main.rend.js:157)
+2026-02-16T12:46:14.507Z error 	stream loop volume-stream exited: Error: [IPC engine.dockerStreamEvents] aborted (app://dd/main.rend.js:157)
+2026-02-16T14:35:00.319Z error 	stream loop volume-stream exited: Error: (HTTP code 404) no such volume - get 3331b537f83d69f4f3e09f7597d370b676bf74d3f45778ea3c6f0e7ec9c0792a: no such volume  (app://dd/main.rend.js:157)
+2026-02-16T14:38:08.787Z error 	stream loop volume-stream exited: Error: (HTTP code 404) no such volume - get a010b0f33e597a8265580c9255ea583ccc481f2de5159018339ee08c49d2d005: no such volume  (app://dd/main.rend.js:157)
+2026-02-16T14:38:09.694Z error 	stream loop volume-stream exited: Error: (HTTP code 404) no such volume - get a010b0f33e597a8265580c9255ea583ccc481f2de5159018339ee08c49d2d005: no such volume  (app://dd/main.rend.js:157)
+2026-02-16T15:29:21.219Z error 	stream loop volume-stream exited: Error: (HTTP code 404) no such volume - get aec02c1763886bce45396138624735e0df40387c49687af914775bccc56be64a: no such volume  (app://dd/main.rend.js:157)

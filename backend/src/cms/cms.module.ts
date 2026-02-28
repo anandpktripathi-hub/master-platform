@@ -31,6 +31,7 @@ import { CmsAnalyticsController } from './controllers/cms-analytics.controller';
 import { CmsSeoAuditController } from './controllers/cms-seo-audit.controller';
 import { CmsMenuController } from './controllers/cms-menu.controller';
 import { CmsFileImportController } from './controllers/cms-file-import.controller';
+import { CmsMenuShortController } from './controllers/cms-menu-short.controller';
 
 // ...existing code...
 
@@ -61,6 +62,7 @@ import { CmsFileImportController } from './controllers/cms-file-import.controlle
     CmsAnalyticsController,
     CmsSeoAuditController,
     CmsMenuController,
+    CmsMenuShortController,
     CmsFileImportController,
   ],
   exports: [CmsPageService, CmsTemplateService, CmsAnalyticsService],

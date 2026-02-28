@@ -24,110 +24,12 @@ import {
   PosOrder,
   PosOrderDocument,
 } from '../../database/schemas/pos-order.schema';
+import { PaymentLog } from '../../database/schemas/payment-log.schema';
 
 import { PlanKey } from '../../database/schemas/tenant.schema';
 import { CmsPageAnalyticsEntity } from '../../cms/entities/cms.entities';
 import { PaymentLogService } from '../payments/services/payment-log.service';
-
-interface SaasOverviewResponse {
-  tenants: {
-    total: number;
-    active: number;
-    trialing: number;
-    paying: number;
-  };
-  users: {
-    total: number;
-    verified: number;
-  };
-  billing: {
-    totalRevenue: number;
-    totalInvoices: number;
-    paidInvoices: number;
-    currency: string | null;
-  };
-  domains: {
-    internal: {
-      total: number;
-      path: number;
-      subdomain: number;
-      byStatus: {
-        pending: number;
-        active: number;
-        suspended: number;
-        blocked: number;
-      };
-    };
-    custom: {
-      total: number;
-      byStatus: {
-        pending_verification: number;
-        verified: number;
-        ssl_pending: number;
-        ssl_issued: number;
-        active: number;
-        suspended: number;
-      };
-    };
-  };
-  orders: {
-    totalOrders: number;
-    totalSales: number;
-    last30Days: {
-      orders: number;
-      totalSales: number;
-    };
-    byStatus: {
-      completed: number;
-      cancelled: number;
-    };
-    dailySeries: {
-      date: string; // YYYY-MM-DD
-      totalOrders: number;
-      totalSales: number;
-    }[];
-  };
-  plans: {
-    byPlanKey: Record<PlanKey, number>;
-  };
-  visitors: {
-    totalViewsLast30Days: number;
-    totalUniqueVisitorsLast30Days: number;
-    dailySeries: {
-      date: string; // YYYY-MM-DD
-      views: number;
-      uniqueVisitors: number;
-    }[];
-    topTenants: {
-      tenantId: string;
-      tenantName: string;
-      views: number;
-      uniqueVisitors: number;
-    }[];
-  };
-  monthlyRevenue: {
-    month: string; // YYYY-MM
-    totalAmount: number;
-    paidInvoices: number;
-  }[];
-  sslAutomation: {
-    acme: {
-      total: number;
-      pending: number;
-      issued: number;
-      failed: number;
-    };
-  };
-  paymentsHealth: {
-    totalFailedLast30Days: number;
-    recentFailures: {
-      transactionId: string;
-      gatewayName: string;
-      error: string;
-      createdAt: string;
-    }[];
-  };
-}
+import type { SaasOverviewResponse } from './dto/saas-overview.dto';
 
 @Injectable()
 export class AnalyticsService {
@@ -305,19 +207,21 @@ export class AnalyticsService {
     // Payments health (recent failures)
     const nowTs = Date.now();
     const thirtyDaysAgoTs = nowTs - 30 * 24 * 60 * 60 * 1000;
-    const allLogs = this.paymentLogService.list();
+    const allLogs: PaymentLog[] = await this.paymentLogService.list();
     const failedLast30 = allLogs.filter(
-      (l) =>
+      (l: PaymentLog) =>
         l.status === 'failed' &&
-        l.createdAt &&
+        !!l.createdAt &&
         l.createdAt.getTime() >= thirtyDaysAgoTs,
     );
     const totalFailedLast30Days = failedLast30.length;
-    const recentFailures = this.paymentLogService.listFailures(5).map((l) => ({
+    const recentFailureLogs: PaymentLog[] =
+      await this.paymentLogService.listFailures(5);
+    const recentFailures = recentFailureLogs.map((l: PaymentLog) => ({
       transactionId: l.transactionId,
       gatewayName: l.gatewayName || 'unknown',
       error: l.error || 'Unknown error',
-      createdAt: l.createdAt.toISOString(),
+      createdAt: l.createdAt ? l.createdAt.toISOString() : '',
     }));
 
     // Resolve tenant names for top tenants by traffic

@@ -1,9 +1,10 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { ReportsService } from './reports.service';
 import type { Request } from 'express';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 interface AuthRequest extends Request {
   user?: {
@@ -14,7 +15,8 @@ interface AuthRequest extends Request {
     role?: string;
   };
 }
-
+@ApiTags('Reports')
+@ApiBearerAuth('bearer')
 @Controller('reports')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ReportsController {
@@ -23,7 +25,7 @@ export class ReportsController {
   private getTenantIdFromRequest(req: AuthRequest): string {
     const tenantId = req.user?.tenantId;
     if (!tenantId) {
-      throw new Error('Tenant ID not found in auth context');
+      throw new BadRequestException('Tenant ID not found in auth context');
     }
     return String(tenantId);
   }

@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -21,6 +26,14 @@ import {
   TrainingSession,
   TrainingSessionDocument,
 } from '../../database/schemas/training-session.schema';
+import {
+  CreateEmployeeDto,
+  CreateJobPostingDto,
+  CreateLeaveRequestDto,
+  CreateTrainingSessionDto,
+  RecordAttendanceDto,
+  UpdateEmployeeDto,
+} from './dto/hrm.dto';
 
 @Injectable()
 export class HrmService {
@@ -37,30 +50,153 @@ export class HrmService {
     private readonly trainingModel: Model<TrainingSessionDocument>,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (typeof value !== 'string' || !Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return new Types.ObjectId(value);
+  }
+
+  private parseDate(value: string, fieldName: string): Date {
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) {
+      throw new BadRequestException(`Invalid ${fieldName}`);
+    }
+    return d;
+  }
+
+  private sanitizeUpdatePayload(
+    payload: Record<string, unknown>,
+    forbiddenKeys: string[],
+  ): Record<string, unknown> {
+    const forbidden = new Set(forbiddenKeys);
+    return Object.fromEntries(
+      Object.entries(payload).filter(
+        ([key, value]) => !forbidden.has(key) && value !== undefined,
+      ),
+    );
+  }
+
+  private async assertEmployeeInTenant(
+    tenantObjectId: Types.ObjectId,
+    employeeId: string,
+  ): Promise<Types.ObjectId> {
+    const employeeObjectId = this.toObjectId(employeeId, 'employeeId');
+    const exists = await this.employeeModel
+      .findOne({ _id: employeeObjectId, tenantId: tenantObjectId })
+      .select({ _id: 1 })
+      .lean()
+      .exec();
+    if (!exists) {
+      throw new NotFoundException('Employee not found');
+    }
+    return employeeObjectId;
+  }
+
   // Employees
   async listEmployees(tenantId: string): Promise<Employee[]> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.employeeModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .lean()
       .exec();
   }
 
+  async getEmployeeById(tenantId: string, id: string): Promise<Employee> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const employeeObjectId = this.toObjectId(id, 'employeeId');
+
+    const employee = await this.employeeModel
+      .findOne({ _id: employeeObjectId, tenantId: tenantObjectId })
+      .lean()
+      .exec();
+
+    if (!employee) {
+      throw new NotFoundException('Employee not found');
+    }
+
+    return employee;
+  }
+
   async createEmployee(
     tenantId: string,
-    payload: Partial<Employee>,
+    payload: CreateEmployeeDto,
   ): Promise<Employee> {
-    const doc = new this.employeeModel({
-      ...payload,
-      tenantId: new Types.ObjectId(tenantId),
-    });
-    return doc.save();
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    try {
+      return await this.employeeModel.create({
+        ...payload,
+        tenantId: tenantObjectId,
+      });
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        throw new ConflictException('Employee email already exists');
+      }
+      throw err;
+    }
+  }
+
+  async updateEmployee(
+    tenantId: string,
+    id: string,
+    payload: UpdateEmployeeDto,
+  ): Promise<Employee> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const employeeObjectId = this.toObjectId(id, 'employeeId');
+
+    const safeUpdate = this.sanitizeUpdatePayload(
+      payload as unknown as Record<string, unknown>,
+      ['tenantId', '_id'],
+    );
+
+    if (Object.keys(safeUpdate).length === 0) {
+      return this.getEmployeeById(tenantId, id);
+    }
+
+    try {
+      const updated = await this.employeeModel
+        .findOneAndUpdate(
+          { _id: employeeObjectId, tenantId: tenantObjectId },
+          { $set: safeUpdate },
+          { new: true },
+        )
+        .lean()
+        .exec();
+
+      if (!updated) {
+        throw new NotFoundException('Employee not found');
+      }
+
+      return updated;
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        throw new ConflictException('Employee email already exists');
+      }
+      throw err;
+    }
+  }
+
+  async deleteEmployee(tenantId: string, id: string): Promise<{ success: true }> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const employeeObjectId = this.toObjectId(id, 'employeeId');
+
+    const res = await this.employeeModel
+      .deleteOne({ _id: employeeObjectId, tenantId: tenantObjectId })
+      .exec();
+
+    if (!res.deletedCount) {
+      throw new NotFoundException('Employee not found');
+    }
+
+    return { success: true };
   }
 
   // Attendance
   async listAttendance(tenantId: string, date?: string): Promise<Attendance[]> {
-    const filter: any = { tenantId: new Types.ObjectId(tenantId) };
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const filter: any = { tenantId: tenantObjectId };
     if (date) {
-      const d = new Date(date);
+      const d = this.parseDate(date, 'date');
       const start = new Date(d.getFullYear(), d.getMonth(), d.getDate());
       const end = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
       filter.date = { $gte: start, $lt: end };
@@ -70,39 +206,61 @@ export class HrmService {
 
   async recordAttendance(
     tenantId: string,
-    payload: {
-      employeeId: string;
-      status: 'present' | 'absent' | 'remote' | 'on_leave';
-      date?: string;
-    },
+    payload: RecordAttendanceDto,
   ): Promise<Attendance> {
-    const date = payload.date ? new Date(payload.date) : new Date();
-    const doc = new this.attendanceModel({
-      employeeId: new Types.ObjectId(payload.employeeId),
-      tenantId: new Types.ObjectId(tenantId),
-      status: payload.status,
-      date,
-    });
-    return doc.save();
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const employeeObjectId = await this.assertEmployeeInTenant(
+      tenantObjectId,
+      payload.employeeId,
+    );
+    const date = payload.date ? this.parseDate(payload.date, 'date') : new Date();
+    try {
+      return await this.attendanceModel.create({
+        employeeId: employeeObjectId,
+        tenantId: tenantObjectId,
+        status: payload.status,
+        date,
+      });
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        throw new ConflictException('Attendance already recorded for this day');
+      }
+      throw err;
+    }
   }
 
   // Leave requests
   async listLeaveRequests(tenantId: string): Promise<LeaveRequest[]> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.leaveRequestModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .lean()
       .exec();
   }
 
   async createLeaveRequest(
     tenantId: string,
-    payload: Partial<LeaveRequest>,
+    payload: CreateLeaveRequestDto,
   ): Promise<LeaveRequest> {
-    const doc = new this.leaveRequestModel({
-      ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const employeeObjectId = await this.assertEmployeeInTenant(
+      tenantObjectId,
+      payload.employeeId,
+    );
+    const startDate = this.parseDate(payload.startDate, 'startDate');
+    const endDate = this.parseDate(payload.endDate, 'endDate');
+    if (endDate.getTime() < startDate.getTime()) {
+      throw new BadRequestException('Invalid date range');
+    }
+
+    return this.leaveRequestModel.create({
+      employeeId: employeeObjectId,
+      tenantId: tenantObjectId,
+      startDate,
+      endDate,
+      type: payload.type,
+      reason: payload.reason,
     });
-    return doc.save();
   }
 
   async updateLeaveStatus(
@@ -110,51 +268,68 @@ export class HrmService {
     id: string,
     status: 'pending' | 'approved' | 'rejected',
   ): Promise<LeaveRequest | null> {
-    return this.leaveRequestModel
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const leaveId = this.toObjectId(id, 'id');
+    const updated = await this.leaveRequestModel
       .findOneAndUpdate(
-        { _id: new Types.ObjectId(id), tenantId: new Types.ObjectId(tenantId) },
+        { _id: leaveId, tenantId: tenantObjectId },
         { $set: { status } },
         { new: true },
       )
       .exec();
+
+    if (!updated) {
+      throw new NotFoundException('Leave request not found');
+    }
+
+    return updated;
   }
 
   // Job postings
   async listJobPostings(tenantId: string): Promise<JobPosting[]> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.jobPostingModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .lean()
       .exec();
   }
 
   async createJobPosting(
     tenantId: string,
-    payload: Partial<JobPosting>,
+    payload: CreateJobPostingDto,
   ): Promise<JobPosting> {
-    const doc = new this.jobPostingModel({
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    return this.jobPostingModel.create({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+      tenantId: tenantObjectId,
     });
-    return doc.save();
   }
 
   // Training sessions
   async listTrainingSessions(tenantId: string): Promise<TrainingSession[]> {
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     return this.trainingModel
-      .find({ tenantId: new Types.ObjectId(tenantId) })
+      .find({ tenantId: tenantObjectId })
       .lean()
       .exec();
   }
 
   async createTrainingSession(
     tenantId: string,
-    payload: Partial<TrainingSession>,
+    payload: CreateTrainingSessionDto,
   ): Promise<TrainingSession> {
-    const doc = new this.trainingModel({
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
+    const startDate = this.parseDate(payload.startDate, 'startDate');
+    const endDate = this.parseDate(payload.endDate, 'endDate');
+    if (endDate.getTime() < startDate.getTime()) {
+      throw new BadRequestException('Invalid date range');
+    }
+    return this.trainingModel.create({
       ...payload,
-      tenantId: new Types.ObjectId(tenantId),
+      startDate,
+      endDate,
+      tenantId: tenantObjectId,
     });
-    return doc.save();
   }
 
   async getSummary(tenantId: string): Promise<{
@@ -163,7 +338,7 @@ export class HrmService {
     openJobs: number;
     upcomingTrainings: number;
   }> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
 
     const [activeEmployees, todayAttendance, openJobs, upcomingTrainings] =
       await Promise.all([
@@ -204,7 +379,7 @@ export class HrmService {
       absent: number;
     }[];
   }> {
-    const tenantObjectId = new Types.ObjectId(tenantId);
+    const tenantObjectId = this.toObjectId(tenantId, 'tenantId');
     const today = new Date();
     const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
 

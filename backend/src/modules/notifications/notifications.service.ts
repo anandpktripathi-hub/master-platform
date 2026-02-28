@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -26,12 +26,19 @@ export class NotificationsService {
     private readonly telegram: TelegramIntegrationService,
   ) {}
 
+  private toObjectId(value: string, fieldName: string): Types.ObjectId {
+    if (!Types.ObjectId.isValid(value)) {
+      throw new BadRequestException(`${fieldName} must be a valid ObjectId`);
+    }
+    return new Types.ObjectId(value);
+  }
+
   async createForUser(
     input: CreateNotificationInput,
   ): Promise<UserNotification> {
     const doc = new this.notificationModel({
-      tenantId: new Types.ObjectId(input.tenantId),
-      userId: new Types.ObjectId(input.userId),
+      tenantId: this.toObjectId(input.tenantId, 'tenantId'),
+      userId: this.toObjectId(input.userId, 'userId'),
       eventKey: input.eventKey,
       title: input.title,
       message: input.message,
@@ -57,27 +64,30 @@ export class NotificationsService {
     userId: string,
     opts?: { limit?: number },
   ): Promise<UserNotification[]> {
-    const limit = opts?.limit && opts.limit > 0 ? opts.limit : 50;
+    const limit = opts?.limit && opts.limit > 0 ? Math.min(opts.limit, 200) : 50;
 
     return this.notificationModel
       .find({
-        tenantId: new Types.ObjectId(tenantId),
-        userId: new Types.ObjectId(userId),
+        tenantId: this.toObjectId(tenantId, 'tenantId'),
+        userId: this.toObjectId(userId, 'userId'),
       })
       .sort({ createdAt: -1 })
       .limit(limit)
-      .lean();
+      .lean<UserNotificationDocument[]>()
+      .exec();
   }
 
   async markAllRead(tenantId: string, userId: string): Promise<number> {
-    const res = await this.notificationModel.updateMany(
-      {
-        tenantId: new Types.ObjectId(tenantId),
-        userId: new Types.ObjectId(userId),
-        read: false,
-      },
-      { $set: { read: true } },
-    );
+    const res = await this.notificationModel
+      .updateMany(
+        {
+          tenantId: this.toObjectId(tenantId, 'tenantId'),
+          userId: this.toObjectId(userId, 'userId'),
+          read: false,
+        },
+        { $set: { read: true } },
+      )
+      .exec();
     return res.modifiedCount ?? 0;
   }
 }

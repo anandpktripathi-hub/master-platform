@@ -11,17 +11,61 @@
   Param,
 } from '@nestjs/common';
 import { objectIdToString } from '../../utils/objectIdToString';
-import { Types } from 'mongoose';
 import { TenantsService } from './tenants.service';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { ManualCreateTenantDto } from './dto/manual-create-tenant.dto';
 import { UpdateTenantPublicProfileDto } from './dto/tenant-public-profile.dto';
-
+import { CreateBusinessReviewDto } from './dto/business-review.dto';
+import { ListTenantsQueryDto } from './dto/list-tenants.dto';
+import { CreateTenantDto } from './dto/create-tenant.dto';
+import { Types } from 'mongoose';
+import { Public } from '../../common/decorators/public.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Tenants')
+@ApiBearerAuth('bearer')
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
+
+  /**
+   * GET /tenants
+   * Platform admin tenant listing
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('platform_admin', 'PLATFORM_SUPER_ADMIN')
+  @Get()
+  async listTenants(@Query() query: ListTenantsQueryDto) {
+    return this.tenantsService.listTenants(query);
+  }
+
+  /**
+   * POST /tenants
+   * Platform admin creates a tenant record (lightweight)
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('platform_admin', 'PLATFORM_SUPER_ADMIN')
+  @Post()
+  async createTenant(
+    @Body() dto: CreateTenantDto,
+    @Req() req: { user?: { sub?: string; _id?: unknown } },
+  ) {
+    let adminId = req.user?.sub;
+    if (!adminId && req.user?._id && typeof req.user._id === 'object') {
+      adminId = objectIdToString(req.user._id);
+    }
+    if (!adminId) throw new BadRequestException('User ID is required');
+    if (!Types.ObjectId.isValid(adminId)) {
+      throw new BadRequestException('User ID is invalid');
+    }
+
+    return this.tenantsService.createTenant(
+      dto.name,
+      new Types.ObjectId(adminId),
+      dto.planKey ?? 'FREE',
+    );
+  }
 
   /**
    * GET /tenants/custom-domains
@@ -116,6 +160,7 @@ export class TenantsController {
    * Minimal business directory listing for public tenants
    */
   @Get('public-directory')
+  @Public()
   async listPublicBusinesses(
     @Query('q') q?: string,
     @Query('category') category?: string,
@@ -125,7 +170,14 @@ export class TenantsController {
     @Query('priceTier') priceTier?: 'LOW' | 'MEDIUM' | 'HIGH',
     @Query('minRating') minRatingRaw?: string,
   ) {
-    const minRating = minRatingRaw ? Number(minRatingRaw) : undefined;
+    let minRating: number | undefined;
+    if (minRatingRaw !== undefined) {
+      const parsed = Number(minRatingRaw);
+      if (!Number.isFinite(parsed)) {
+        throw new BadRequestException('minRating must be a number');
+      }
+      minRating = parsed;
+    }
     return this.tenantsService.listPublicBusinesses({
       q,
       category,
@@ -142,6 +194,7 @@ export class TenantsController {
    * Public business profile by slug
    */
   @Get('public/:slug')
+  @Public()
   async getPublicBusiness(@Param('slug') slug: string) {
     if (!slug) throw new BadRequestException('Slug is required');
     return this.tenantsService.getPublicBusinessBySlug(slug);
@@ -152,12 +205,12 @@ export class TenantsController {
    * Public reviews for a business
    */
   @Get('public/:slug/reviews')
+  @Public()
   async getBusinessReviews(@Param('slug') slug: string) {
     if (!slug) throw new BadRequestException('Slug is required');
     const tenant = await this.tenantsService.getPublicBusinessBySlug(slug);
-    return this.tenantsService.listBusinessReviews(
-      new Types.ObjectId(tenant._id as any),
-    );
+    const tenantId = objectIdToString(tenant._id);
+    return this.tenantsService.listBusinessReviews(tenantId);
   }
 
   /**
@@ -169,13 +222,11 @@ export class TenantsController {
   async addBusinessReview(
     @Param('slug') slug: string,
     @Req() req: { user?: { sub?: string; _id?: unknown } },
-    @Body() body: { rating?: number; comment?: string },
+    @Body() dto: CreateBusinessReviewDto,
   ) {
     if (!slug) throw new BadRequestException('Slug is required');
-    if (!body.rating || body.rating < 1 || body.rating > 5) {
-      throw new BadRequestException('Rating must be between 1 and 5');
-    }
     const tenant = await this.tenantsService.getPublicBusinessBySlug(slug);
+    const tenantId = objectIdToString(tenant._id);
 
     let userId = req.user?.sub;
     if (!userId && req.user?._id && typeof req.user._id === 'object') {
@@ -184,10 +235,10 @@ export class TenantsController {
     if (!userId) throw new BadRequestException('User ID is required');
 
     await this.tenantsService.addBusinessReview(
-      new Types.ObjectId(tenant._id as any),
-      new Types.ObjectId(userId),
-      body.rating,
-      body.comment,
+      tenantId,
+      userId,
+      dto.rating,
+      dto.comment,
     );
 
     return { success: true };

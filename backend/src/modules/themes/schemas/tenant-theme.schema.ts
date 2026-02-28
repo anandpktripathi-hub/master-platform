@@ -38,6 +38,6 @@ export class TenantTheme {
 export const TenantThemeSchema = SchemaFactory.createForClass(TenantTheme);
 
 // Create unique index: one theme per tenant
-TenantThemeSchema.index({ tenantId: 1 });
+TenantThemeSchema.index({ tenantId: 1 }, { unique: true });
 TenantThemeSchema.index({ themeId: 1 });
 TenantThemeSchema.index({ updatedAt: -1 });
