@@ -3,6 +3,8 @@ import { HierarchyController } from './hierarchy.controller';
 describe('HierarchyController', () => {
   let controller: HierarchyController;
 
+  const nodeId = '507f1f77bcf86cd799439011';
+
   const hierarchyService = {
     createNode: jest.fn().mockResolvedValue({ _id: 'n1' }),
     getNodeById: jest.fn().mockResolvedValue({ _id: 'n1' }),
@@ -18,8 +20,8 @@ describe('HierarchyController', () => {
   });
 
   it('delete returns success after service deletion', async () => {
-    const res = await controller.delete('n1');
-    expect(hierarchyService.deleteNode).toHaveBeenCalledWith('n1');
+    const res = await controller.delete({ id: nodeId } as any);
+    expect(hierarchyService.deleteNode).toHaveBeenCalledWith(nodeId);
     expect(res).toEqual({ success: true });
   });
 });

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class SendVerificationEmailDto {
@@ -12,7 +13,18 @@ export class RefreshTokenDto {
   refreshToken!: string;
 }
 
+export class RefreshTokenResponseDto {
+  @ApiProperty({ description: 'New short-lived access token (JWT)' })
+  accessToken!: string;
+}
+
 export class VerifyEmailDto {
+  @IsString()
+  @IsNotEmpty()
+  token!: string;
+}
+
+export class VerifyEmailQueryDto {
   @IsString()
   @IsNotEmpty()
   token!: string;

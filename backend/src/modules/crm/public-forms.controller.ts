@@ -2,11 +2,14 @@ import {
   BadRequestException,
   Body,
   Controller,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Public } from '../../common/decorators/public.decorator';
 import { RateLimitGuard } from '../../common/guards/rate-limit.guard';
@@ -17,6 +20,8 @@ import { PublicContactFormDto } from './dto/public-forms.dto';
 @ApiTags('Public')
 @Controller('public/forms')
 export class PublicFormsController {
+  private readonly logger = new Logger(PublicFormsController.name);
+
   constructor(
     private readonly crmService: CrmService,
     private readonly tenantsService: TenantsService,
@@ -117,8 +122,23 @@ export class PublicFormsController {
   @Public()
   @UseGuards(RateLimitGuard)
   @Post('contact')
+  @ApiOperation({ summary: 'Submit public contact form (host-scoped tenant)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async contact(@Req() req: Request, @Body() body: PublicContactFormDto) {
-    const tenantId = await this.resolveTenantIdFromRequest(req);
-    return this.crmService.createLeadFromPublicContactForm(tenantId, body);
+    try {
+      const tenantId = await this.resolveTenantIdFromRequest(req);
+      return await this.crmService.createLeadFromPublicContactForm(tenantId, body);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[contact] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to submit contact form');
+    }
   }
 }

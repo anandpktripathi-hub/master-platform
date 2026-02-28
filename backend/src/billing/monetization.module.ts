@@ -13,6 +13,7 @@ import { WalletController } from './wallet/wallet.controller';
 import { AffiliateService } from './affiliate/affiliate.service';
 import { CommissionController } from './affiliate/commission.controller';
 import { RevenueController } from './analytics/revenue.controller';
+import { RevenueService } from './analytics/revenue.service';
 import {
   Affiliate,
   AffiliateSchema,
@@ -62,6 +63,7 @@ import {
     UsageMeterService,
     WalletService,
     AffiliateService,
+    RevenueService,
   ],
   controllers: [
     LifetimeController,

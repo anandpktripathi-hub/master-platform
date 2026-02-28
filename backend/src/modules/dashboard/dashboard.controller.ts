@@ -5,6 +5,9 @@
   Body,
   Put,
   Delete,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
   Param,
   UseGuards,
   BadRequestException,
@@ -12,7 +15,6 @@
   Res,
 } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
-import { Dashboard } from '../../database/schemas/dashboard.schema';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { Tenant } from '../../decorators/tenant.decorator';
@@ -22,12 +24,16 @@ import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { WorkspaceGuard } from '../../guards/workspace.guard';
 import { Response } from 'express';
 import { CreateDashboardDto, UpdateDashboardDto } from './dto/dashboard.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuditLogsQueryDto } from './dto/audit-logs-query.dto';
+import { DashboardIdParamDto } from './dto/dashboard-id-param.dto';
 @ApiTags('Dashboard')
 @ApiBearerAuth('bearer')
 @Controller('dashboards')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class DashboardController {
+  private readonly logger = new Logger(DashboardController.name);
+
   constructor(
     private readonly dashboardService: DashboardService,
     private readonly auditLogService: AuditLogService,
@@ -41,41 +47,43 @@ export class DashboardController {
    */
   @Get('audit/logs')
   @UseGuards(WorkspaceGuard)
+  @ApiOperation({ summary: 'Get audit logs for current tenant' })
+  @ApiResponse({ status: 200, description: 'Audit logs returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getAuditLogs(
     @Tenant() tenantId: string,
-    @Query('limit') limit?: string,
-    @Query('skip') skip?: string,
-    @Query('sortBy') sortBy?: string,
-    @Query('action') action?: string,
-    @Query('actionPrefix') actionPrefix?: string,
-    @Query('resourceType') resourceType?: string,
-    @Query('resourceId') resourceId?: string,
-    @Query('status') status?: 'success' | 'failure' | 'pending',
-    @Query('startDate') startDate?: string,
-    @Query('endDate') endDate?: string,
+    @Query() query: AuditLogsQueryDto,
   ) {
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID is required');
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+
+      const parsedStartDate = query.startDate ? new Date(query.startDate) : undefined;
+      const parsedEndDate = query.endDate ? new Date(query.endDate) : undefined;
+
+      return await this.auditLogService.getTenantLogs(tenantId, {
+        limit: query.limit,
+        skip: query.skip,
+        sortBy: query.sortBy || '-createdAt',
+        action: query.action,
+        actionPrefix: query.actionPrefix,
+        resourceType: query.resourceType,
+        resourceId: query.resourceId,
+        status: query.status,
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
+      });
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[getAuditLogs] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to fetch audit logs');
     }
-
-    const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-    const parsedSkip = skip ? parseInt(skip, 10) : undefined;
-
-    const parsedStartDate = startDate ? new Date(startDate) : undefined;
-    const parsedEndDate = endDate ? new Date(endDate) : undefined;
-
-    return this.auditLogService.getTenantLogs(tenantId, {
-      limit: parsedLimit,
-      skip: parsedSkip,
-      sortBy: sortBy || '-createdAt',
-      action,
-      actionPrefix,
-      resourceType,
-      resourceId,
-      status,
-      startDate: parsedStartDate,
-      endDate: parsedEndDate,
-    });
   }
 
   /**
@@ -84,35 +92,35 @@ export class DashboardController {
    */
   @Get('audit/logs/export')
   @UseGuards(WorkspaceGuard)
+  @ApiOperation({ summary: 'Export audit logs for current tenant as CSV' })
+  @ApiResponse({ status: 200, description: 'CSV exported' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async exportAuditLogs(
     @Tenant() tenantId: string,
-    @Query('sortBy') sortBy: string | undefined,
-    @Query('action') action: string | undefined,
-    @Query('actionPrefix') actionPrefix: string | undefined,
-    @Query('resourceType') resourceType: string | undefined,
-    @Query('resourceId') resourceId: string | undefined,
-    @Query('status') status: 'success' | 'failure' | 'pending' | undefined,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query() query: AuditLogsQueryDto,
     @Res() res: Response,
   ) {
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID is required');
-    }
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
 
-    const parsedStartDate = startDate ? new Date(startDate) : undefined;
-    const parsedEndDate = endDate ? new Date(endDate) : undefined;
+      const parsedStartDate = query.startDate ? new Date(query.startDate) : undefined;
+      const parsedEndDate = query.endDate ? new Date(query.endDate) : undefined;
 
-    const logs = await this.auditLogService.getTenantLogsForExport(tenantId, {
-      sortBy: sortBy || '-createdAt',
-      action,
-      actionPrefix,
-      resourceType,
-      resourceId,
-      status,
-      startDate: parsedStartDate,
-      endDate: parsedEndDate,
-    });
+      const logs = await this.auditLogService.getTenantLogsForExport(tenantId, {
+        sortBy: query.sortBy || '-createdAt',
+        action: query.action,
+        actionPrefix: query.actionPrefix,
+        resourceType: query.resourceType,
+        resourceId: query.resourceId,
+        status: query.status,
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
+      });
 
     const header = [
       'Time',
@@ -160,15 +168,22 @@ export class DashboardController {
         .join(',');
     });
 
-    const csv = [header.join(','), ...rows].join('\n');
+      const csv = [header.join(','), ...rows].join('\n');
 
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader(
-      'Content-Disposition',
-      'attachment; filename="audit-logs.csv"',
-    );
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename="audit-logs.csv"',
+      );
 
-    return res.send(csv);
+      return res.send(csv);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[exportAuditLogs] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to export audit logs');
+    }
   }
 
   /**
@@ -178,48 +193,148 @@ export class DashboardController {
    */
   @Get('admin/saas-overview')
   @Roles('PLATFORM_SUPER_ADMIN', 'PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Get SaaS super-admin overview dashboard' })
+  @ApiResponse({ status: 200, description: 'Overview returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getSaasOverview(): Promise<any> {
-    return this.analyticsService.getSaasOverview();
+    try {
+      return await this.analyticsService.getSaasOverview();
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[getSaasOverview] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to fetch SaaS overview');
+    }
   }
 
   @Get()
   @UseGuards(WorkspaceGuard)
-  findAll(@Tenant() tenantId: string) {
-    return this.dashboardService.findAll(tenantId);
+  @ApiOperation({ summary: 'List dashboards for current tenant' })
+  @ApiResponse({ status: 200, description: 'Dashboards returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async findAll(@Tenant() tenantId: string) {
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      return await this.dashboardService.findAll(tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[findAll] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to list dashboards');
+    }
   }
 
   @Get(':id')
   @UseGuards(WorkspaceGuard)
-  findOne(@Param('id') id: string, @Tenant() tenantId: string) {
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID is required');
-    }
+  @ApiOperation({ summary: 'Get dashboard by id for current tenant' })
+  @ApiResponse({ status: 200, description: 'Dashboard returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async findOne(@Param() params: DashboardIdParamDto, @Tenant() tenantId: string) {
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
 
-    return this.dashboardService.findOne(id, tenantId);
+      return await this.dashboardService.findOne(params.id, tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[findOne] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to fetch dashboard');
+    }
   }
 
   @Post()
   @UseGuards(WorkspaceGuard)
   @Roles('admin')
-  create(@Body() createDashboardDto: CreateDashboardDto, @Tenant() tenantId: string) {
-    return this.dashboardService.create(createDashboardDto, tenantId);
+  @ApiOperation({ summary: 'Create dashboard for current tenant' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async create(
+    @Body() createDashboardDto: CreateDashboardDto,
+    @Tenant() tenantId: string,
+  ) {
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      return await this.dashboardService.create(createDashboardDto, tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[create] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to create dashboard');
+    }
   }
 
   @Put(':id')
   @UseGuards(WorkspaceGuard)
   @Roles('admin')
+  @ApiOperation({ summary: 'Update dashboard for current tenant' })
+  @ApiResponse({ status: 200, description: 'Dashboard updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   update(
-    @Param('id') id: string,
+    @Param() params: DashboardIdParamDto,
     @Body() updateDashboardDto: UpdateDashboardDto,
     @Tenant() tenantId: string,
   ) {
-    return this.dashboardService.update(id, updateDashboardDto, tenantId);
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      return this.dashboardService.update(params.id, updateDashboardDto, tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[update] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to update dashboard');
+    }
   }
 
   @Delete(':id')
   @UseGuards(WorkspaceGuard)
   @Roles('admin')
-  remove(@Param('id') id: string, @Tenant() tenantId: string) {
-    return this.dashboardService.remove(id, tenantId);
+  @ApiOperation({ summary: 'Delete dashboard for current tenant' })
+  @ApiResponse({ status: 200, description: 'Dashboard deleted' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async remove(@Param() params: DashboardIdParamDto, @Tenant() tenantId: string) {
+    try {
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      return await this.dashboardService.remove(params.id, tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[remove] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to delete dashboard');
+    }
   }
 }

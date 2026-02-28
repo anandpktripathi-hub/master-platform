@@ -5,6 +5,9 @@ import {
   Patch,
   Delete,
   Body,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
   Param,
   Query,
   UseGuards,
@@ -20,15 +23,27 @@ import { Roles } from '../../decorators/roles.decorator';
 import { Tenant } from '../../decorators/tenant.decorator';
 import { CustomDomainService } from './services/custom-domain.service';
 import { objectIdToString } from '../../common/utils/objectid.util';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   CreateCustomDomainDto,
   UpdateCustomDomainDto,
 } from './dto/custom-domain.dto';
+import {
+  CustomDomainIdParamDto,
+  CustomDomainsAdminListQueryDto,
+  CustomDomainsListQueryDto,
+} from './dto/custom-domains-query.dto';
 @ApiTags('Custom Domains')
 @ApiBearerAuth('bearer')
 @Controller('custom-domains')
 export class CustomDomainController {
+  private readonly logger = new Logger(CustomDomainController.name);
+
   constructor(private customDomainService: CustomDomainService) {}
 
   /**
@@ -40,20 +55,34 @@ export class CustomDomainController {
    */
   @Get('me')
   @UseGuards(JwtAuthGuard, TenantGuard)
+  @ApiOperation({ summary: "Get current tenant's custom domains" })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getTenantCustomDomains(
     @Tenant() tenantId: string,
-    @Query('status') status?: string,
-    @Query('limit') limit?: string,
-    @Query('skip') skip?: string,
+    @Query() query?: CustomDomainsListQueryDto,
   ) {
-    return this.customDomainService.getCustomDomainsForTenant(
-      objectIdToString(tenantId),
-      {
-        status,
-        limit: limit ? parseInt(limit) : undefined,
-        skip: skip ? parseInt(skip) : undefined,
-      },
-    );
+    try {
+      return await this.customDomainService.getCustomDomainsForTenant(
+        objectIdToString(tenantId),
+        {
+          status: query?.status,
+          limit: query?.limit,
+          skip: query?.skip,
+        },
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getTenantCustomDomains] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -61,19 +90,36 @@ export class CustomDomainController {
    */
   @Post('me')
   @UseGuards(JwtAuthGuard, TenantGuard)
+  @ApiOperation({ summary: 'Request a custom domain for the current tenant' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async requestCustomDomain(
     @Request() req: RequestWithUser,
     @Tenant() tenantId: string,
     @Body() createDto: CreateCustomDomainDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    return this.customDomainService.requestCustomDomain(
-      objectIdToString(tenantId),
-      createDto,
-      userId,
-    );
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      return await this.customDomainService.requestCustomDomain(
+        objectIdToString(tenantId),
+        createDto,
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[requestCustomDomain] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -81,15 +127,32 @@ export class CustomDomainController {
    */
   @Post('me/:domainId/verify')
   @UseGuards(JwtAuthGuard, TenantGuard)
+  @ApiOperation({ summary: 'Verify custom domain ownership (tenant)' })
+  @ApiResponse({ status: 201, description: 'Verified' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async verifyDomainOwnership(
     @Tenant() tenantId: string,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
   ) {
-    const verified = await this.customDomainService.verifyDomainOwnership(
-      domainId,
-      objectIdToString(tenantId),
-    );
-    return { verified, domainId };
+    try {
+      const verified = await this.customDomainService.verifyDomainOwnership(
+        params.domainId,
+        objectIdToString(tenantId),
+      );
+      return { verified, domainId: params.domainId };
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[verifyDomainOwnership] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -97,14 +160,31 @@ export class CustomDomainController {
    */
   @Post('me/:domainId/ssl/issue')
   @UseGuards(JwtAuthGuard, TenantGuard)
+  @ApiOperation({ summary: 'Issue SSL certificate for verified custom domain (tenant)' })
+  @ApiResponse({ status: 201, description: 'Issuance initiated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async issueSslCertificate(
     @Tenant() tenantId: string,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
   ) {
-    return this.customDomainService.issueSslCertificate(
-      domainId,
-      objectIdToString(tenantId),
-    );
+    try {
+      return await this.customDomainService.issueSslCertificate(
+        params.domainId,
+        objectIdToString(tenantId),
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[issueSslCertificate] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -112,19 +192,36 @@ export class CustomDomainController {
    */
   @Post('me/:domainId/primary')
   @UseGuards(JwtAuthGuard, TenantGuard)
+  @ApiOperation({ summary: 'Set a tenant custom domain as primary' })
+  @ApiResponse({ status: 201, description: 'Updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async setPrimaryCustomDomain(
     @Request() req: RequestWithUser,
     @Tenant() tenantId: string,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    return this.customDomainService.setPrimaryDomain(
-      domainId,
-      objectIdToString(tenantId),
-      userId,
-    );
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      return await this.customDomainService.setPrimaryDomain(
+        params.domainId,
+        objectIdToString(tenantId),
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[setPrimaryCustomDomain] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -132,29 +229,43 @@ export class CustomDomainController {
    */
   @Patch('me/:domainId')
   @UseGuards(JwtAuthGuard, TenantGuard)
+  @ApiOperation({ summary: 'Update a tenant custom domain (limited fields)' })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updateCustomDomain(
     @Tenant() tenantId: string,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
     @Body() updateDto: UpdateCustomDomainDto,
   ) {
-    const domain = await this.customDomainService.getCustomDomainsForTenant(
-      objectIdToString(tenantId),
-    );
-    const targetDomain = domain.data.find((d) => d._id === domainId);
-    if (!targetDomain) {
-      throw new BadRequestException('Domain not found or not authorized');
-    }
-    // For now, only notes can be updated by tenant
-    // Other fields are admin-only
-    if (updateDto.notes !== undefined) {
-      // Use service method to update
-      return this.customDomainService.updateCustomDomain(
-        domainId,
+    try {
+      const domain = await this.customDomainService.getCustomDomainsForTenant(
         objectIdToString(tenantId),
-        updateDto,
       );
+      const targetDomain = domain.data.find((d) => d._id === params.domainId);
+      if (!targetDomain) {
+        throw new BadRequestException('Domain not found or not authorized');
+      }
+      if (updateDto.notes !== undefined) {
+        return await this.customDomainService.updateCustomDomain(
+          params.domainId,
+          objectIdToString(tenantId),
+          updateDto,
+        );
+      }
+      throw new BadRequestException('Unauthorized');
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updateCustomDomain] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    throw new BadRequestException('Unauthorized');
   }
 
   /**
@@ -163,19 +274,36 @@ export class CustomDomainController {
   @Delete('me/:domainId')
   @UseGuards(JwtAuthGuard, TenantGuard)
   @HttpCode(204)
+  @ApiOperation({ summary: 'Delete a tenant custom domain' })
+  @ApiResponse({ status: 204, description: 'Deleted' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async deleteCustomDomain(
     @Request() req: RequestWithUser,
     @Tenant() tenantId: string,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    await this.customDomainService.deleteCustomDomain(
-      domainId,
-      objectIdToString(tenantId),
-      userId,
-    );
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      await this.customDomainService.deleteCustomDomain(
+        params.domainId,
+        objectIdToString(tenantId),
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[deleteCustomDomain] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -188,18 +316,31 @@ export class CustomDomainController {
   @Get()
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'List all custom domains (platform)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getAllCustomDomains(
-    @Query('tenantId') tenantId?: string,
-    @Query('status') status?: string,
-    @Query('limit') limit?: string,
-    @Query('skip') skip?: string,
+    @Query() query?: CustomDomainsAdminListQueryDto,
   ) {
-    return this.customDomainService.getAllCustomDomains({
-      tenantId,
-      status,
-      limit: limit ? parseInt(limit) : undefined,
-      skip: skip ? parseInt(skip) : undefined,
-    });
+    try {
+      return await this.customDomainService.getAllCustomDomains({
+        tenantId: query?.tenantId,
+        status: query?.status,
+        limit: query?.limit,
+        skip: query?.skip,
+      });
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getAllCustomDomains] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -208,29 +349,45 @@ export class CustomDomainController {
   @Post(':domainId/activate')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Activate a custom domain (platform)' })
+  @ApiResponse({ status: 201, description: 'Activated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async activateCustomDomain(
     @Request() req: RequestWithUser,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
 
-    // Get domain to find tenantId - using service method instead of direct model access
-    const domains = await this.customDomainService.getAllCustomDomains({});
-    const domain = domains.data.find((d) => {
-      const idStr = objectIdToString(d._id);
-      return idStr === domainId;
-    });
+      const domains = await this.customDomainService.getAllCustomDomains({});
+      const domain = domains.data.find((d) => {
+        const idStr = objectIdToString(d._id);
+        return idStr === params.domainId;
+      });
 
-    if (!domain) {
-      throw new BadRequestException('Domain not found');
+      if (!domain) {
+        throw new BadRequestException('Domain not found');
+      }
+
+      return await this.customDomainService.activateDomain(
+        params.domainId,
+        objectIdToString(domain.tenantId),
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[activateCustomDomain] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-
-    return this.customDomainService.activateDomain(
-      domainId,
-      objectIdToString(domain.tenantId),
-      userId,
-    );
   }
 
   /**
@@ -239,27 +396,42 @@ export class CustomDomainController {
   @Patch(':domainId')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Update a custom domain (platform)' })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updateCustomDomainAdmin(
     @Request() req: RequestWithUser,
-    @Param('domainId') domainId: string,
+    @Param() params: CustomDomainIdParamDto,
     @Body() updateDto: UpdateCustomDomainDto,
   ) {
-    // Get domain to validate it exists
-    const domains = await this.customDomainService.getAllCustomDomains({});
-    const domain = domains.data.find((d) => {
-      const idStr = objectIdToString(d._id);
-      return idStr === domainId;
-    });
+    try {
+      const domains = await this.customDomainService.getAllCustomDomains({});
+      const domain = domains.data.find((d) => {
+        const idStr = objectIdToString(d._id);
+        return idStr === params.domainId;
+      });
 
-    if (!domain) {
-      throw new BadRequestException('Domain not found');
+      if (!domain) {
+        throw new BadRequestException('Domain not found');
+      }
+
+      return await this.customDomainService.updateCustomDomain(
+        params.domainId,
+        objectIdToString(domain.tenantId),
+        updateDto,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updateCustomDomainAdmin] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-
-    // Update through service method
-    return this.customDomainService.updateCustomDomain(
-      domainId,
-      objectIdToString(domain.tenantId),
-      updateDto,
-    );
   }
 }

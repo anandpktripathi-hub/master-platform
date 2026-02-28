@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export interface MetricDataDto {
   totalRequests: number;
   requestsByMethod: Record<string, number>;
@@ -28,4 +30,9 @@ export interface MetricsJsonResponseDto {
     external: number;
     rss: number;
   };
+}
+
+export class ResetMetricsResponseDto {
+  @ApiProperty({ description: 'Result message' })
+  message!: string;
 }

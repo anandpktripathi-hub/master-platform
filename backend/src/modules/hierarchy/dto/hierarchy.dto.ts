@@ -21,6 +21,11 @@ export const HIERARCHY_NODE_TYPES = [
 
 export type HierarchyNodeType = (typeof HIERARCHY_NODE_TYPES)[number];
 
+export class HierarchyNodeIdParamDto {
+  @IsMongoId()
+  id!: string;
+}
+
 export class CreateHierarchyNodeDto {
   @IsString()
   @MinLength(1)

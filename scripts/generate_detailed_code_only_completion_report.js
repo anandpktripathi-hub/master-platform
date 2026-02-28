@@ -5,6 +5,7 @@ const path = require('path');
 const root = process.cwd();
 
 const scanPath = path.join(root, 'reports', 'launch_publish_earn_scan_code_only.json');
+const buildChecksPath = path.join(root, 'reports', '_last_build_checks_code_only.json');
 // Intentionally overwrites the user-facing attached report.
 const outPath = path.join(root, 'reports', 'DETAILED_CODE_ONLY_COMPLETION_REPORT.md');
 
@@ -14,6 +15,16 @@ function safeReadJson(filePath) {
   } catch {
     return null;
   }
+}
+
+function formatMs(ms) {
+  if (typeof ms !== 'number' || Number.isNaN(ms)) return '—';
+  if (ms < 1000) return `${ms}ms`;
+  const s = Math.round(ms / 100) / 10;
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  const rs = Math.round((s - m * 60) * 10) / 10;
+  return `${m}m ${rs}s`;
 }
 
 function pct(n, d) {
@@ -64,6 +75,8 @@ function main() {
     process.exit(1);
   }
 
+  const buildChecks = safeReadJson(buildChecksPath);
+
   const lines = [];
   lines.push('# Detailed Code-Only Completion Report (Publish / Launch / Earn)');
   lines.push('');
@@ -80,24 +93,52 @@ function main() {
   const r100 = routes.filter((r) => r.routePct === 100).length;
   const p100 = pages.filter((p) => p.pagePct === 100).length;
 
+  const packagingPct = Number(scan.packaging?.pct || 0);
+  const endpointsPerfect = routes.length > 0 && r100 === routes.length;
+  const endpointsMin100 = Number(scan.backendEndpoints?.minRoutePct || 0) === 100;
+  const endpointsAll100 = endpointsPerfect && endpointsMin100;
+  const earningPct = Number(scan.earningReadiness?.pct || 0);
+  const earning100 = earningPct === 100;
+  const buildChecksOk =
+    !!buildChecks &&
+    Array.isArray(buildChecks.checks) &&
+    buildChecks.checks.length > 0 &&
+    buildChecks.checks.every((c) => c.ok);
+
   lines.push('## Executive Summary');
   lines.push('');
   lines.push('### What is 100% complete (code-only evidence)');
   lines.push('');
   lines.push(`- Backend modules (structural wiring artifacts): ${scan.backendModules.complete}/${scan.backendModules.total} = ${pct(scan.backendModules.complete, scan.backendModules.total)}%`);
   lines.push('  - Meaning: every backend module shows module/controller/service/dto/schema/tests/migrations signals present.');
-  lines.push(`- Packaging/infra presence checks: ${scan.packaging.present}/${scan.packaging.total} = ${scan.packaging.pct}%`);
   lines.push(`- Frontend route-exposed pages “visible”: ${scan.frontendPages.totals.routedVisible}/${scan.frontendPages.totals.routedTotal} = ${scan.frontendPages.totals.routedVisiblePct}%`);
   lines.push('  - Meaning: everything referenced by the router is navigable (exists in the router + import resolved).');
+  if (packagingPct === 100) {
+    lines.push(`- Packaging/infra presence checks: ${scan.packaging.present}/${scan.packaging.total} = ${scan.packaging.pct}%`);
+  }
+  if (endpointsAll100) {
+    lines.push(`- Backend endpoints (feature-level, route-by-route evidence): ${routes.length} routes = 100% (perfect ${r100}/${routes.length})`);
+  }
+  if (earning100) {
+    lines.push(`- Earning readiness (practical real-world loop heuristic): ${earningPct}%`);
+  }
+  if (buildChecksOk) {
+    lines.push(`- Executable / Build checks: PASS (${buildChecks.checks.length}/${buildChecks.checks.length})`);
+  }
   lines.push('');
 
   lines.push('### What is NOT 100% (and the % completion)');
   lines.push('');
-  lines.push(`- Backend endpoints (feature-level, route-by-route evidence): ${routes.length} routes`);
-  lines.push(`  - Avg endpoint evidence score: ${scan.backendEndpoints.avgRoutePct}%`);
-  lines.push(`  - Min endpoint score: ${scan.backendEndpoints.minRoutePct}%`);
-  lines.push(`  - Perfect (100%) endpoints: ${r100}/${routes.length}`);
-  lines.push('  - Typical missing evidence: guards/roles, Swagger decorators, DTO usage/validation, try/catch, consistent service-call wiring.');
+  if (packagingPct !== 100) {
+    lines.push(`- Packaging/infra presence checks: ${scan.packaging.present}/${scan.packaging.total} = ${scan.packaging.pct}%`);
+  }
+  if (!endpointsAll100) {
+    lines.push(`- Backend endpoints (feature-level, route-by-route evidence): ${routes.length} routes`);
+    lines.push(`  - Avg endpoint evidence score: ${scan.backendEndpoints.avgRoutePct}%`);
+    lines.push(`  - Min endpoint score: ${scan.backendEndpoints.minRoutePct}%`);
+    lines.push(`  - Perfect (100%) endpoints: ${r100}/${routes.length}`);
+    lines.push('  - Typical missing evidence: guards/roles, Swagger decorators, DTO usage/validation, try/catch, consistent service-call wiring.');
+  }
   lines.push(`- Frontend route-exposed pages “workable (mapped API)”: ${scan.frontendPages.totals.routedWorkablePct}%`);
   lines.push('  - Interpreted as: page has at least one detected `api.*` call that matches a backend controller route.');
   lines.push(`  - Router-exposed pages: ${scan.frontendPages.totals.routedTotal} total, workable ${scan.frontendPages.totals.routedWorkablePct}%, avg page score ${scan.frontendPages.totals.routedAvgPagePct}%.`);
@@ -107,7 +148,13 @@ function main() {
   lines.push(`  - Workable (mapped API): ${scan.frontendPages.totals.workablePct}%`);
   lines.push(`  - Avg: ${scan.frontendPages.totals.avgPagePct}%`);
   lines.push(`  - Perfect (100%) pages: ${p100}/${pages.length}`);
-  lines.push(`- Earning readiness (practical real-world loop heuristic): ${scan.earningReadiness.pct}%`);
+  if (!earning100) {
+    lines.push(`- Earning readiness (practical real-world loop heuristic): ${earningPct}%`);
+  }
+  if (!buildChecksOk && buildChecks && Array.isArray(buildChecks.checks)) {
+    const okCount = buildChecks.checks.filter((c) => c.ok).length;
+    lines.push(`- Executable / Build checks: ${pct(okCount, buildChecks.checks.length)}% (${okCount}/${buildChecks.checks.length})`);
+  }
   lines.push('');
 
   // Methodology
@@ -165,6 +212,37 @@ function main() {
     lines.push(`- ${item.present ? 'yes' : 'no'}: ${item.path}`);
   }
   lines.push('');
+
+  lines.push('## Executable / Build Checks (Code-run, not docs)');
+  lines.push('');
+  if (!buildChecks || !Array.isArray(buildChecks.checks)) {
+    lines.push('- No build-check snapshot found. Run `node scripts/run_code_only_build_checks.js` to generate it.');
+    lines.push('');
+  } else {
+    lines.push(`Snapshot: ${buildChecks.generatedAt}`);
+    lines.push('');
+    lines.push(mdTable(
+      ['Check', 'OK', 'Duration', 'CWD', 'Command'],
+      buildChecks.checks.map((c) => [
+        c.name,
+        c.ok ? 'Yes' : 'No',
+        formatMs(c.durationMs),
+        c.cwd,
+        c.command,
+      ]),
+    ));
+    lines.push('');
+    const failed = buildChecks.checks.filter((c) => !c.ok);
+    if (failed.length) {
+      lines.push('Failures (tail logs):');
+      for (const f of failed) {
+        const tail = (f.stderr || f.stdout || '').trim();
+        lines.push(`- ${f.name} exitCode=${f.exitCode}`);
+        if (tail) lines.push(`  - tail: ${tail.slice(-500).replace(/\r?\n/g, ' ')}`);
+      }
+      lines.push('');
+    }
+  }
 
   // Backend modules overall table
   lines.push('## Backend Modules — Structural + Endpoint Quality (Overall)');

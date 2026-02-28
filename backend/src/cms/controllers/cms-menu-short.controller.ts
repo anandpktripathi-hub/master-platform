@@ -4,10 +4,11 @@ import {
   Get,
   HttpException,
   InternalServerErrorException,
+  Logger,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CmsMenuService } from '../services/cms-menu.service';
 import { Tenant } from '../../decorators/tenant.decorator';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
@@ -29,10 +30,17 @@ import { GetMenuQueryDto } from '../dto/get-menu.query.dto';
   'PLATFORM_SUPER_ADMIN',
 )
 export class CmsMenuShortController {
+  private readonly logger = new Logger(CmsMenuShortController.name);
+
   constructor(private readonly menuService: CmsMenuService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get CMS menu items for the current tenant' })
+  @ApiResponse({ status: 200, description: 'Menu items returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getMenu(@Tenant() tenantId: string, @Query() query: GetMenuQueryDto) {
     if (!tenantId) throw new BadRequestException('Tenant context missing');
 
@@ -46,6 +54,11 @@ export class CmsMenuShortController {
       const menuItems = await this.menuService.getMenu(tenantId, resolvedMenuId);
       return { menuItems };
     } catch (err) {
+      const error = err as any;
+      this.logger.error(
+        `[getMenu] ${error?.message ?? String(error)}`,
+        error?.stack,
+      );
       if (err instanceof HttpException) {
         throw err;
       }

@@ -11,6 +11,9 @@ import {
   Request,
   BadRequestException,
   HttpCode,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { RequestWithUser } from '../../common/interfaces/request-with-user.interface';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
@@ -22,16 +25,19 @@ import { CouponService } from './services/coupon.service';
 import { objectIdToString } from '../../common/utils/objectid.util';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   ApplyCouponDto,
   BulkUpdateCouponStatusDto,
   ValidateCouponDto,
 } from './dto/coupon-actions.dto';
+import { CouponIdParamDto } from './dto/coupon-id-param.dto';
 @ApiTags('Coupons')
 @ApiBearerAuth('bearer')
 @Controller('coupons')
 export class CouponController {
+  private readonly logger = new Logger(CouponController.name);
+
   constructor(private couponService: CouponService) {}
 
   /**
@@ -43,20 +49,38 @@ export class CouponController {
    */
   @Post('validate')
   @UseGuards(JwtAuthGuard, WorkspaceGuard)
+  @ApiOperation({ summary: 'Validate a coupon code (tenant)' })
+  @ApiResponse({ status: 200, description: 'Validation result returned' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async validateCoupon(
     @Request() req: RequestWithUser,
     @Tenant() tenantId: string | undefined,
     @Body() dto: ValidateCouponDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID not found');
+      }
+      return await this.couponService.validateCoupon(
+        dto.code,
+        objectIdToString(tenantId),
+        dto.packageId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[validateCoupon] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to validate coupon');
     }
-    return this.couponService.validateCoupon(
-      dto.code,
-      objectIdToString(tenantId),
-      dto.packageId,
-    );
   }
 
   /**
@@ -64,20 +88,35 @@ export class CouponController {
    */
   @Post('apply')
   @UseGuards(JwtAuthGuard, WorkspaceGuard)
+  @ApiOperation({ summary: 'Apply a coupon during checkout (tenant)' })
+  @ApiResponse({ status: 200, description: 'Coupon applied' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async applyCoupon(
     @Request() req: RequestWithUser,
     @Tenant() tenantId: string | undefined,
     @Body() dto: ApplyCouponDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID not found');
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID not found');
+      }
+      return await this.couponService.applyCoupon(
+        dto.code,
+        objectIdToString(tenantId),
+        'checkout',
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[applyCoupon] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to apply coupon');
     }
-    return this.couponService.applyCoupon(
-      dto.code,
-      objectIdToString(tenantId),
-      'checkout',
-    );
   }
 
   /**
@@ -90,16 +129,30 @@ export class CouponController {
   @Get()
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'List all coupons (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Coupons returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async listCoupons(
     @Query('status') status?: string,
     @Query('limit') limit?: string,
     @Query('skip') skip?: string,
   ) {
-    return this.couponService.listCoupons({
-      status,
-      limit: limit ? parseInt(limit) : undefined,
-      skip: skip ? parseInt(skip) : undefined,
-    });
+    try {
+      return await this.couponService.listCoupons({
+        status,
+        limit: limit ? parseInt(limit) : undefined,
+        skip: skip ? parseInt(skip) : undefined,
+      });
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[listCoupons] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to list coupons');
+    }
   }
 
   /**
@@ -108,14 +161,32 @@ export class CouponController {
   @Post()
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Create a new coupon (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async createCoupon(
     @Request() req: RequestWithUser,
     @Body() createDto: CreateCouponDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    return this.couponService.createCoupon(createDto, userId);
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      return await this.couponService.createCoupon(createDto, userId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[createCoupon] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to create coupon');
+    }
   }
 
   /**
@@ -124,15 +195,36 @@ export class CouponController {
   @Patch(':couponId')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Update a coupon (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Coupon updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updateCoupon(
     @Request() req: RequestWithUser,
-    @Param('couponId') couponId: string,
+    @Param() params: CouponIdParamDto,
     @Body() updateDto: UpdateCouponDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    return this.couponService.updateCoupon(couponId, updateDto, userId);
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      return await this.couponService.updateCoupon(
+        params.couponId,
+        updateDto,
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updateCoupon] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to update coupon');
+    }
   }
 
   /**
@@ -142,14 +234,32 @@ export class CouponController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
   @HttpCode(204)
+  @ApiOperation({ summary: 'Delete a coupon (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 204, description: 'No Content' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async deleteCoupon(
     @Request() req: RequestWithUser,
-    @Param('couponId') couponId: string,
+    @Param() params: CouponIdParamDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    await this.couponService.deleteCoupon(couponId, userId);
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      await this.couponService.deleteCoupon(params.couponId, userId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[deleteCoupon] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to delete coupon');
+    }
   }
 
   /**
@@ -158,8 +268,25 @@ export class CouponController {
   @Get(':couponId/usage')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
-  async getCouponStats(@Param('couponId') couponId: string) {
-    return this.couponService.getCouponStats(couponId);
+  @ApiOperation({ summary: 'Get coupon usage statistics (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Coupon stats returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getCouponStats(@Param() params: CouponIdParamDto) {
+    try {
+      return await this.couponService.getCouponStats(params.couponId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getCouponStats] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to fetch coupon stats');
+    }
   }
 
   /**
@@ -168,18 +295,36 @@ export class CouponController {
   @Post(':couponId/activate')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Activate a coupon (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Coupon activated' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async activateCoupon(
     @Request() req: RequestWithUser,
-    @Param('couponId') couponId: string,
+    @Param() params: CouponIdParamDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    return this.couponService.updateCoupon(
-      couponId,
-      { status: 'active' },
-      userId,
-    );
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      return await this.couponService.updateCoupon(
+        params.couponId,
+        { status: 'active' },
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[activateCoupon] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to activate coupon');
+    }
   }
 
   /**
@@ -188,18 +333,36 @@ export class CouponController {
   @Post(':couponId/deactivate')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
+  @ApiOperation({ summary: 'Deactivate a coupon (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Coupon deactivated' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async deactivateCoupon(
     @Request() req: RequestWithUser,
-    @Param('couponId') couponId: string,
+    @Param() params: CouponIdParamDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    return this.couponService.updateCoupon(
-      couponId,
-      { status: 'inactive' },
-      userId,
-    );
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      return await this.couponService.updateCoupon(
+        params.couponId,
+        { status: 'inactive' },
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[deactivateCoupon] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to deactivate coupon');
+    }
   }
 
   /**
@@ -209,17 +372,35 @@ export class CouponController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('PLATFORM_SUPERADMIN')
   @HttpCode(204)
+  @ApiOperation({ summary: 'Bulk activate/deactivate coupons (platform admin)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 204, description: 'No Content' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async bulkUpdateCoupons(
     @Request() req: RequestWithUser,
     @Body() body: BulkUpdateCouponStatusDto,
   ) {
-    if (!req.user) throw new BadRequestException('User not authenticated');
-    const userId = req.user.sub;
-    if (!userId) throw new BadRequestException('User ID is required');
-    await this.couponService.bulkUpdateStatus(
-      body.couponIds,
-      body.status,
-      userId,
-    );
+    try {
+      if (!req.user) throw new BadRequestException('User not authenticated');
+      const userId = req.user.sub;
+      if (!userId) throw new BadRequestException('User ID is required');
+      await this.couponService.bulkUpdateStatus(
+        body.couponIds,
+        body.status,
+        userId,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[bulkUpdateCoupons] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to update coupon status');
+    }
   }
 }

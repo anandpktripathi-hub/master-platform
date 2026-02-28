@@ -31,6 +31,14 @@ export class AuthService {
     private readonly emailService: EmailService,
   ) {}
 
+  async logout(): Promise<{ success: true }> {
+    return { success: true };
+  }
+
+  async trackOAuthStart(provider: 'google' | 'github'): Promise<void> {
+    void provider;
+  }
+
   async validateUser(
     email: string,
     pass: string,

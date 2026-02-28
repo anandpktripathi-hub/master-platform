@@ -31,6 +31,10 @@ export class HealthService {
     private readonly configService: ConfigService,
   ) {}
 
+  async liveness(): Promise<{ status: 'ok'; timestamp: string }> {
+    return { status: 'ok', timestamp: new Date().toISOString() };
+  }
+
   async checkAll(): Promise<HealthReport> {
     const checks = {
       database: await this.checkDatabase(),

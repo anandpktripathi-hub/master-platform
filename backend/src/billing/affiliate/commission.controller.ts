@@ -4,6 +4,9 @@ import {
   Controller,
   ForbiddenException,
   Get,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
   Post,
   Req,
   UnauthorizedException,
@@ -26,6 +29,8 @@ import { PayoutDto, RecordCommissionDto } from './dto/affiliate.dto';
 @ApiBearerAuth()
 @Controller('billing/affiliate')
 export class CommissionController {
+  private readonly logger = new Logger(CommissionController.name);
+
   constructor(private readonly affiliateService: AffiliateService) {}
 
   /**
@@ -33,14 +38,27 @@ export class CommissionController {
    */
   @UseGuards(JwtAuthGuard, RateLimitGuard)
   @ApiOperation({ summary: 'Register (or fetch) affiliate profile for current user' })
+  @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 201, description: 'Affiliate profile returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   @Post('register')
   async register(@Req() req: { user?: { sub?: string } }) {
-    const userId = req.user?.sub;
-    if (!userId) {
-      throw new UnauthorizedException('User not found in token');
+    try {
+      const userId = req.user?.sub;
+      if (!userId) {
+        throw new UnauthorizedException('User not found in token');
+      }
+      return await this.affiliateService.registerAffiliate(userId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[register] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to register affiliate');
     }
-    return this.affiliateService.registerAffiliate(userId);
   }
 
   /**
@@ -49,13 +67,25 @@ export class CommissionController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Get current user's affiliate profile + ledger" })
   @ApiResponse({ status: 200, description: 'Affiliate profile returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   @Get('me')
   async me(@Req() req: { user?: { sub?: string } }) {
-    const userId = req.user?.sub;
-    if (!userId) {
-      throw new UnauthorizedException('User not found in token');
+    try {
+      const userId = req.user?.sub;
+      if (!userId) {
+        throw new UnauthorizedException('User not found in token');
+      }
+      return await this.affiliateService.getAffiliateForUser(userId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[me] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to get affiliate profile');
     }
-    return this.affiliateService.getAffiliateForUser(userId);
   }
 
   /**
@@ -64,20 +94,35 @@ export class CommissionController {
   @UseGuards(JwtAuthGuard, RoleGuard, RateLimitGuard)
   @Roles('PLATFORM_SUPERADMIN')
   @ApiOperation({ summary: 'Record a commission event for an affiliate (platform-only)' })
+  @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 201, description: 'Commission recorded' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   @Post('record-commission')
   async recordCommission(
     @Body()
     body: RecordCommissionDto,
   ) {
-    return this.affiliateService.recordCommission(
-      body.affiliateId,
-      body.baseAmount,
-      body.commissionPercent,
-      body.currency,
-      body.metadata,
-    );
+    try {
+      return await this.affiliateService.recordCommission(
+        body.affiliateId,
+        body.baseAmount,
+        body.commissionPercent,
+        body.currency,
+        body.metadata,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[recordCommission] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to record commission');
+    }
   }
 
   /**
@@ -85,40 +130,51 @@ export class CommissionController {
    */
   @UseGuards(JwtAuthGuard, RateLimitGuard)
   @ApiOperation({ summary: 'Trigger payout for current user (admin override allowed)' })
+  @ApiResponse({ status: 200, description: 'Success' })
   @ApiResponse({ status: 201, description: 'Payout processed' })
   @ApiResponse({ status: 400, description: 'Invalid payload' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   @Post('payout')
   async payout(
     @Req() req: { user?: { sub?: string; role?: string } },
     @Body() body: PayoutDto,
   ) {
-    const userId = req.user?.sub;
-    if (!userId) {
-      throw new UnauthorizedException('User not found in token');
+    try {
+      const userId = req.user?.sub;
+      if (!userId) {
+        throw new UnauthorizedException('User not found in token');
+      }
+
+      // Default behavior: payout for current user only.
+      if (!body.affiliateId) {
+        return await this.affiliateService.payoutForUser(userId);
+      }
+
+      // Admin override: allow explicit affiliateId payout only for platform super admin.
+      const role = req.user?.role?.trim();
+      const isPlatformAdmin =
+        role === 'PLATFORM_SUPER_ADMIN' ||
+        role === 'PLATFORM_SUPERADMIN' ||
+        role === 'platform_admin' ||
+        role === 'PLATFORM_ADMIN_LEGACY';
+
+      if (!isPlatformAdmin) {
+        throw new ForbiddenException('Not allowed to payout for other affiliates');
+      }
+
+      if (!body.affiliateId) {
+        throw new BadRequestException('affiliateId is required');
+      }
+
+      return await this.affiliateService.payout(body.affiliateId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[payout] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to process payout');
     }
-
-    // Default behavior: payout for current user only.
-    if (!body.affiliateId) {
-      return this.affiliateService.payoutForUser(userId);
-    }
-
-    // Admin override: allow explicit affiliateId payout only for platform super admin.
-    const role = req.user?.role?.trim();
-    const isPlatformAdmin =
-      role === 'PLATFORM_SUPER_ADMIN' ||
-      role === 'PLATFORM_SUPERADMIN' ||
-      role === 'platform_admin' ||
-      role === 'PLATFORM_ADMIN_LEGACY';
-
-    if (!isPlatformAdmin) {
-      throw new ForbiddenException('Not allowed to payout for other affiliates');
-    }
-
-    if (!body.affiliateId) {
-      throw new BadRequestException('affiliateId is required');
-    }
-
-    return this.affiliateService.payout(body.affiliateId);
   }
 }

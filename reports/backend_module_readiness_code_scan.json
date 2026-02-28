@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-27T03:40:28.506Z",
+  "generatedAt": "2026-02-28T14:09:02.129Z",
   "weights": {
     "module": 10,
     "controller": 15,
@@ -113,14 +113,14 @@
         "migrations": true
       },
       "missing": [],
-      "filesCount": 7,
+      "filesCount": 8,
       "sampleFiles": [
         "billing-notification.service.spec.ts",
         "billing-notification.service.ts",
+        "billing-subscriptions.controller.ts",
         "billing.controller.spec.ts",
         "billing.controller.ts",
-        "billing.module.ts",
-        "billing.service.spec.ts"
+        "billing.module.ts"
       ]
     },
     {
@@ -197,7 +197,7 @@
         "migrations": true
       },
       "missing": [],
-      "filesCount": 6,
+      "filesCount": 7,
       "sampleFiles": [
         "crm-notification.service.ts",
         "crm.controller.spec.ts",

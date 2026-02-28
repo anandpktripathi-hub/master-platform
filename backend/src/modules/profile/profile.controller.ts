@@ -8,6 +8,9 @@ import {
   BadRequestException,
   Query,
   Param,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { ProfileService } from './profile.service';
@@ -16,8 +19,10 @@ import {
   UpdateTenantProfileDto,
   UpdatePublicProfileDto,
 } from './dto/profile.dto';
+import { ProfileHandleParamDto } from './dto/profile-handle-param.dto';
+import { ProfileHandleQueryDto } from './dto/profile-handle-query.dto';
 import { Public } from '../../common/decorators/public.decorator';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 interface AuthRequest extends Request {
   user: {
@@ -30,6 +35,8 @@ interface AuthRequest extends Request {
 @ApiBearerAuth('bearer')
 @Controller()
 export class ProfileController {
+  private readonly logger = new Logger(ProfileController.name);
+
   constructor(private readonly profileService: ProfileService) {}
 
   /**
@@ -38,10 +45,27 @@ export class ProfileController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('me/profile')
+  @ApiOperation({ summary: "Get current user's personal profile" })
+  @ApiResponse({ status: 200, description: 'Profile returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getMyProfile(@Req() req: AuthRequest) {
-    const userId = req.user?.sub || req.user?._id;
-    if (!userId) throw new BadRequestException('User ID not found');
-    return this.profileService.getUserProfile(userId);
+    try {
+      const userId = req.user?.sub || req.user?._id;
+      if (!userId) throw new BadRequestException('User ID not found');
+      return await this.profileService.getUserProfile(userId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getMyProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to get profile');
+    }
   }
 
   /**
@@ -50,13 +74,30 @@ export class ProfileController {
    */
   @UseGuards(JwtAuthGuard)
   @Put('me/profile')
+  @ApiOperation({ summary: "Update current user's personal profile" })
+  @ApiResponse({ status: 200, description: 'Profile updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updateMyProfile(
     @Req() req: AuthRequest,
     @Body() dto: UpdateProfileDto,
   ) {
-    const userId = req.user?.sub || req.user?._id;
-    if (!userId) throw new BadRequestException('User ID not found');
-    return this.profileService.updateUserProfile(userId, dto);
+    try {
+      const userId = req.user?.sub || req.user?._id;
+      if (!userId) throw new BadRequestException('User ID not found');
+      return await this.profileService.updateUserProfile(userId, dto);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updateMyProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to update profile');
+    }
   }
 
   /**
@@ -65,10 +106,27 @@ export class ProfileController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('tenant/profile')
+  @ApiOperation({ summary: "Get current tenant/company profile" })
+  @ApiResponse({ status: 200, description: 'Tenant profile returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getTenantProfile(@Req() req: AuthRequest) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) throw new BadRequestException('Tenant ID not found');
-    return this.profileService.getTenantProfile(tenantId);
+    try {
+      const tenantId = req.user?.tenantId;
+      if (!tenantId) throw new BadRequestException('Tenant ID not found');
+      return await this.profileService.getTenantProfile(tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getTenantProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to get tenant profile');
+    }
   }
 
   /**
@@ -77,13 +135,30 @@ export class ProfileController {
    */
   @UseGuards(JwtAuthGuard)
   @Put('tenant/profile')
+  @ApiOperation({ summary: 'Update current tenant/company profile' })
+  @ApiResponse({ status: 200, description: 'Tenant profile updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updateTenantProfile(
     @Req() req: AuthRequest,
     @Body() dto: UpdateTenantProfileDto,
   ) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) throw new BadRequestException('Tenant ID not found');
-    return this.profileService.updateTenantProfile(tenantId, dto);
+    try {
+      const tenantId = req.user?.tenantId;
+      if (!tenantId) throw new BadRequestException('Tenant ID not found');
+      return await this.profileService.updateTenantProfile(tenantId, dto);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updateTenantProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to update tenant profile');
+    }
   }
 
   /**
@@ -92,10 +167,27 @@ export class ProfileController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('me/public-profile')
+  @ApiOperation({ summary: "Get or create current user's public profile" })
+  @ApiResponse({ status: 200, description: 'Public profile returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getMyPublicProfile(@Req() req: AuthRequest) {
-    const userId = req.user?.sub || req.user?._id;
-    if (!userId) throw new BadRequestException('User ID not found');
-    return this.profileService.getOrCreatePublicProfile(userId);
+    try {
+      const userId = req.user?.sub || req.user?._id;
+      if (!userId) throw new BadRequestException('User ID not found');
+      return await this.profileService.getOrCreatePublicProfile(userId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getMyPublicProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to get public profile');
+    }
   }
 
   /**
@@ -104,13 +196,30 @@ export class ProfileController {
    */
   @UseGuards(JwtAuthGuard)
   @Put('me/public-profile')
+  @ApiOperation({ summary: "Update current user's public profile" })
+  @ApiResponse({ status: 200, description: 'Public profile updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updateMyPublicProfile(
     @Req() req: AuthRequest,
     @Body() dto: UpdatePublicProfileDto,
   ) {
-    const userId = req.user?.sub || req.user?._id;
-    if (!userId) throw new BadRequestException('User ID not found');
-    return this.profileService.updatePublicProfile(userId, dto);
+    try {
+      const userId = req.user?.sub || req.user?._id;
+      if (!userId) throw new BadRequestException('User ID not found');
+      return await this.profileService.updatePublicProfile(userId, dto);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updateMyPublicProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to update public profile');
+    }
   }
 
   /**
@@ -119,10 +228,28 @@ export class ProfileController {
    */
   @Get('public/profiles/check-handle')
   @Public()
-  async checkHandle(@Query('handle') handle?: string) {
-    if (!handle) throw new BadRequestException('Handle is required');
-    const available = await this.profileService.isHandleAvailable(handle);
-    return { available };
+  @ApiOperation({ summary: 'Check whether a public handle is available' })
+  @ApiResponse({ status: 200, description: 'Availability returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async checkHandle(@Query() query: ProfileHandleQueryDto) {
+    try {
+      const available = await this.profileService.isHandleAvailable(
+        query.handle,
+      );
+      return { available };
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[checkHandle] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to check handle');
+    }
   }
 
   /**
@@ -131,8 +258,24 @@ export class ProfileController {
    */
   @Get('public/profiles/:handle')
   @Public()
-  async getPublicProfile(@Param('handle') handle: string) {
-    if (!handle) throw new BadRequestException('Handle is required');
-    return this.profileService.getPublicProfileByHandle(handle);
+  @ApiOperation({ summary: 'Get public user profile by handle' })
+  @ApiResponse({ status: 200, description: 'Public profile returned' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getPublicProfile(@Param() params: ProfileHandleParamDto) {
+    try {
+      return await this.profileService.getPublicProfileByHandle(params.handle);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getPublicProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('Failed to get public profile');
+    }
   }
 }

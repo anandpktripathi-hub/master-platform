@@ -14,12 +14,24 @@ import {
 import { BillingNotificationService } from './billing-notification.service';
 import { TenantsService } from '../tenants/tenants.service';
 import { PackageService } from '../packages/services/package.service';
+import { PaymentGatewayService } from '../payments/services/payment-gateway.service';
+import { PaymentLogService } from '../payments/services/payment-log.service';
+import { CreateBillingDto, UpdateBillingDto } from './dto/billing.dto';
 import type { TenantPackage } from '../../database/schemas/tenant-package.schema';
 import type { Package } from '../../database/schemas/package.schema';
 
 type CustomDomainsEntitlementOptionsV1 = {
   used?: number;
   now?: Date;
+};
+
+export type SubscriptionViewV1 = {
+  tenantId: string;
+  packageId: string;
+  status: string;
+  trialEndsAt?: Date;
+  expiresAt?: Date;
+  isActive: boolean;
 };
 
 @Injectable()
@@ -44,7 +56,100 @@ export class BillingService {
     private readonly billingNotifications: BillingNotificationService,
     private readonly tenantsService: TenantsService,
     private readonly packageService: PackageService,
+    private readonly paymentGatewayService: PaymentGatewayService,
+    private readonly paymentLogService: PaymentLogService,
   ) {}
+
+  private toSubscriptionViewV1(
+    tenantId: string,
+    tenantPackage: TenantPackage,
+  ): SubscriptionViewV1 {
+    const pkgIdValue = (() => {
+      const raw = (tenantPackage as any).packageId;
+      const maybeObjectId = raw && raw.toString ? raw.toString() : undefined;
+      const maybeNested = raw && raw._id && raw._id.toString ? raw._id.toString() : undefined;
+      return (maybeNested || maybeObjectId || '').toString();
+    })();
+
+    const now = new Date();
+    return {
+      tenantId,
+      packageId: pkgIdValue,
+      status: String((tenantPackage as any).status || 'unknown'),
+      trialEndsAt: (tenantPackage as any).trialEndsAt,
+      expiresAt: (tenantPackage as any).expiresAt,
+      isActive: this.isTenantPackageActiveNow(tenantPackage as any, now),
+    };
+  }
+
+  async getCurrentSubscriptionForTenant(
+    tenantId: string,
+  ): Promise<SubscriptionViewV1> {
+    const tenantPackage = await this.packageService.getTenantPackage(tenantId);
+    if (!tenantPackage) {
+      throw new NotFoundException('Subscription not found');
+    }
+    return this.toSubscriptionViewV1(tenantId, tenantPackage as any);
+  }
+
+  async selectPlanForTenant(input: {
+    tenantId: string;
+    userId?: string;
+    packageId: string;
+    startTrial?: boolean;
+    paymentToken?: string;
+    gatewayName?: string;
+  }): Promise<SubscriptionViewV1> {
+    const tenantPackage = await this.packageService.assignPackageToTenant(
+      input.tenantId,
+      input.packageId,
+      {
+        startTrial: input.startTrial,
+        userId: input.userId,
+        paymentToken: input.paymentToken,
+        gatewayName: input.gatewayName,
+      },
+      this.paymentGatewayService,
+      this.paymentLogService,
+    );
+
+    return this.toSubscriptionViewV1(input.tenantId, tenantPackage as any);
+  }
+
+  async adminSetTenantPlan(input: {
+    tenantId: string;
+    packageId: string;
+    adminUserId?: string;
+    startTrial?: boolean;
+    notes?: string;
+  }): Promise<SubscriptionViewV1> {
+    const tenantPackage = await this.packageService.assignPackageToTenant(
+      input.tenantId,
+      input.packageId,
+      {
+        startTrial: input.startTrial,
+        skipPayment: true,
+        userId: input.adminUserId,
+      },
+      this.paymentGatewayService,
+      this.paymentLogService,
+    );
+
+    // Notes are currently not persisted; hook into audit log if/when available.
+    if (input.notes) {
+      this.logger.log(`Admin set plan notes: ${input.notes}`);
+    }
+
+    return this.toSubscriptionViewV1(input.tenantId, tenantPackage as any);
+  }
+
+  async checkAndExpireOverdueSubscriptions(): Promise<{ expired: number }> {
+    const expired = await this.packageService.expireTenantPackagesWithNotifications(
+      this.billingNotifications,
+      this.tenantsService,
+    );
+    return { expired };
+  }
 
   private isTenantPackageActiveNow(
     tenantPackage: TenantPackage,
@@ -150,10 +255,12 @@ export class BillingService {
     }
   }
 
-  async findOne(id: string): Promise<Billing | null> {
+  async findOne(id: string, tenantId?: string): Promise<Billing | null> {
     try {
       this.logger.log(`Fetching billing record with id: ${id}`);
-      const billing = await this.billingModel.findById(id).exec();
+      const billing = tenantId
+        ? await this.billingModel.findOne({ _id: id, tenantId }).exec()
+        : await this.billingModel.findById(id).exec();
       if (!billing) {
         this.logger.warn(`Billing record not found: ${id}`);
         throw new NotFoundException(`Billing record with id ${id} not found`);
@@ -168,7 +275,10 @@ export class BillingService {
     }
   }
 
-  async create(createBillingDto: Billing, tenantId: string): Promise<Billing> {
+  async create(
+    createBillingDto: CreateBillingDto,
+    tenantId: string,
+  ): Promise<Billing> {
     try {
       this.logger.log(`Creating billing record for tenant: ${tenantId}`);
       const createdBilling = new this.billingModel({
@@ -216,13 +326,17 @@ export class BillingService {
 
   async update(
     id: string,
-    updateBillingDto: Billing,
+    updateBillingDto: UpdateBillingDto,
     tenantId: string,
   ): Promise<Billing | null> {
     try {
       this.logger.log(`Updating billing record ${id} for tenant: ${tenantId}`);
       const updated = await this.billingModel
-        .findByIdAndUpdate(id, { ...updateBillingDto, tenantId }, { new: true })
+        .findOneAndUpdate(
+          { _id: id, tenantId },
+          { ...updateBillingDto, tenantId },
+          { new: true },
+        )
         .exec();
       if (!updated) {
         this.logger.warn(`Billing record not found for update: ${id}`);
@@ -238,10 +352,12 @@ export class BillingService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, tenantId?: string) {
     try {
       this.logger.log(`Removing billing record: ${id}`);
-      const deleted = await this.billingModel.findByIdAndDelete(id).exec();
+      const deleted = tenantId
+        ? await this.billingModel.findOneAndDelete({ _id: id, tenantId }).exec()
+        : await this.billingModel.findByIdAndDelete(id).exec();
       if (!deleted) {
         this.logger.warn(`Billing record not found for deletion: ${id}`);
         throw new NotFoundException(`Billing record with id ${id} not found`);
@@ -291,10 +407,10 @@ export class BillingService {
   }
 
   async createForTenant(
-    createBillingDto: Omit<Billing, 'tenantId'>,
+    createBillingDto: CreateBillingDto,
     tenantId: string,
   ): Promise<Billing> {
-    return this.create(createBillingDto as Billing, tenantId);
+    return this.create(createBillingDto, tenantId);
   }
 
   async updateForAdmin(

@@ -1,11 +1,14 @@
 ﻿import {
+  BadRequestException,
   Controller,
   Get,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
   Post,
   Body,
   Req,
   UseGuards,
-  BadRequestException,
   Put,
   Query,
   Param,
@@ -22,11 +25,20 @@ import { ListTenantsQueryDto } from './dto/list-tenants.dto';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { Types } from 'mongoose';
 import { Public } from '../../common/decorators/public.decorator';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { RequestWithUser } from '../../common/interfaces/request-with-user.interface';
+import { TenantSlugParamDto, PublicDirectoryQueryDto } from './dto/tenants-public.dto';
 @ApiTags('Tenants')
 @ApiBearerAuth('bearer')
 @Controller('tenants')
 export class TenantsController {
+  private readonly logger = new Logger(TenantsController.name);
+
   constructor(private readonly tenantsService: TenantsService) {}
 
   /**
@@ -36,8 +48,25 @@ export class TenantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('platform_admin', 'PLATFORM_SUPER_ADMIN')
   @Get()
+  @ApiOperation({ summary: 'List tenants (platform)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async listTenants(@Query() query: ListTenantsQueryDto) {
-    return this.tenantsService.listTenants(query);
+    try {
+      return await this.tenantsService.listTenants(query);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[listTenants] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -47,24 +76,41 @@ export class TenantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('platform_admin', 'PLATFORM_SUPER_ADMIN')
   @Post()
+  @ApiOperation({ summary: 'Create a tenant (platform)' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async createTenant(
     @Body() dto: CreateTenantDto,
-    @Req() req: { user?: { sub?: string; _id?: unknown } },
+    @Req() req: RequestWithUser,
   ) {
-    let adminId = req.user?.sub;
-    if (!adminId && req.user?._id && typeof req.user._id === 'object') {
-      adminId = objectIdToString(req.user._id);
-    }
-    if (!adminId) throw new BadRequestException('User ID is required');
-    if (!Types.ObjectId.isValid(adminId)) {
-      throw new BadRequestException('User ID is invalid');
-    }
+    try {
+      let adminId = req.user?.sub;
+      if (!adminId && req.user?._id) {
+        adminId = objectIdToString(req.user._id as any);
+      }
+      if (!adminId) throw new BadRequestException('User ID is required');
+      if (!Types.ObjectId.isValid(adminId)) {
+        throw new BadRequestException('User ID is invalid');
+      }
 
-    return this.tenantsService.createTenant(
-      dto.name,
-      new Types.ObjectId(adminId),
-      dto.planKey ?? 'FREE',
-    );
+      return await this.tenantsService.createTenant(
+        dto.name,
+        new Types.ObjectId(adminId),
+        dto.planKey ?? 'FREE',
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[createTenant] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -73,16 +119,30 @@ export class TenantsController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('custom-domains')
-  async getCustomDomains(@Req() req: { user?: { tenantId?: string } }) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID is required');
+  @ApiOperation({ summary: 'Get custom domains for current tenant' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getCustomDomains(@Req() req: RequestWithUser) {
+    try {
+      const tenantId = req.user?.tenantId;
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      const tenant = await this.tenantsService.getCurrentTenant(String(tenantId));
+      if (!tenant) throw new BadRequestException('Tenant not found');
+      return { domains: (tenant as any).customDomains ?? [] };
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getCustomDomains] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    // Fetch custom domains from tenant
-    const tenant = await this.tenantsService.getCurrentTenant(tenantId);
-    if (!tenant) throw new BadRequestException('Tenant not found');
-    // Example: tenant.customDomains is an array
-    return { domains: tenant.customDomains ?? [] };
   }
 
   /**
@@ -91,31 +151,54 @@ export class TenantsController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('quota')
-  async getQuota(@Req() req: { user?: { tenantId?: string } }) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID is required');
+  @ApiOperation({ summary: 'Get quota usage for current tenant' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getQuota(@Req() req: RequestWithUser) {
+    try {
+      const tenantId = req.user?.tenantId;
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      const tenant = await this.tenantsService.getCurrentTenant(String(tenantId));
+      if (!tenant) throw new BadRequestException('Tenant not found');
+      return {
+        maxApiCallsPerDay: (tenant as any).maxApiCallsPerDay ?? 10000,
+        usedApiCallsToday: (tenant as any).usedApiCallsToday ?? 0,
+        maxStorageMb: (tenant as any).maxStorageMb ?? 1024,
+        usedStorageMb: (tenant as any).usedStorageMb ?? 0,
+      };
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[getQuota] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    // Fetch quota info from tenant
-    const tenant = await this.tenantsService.getCurrentTenant(tenantId);
-    if (!tenant) throw new BadRequestException('Tenant not found');
-    // Example quota fields, adjust as needed
-    return {
-      maxApiCallsPerDay: tenant.maxApiCallsPerDay ?? 10000,
-      usedApiCallsToday: tenant.usedApiCallsToday ?? 0,
-      maxStorageMb: tenant.maxStorageMb ?? 1024,
-      usedStorageMb: tenant.usedStorageMb ?? 0,
-    };
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  async me(@Req() req: { user?: { tenantId?: string } }) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) {
-      return null;
+  @ApiOperation({ summary: 'Get current tenant record for authenticated user' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async me(@Req() req: RequestWithUser) {
+    try {
+      const tenantId = req.user?.tenantId;
+      if (!tenantId) {
+        return null;
+      }
+      return await this.tenantsService.getCurrentTenant(String(tenantId));
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(`[me] ${err?.message ?? String(err)}`, err?.stack);
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    return this.tenantsService.getCurrentTenant(tenantId);
   }
 
   /**
@@ -126,16 +209,33 @@ export class TenantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('platform_admin')
   @Post('manual-create')
+  @ApiOperation({ summary: 'Manually create tenant (platform)' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async manualCreate(
     @Body() dto: ManualCreateTenantDto,
-    @Req() req: { user?: { sub?: string; _id?: unknown } },
+    @Req() req: RequestWithUser,
   ) {
-    let adminId = req.user?.sub;
-    if (!adminId && req.user?._id && typeof req.user._id === 'object') {
-      adminId = objectIdToString(req.user._id);
+    try {
+      let adminId = req.user?.sub;
+      if (!adminId && req.user?._id) {
+        adminId = objectIdToString(req.user._id as any);
+      }
+      if (!adminId) throw new BadRequestException('User ID is required');
+      return await this.tenantsService.manualCreateTenant(dto, adminId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[manualCreate] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    if (!adminId) throw new BadRequestException('User ID is required');
-    return this.tenantsService.manualCreateTenant(dto, adminId);
   }
 
   /**
@@ -144,15 +244,34 @@ export class TenantsController {
    */
   @UseGuards(JwtAuthGuard)
   @Put('public-profile')
+  @ApiOperation({ summary: "Update current tenant's public business profile" })
+  @ApiResponse({ status: 200, description: 'Updated' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async updatePublicProfile(
-    @Req() req: { user?: { tenantId?: string } },
+    @Req() req: RequestWithUser,
     @Body() dto: UpdateTenantPublicProfileDto,
   ) {
-    const tenantId = req.user?.tenantId;
-    if (!tenantId) {
-      throw new BadRequestException('Tenant ID is required');
+    try {
+      const tenantId = req.user?.tenantId;
+      if (!tenantId) {
+        throw new BadRequestException('Tenant ID is required');
+      }
+      return await this.tenantsService.updateTenantPublicProfile(
+        String(tenantId),
+        dto,
+      );
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[updatePublicProfile] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    return this.tenantsService.updateTenantPublicProfile(tenantId, dto);
   }
 
   /**
@@ -161,32 +280,33 @@ export class TenantsController {
    */
   @Get('public-directory')
   @Public()
+  @ApiOperation({ summary: 'List public businesses (directory)' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async listPublicBusinesses(
-    @Query('q') q?: string,
-    @Query('category') category?: string,
-    @Query('city') city?: string,
-    @Query('country') country?: string,
-    @Query('tag') tag?: string,
-    @Query('priceTier') priceTier?: 'LOW' | 'MEDIUM' | 'HIGH',
-    @Query('minRating') minRatingRaw?: string,
+    @Query() query: PublicDirectoryQueryDto,
   ) {
-    let minRating: number | undefined;
-    if (minRatingRaw !== undefined) {
-      const parsed = Number(minRatingRaw);
-      if (!Number.isFinite(parsed)) {
-        throw new BadRequestException('minRating must be a number');
-      }
-      minRating = parsed;
+    try {
+      return await this.tenantsService.listPublicBusinesses({
+        q: query.q,
+        category: query.category,
+        city: query.city,
+        country: query.country,
+        tag: query.tag,
+        priceTier: query.priceTier,
+        minRating: query.minRating,
+      });
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[listPublicBusinesses] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    return this.tenantsService.listPublicBusinesses({
-      q,
-      category,
-      city,
-      country,
-      tag,
-      priceTier,
-      minRating,
-    });
   }
 
   /**
@@ -195,9 +315,23 @@ export class TenantsController {
    */
   @Get('public/:slug')
   @Public()
-  async getPublicBusiness(@Param('slug') slug: string) {
-    if (!slug) throw new BadRequestException('Slug is required');
-    return this.tenantsService.getPublicBusinessBySlug(slug);
+  @ApiOperation({ summary: 'Get public business profile by slug' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getPublicBusiness(@Param() params: TenantSlugParamDto) {
+    try {
+      return await this.tenantsService.getPublicBusinessBySlug(params.slug);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getPublicBusiness] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -206,11 +340,27 @@ export class TenantsController {
    */
   @Get('public/:slug/reviews')
   @Public()
-  async getBusinessReviews(@Param('slug') slug: string) {
-    if (!slug) throw new BadRequestException('Slug is required');
-    const tenant = await this.tenantsService.getPublicBusinessBySlug(slug);
-    const tenantId = objectIdToString(tenant._id);
-    return this.tenantsService.listBusinessReviews(tenantId);
+  @ApiOperation({ summary: 'Get public reviews for a business' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getBusinessReviews(@Param() params: TenantSlugParamDto) {
+    try {
+      const tenant = await this.tenantsService.getPublicBusinessBySlug(
+        params.slug,
+      );
+      const tenantId = objectIdToString((tenant as any)._id);
+      return await this.tenantsService.listBusinessReviews(tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getBusinessReviews] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   /**
@@ -219,28 +369,45 @@ export class TenantsController {
    */
   @UseGuards(JwtAuthGuard)
   @Post('public/:slug/reviews')
+  @ApiOperation({ summary: 'Add a review for a public business (authed)' })
+  @ApiResponse({ status: 201, description: 'Created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async addBusinessReview(
-    @Param('slug') slug: string,
-    @Req() req: { user?: { sub?: string; _id?: unknown } },
+    @Param() params: TenantSlugParamDto,
+    @Req() req: RequestWithUser,
     @Body() dto: CreateBusinessReviewDto,
   ) {
-    if (!slug) throw new BadRequestException('Slug is required');
-    const tenant = await this.tenantsService.getPublicBusinessBySlug(slug);
-    const tenantId = objectIdToString(tenant._id);
+    try {
+      const tenant = await this.tenantsService.getPublicBusinessBySlug(
+        params.slug,
+      );
+      const tenantId = objectIdToString((tenant as any)._id);
 
-    let userId = req.user?.sub;
-    if (!userId && req.user?._id && typeof req.user._id === 'object') {
-      userId = objectIdToString(req.user._id);
+      let userId = req.user?.sub;
+      if (!userId && req.user?._id) {
+        userId = objectIdToString(req.user._id as any);
+      }
+      if (!userId) throw new BadRequestException('User ID is required');
+
+      await this.tenantsService.addBusinessReview(
+        tenantId,
+        userId,
+        dto.rating,
+        dto.comment,
+      );
+
+      return { success: true };
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[addBusinessReview] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
     }
-    if (!userId) throw new BadRequestException('User ID is required');
-
-    await this.tenantsService.addBusinessReview(
-      tenantId,
-      userId,
-      dto.rating,
-      dto.comment,
-    );
-
-    return { success: true };
   }
 }

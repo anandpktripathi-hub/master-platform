@@ -27,7 +27,7 @@ describe('SeoController', () => {
   it('propagates errors from SeoService', async () => {
     seoService.getTenantRobots.mockRejectedValue(new BadRequestException());
 
-    await expect(controller.tenantRobots('')).rejects.toBeInstanceOf(
+    await expect(controller.tenantRobots({ slug: '' } as any)).rejects.toBeInstanceOf(
       BadRequestException,
     );
   });
@@ -35,21 +35,21 @@ describe('SeoController', () => {
   it('delegates robots.txt', async () => {
     seoService.getTenantRobots.mockResolvedValue('robots');
 
-    await expect(controller.tenantRobots('acme')).resolves.toBe('robots');
+    await expect(controller.tenantRobots({ slug: 'acme' } as any)).resolves.toBe('robots');
     expect(seoService.getTenantRobots).toHaveBeenCalledWith('acme');
   });
 
   it('delegates sitemap.xml', async () => {
     seoService.getTenantSitemap.mockResolvedValue('<xml/>' );
 
-    await expect(controller.tenantSitemap('acme')).resolves.toBe('<xml/>');
+    await expect(controller.tenantSitemap({ slug: 'acme' } as any)).resolves.toBe('<xml/>');
     expect(seoService.getTenantSitemap).toHaveBeenCalledWith('acme');
   });
 
   it('delegates feed.xml', async () => {
     seoService.getTenantFeed.mockResolvedValue('<rss/>' );
 
-    await expect(controller.tenantFeed('acme')).resolves.toBe('<rss/>');
+    await expect(controller.tenantFeed({ slug: 'acme' } as any)).resolves.toBe('<rss/>');
     expect(seoService.getTenantFeed).toHaveBeenCalledWith('acme');
   });
 });

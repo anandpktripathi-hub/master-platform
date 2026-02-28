@@ -44,6 +44,35 @@ export interface DomainResellerProvider {
   ensureDns(domain: string, records: DnsRecord[]): Promise<void>;
 }
 
+export class StubDomainResellerProvider implements DomainResellerProvider {
+  async search(domain: string): Promise<DomainSearchResult> {
+    const normalizedLength = domain.replace(/\./g, '').length;
+    const available = normalizedLength % 2 === 1;
+    return {
+      domain,
+      available,
+      currency: 'USD',
+      price: available ? 12.99 : undefined,
+      renewalPrice: available ? 12.99 : undefined,
+      provider: 'stub',
+    };
+  }
+
+  async purchase(request: DomainPurchaseRequest): Promise<DomainPurchaseResult> {
+    return {
+      success: true,
+      domain: request.domain,
+      providerOrderId: `stub-${Date.now()}`,
+      nameservers: ['ns1.stub.local', 'ns2.stub.local'],
+      message: 'Stub purchase successful',
+    };
+  }
+
+  async ensureDns(_domain: string, _records: DnsRecord[]): Promise<void> {
+    return;
+  }
+}
+
 @Injectable()
 export class NotConfiguredDomainResellerProvider
   implements DomainResellerProvider

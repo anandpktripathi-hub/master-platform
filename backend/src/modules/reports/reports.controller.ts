@@ -1,10 +1,23 @@
-import { BadRequestException, Controller, Get, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { Roles } from '../../decorators/roles.decorator';
 import { ReportsService } from './reports.service';
 import type { Request } from 'express';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  TenantCommerceReportDto,
+  TenantFinancialReportDto,
+} from './dto/reports-response.dto';
 
 interface AuthRequest extends Request {
   user?: {
@@ -20,6 +33,8 @@ interface AuthRequest extends Request {
 @Controller('reports')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ReportsController {
+  private readonly logger = new Logger(ReportsController.name);
+
   constructor(private readonly reports: ReportsService) {}
 
   private getTenantIdFromRequest(req: AuthRequest): string {
@@ -38,9 +53,26 @@ export class ReportsController {
     'platform_admin',
     'PLATFORM_SUPER_ADMIN',
   )
-  async getTenantFinancial(@Req() req: AuthRequest) {
-    const tenantId = this.getTenantIdFromRequest(req);
-    return this.reports.getTenantFinancialReport(tenantId);
+  @ApiOperation({ summary: 'Get tenant financial report' })
+  @ApiResponse({ status: 200, description: 'Success', type: TenantFinancialReportDto })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getTenantFinancial(@Req() req: AuthRequest): Promise<TenantFinancialReportDto> {
+    try {
+      const tenantId = this.getTenantIdFromRequest(req);
+      return await this.reports.getTenantFinancialReport(tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getTenantFinancial] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   @Get('tenant/commerce')
@@ -52,9 +84,26 @@ export class ReportsController {
     'platform_admin',
     'PLATFORM_SUPER_ADMIN',
   )
-  async getTenantCommerce(@Req() req: AuthRequest) {
-    const tenantId = this.getTenantIdFromRequest(req);
-    return this.reports.getTenantCommerceReport(tenantId);
+  @ApiOperation({ summary: 'Get tenant commerce report' })
+  @ApiResponse({ status: 200, description: 'Success', type: TenantCommerceReportDto })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
+  async getTenantCommerce(@Req() req: AuthRequest): Promise<TenantCommerceReportDto> {
+    try {
+      const tenantId = this.getTenantIdFromRequest(req);
+      return await this.reports.getTenantCommerceReport(tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getTenantCommerce] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 
   @Get('tenant/traffic')
@@ -66,8 +115,25 @@ export class ReportsController {
     'platform_admin',
     'PLATFORM_SUPER_ADMIN',
   )
+  @ApiOperation({ summary: 'Get tenant traffic report' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async getTenantTraffic(@Req() req: AuthRequest) {
-    const tenantId = this.getTenantIdFromRequest(req);
-    return this.reports.getTenantTrafficReport(tenantId);
+    try {
+      const tenantId = this.getTenantIdFromRequest(req);
+      return await this.reports.getTenantTrafficReport(tenantId);
+    } catch (error) {
+      const err = error as any;
+      this.logger.error(
+        `[getTenantTraffic] ${err?.message ?? String(err)}`,
+        err?.stack,
+      );
+      throw err instanceof HttpException
+        ? err
+        : new InternalServerErrorException('An unexpected error occurred');
+    }
   }
 }
